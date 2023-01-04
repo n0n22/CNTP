@@ -90,7 +90,6 @@ local.properties
 *.rar
 
 
-log4j.xml
 /servers
 */target
 
