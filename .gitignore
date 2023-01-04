@@ -93,8 +93,6 @@ local.properties
 log4j.xml
 /servers
 */target
-.classpath
-.project
 
 lecture
 MANIFEST.MF
