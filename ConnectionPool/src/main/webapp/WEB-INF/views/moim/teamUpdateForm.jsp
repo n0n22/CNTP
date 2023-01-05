@@ -68,6 +68,12 @@
 	        </tr>
 	        <!-- 이미 파워 등록을 했는지 확인이 필요 -->
 	        <tr>
+	            <th>뱃지 등록</th>
+	            <td colspan="2">
+	                *팀 페이지에서 뱃지 구매 시 사용 가능합니다 <input type="text">
+	            </td>
+	        </tr>
+	        <tr>
 	            <th>파워등록</th>
 	            <td colspan="2">
 	                <input type="checkbox" name="powerDuration"> 파워 등록 시 10P가 소요됩니다. 
