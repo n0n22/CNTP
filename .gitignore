@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/eclipse,java
-# Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,java
+# Created by https://www.gitignore.io/api/git,java,maven,windows,eclipse
+# Edit at https://www.gitignore.io/?templates=git,java,maven,windows,eclipse
 
 ### Eclipse ###
 .metadata
@@ -12,24 +12,19 @@ tmp/
 local.properties
 .loadpath
 .recommenders
+.target/
 
-# External tool builders
-.externalToolBuilders/
+# ignore properties file
+config.properties
 
 # Locally stored "Eclipse launch configurations"
 *.launch
-
-# PyDev specific (Python IDE for Eclipse)
-*.pydevproject
 
 # CDT-specific (C/C++ Development Tooling)
 .cproject
 
 # CDT- autotools
 .autotools
-
-# Java annotation processor (APT)
-.factorypath
 
 # PDT-specific (PHP Development Tools)
 .buildpath
@@ -51,22 +46,31 @@ local.properties
 
 # Annotation Processing
 .apt_generated/
-.apt_generated_test/
 
 # Scala IDE specific (Scala & Java development for Eclipse)
 .cache-main
 .scala_dependencies
 .worksheet
 
-# Uncomment this line if you wish to ignore the project description file.
-# Typically, this file would be tracked if it contains build/dependency configurations:
-#.project
+### Git ###
+# Created by git for backups. To disable backups in Git:
+# $ git config --global mergetool.keepBackup false
+*.orig
 
-### Eclipse Patch ###
-# Spring Boot Tooling
-.sts4-cache/
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
 
 ### Java ###
+
+/Servers
+
 # Compiled class file
 *.class
 
@@ -88,13 +92,8 @@ local.properties
 *.tar.gz
 *.rar
 
-
-/servers
-*/target
-
-
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-replay_pid*
 
-# End of https://www.toptal.com/developers/gitignore/api/eclipse,java
+### Maven ###
+target/
