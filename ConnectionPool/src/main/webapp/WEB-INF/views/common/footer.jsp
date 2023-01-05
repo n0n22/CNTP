@@ -121,7 +121,7 @@
     
     <div class="footer">
         <div class="footer-inner">
-            <div class="flex justify-between">
+            <div class="footer-inner1">
                 <div class="footer-subDescription">
                     <p class="company">ConnectionPool</p>
                     <p class="call">고객센터: 1234-5678</p>
