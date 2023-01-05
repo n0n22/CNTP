@@ -37,7 +37,7 @@
 
 	<div class="outer" align="center">
 
-		<img width="80%" height="200px" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbhd1qW%2FbtqUnLpjyqL%2FsRwVDDHp0keOfVq1nKDb11%2Fimg.jpg">
+		<img width="80%" height="300px" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbhd1qW%2FbtqUnLpjyqL%2FsRwVDDHp0keOfVq1nKDb11%2Fimg.jpg">
 		
 		<br><br>
 
@@ -74,7 +74,11 @@
 
 			</table>
 
-			<a href="#">수정하기페이지보내주는버튼</a>
+			<br>
+
+			<div class="enroll-area" align="right">
+				<a href="#">수정하기페이지보내주는버튼</a>
+			</div>
 
 		</div>
 
@@ -97,7 +101,10 @@
 					</tr>
 				</table>
 				<br>
-				<button>팀장/부팀장 수정</button>
+
+				<div class="memberUpdate-area" align="right">
+					<button>팀장/부팀장 수정</button>
+				</div>
 			</div>
 
 			<div>
