@@ -10,7 +10,7 @@
 <body>
 
 	<jsp:include page="../common/menubar_nosearch.jsp"></jsp:include>
-	
+
 	<div class="outer" align="center">
 		<h3>팀 멤버 권한 수정하기</h3>
 		<hr>

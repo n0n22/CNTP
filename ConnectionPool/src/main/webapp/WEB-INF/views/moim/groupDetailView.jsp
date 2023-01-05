@@ -6,53 +6,91 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+    .left-area, .right-area{
+        display: inline-block;
+
+    }
+
+    .margin{
+        width:50px;
+        display: inline-block;
+    }
+
+</style>
 </head>
 <body>
-    <div class="outer">
+    <div class="outer" align="center">
+    
+        <h3 align="left">제목 들어가기</h3>
+
+        <hr>
+        <br>
+
         <div class="left-area">
-            <table class="groupInfoTable_1">
-                <tr>
-                    <td>제목이 들어갈 거구여</td>
-                </tr>
-                <tr>
-                    <th>
-                        <img src=""/>
-                        사진이 들어갈 것이에요
-                    </th>
-                </tr>
-            </table>
-            <table class="groupInfoTable_2">
-                <tr>
-                    <th>지역</th>
-                    <td>제주도</td>
-                    <th>모집인원</th>
-                    <td>1/10</td>
-                    <th>#여자만</th>
-                </tr>
-                <tr>
-                    <th>일시</th>
-                    <td colspan="3">2023-01-01 15:00 ~ 18:00</td>
-                    <td>#중수</td>
-                </tr>
-            </table>
+            <div class="detailTitle" align="left">
+                <table class="groupInfoTable_1" border="1">
+                    <tr>
+                        <th>
+                            <img width="400px" height="" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"/>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="group-info">
+                <table>
+                    <tr>
+                        <td width="150">#지역 제주도</td>
+                        <td width="150">#모집인원 1/10</td>
+                    </tr>
+                    <tr>
+                        <td>#여자만</td>
+                        <td>#중수레벨</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"> #2023-01-10 15:00</td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
+        <div class="margin"></div>
+
         <div class="right-area">
-            <table>
-            	<!-- 이거 할 수 있을진 모르겠다 ㅎㅎ -->
-                <tr>프로필 사진이여</tr>
-                <tr>닉네임</tr>
-                <tr>레벨 :</tr>
-                <tr>인기도 : </tr>
-            </table>
-            <br><br>
-            <button>신청하기</button>
-            <button>채팅방 입장</button>
+           <div class="left-area">
+            <div class="detailTitle" align="left">
+                <table class="groupInfoTable_1" border="1">
+                    <tr>
+                        <th>
+                            <img width="400px" height="" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"/>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="group-info">
+                <table>
+                    <tr>
+                        <td width="150">닉네임</td>
+                        <td width="150">꾸꾸리삐</td>
+                    </tr>
+                    <tr>
+                        <td>인기도</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>성별</td>
+                        <td>여성</td>
+                    </tr>
+                </table>
+            </div>
+
         </div>
         
         <div class="right-area">
-        	<h6>신청관리</h6>
-        	<table>
+        	<h4>신청관리</h4>
+        	<table border="1">
         		<tr>
         			<th>닉네임</th>
         			<th>성별</th>
@@ -66,12 +104,64 @@
         			<td>5</td>
         			<td>2020-01-01</td>
         			<td>
-        				<a>수락</a>
-        				<a>거절</a>
+        				<button>수락</button>
+        	            <button>거절</button>
+        			</td>
+        		</tr>
+        		<tr>
+        			<td>user1</td>
+        			<td>남자</td>
+        			<td>5</td>
+        			<td>2020-01-01</td>
+        			<td>
+        				<button>수락</button>
+        	            <button>거절</button>
+        			</td>
+        		</tr>
+        		<tr>
+        			<td>user1</td>
+        			<td>남자</td>
+        			<td>5</td>
+        			<td>2020-01-01</td>
+        			<td>
+        				<button>수락</button>
+        	            <button>거절</button>
+        			</td>
+        		</tr>
+        		<tr>
+        			<td>user1</td>
+        			<td>남자</td>
+        			<td>5</td>
+        			<td>2020-01-01</td>
+        			<td>
+        				<button>수락</button>
+        	            <button>거절</button>
+        			</td>
+        		</tr>
+        		<tr>
+        			<td>user1</td>
+        			<td>남자</td>
+        			<td>5</td>
+        			<td>2020-01-01</td>
+        			<td>
+        				<button>수락</button>
+        	            <button>거절</button>
+        			</td>
+        		</tr>
+        		<tr>
+        			<td>user1</td>
+        			<td>남자</td>
+        			<td>5</td>
+        			<td>2020-01-01</td>
+        			<td>
+        				<button>수락</button>
+        	            <button>거절</button>
         			</td>
         		</tr>
         	</table>
         	
+            <br>
+
         	<button>수정하기</button>
         	<button>채팅입장</button>
         </div>
