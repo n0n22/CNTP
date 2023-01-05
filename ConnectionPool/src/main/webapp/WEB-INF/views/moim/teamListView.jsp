@@ -9,14 +9,17 @@
 </head>
 <body>
 	
-	<div class="outer">
+	<div class="outer" align="center">
 	
-		<div class="teamListTitle">
+		<div class="teamListTitle" align="left">
 			<h3>팀 참여</h3>
-			<h6>팀에 소속되어 친목 및 배틀을 즐겨보세요</h6>
+			<h5>팀에 소속되어 친목 및 배틀을 즐겨보세요</h5>
+			<hr>
 		</div>
+
+		<br>
 		
-		<div class="teamListCondition">
+		<div class="teamListCondition" align="right">
 			지역
 			<select name="teamArea">
 				<option value="S">서울</option>
@@ -31,12 +34,14 @@
 			</select>
 		</div>
 		
-		<table class="table table-hover thead-dark">
+		<br>
+		
+		<table class="table table-hover thead-dark" border="1">
 			<tr>
-				<th colspan="2">지역</th>
-				<th>팀명</th>
-				<th>인원</th>
-				<th>키워드</th>
+				<th colspan="2" width="200">지역</th>
+				<th width="200">팀명</th>
+				<th width="200">인원</th>
+				<th width="200">키워드</th>
 			</tr>
 			<tr>
 				<td>파워</td>
