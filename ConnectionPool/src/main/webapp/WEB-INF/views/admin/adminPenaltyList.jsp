@@ -69,55 +69,58 @@
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th width="5%">번호</th>
-                            <th width="15%">신고대상자</th>
-                            <th width="20%">유형</th>
-                            <th width="20%">신고사유</th>
-                            <th width="15%">신고자</th>
-                            <th width="15%">신고일시</th>
+                            <th width="10%"><input type="checkbox"></th>
+                            <th width="15%">회원번호</th>
+                            <th width="20%">아이디</th>
+                            <th width="10%">누적신고</th>
+                            <th width="15%">패널티 유형</th>
+                            <th width="25%">최종신고처리일</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
+                            <td><input type="checkbox"></td>
                             <td>3</td>
                             <td>user02</td>
-                            <td>자유게시판 댓글</td>
-                            <td>욕설/비방</td>
-                            <td>user05</td>
-                            <td>2022-05-30</td>
+                            <td>10</td>
+                            <td>탈퇴</td>
+                            <td>2022-10-05</td>
                         </tr>
                         <tr>
+                            <td><input type="checkbox"></td>
                             <td>3</td>
                             <td>user02</td>
-                            <td>자유게시판 댓글</td>
-                            <td>욕설/비방</td>
-                            <td>user05</td>
-                            <td>2022-05-30</td>
+                            <td>10</td>
+                            <td>탈퇴</td>
+                            <td>2022-10-05</td>
                         </tr>
                         <tr>
+                            <td><input type="checkbox"></td>
                             <td>3</td>
                             <td>user02</td>
-                            <td>자유게시판 댓글</td>
-                            <td>욕설/비방</td>
-                            <td>user05</td>
-                            <td>2022-05-30</td>
+                            <td>10</td>
+                            <td>탈퇴</td>
+                            <td>2022-10-05</td>
                         </tr>
                     </tbody>
                 </table>
+                <a href="#" class="btn btn-danger">처리</a>
             </div>
 
 
+        </div>
 
-        </div>
+
+
     
     
     
         
         
-        </div>
+    </div>
         
         
-        <jsp:include page="../common/footer.jsp" />
+    <jsp:include page="../common/footer.jsp" />
     
 
 
