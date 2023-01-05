@@ -9,6 +9,7 @@
 <style>
     .left-area, .right-area{
         display: inline-block;
+
     }
 
     .margin{
@@ -21,6 +22,11 @@
 <body>
     <div class="outer" align="center">
     
+        <h3 align="left">제목 들어가기</h3>
+
+        <hr>
+        <br>
+
         <div class="left-area">
             <div class="detailTitle" align="left">
                 <table class="groupInfoTable_1" border="1">
@@ -28,11 +34,6 @@
                         <th>
                             <img width="400px" height="" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"/>
                         </th>
-                    </tr>
-                    <tr align="left">
-                        <td align="left" class="groupTitle">
-                            <h3>제목이 들어갈 거구여</h3>
-                        </td>
                     </tr>
                 </table>
             </div>
@@ -60,11 +61,6 @@
            <div class="left-area">
             <div class="detailTitle" align="left">
                 <table class="groupInfoTable_1" border="1">
-                    <tr align="left">
-                        <td align="left" class="groupTitle">
-                            <h3>제목이 들어갈 거구여</h3>
-                        </td>
-                    </tr>
                     <tr>
                         <th>
                             <img width="400px" height="" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"/>
@@ -72,11 +68,29 @@
                     </tr>
                 </table>
             </div>
+
+            <div class="group-info">
+                <table>
+                    <tr>
+                        <td width="150">닉네임</td>
+                        <td width="150">꾸꾸리삐</td>
+                    </tr>
+                    <tr>
+                        <td>인기도</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>성별</td>
+                        <td>여성</td>
+                    </tr>
+                </table>
+            </div>
+
         </div>
         
         <div class="right-area">
-        	<h6>신청관리</h6>
-        	<table>
+        	<h4>신청관리</h4>
+        	<table border="1">
         		<tr>
         			<th>닉네임</th>
         			<th>성별</th>
@@ -90,12 +104,64 @@
         			<td>5</td>
         			<td>2020-01-01</td>
         			<td>
-        				<a>수락</a>
-        				<a>거절</a>
+        				<button>수락</button>
+        	            <button>거절</button>
+        			</td>
+        		</tr>
+        		<tr>
+        			<td>user1</td>
+        			<td>남자</td>
+        			<td>5</td>
+        			<td>2020-01-01</td>
+        			<td>
+        				<button>수락</button>
+        	            <button>거절</button>
+        			</td>
+        		</tr>
+        		<tr>
+        			<td>user1</td>
+        			<td>남자</td>
+        			<td>5</td>
+        			<td>2020-01-01</td>
+        			<td>
+        				<button>수락</button>
+        	            <button>거절</button>
+        			</td>
+        		</tr>
+        		<tr>
+        			<td>user1</td>
+        			<td>남자</td>
+        			<td>5</td>
+        			<td>2020-01-01</td>
+        			<td>
+        				<button>수락</button>
+        	            <button>거절</button>
+        			</td>
+        		</tr>
+        		<tr>
+        			<td>user1</td>
+        			<td>남자</td>
+        			<td>5</td>
+        			<td>2020-01-01</td>
+        			<td>
+        				<button>수락</button>
+        	            <button>거절</button>
+        			</td>
+        		</tr>
+        		<tr>
+        			<td>user1</td>
+        			<td>남자</td>
+        			<td>5</td>
+        			<td>2020-01-01</td>
+        			<td>
+        				<button>수락</button>
+        	            <button>거절</button>
         			</td>
         		</tr>
         	</table>
         	
+            <br>
+
         	<button>수정하기</button>
         	<button>채팅입장</button>
         </div>
