@@ -195,7 +195,7 @@
 
                     <!-- 로그인 되어있을때 시작 -->
                     
-                    <li class="username" >커풀님 ></li>
+                    <li class="username"  data-toggle="modal" data-target="#myModal">커풀님 ></li>
                     <li></li>
                     <li class="logout">로그아웃</li>
                     <div class="basket-icon">
