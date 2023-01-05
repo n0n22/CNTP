@@ -9,23 +9,24 @@
 </head>
 <body>
 
-	<div class="outer">
+	<div class="outer" align="center">
 		<h3>팀 멤버 권한 수정하기</h3>
+		<hr>
+
+		<br>
 		<form action="#">
-			<table>
+			<table border="1">
 				<tr>
-					<th>닉네임</th>
-					<th>가입일시</th>
-					<th>직급선택</th>
+					<th width="200">닉네임</th>
+					<th width="200">가입일시</th>
+					<th width="300">직급선택</th>
 				</tr>
 				<tr>
 					<td>홍길동</td>
 					<td>2020-01-01</td>
 					<td>
 						팀장<input type="radio" name="L">
-						value에 이름을 가져다가 가자
 						부팀장<input type="radio" name="S">
-						value에 이름을 가져다가 가자
 						
 					</td>
 				</tr>
@@ -73,10 +74,18 @@
 			</table>
 			
 			<br><br>
-			
-			<button>수정하기</button>
+			<div class="teamMeberUpdate-area" align="right"> 
+				<button>수정하기</button>
+			</div>
 		</form>
 	</div>
+
+	<script>
+		
+	</script>
+
+
+
 
 </body>
 </html>
