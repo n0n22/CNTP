@@ -9,6 +9,8 @@
 </head>
 <body>
 
+	<jsp:include page="../common/menubar_nosearch.jsp"></jsp:include>
+	
 	<div class="outer" align="center">
 		<h3>팀 멤버 권한 수정하기</h3>
 		<hr>
@@ -81,7 +83,12 @@
 	</div>
 
 	<script>
-		
+		$(function(){
+			$('input[name=L]').on('change', function(){
+				var $name = $(this).parent().parent().children().eq(0).text();
+				
+			});
+		})
 	</script>
 
 
