@@ -6,6 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	
+
+</style>
 </head>
 <body>
 
@@ -20,7 +24,7 @@
 	    <h3 align="center">팀 만들기 신청</h3>
 	    
 		<!-- th태그들 안은 당연하게 중앙 정렬이라 후에 왼쪽 정렬 바꿔주자 -->
-	    <table align="center" border="1">
+	    <table align="center" border="1" class="teamEnrollFormTable">
 	        <tr>
 	            <th>팀 이름<br>*팀 이름은 추후 수정 불가</th>
 	            <td>

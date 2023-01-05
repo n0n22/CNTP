@@ -6,38 +6,53 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	.teamUpdateFormTable input[type=text], select, textarea{
+		width: 95%;
+		height: 100%;
+		border: 0px;
+		padding: 0px;
+	}
+
+	.teamUpdateFormTable td{
+		padding:0px;
+	}
+
+	.teamUpdateFormTable textarea{
+		height:100px;
+	}
+
+</style>
 </head>
 <body>
 	<div class="outer">
 	
-	
-	
 	    <h3 align="center">팀 정보 수정하기</h3>
 	    <br>
 	
-	    <table align="center">
-	        <tr>
+	    <table align="center" border="1" class="teamUpdateFormTable">
+	        <tr height="50">
 	            <th>팀 이름<br>
 	            <td>
 	                <input type="text" name="teamName" disabled>
 	            </td>
 	            <td></td>
 	        </tr>
-	        <tr>
+	        <tr height="50">
 	            <th>팀 인원</th>
 	            <td>
-	                <input type="number" name="teamMember" max="12" min="2">
+	                <input type="number" name="teamMember" max="12" min="2">명
 	            </td>
 	            <td></td>
 	        </tr>
 	        <tr>
 	            <th>팀 소개</th>
 	            <td>
-	                <textarea name="teamIntro" cols="30" rows="10" style="resize:none"></textarea>
+	                <textarea name="teamIntro" style="resize:none"></textarea>
 	            </td>
 	            <td></td>
 	        </tr>
-	        <tr>
+	        <tr height="50">
 	            <th>주 활동지역</th>
 	            <td>
 	                <select name="teamArea">
@@ -48,11 +63,12 @@
 	            </td>
 	            <td></td>
 	        </tr>
-	        <tr>
+	        <tr height="50">
 	            <th>주 활동시간</th>
 	            <td>
 	                <select name="teamTime">
-	                    <option value=""></option>
+	                    <option value="weekday">평일</option>
+	                    <option value="weekend">주말</option>
 	                </select>
 	            </td>
 	            <td></td>
@@ -67,13 +83,13 @@
 	            </td>
 	        </tr>
 	        <!-- 이미 파워 등록을 했는지 확인이 필요 -->
-	        <tr>
+	        <tr height="50">
 	            <th>뱃지 등록</th>
 	            <td colspan="2">
 	                *팀 페이지에서 뱃지 구매 시 사용 가능합니다 <input type="text">
 	            </td>
 	        </tr>
-	        <tr>
+	        <tr height="50">
 	            <th>파워등록</th>
 	            <td colspan="2">
 	                <input type="checkbox" name="powerDuration"> 파워 등록 시 10P가 소요됩니다. 
