@@ -63,7 +63,7 @@
 				</tr>
 			</table>
 			<button>팀장/부팀장 수정</button>
-			<table calss="applyTable">
+			<table class="applyTable">
 				<tr>
 					<th>닉네임</th>
 					<th>신청일시</th>
@@ -79,9 +79,6 @@
 				</tr>
 			</table>
 		</div>
-
-
-		
 		
 	</div>
 
