@@ -88,7 +88,7 @@
 
             <div class="container">
 
-                <table class="table notice-table">
+                <table class="table">
                     <thead>
                         <tr>
                             <td colspan="2" align="right">글번호 15  |  조회수 10  |  작성일시 2022-05-03</td>
