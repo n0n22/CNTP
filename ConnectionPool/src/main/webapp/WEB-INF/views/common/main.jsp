@@ -8,10 +8,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-	나 인덱스
+
+	<jsp:include page="menubar_nosearch.jsp"/>
 	
-	<jsp:forward page="WEB-INF/views/common/main.jsp"/>
+	
+	<div class="outer" style="height:550px">
+	
+	</div>
 	
 	
+	<jsp:include page="footer.jsp"/>
+
 </body>
 </html>
