@@ -8,16 +8,19 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	
+	
+
 	<div class="outer">
 	
 		<h4 align="center">팀을 생성하여 팀원들을 모집하고 배틀에 참가해보세요!</h4>
 	
-	    <br><br>
 	
 	    <h3 align="center">팀 만들기 신청</h3>
-	    <br>
-	
-	    <table align="center">
+	    
+		<!-- th태그들 안은 당연하게 중앙 정렬이라 후에 왼쪽 정렬 바꿔주자 -->
+	    <table align="center" border="1">
 	        <tr>
 	            <th>팀 이름<br>*팀 이름은 추후 수정 불가</th>
 	            <td>
