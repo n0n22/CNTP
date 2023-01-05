@@ -9,7 +9,7 @@
 </head>
 
 	<div class="outer">
-		<h3>소모임 모집</h3><br>
+		<h3>소모임 모집글 수정하기</h3><br>
 
 		<form action="#">
 			<table class="groupEnrollTable">
