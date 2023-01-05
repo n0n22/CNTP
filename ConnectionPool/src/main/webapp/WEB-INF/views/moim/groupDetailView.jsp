@@ -16,7 +16,7 @@
                 </tr>
                 <tr>
                     <th>
-                        <image></image>
+                        <img src=""/>
                         사진이 들어갈 것이에요
                     </th>
                 </tr>

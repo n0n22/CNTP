@@ -25,7 +25,7 @@
         width: 49.5%;
         float: left;
         box-sizing: border-box;
-        background-color: RGB(28,154,206);
+        border: 1px solid rgb(28,154,206);
         border-radius: 30px;
     }
     div.right {
@@ -33,7 +33,7 @@
         width: 49.5%;
         float: right;
         box-sizing: border-box;
-        background-color: RGB(28,154,206);
+        border: 1px solid rgb(28,154,206);
         border-radius: 30px;
     }
   
