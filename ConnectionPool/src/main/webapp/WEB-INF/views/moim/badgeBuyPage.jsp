@@ -6,10 +6,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	.myPointInfo{
+		background-color: antiquewhite;
+		border-radius: 5px;
+		width: 600px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+</style>
 </head>
 <body>
-	<div class="outer">
-		<h3>뱃지 구매</h3>
+	<div class="outer" align="center">
+		<h3 align="left">뱃지 구매</h3>
+		<hr>
+		<br>
+		<p>뱃지로 우리 팀의 정체성을 표현해보세요</p>
+		<br>
+
 		<div class="myPointInfo">
 			<p>현재 내 포인트 : </p>
 			<p>소요 포인트 : </p>
@@ -19,7 +33,7 @@
 			* 팀 삭제 및 소멸 시 뱃지 사용 권한 또한 삭제되며 복구 불가합니다.
 		</p>
 		
-		<br><br>
+		<br>
 		
 		<div align="center">
 	        <input type="checkbox"> 위 내용을 숙지하고 동의합니다. <br><br>
