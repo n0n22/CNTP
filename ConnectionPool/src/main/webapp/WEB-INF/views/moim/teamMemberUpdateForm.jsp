@@ -9,6 +9,8 @@
 </head>
 <body>
 
+	<jsp:include page="../common/menubar_nosearch.jsp"></jsp:include>
+	
 	<div class="outer" align="center">
 		<h3>팀 멤버 권한 수정하기</h3>
 		<hr>
@@ -31,7 +33,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>홍길동</td>
+					<td>일길동</td>
 					<td>2020-01-01</td>
 					<td>
 						팀장<input type="radio" name="L">
@@ -39,7 +41,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>홍길동</td>
+					<td>이길동</td>
 					<td>2020-01-01</td>
 					<td>
 						팀장<input type="radio" name="L">
@@ -47,7 +49,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>홍길동</td>
+					<td>삼길동</td>
 					<td>2020-01-01</td>
 					<td>
 						팀장<input type="radio" name="L">
@@ -55,7 +57,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>홍길동</td>
+					<td>사길동</td>
 					<td>2020-01-01</td>
 					<td>
 						팀장<input type="radio" name="L">
@@ -63,7 +65,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>홍길동</td>
+					<td>오길동</td>
 					<td>2020-01-01</td>
 					<td>
 						팀장<input type="radio" name="L">
@@ -81,7 +83,49 @@
 	</div>
 
 	<script>
-		
+		$(function(){
+			$('input[name=L]').on('change', function(){
+				
+				var $name = $(this).parent().parent().children().eq(0).text();
+				
+				$('input[name=S]').each(function(index, option){
+
+					//window.alert($(this).parent().parent().children().eq(0).text());
+
+					if($(this).parent().parent().children().eq(0).text() == $name){
+						console.log($(this));
+						$(this).attr('disabled' ,'true');
+					}
+					
+					 
+					if($(this).parent().parent().children().eq(0).text() != $name){
+						console.log($(this));
+						$(this).removeAttr('disabled');
+					}
+				})
+			});
+
+			$('input[name=S]').on('change', function(){
+
+				var $name = $(this).parent().parent().children().eq(0).text();
+				
+				$('input[name=L]').each(function(index, option){
+
+					//window.alert($(this).parent().parent().children().eq(0).text());
+
+					if($(this).parent().parent().children().eq(0).text() == $name){
+						console.log($(this));
+						$(this).attr('disabled' ,'true');
+					}
+					
+					 
+					if($(this).parent().parent().children().eq(0).text() != $name){
+						console.log($(this));
+						$(this).removeAttr('disabled');
+					}
+				})
+			});
+		})
 	</script>
 
 

@@ -24,7 +24,11 @@
 
 </style>
 </head>
+
+
 <body>
+
+	
 	<div class="outer">
 	
 	    <h3 align="center">팀 정보 수정하기</h3>
