@@ -7,7 +7,28 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	
+	.TE_point_area{
+		
+		background-color: antiquewhite;
+		border-radius: 5px;
+		width: 600px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+	.teamEnrollFormTable input[type=text], select, textarea{
+		width: 95%;
+		height: 100%;
+		border: 0px;
+		padding: 0px;
+	}
+
+	.teamEnrollFormTable td{
+		padding:0px;
+	}
+
+	.teamEnrollFormTable textarea{
+		height:100px;
+	}
 
 </style>
 </head>
@@ -16,7 +37,7 @@
 	
 	
 
-	<div class="outer">
+	<div class="outer" align="center">
 	
 		<h4 align="center">팀을 생성하여 팀원들을 모집하고 배틀에 참가해보세요!</h4>
 	
@@ -25,14 +46,14 @@
 	    
 		<!-- th태그들 안은 당연하게 중앙 정렬이라 후에 왼쪽 정렬 바꿔주자 -->
 	    <table align="center" border="1" class="teamEnrollFormTable">
-	        <tr>
+	        <tr height="50">
 	            <th>팀 이름<br>*팀 이름은 추후 수정 불가</th>
 	            <td>
 	                <input type="text" name="teamName">
 	            </td>
 	            <td></td>
 	        </tr>
-	        <tr>
+	        <tr height="50">
 	            <th>팀 인원</th>
 	            <td>
 	                <input type="number" name="teamMember" max="12" min="2">
@@ -46,7 +67,7 @@
 	            </td>
 	            <td></td>
 	        </tr>
-	        <tr>
+	        <tr height="50">
 	            <th>주 활동지역</th>
 	            <td>
 	                <select name="teamArea">
@@ -57,16 +78,17 @@
 	            </td>
 	            <td></td>
 	        </tr>
-	        <tr>
+	        <tr height="50">
 	            <th>주 활동시간</th>
 	            <td>
-	                <select name="teamTime">
-	                    <option value=""></option>
+					<select name="teamTime">
+	                    <option value="weekday">평일</option>
+	                    <option value="weekend">주말</option>
 	                </select>
 	            </td>
 	            <td></td>
 	        </tr>
-	        <tr>
+	        <tr height="50">
 	            <th>우리팀 키워드</th>
 	            <td colspan="2">
 	                <input type="radio" name="keyword" value="battle"> 배틀
@@ -75,7 +97,7 @@
 	                <input type="radio" name="keyword" value="online"> 온라인모임만
 	            </td>
 	        </tr>
-	        <tr>
+	        <tr height="50">
 	            <th>파워등록</th>
 	            <td colspan="2">
 	                <input type="checkbox" name="powerDuration"> 파워 등록 시 10P가 소요됩니다. 
@@ -101,7 +123,7 @@
 	        </p>
 	    </div>
 	
-	    <br><br><br>
+	    <br>
 	
 	    <div align="center">
 	        <input type="checkbox"> 위 내용을 숙지하고 동의합니다. <br><br>
