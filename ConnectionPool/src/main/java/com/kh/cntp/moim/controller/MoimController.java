@@ -9,7 +9,7 @@ public class MoimController {
 	// moimController 매핑값은 .mo로 통일!
 	@RequestMapping("teamEnrollForm.mo")
 	public String teamEnrollFrom() {
-		return "moim/badgeBuyPage";
+		return "moim/groupEnrollForm";
 		
 		
 		/*

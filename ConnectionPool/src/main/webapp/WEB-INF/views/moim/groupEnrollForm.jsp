@@ -5,14 +5,35 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+
+<style>
+	.groupEnrollTable input[type=text], select, textarea{
+		width: 95%;
+		height: 100%;
+		border: 0px;
+		padding: 0px;
+	}
+
+	.groupEnrollTable td{
+		padding:0px;
+	}
+
+	.groupEnrollTable textarea{
+		height:100px;
+	}
+
+</style>
+
+<title>소모임 모집</title>
 </head>
 
 	<div class="outer">
-		<h3>소모임 모집</h3><br>
+		<h3>소모임 모집</h3>
+		<hr>
+		<br>
 
 		<form action="#">
-			<table class="groupEnrollTable">
+			<table class="groupEnrollTable" border="1">
 				<tr>
 					<th>제목</th>
 					<td><input type="text" ></td>
