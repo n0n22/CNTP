@@ -85,11 +85,11 @@
 				</tr>
 				<tr>
 					<th>모집인원</th>
-					<td><input type="number"></td>
+					<td><input type="number" min="2" max="12">명</td>
 				</tr>
 				<tr>
 					<th>일시</th>
-					<td><input type="date"><input type="date"></td>
+					<td><input type="date"><input type="time">-<input type="time"></td>
 				</tr>
 			</table>
 			<br><br>

@@ -17,7 +17,7 @@ public class MoimController {
 		<jsp:foward page="teamPage.jsp"></jsp:foward>
 		팀페이지(정보) 수정
 		<!--<jsp:foward page="teamUpdateForm.jsp"/>-->
-		팀가입(리스트)
+		팀가입(리스트
 		<!--<jsp:foward page="teamListView.jsp"/>-->
 		팀원수정
 		<!--<jsp:foward page="teamMemberUpdate.jsp"/>-->
