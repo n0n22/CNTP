@@ -10,18 +10,12 @@
 
 <style>
 
-	div {
-		border: solid 1px red;
-	}
 
 	.report-outer {
-		
 		margin-left : 150px;
 		height : 90%;
 
 		padding: 20px;
-		
-
 	}
 
 	.report-btn-area {
@@ -30,11 +24,13 @@
 
 
 	.report-table-area {
-
 		padding: 20px;
-
 	}
 
+	
+	.page-area {
+		padding: 20px;
+	}
 	
 
 
@@ -58,8 +54,8 @@
     
         
         <div class="report-btn-area">
-            <a href="#" class="btn btn-secondary">신고글 목록</a>
-            <a href="#" class="btn btn-secondary">패널티 대상 목록</a>
+            <a href="reportList.ad" class="btn btn-secondary">신고글 목록</a>
+            <a href="penaltyList.ad" class="btn btn-secondary">패널티 대상 목록</a>
 
             
         </div>
@@ -106,7 +102,15 @@
                 </table>
                 <a href="#" class="btn btn-danger">처리</a>
             </div>
-
+			<div class="page-area">
+				<ul class="pagination justify-content-center">
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">&lt;</a></li>
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
+            	</ul>
+			</div>
 
         </div>
 

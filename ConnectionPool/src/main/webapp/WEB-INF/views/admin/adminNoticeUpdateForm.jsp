@@ -16,16 +16,9 @@
 
 
     <style>
-        
-        div {
-            box-sizing: border-box;
-            border: solid 1px red;
-        }
-
 
         .admin-outer {
             margin-left: 150px;
-            width: 1000px;
             height: 100%;
         }
 

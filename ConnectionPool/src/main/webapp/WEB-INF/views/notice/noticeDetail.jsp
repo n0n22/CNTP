@@ -7,25 +7,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
 
 
     <style>
 
-   
-        div {
-            box-sizing: border-box;
-            border: solid 1px red;
-        }
-
-
         .admin-outer {
             margin-left: 150px;
-            width: 1000px;
             height: 100%;
         }
 
@@ -73,7 +60,7 @@
 </head>
 <body>
 
-
+	<jsp:include page="../common/menubar_nosearch.jsp" />
 
 
     <div class="admin-outer">
@@ -122,23 +109,10 @@
                 <button class="btn btn-sm btn-warning">수정</button>
             </div>
             <div class="notice-list">
-                <button class="btn btn-sm btn-secondary">목록으로</button>
+                <button class="btn btn-sm btn-secondary" onclick="history.back();">목록으로</button>
             </div>
 
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -147,7 +121,7 @@
 
 
 
-
+	<jsp:include page="../common/footer.jsp" />
 
 
 

@@ -7,19 +7,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
     <style>
 
         * {
             box-sizing: border-box;
-        }
-
-        div {
-            border: 1px red solid;
         }
 
         .admin-menubar-outer {
@@ -64,10 +55,9 @@
     <div class="admin-menubar-outer">
 
         <div class="button-area">
-            <a href="#" class="admin-menu-button">회원관리</a>
-            <a href="#" class="admin-menu-button">신고관리</a>
-            <a href="#" class="admin-menu-button">배너관리</a>
-
+            <a href="memberList.ad" class="admin-menu-button">회원관리</a>
+            <a href="reportList.ad" class="admin-menu-button">신고관리</a>
+            <a href="bannerList.ad" class="admin-menu-button">배너관리</a>
         </div>
         
 

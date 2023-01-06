@@ -15,12 +15,6 @@
 
     <style>
         
-        div {
-            box-sizing: border-box;
-            border: solid 1px red;
-        }
-
-
         .admin-outer {
             margin-left: 150px;
             height: 100%;
@@ -63,28 +57,30 @@
             <table class="table table-bordered">
                 <tbody>
                     <tr>
-                        <th>번호</th>
-                        <td>5</td>
-                        <th>신고사유</th>
-                        <td>욕설/비방</td>
-                        <th>신고일</th>
-                        <td>2022-01-03</td>
+                        <th width="20%">번호</th>
+                        <td width="30%">5</td>
+                        <th width="20%">신고사유</th>
+                        <td width="30%">욕설/비방</td>
                     </tr>
                     <tr>
                         <th>신고대상자</th>
                         <td>user01</td>
                         <th>신고자</th>
                         <td>user05</td>
+                    </tr>
+                    <tr>
                         <th>대상글번호</th>
                         <td>105</td>
+                        <th>신고일</th>
+                        <td>2022-01-03</td>
                     </tr>
                     <tr>
-                        <th colspan="2">대상 유형</th>
-                        <td colspan="4" align="left">자유게시판 댓글</td>
+                        <th>대상 유형</th>
+                        <td colspan="5" align="left">자유게시판 댓글</td>
                     </tr>
                     <tr>
-                        <th colspan="2">대상 내용</th>
-                        <td colspan="4">
+                        <th>대상 내용</th>
+                        <td colspan="5">
                             <p align="left">
                                 ㅎㅎㅎㅎ흏ㅎㅎㅎㅎ
                             </p>
@@ -103,8 +99,6 @@
         <div class="result-btn-area">
             <a href="" class="btn btn-warning">신고철회</a>
             <a href="" class="btn btn-danger">신고확정</a>
-
-
         </div>
 
 
