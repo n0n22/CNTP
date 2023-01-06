@@ -98,6 +98,22 @@
                             <td>탈퇴</td>
                             <td>2022-10-05</td>
                         </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>3</td>
+                            <td>user02</td>
+                            <td>10</td>
+                            <td>탈퇴</td>
+                            <td>2022-10-05</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>3</td>
+                            <td>user02</td>
+                            <td>10</td>
+                            <td>탈퇴</td>
+                            <td>2022-10-05</td>
+                        </tr>
                     </tbody>
                 </table>
                 <a href="#" class="btn btn-danger">처리</a>
@@ -114,18 +130,51 @@
 
         </div>
 
-
-
-    
-    
-    
-        
         
     </div>
         
         
     <jsp:include page="../common/footer.jsp" />
     
+
+	<script>
+	
+	
+		$(function() {
+			
+			
+			// 전체 checkbox 클릭 시 체크 + 해제
+			$('.report-table-area thead').on('click', 'input[type=checkbox]', function() {
+
+				if($(this).is(':checked')) {
+					$('.report-table-area tbody input[type=checkbox]').each(function() {
+						$(this).attr('checked', true);
+					});
+				}
+				else {
+					$('.report-table-area tbody input[type=checkbox]').each(function() {
+						$(this).attr('checked', false);
+					});
+				}
+			});	
+		
+			// 일부 checkbox 클릭 시 전체 체크 해제
+
+			
+			
+			
+			
+		});
+	
+	
+	
+	
+	
+	
+	</script>
+
+
+
 
 
 
