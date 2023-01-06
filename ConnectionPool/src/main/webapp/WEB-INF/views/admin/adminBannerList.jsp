@@ -86,7 +86,7 @@
         <div class="page-area">
             
             <div class="banner-btn">
-                <a href="" class="btn btn-primary">등록</a>
+                <a href="bannerEnrollForm.ad" class="btn btn-primary">등록</a>
             </div>
             <div class="banner-page">
                 <ul class="pagination justify-content-center">

@@ -192,7 +192,7 @@
 	            <br>
 	
 	        	<button>채팅입장</button>
-	        	<button>수정하기</button>
+	        	<a href="groupUpdateForm.mo">수정하기</a>
 	        </div>
 		</div>
     </div>

@@ -43,7 +43,7 @@
 				</tr>
 				<tr>
 					<th>썸네일</th>
-					<td><input type="text">이거 파일 어케 하더라 기억이 안나</td>
+					<td><input type="text"></td>
 				</tr>
 				<tr>
 					<th>내용</th>
@@ -55,9 +55,15 @@
 					<th>지역</th>
 					<td>
 						<select name="groupArea">
-							<option value="S">서울</option>
-							<option value="G">경기</option>
-							<option value="I">인천</option>
+							<option value="Seoul">서울특별시</option>
+							<option value="Gyeonggi">경기도</option>
+							<option value="Gangwon">강원도</option>
+							<option value="Chungbuk">충청북도</option>
+							<option value="Chungnam">충청남도</option>
+							<option value="Jeonabuk">전라북도</option>
+							<option value="Jeonnam">전라남도</option>
+							<option value="Gyeongbuk">경상북도</option>
+							<option value="Gyeongnam">경상남도</option>
 						</select>
 					</td>
 				</tr>
