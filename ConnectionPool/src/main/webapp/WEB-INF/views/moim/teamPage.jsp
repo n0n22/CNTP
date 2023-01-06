@@ -41,7 +41,17 @@
 
 	<div class="outer" align="center">
 
-		<img width="80%" height="300px" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbhd1qW%2FbtqUnLpjyqL%2FsRwVDDHp0keOfVq1nKDb11%2Fimg.jpg">
+		<div>
+			<div class="badge-area" style="width:20%; float:left">
+				<!-- 팀 뱃지 -->
+
+			</div>
+
+			<div class="img-area" style="width:80%; float:left">
+				<!-- 팀 이미지 -->
+				<img width="80%" height="300px" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbhd1qW%2FbtqUnLpjyqL%2FsRwVDDHp0keOfVq1nKDb11%2Fimg.jpg">
+			</div>
+		</div>
 		
 		<br><br>
 
@@ -110,6 +120,7 @@
 				<div class="memberUpdate-area" align="right">
 					<a href="teamMemberUpdateForm.mo">팀장/부팀장 수정</a>
 					<!-- <a href="teamMemberUpdateForm.mo?teamNo=${ teamNo }">팀장/부팀장 수정</a> -->
+					<a href="chattingRoom.mo">팀 채팅방 입장하기</a>
 				</div>
 			</div>
 
