@@ -49,8 +49,11 @@ public class MoimController {
 	}
 	
 	@RequestMapping("teamEnrollFrom.mo")
-	public String teamEnrollFrom() {
-		return "moim/teamEnrollForm";
+	public ModelAndView teamEnrollFrom(ModelAndView mv) {
+		
+		mv.setViewName("moim/teamEnrollForm");
+		
+		return mv;
 	}
 	
 	@RequestMapping("teamUpdateForm.mo")
@@ -67,6 +70,15 @@ public class MoimController {
 		// teamNo 사용해서 teamMember 정보를 가지고서 updateForm으로 이동
 		
 		mv.setViewName("moim/teamMemberUpdateForm");
+		
+		return mv;
+	}
+	
+	@RequestMapping("chattingRoom.mo")
+	public ModelAndView cahttingRoom(ModelAndView mv/*, int teamNo*/) {
+		// teamNo 이용해서 채팅방 보내주기~
+		
+		mv.setViewName("moim/chatView");
 		
 		return mv;
 	}
