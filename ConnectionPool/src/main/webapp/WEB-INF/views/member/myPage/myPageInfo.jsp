@@ -261,23 +261,24 @@
                     <input type="hidden" name="userNo" value="\">
                     
                     <div>
-                        <div class="subText">이름</div>
-                        <div><input type="text" name="userName" id="userName2" value="" maxlength="5" required readonly></div>
-                        <label class="checkResult" id="nameCheck">&nbsp;</label>
-                    </div>
-
-                    <div>
                         <div class="subText">아이디</div>
                         <div><input type="text" id="userId" name="userId" value="" maxlength="12" required readonly></div>
                         <!-- <td><button type="button" id="idCheck-btn">중복확인</button></td> -->
                         <label class="checkResult" id="idCheck">&nbsp;</label>
                     </div>
+                                     
+                    <div>
+                        <div class="subText">이름</div>
+                        <div><input type="text" name="userName" id="userName2" value="" maxlength="5" required readonly></div>
+                        <label class="checkResult" id="nameCheck">&nbsp;</label>
+                    </div>
+
 
                     <div>  
                         <!-- 닉네임 -->
                         <!-- ajax로 중복확인할것-->
                         <div class="subText">닉네임</div>
-                        <div><input type="text" id="userNickName" name="" maxlength="12" required placeholder=""></div>
+                        <div><input type="text" id="userNickName" name="" maxlength="12" value="커풀" required placeholder=""></div>
                         <label class="checkResult" id="nickNameCheck">&nbsp;</label>
                     </div>
                   
@@ -288,19 +289,8 @@
                         <!-- <div style="display: inline-block;"><input type="text" name="phone" maxlength="13" oninput="this.value=this.value.replace(/^01[016789]-\d{3,4}-\d{4}$/g,'');" placeholder="-를 포함해서 입력해주세요" style="width: 223px;"></div> -->
                         <div><label>&nbsp;</label></div>
                     </div>
-
-                    <div>
-                        <div class="subText">비밀번호</div>
-                        <div><input type="password" name="userPwd" id="userPwd" maxlength="15" placeholder="비밀번호 수정시 입력해주세요"></div>
-                        <label class="checkResult" id="pwdCheck">&nbsp;</label>
-                    </div>
-
-                    <div>
-                        <div class="subText">비밀번호 확인</div>
-                        <div><input type="password" id="userPwd2" maxlength="15"  placeholder=""></div>
-                        <label class="checkResult" id="pwdCheck2">&nbsp;</label>
-                    </div>
-
+					
+					
                     <div>
                         <div class="subText">이메일</div>
                         <div>
@@ -316,6 +306,13 @@
                                 <option value="gmail.com" >gmail.com</option>
                             </select>
                         </div>
+                        <div><label>&nbsp;</label></div>
+                    </div>
+                    
+                    <div>  
+                        <div class="subText">생년월일</div>
+                        <div><input type="text" id="birthdate" name="" maxlength="12" value="2009-09-09" required readonly></div>
+                        <div><label>&nbsp;</label></div>
                     </div>
 
                     <div>
@@ -337,15 +334,32 @@
                         </div>
                         <div><label>&nbsp;</label></div>
                     </div>
+					<br><br>
+					<div>
+						<div class="subText">개인정보 수정을 위해서는 본인 확인이 필요합니다.</div>
+						<div class="subText">비밀번호를 다시 한번 입력해주세요.</div>
+					</div>
+					<br><br>
+                    <div>
+                        <div class="subText">비밀번호</div>
+                        <div><input type="password" name="userPwd" id="userPwd" maxlength="15" placeholder=""></div>
+                        <label class="checkResult" id="pwdCheck">&nbsp;</label>
+                    </div>
 
+                    <div>
+                        <div class="subText">비밀번호 확인</div>
+                        <div><input type="password" id="userPwd2" maxlength="15"  placeholder=""></div>
+                        <label class="checkResult" id="pwdCheck2">&nbsp;</label>
+                    </div>
 
                     <div align="center">
                         <div><button type="submit" id="info-btn" style="margin-top: 0px;">수정하기</button></div>
                     </div>
                 </form>
-
+				<br><br>
                 <div><hr></div>
                 <div id="delete-btn"><a href="deleteForm.me">탈퇴하기</a></div>
+                <div id="delete-btn"><a href="">비밀번호 변경 </a></div>
             </div>
         </div>
 
