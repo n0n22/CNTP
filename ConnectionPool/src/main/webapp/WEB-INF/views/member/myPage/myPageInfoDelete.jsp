@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>술렁술렁 마이페이지</title>
+<title>마이페이지 회원탈퇴</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <style>
     @font-face {
         font-family: 'Pretendard-Regular';
@@ -177,13 +178,14 @@
     
 
 </style>
+
 </head>
 <body>
 
     <div class="outer">
         <div class="top-bar">
             <div class="inline-block">
-                <div> id="name-area" style="cursor: default;"><span id="userName">커풀</span> 님
+                <div id="name-area" style="cursor: default;"><span id="userName">커풀</span> 님
                     <br>🤔<span>무소속</span>
                 </div>
                 <div>
@@ -191,14 +193,15 @@
                     <div id="ingido-text">인기도&nbsp;<span id="ingido">13</span></div>
                 </div>
             </div>
-            <div>
+             <div>
                 <ul id="top-ul">
-                    <li><a href="">구독관리</a></li>
-                    <li><a href="">주문내역</a></li>
-                    <li><a href="">배송지</a></li>
-                    <li><a id="click" href="">회원정보</a></li>
-                    <li><a href="">문의내역</a></li>
-                    <li><a href="">게시글</a></li>
+                    <li><a id="click" href="myPageInfo.me">회원정보</a></li>
+                    <li><a href="">출석체크</a></li>
+                    <li><a href="">작성글 보기</a></li>
+                    <li><a href="">수영일기</a></li>
+                    <li><a href="">나의팀 보기</a></li>
+                    <li><a href="">소모임 보기</a></li>
+                    <li><a href="">포인트 조회</a></li>
                 </ul>
             </div>
         </div>
@@ -210,24 +213,24 @@
                     <div class="del-title">[회원 탈퇴 유의사항]</div>
                     <pre class="del-content">
                             [1] 회원 탈퇴 시 삭제된 데이터에 대해 복구가 불가능하며, 개인정보가 필요한 술렁술렁의 모든 웹서비스 이용이 불가합니다. <br>
-                            [2] 구독을 이용하고 계신 경우, 회원 탈퇴 진행 시 구독도 함께 취소됩니다. <br>
+                            [2] 을 이용하고 계신 경우, 회원 탈퇴 진행 시 구독도 함께 취소됩니다. <br>
                             [3] 잔여 포인트, 잔여 쿠폰, 회원 등급 등의 정보는 모두 삭제되며 환불되지 않습니다. <br>
-                            [4] 회원 탈퇴 후 모든 술렁술렁 웹서비스 내에서의 계약 또는 청약 철회 등에 관한 기록은
+                            [4] 회원 탈퇴 후 모든 ConnectionPool 웹서비스 내에서의 관한 기록은
                                   전자상거래 등에서의 소비자 보호에 관한 법률에 따라 5년간 보관되며, 
                                   이를 위한 개인정보는 법률에 따른 보유 목적 외에 다른 목적으로는 이용되지 않습니다. <br>
-                            [5] 회원 탈퇴 후 술렁술렁 서비스에 입력하신 상품문의 및 후기(사진 포함)는 삭제되지 않으며,
+                            [5] 회원 탈퇴 후 ConnectionPool 서비스에 입력하신 게시글 및 수영일기는 삭제되지 않으며,
                                   회원 정보 삭제로 인해 작성자 본인을 확인할 수 없어 편집 및 삭제처리가 원천적으로 불가능합니다. 
-                                  상품문의 및 후기, 댓글 삭제를 원하시는 경우에는 먼저 해당 게시물을 삭제하신 후 탈퇴를 신청하시기 바랍니다.
+                                  게시글 및 수영일기, 댓글 삭제를 원하시는 경우에는 먼저 해당 게시물을 삭제하신 후 탈퇴를 신청하시기 바랍니다.
                     </pre>
 
                     <div class="del-title" style="margin-top: 70px;">[회원 탈퇴 사유]</div>
-                    <form action="<%= contextPath %>/delete.me" method="post">
-                        <input type="hidden" name="userNo" value="<%= loginUser.getUserNo() %>">
+                    <form action="delete.me" method="post">
+                        <input type="hidden" name="userNo" value="">
                         <div class="del-select" align="center">
                             <select name="" id="">
                                 <option value="" selected disabled hidden>사유를 선택해주세요.</option>
-                                <option value="">쇼핑물 상품이 다양하지 않아서</option>
-                                <option value="">고객 응대가 불만족스러워서</option>
+                                <option value="">맘에안듬</option>
+                                <option value="">할게없음</option>
                                 <option value="">기타</option>
                             </select><br>
                             <textarea name="" id="del-textarea" rows="5" maxlength="200" placeholder="더욱 나은 서비스를 위하여 소중한 의견 부탁드립니다. (200자)"></textarea>
@@ -239,7 +242,7 @@
 
                             <script>
                                 $('#cancle-btn').click(function(){
-                                    location.href = "<%= contextPath %>/myPageInfo.me";
+                                    location.href = "myPageInfo.me";
                                 })
 
                                 function abledBtn() {

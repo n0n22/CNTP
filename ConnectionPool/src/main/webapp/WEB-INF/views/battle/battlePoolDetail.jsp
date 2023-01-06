@@ -166,7 +166,7 @@
                 </div>
             </div>
             <div class="right">
-                <h3>배틀 장소 정보</h3>
+                <h3>배틀 경기장</h3>
                 <div>
                     <table>
                         <tr>

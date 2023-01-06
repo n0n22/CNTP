@@ -15,7 +15,7 @@
 		padding-top: 5px;
 		padding-bottom: 5px;
 	}
-	
+
 	.teamEnrollFormTable input[type=text], select, textarea{
 		width: 95%;
 		height: 100%;
@@ -35,6 +35,7 @@
 </head>
 <body>
 
+	<!-- 세션 로그인 유저에서 포인트를 뽑아 -->
 	
 	<jsp:include page="../common/menubar_nosearch.jsp"/>
 	
@@ -75,9 +76,15 @@
 	            <th>주 활동지역</th>
 	            <td>
 	                <select name="teamArea">
-	                    <option value="S">서울</option>
-	                    <option value="G">경기</option>
-	                    <option value="I">인천</option>
+	                    <option value="Seoul">서울특별시</option>
+							<option value="Gyeonggi">경기도</option>
+							<option value="Gangwon">강원도</option>
+							<option value="Chungbuk">충청북도</option>
+							<option value="Chungnam">충청남도</option>
+							<option value="Jeonabuk">전라북도</option>
+							<option value="Jeonnam">전라남도</option>
+							<option value="Gyeongbuk">경상북도</option>
+							<option value="Gyeongnam">경상남도</option>
 	                </select>
 	            </td>
 	            <td></td>
@@ -104,7 +111,7 @@
 	        <tr height="50">
 	            <th>파워등록</th>
 	            <td colspan="2">
-	                <input type="checkbox" name="powerDuration"> 파워 등록 시 10P가 소요됩니다. 
+	                <input type="checkbox" class="powerDuration" name="powerDuration"> 파워 등록 시 10P가 소요됩니다. 
 	            </td>
 	        </tr>
 	
@@ -112,7 +119,7 @@
 	    <br><br>
 	
 	    <div class="TE_point_area" align="center">
-	        <p>소요 포인트 : 50</p>
+	        <p class="cost">소요 포인트 : 50</p>
 	        <!-- checkbox 선택됐을 경우 소요포인트를 변경 -->
 	        <p>현재 내 포인트 : </p>
 	    </div>
@@ -139,5 +146,19 @@
 	<br><br>
 	
 	<jsp:include page="../common/footer.jsp"/>
+
+	<script>
+		$(function(){
+			$('.powerDuration').on('change', function(){
+
+				if($('.powerDuration').is(':checked')) {
+					$('.cost').html('소요 포인트 : 60');
+				}
+				else{
+					$('.cost').html('소요 포인트 : 50');
+				}
+			})
+		})
+	</script>
 </body>
 </html>

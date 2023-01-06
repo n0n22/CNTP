@@ -26,443 +26,288 @@
 </style>
 </head>
 <body>
+    
+    <jsp:include page="../common/menubar_nosearch.jsp"/>
+	
+	<br>
+
     <div class="outer" align="center">
         <div class="group-wrap">
             <h3 align="left">소그룹 참여</h3>
             <hr>
             <br>
 
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
+            <div class="groupCondition-area">
+                <table border="1">
+                    <tr>
+                        <th width="200">지역</th>
+                        <td width="500">
+                            <select name="groupArea">
+                                <option value="Seoul">서울특별시</option>
+                                <option value="Gyeonggi">경기도</option>
+                                <option value="Gangwon">강원도</option>
+                                <option value="Chungbuk">충청북도</option>
+                                <option value="Chungnam">충청남도</option>
+                                <option value="Jeonabuk">전라북도</option>
+                                <option value="Jeonnam">전라남도</option>
+                                <option value="Gyeongbuk">경상북도</option>
+                                <option value="Gyeongnam">경상남도</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>성별</th>
+                        <td>
+                            <input type="radio" name="gender" value="A"> 무관
+                            <input type="radio" name="gender" value="M"> 남
+                            <input type="radio" name="gender" value="F"> 여
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>레벨</th>
+                        <td>
+                            <input type="radio" name="level" value="A"> 무관
+                            <input type="radio" name="level" value="B"> 초급
+                            <input type="radio" name="level" value="M"> 중급
+                            <input type="radio" name="level" value="S"> 고급
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상태</th>
+                        <td>
+                            <input type="checkbox"> 모집중만 보기
+                        </td>
+                    </tr>
+                </table>
 
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
-
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
-
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
+                <div class="selectBtn" align="right">
+                    <button>검색하기</button>
                 </div>
             </div>
 
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
+            <div class="grouptList-area">
 
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
+                <!--이게 하나의 게시물-->
+                <div class="group" align="center">
+    
+                    <div class="thum">
+                        <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
+                    </div>
+    
+                    <div class="group-info">
+                        <table>
+                            <tr>
+                                <td width="150">#지역 제주도</td>
+                                <td width="150">#모집인원 1/10</td>
+                            </tr>
+                            <tr>
+                                <td>#여자만</td>
+                                <td>#중수레벨</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"> #2023-01-10 15:00</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
+    
+                <!--이게 하나의 게시물-->
+                <div class="group" align="center">
+    
+                    <div class="thum">
+                        <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
+                    </div>
+    
+                    <div class="group-info">
+                        <table>
+                            <tr>
+                                <td width="150">#지역 제주도</td>
+                                <td width="150">#모집인원 1/10</td>
+                            </tr>
+                            <tr>
+                                <td>#여자만</td>
+                                <td>#중수레벨</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"> #2023-01-10 15:00</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
+    
+                <!--이게 하나의 게시물-->
+                <div class="group" align="center">
+    
+                    <div class="thum">
+                        <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
+                    </div>
+    
+                    <div class="group-info">
+                        <table>
+                            <tr>
+                                <td width="150">#지역 제주도</td>
+                                <td width="150">#모집인원 1/10</td>
+                            </tr>
+                            <tr>
+                                <td>#여자만</td>
+                                <td>#중수레벨</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"> #2023-01-10 15:00</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+    
+                <!--이게 하나의 게시물-->
+                <div class="group" align="center">
+    
+                    <div class="thum">
+                        <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
+                    </div>
+    
+                    <div class="group-info">
+                        <table>
+                            <tr>
+                                <td width="150">#지역 제주도</td>
+                                <td width="150">#모집인원 1/10</td>
+                            </tr>
+                            <tr>
+                                <td>#여자만</td>
+                                <td>#중수레벨</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"> #2023-01-10 15:00</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+    
+                <!--이게 하나의 게시물-->
+                <div class="group" align="center">
+    
+                    <div class="thum">
+                        <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
+                    </div>
+    
+                    <div class="group-info">
+                        <table>
+                            <tr>
+                                <td width="150">#지역 제주도</td>
+                                <td width="150">#모집인원 1/10</td>
+                            </tr>
+                            <tr>
+                                <td>#여자만</td>
+                                <td>#중수레벨</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"> #2023-01-10 15:00</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+    
+                <!--이게 하나의 게시물-->
+                <div class="group" align="center">
+    
+                    <div class="thum">
+                        <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
+                    </div>
+    
+                    <div class="group-info">
+                        <table>
+                            <tr>
+                                <td width="150">#지역 제주도</td>
+                                <td width="150">#모집인원 1/10</td>
+                            </tr>
+                            <tr>
+                                <td>#여자만</td>
+                                <td>#중수레벨</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"> #2023-01-10 15:00</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+    
+                <!--이게 하나의 게시물-->
+                <div class="group" align="center">
+    
+                    <div class="thum">
+                        <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
+                    </div>
+    
+                    <div class="group-info">
+                        <table>
+                            <tr>
+                                <td width="150">#지역 제주도</td>
+                                <td width="150">#모집인원 1/10</td>
+                            </tr>
+                            <tr>
+                                <td>#여자만</td>
+                                <td>#중수레벨</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"> #2023-01-10 15:00</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+    
+                <!--이게 하나의 게시물-->
+                <div class="group" align="center">
+    
+                    <div class="thum">
+                        <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
+                    </div>
+    
+                    <div class="group-info">
+                        <table>
+                            <tr>
+                                <td width="150">#지역 제주도</td>
+                                <td width="150">#모집인원 1/10</td>
+                            </tr>
+                            <tr>
+                                <td>#여자만</td>
+                                <td>#중수레벨</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"> #2023-01-10 15:00</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+    
+                <!--이게 하나의 게시물-->
+                <div class="group" align="center">
+    
+                    <div class="thum">
+                        <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
+                    </div>
+    
+                    <div class="group-info">
+                        <table>
+                            <tr>
+                                <td width="150">#지역 제주도</td>
+                                <td width="150">#모집인원 1/10</td>
+                            </tr>
+                            <tr>
+                                <td>#여자만</td>
+                                <td>#중수레벨</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"> #2023-01-10 15:00</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+    
+                
+    
+               
             </div>
 
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
-
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
-
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
-
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
-
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
-
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
-
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
-
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
-
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
-
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
-
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
-
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
-
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
-
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!--이게 하나의 게시물-->
-            <div class="group" align="center">
-
-                <div class="thum">
-                    <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                </div>
-
-                <div class="group-info">
-                    <table>
-                        <tr>
-                            <td width="150">#지역 제주도</td>
-                            <td width="150">#모집인원 1/10</td>
-                        </tr>
-                        <tr>
-                            <td>#여자만</td>
-                            <td>#중수레벨</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> #2023-01-10 15:00</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
                
             
 
@@ -475,6 +320,9 @@
     </div>
 
 	
+	<br>
+	
+	<jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>

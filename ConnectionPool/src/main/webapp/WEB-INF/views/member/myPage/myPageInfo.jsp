@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>술렁술렁 마이페이지</title>
+<title>ConnectionPool 마이페이지</title>
 <style>
     @font-face {
         font-family: 'Pretendard-Regular';
@@ -242,7 +242,7 @@
             </div>
             <div>
                 <ul id="top-ul">
-                    <li><a id="click" href="">회원정보</a></li>
+                    <li><a id="click" href="myPageInfo.me">회원정보</a></li>
                     <li><a href="">출석체크</a></li>
                     <li><a href="">작성글 보기</a></li>
                     <li><a href="">수영일기</a></li>
@@ -261,17 +261,27 @@
                     <input type="hidden" name="userNo" value="\">
                     
                     <div>
-                        <div class="subText">이름</div>
-                        <div><input type="text" name="userName" id="userName2" value="" maxlength="5" required placeholder="이름을 입력해주세요"></div>
-                        <label class="checkResult" id="nameCheck">&nbsp;</label>
-                    </div>
-
-                    <div>
                         <div class="subText">아이디</div>
                         <div><input type="text" id="userId" name="userId" value="" maxlength="12" required readonly></div>
                         <!-- <td><button type="button" id="idCheck-btn">중복확인</button></td> -->
                         <label class="checkResult" id="idCheck">&nbsp;</label>
                     </div>
+                                     
+                    <div>
+                        <div class="subText">이름</div>
+                        <div><input type="text" name="userName" id="userName2" value="" maxlength="5" required readonly></div>
+                        <label class="checkResult" id="nameCheck">&nbsp;</label>
+                    </div>
+
+
+                    <div>  
+                        <!-- 닉네임 -->
+                        <!-- ajax로 중복확인할것-->
+                        <div class="subText">닉네임</div>
+                        <div><input type="text" id="userNickName" name="" maxlength="12" value="커풀" required placeholder=""></div>
+                        <label class="checkResult" id="nickNameCheck">&nbsp;</label>
+                    </div>
+                  
 
                     <div>
                         <div class="subText">휴대전화</div>
@@ -279,19 +289,8 @@
                         <!-- <div style="display: inline-block;"><input type="text" name="phone" maxlength="13" oninput="this.value=this.value.replace(/^01[016789]-\d{3,4}-\d{4}$/g,'');" placeholder="-를 포함해서 입력해주세요" style="width: 223px;"></div> -->
                         <div><label>&nbsp;</label></div>
                     </div>
-
-                    <div>
-                        <div class="subText">비밀번호</div>
-                        <div><input type="password" name="userPwd" id="userPwd" maxlength="15" placeholder="비밀번호 수정시 입력해주세요"></div>
-                        <label class="checkResult" id="pwdCheck">&nbsp;</label>
-                    </div>
-
-                    <div>
-                        <div class="subText">비밀번호 확인</div>
-                        <div><input type="password" id="userPwd2" maxlength="15" disabled placeholder=""></div>
-                        <label class="checkResult" id="pwdCheck2">&nbsp;</label>
-                    </div>
-
+					
+					
                     <div>
                         <div class="subText">이메일</div>
                         <div>
@@ -307,6 +306,13 @@
                                 <option value="gmail.com" >gmail.com</option>
                             </select>
                         </div>
+                        <div><label>&nbsp;</label></div>
+                    </div>
+                    
+                    <div>  
+                        <div class="subText">생년월일</div>
+                        <div><input type="text" id="birthdate" name="" maxlength="12" value="2009-09-09" required readonly></div>
+                        <div><label>&nbsp;</label></div>
                     </div>
 
                     <div>
@@ -314,29 +320,46 @@
                         <div>
                             <select name="address" id="addressForm">
                                 <option value="시/도 선택" hidden="" disabled="disabled" selected="selected" >시/도 선택</option>
-                                <option value="">서울</option>
-                                <option value="">경기도</option>
-                                <option value="">강원도</option>
-                                <option value="">충청북도</option>
-                                <option value="">충청남도</option>
-                                <option value="">전라북도</option>
-                                <option value="">전라남도</option>
-                                <option value="">경상북도</option>
-                                <option value="">경상남도</option>
+                                <option value="Seoul">서울</option>
+                                <option value="Gyeonggi">경기도</option>
+                                <option value="Gangwon">강원도</option>
+                                <option value="Chungbuk">충청북도</option>
+                                <option value="Chungnam">충청남도</option>
+                                <option value="Jeonabuk">전라북도</option>
+                                <option value="Jeonnam">전라남도</option>
+                                <option value="Gyeongbuk">경상북도</option>
+                                <option value="Gyeongnam">경상남도</option>
                             </select>
                             <input type="text" name="detailAddress" placeholder="상세 지역 (읍,면,동)" required style="width: 200px;">
                         </div>
                         <div><label>&nbsp;</label></div>
                     </div>
+					<br><br>
+					<div>
+						<div class="subText">개인정보 수정을 위해서는 본인 확인이 필요합니다.</div>
+						<div class="subText">비밀번호를 다시 한번 입력해주세요.</div>
+					</div>
+					<br><br>
+                    <div>
+                        <div class="subText">비밀번호</div>
+                        <div><input type="password" name="userPwd" id="userPwd" maxlength="15" placeholder=""></div>
+                        <label class="checkResult" id="pwdCheck">&nbsp;</label>
+                    </div>
 
+                    <div>
+                        <div class="subText">비밀번호 확인</div>
+                        <div><input type="password" id="userPwd2" maxlength="15"  placeholder=""></div>
+                        <label class="checkResult" id="pwdCheck2">&nbsp;</label>
+                    </div>
 
                     <div align="center">
                         <div><button type="submit" id="info-btn" style="margin-top: 0px;">수정하기</button></div>
                     </div>
                 </form>
-
+				<br><br>
                 <div><hr></div>
-                <div id="delete-btn"><a href="">탈퇴하기</a></div>
+                <div id="delete-btn"><a href="deleteForm.me">탈퇴하기</a></div>
+                <div id="delete-btn"><a href="">비밀번호 변경 </a></div>
             </div>
         </div>
 
