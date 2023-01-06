@@ -102,8 +102,8 @@
 	                첨부파일 : <a href="" download="">공지사항.jpg</a>
 	            </div>
 	            <div class="notice-hidden">
-	                <button class="btn btn-sm btn-danger">삭제</button>
-	                <button class="btn btn-sm btn-warning">수정</button>
+	                <button type="button" class="btn btn-sm btn-danger">삭제</button>
+	                <a href="noticeUpdateForm.ad" class="btn btn-sm btn-warning">수정</a>
 	            </div>
 	            <div class="notice-list">
 	                <button class="btn btn-sm btn-secondary" onclick="history.back();">목록으로</button>
