@@ -195,14 +195,15 @@
 
                     <!-- 로그인 되어있을때 시작 -->
                     
-                    <li class="username"  data-toggle="modal" data-target="#myModal">커풀님 ></li>
-                    <li></li>
+                    <li class="username"  data-toggle="modal" data-target="#myModal">커풀님</li>
+                    <li><div><a href="">마이페이지</a></div></li>
                     <li class="logout">로그아웃</li>
                     <div class="basket-icon">
                         <div class="basket-icon">
                             <img src="" alt="" width="28" height="28" > <!-- 알림기능 넣는다면 종 모양 들어갈곳-->
                         </div>
                      <!-- 로그인 되어있을때 끝 -->
+                     
 	                </div>
                 </ul>
             </section>
