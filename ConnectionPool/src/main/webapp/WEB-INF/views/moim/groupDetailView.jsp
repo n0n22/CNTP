@@ -14,11 +14,11 @@
     }
 	
     .margin{
-        width:50px;
+        width:100px;
     }
     
     .groupDetail-wrap{
-    	width:1000px;
+    	width:1300px;
     }
 
 	.groupContent{
@@ -29,6 +29,11 @@
 </style>
 </head>
 <body>
+
+	<jsp:include page="../common/menubar_nosearch.jsp"></jsp:include>
+
+	<br><br>
+
     <div class="outer" align="center">
     
     	<div class="groupDetail-wrap">
@@ -43,7 +48,7 @@
 	                <table class="groupInfoTable_1" border="1">
 	                    <tr>
 	                        <th>
-	                            <img width="550px" height="350" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"/>
+	                            <img width="600px" height="350" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"/>
 	                        </th>
 	                    </tr>
 	                </table>
@@ -52,8 +57,8 @@
 	            <div class="group-info">
 	                <table>
 	                    <tr>
-	                        <td width="150">#지역 제주도</td>
-	                        <td width="150">#모집인원 1/10</td>
+	                        <td width="250">#지역 제주도</td>
+	                        <td width="250">#모집인원 1/10</td>
 	                    </tr>
 	                    <tr>
 	                        <td>#여자만</td>
@@ -84,7 +89,7 @@
 	                <table class="groupInfoTable_1" border="1">
 	                    <tr>
 	                        <th>
-	                            <img width="350px" height="350" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"/>
+	                            <img width="500px" height="350" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"/>
 	                        </th>
 	                    </tr>
 	                </table>
@@ -119,13 +124,13 @@
 	        
 	        <div class="right-area">
 	        	<h4>신청관리</h4>
-	        	<table border="1">
+	        	<table class="table table-hover">
 	        		<tr>
-	        			<th width="80">닉네임</th>
-	        			<th width="50">성별</th>
-	        			<th width="50">인기도</th>
-	        			<th width="100">요청일시</th>
-	        			<th width="100">수락/거절</th>
+	        			<th width="100">닉네임</th>
+	        			<th width="80">성별</th>
+	        			<th width="80">인기도</th>
+	        			<th width="150">요청일시</th>
+	        			<th width="150">수락/거절</th>
 	        		</tr>
 	        		<tr>
 	        			<td>user1</td>
@@ -196,6 +201,9 @@
 	        </div>
 		</div>
     </div>
+    
+    <br><br>
+	
 
 </body>
 </html>
