@@ -26,6 +26,11 @@
 </style>
 </head>
 <body>
+    
+    <jsp:include page="../common/menubar_nosearch.jsp"/>
+	
+	<br>
+
     <div class="outer" align="center">
         <div class="group-wrap">
             <h3 align="left">소그룹 참여</h3>
@@ -315,6 +320,9 @@
     </div>
 
 	
+	<br>
+	
+	<jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>
