@@ -176,7 +176,7 @@
                     </div>
                 </div>
                 <ul class="landing-list">
-                    <li><a href="teamEnrollForm.mo">친목풀</a></li>
+                    <li><a href="teamList.mo">친목풀</a></li>
                     <li>배틀풀</li>
                     <li>커뮤니티</li>
                     <li>공지사항</li>
@@ -186,8 +186,8 @@
             <section class="user-menu">
                 <ul class="user-list">
                     <!-- 로그인 XXX 시작-->
-                    <!-- <li class="login">로그인</li> -->
-
+                    <li class="login"><a href="loginForm.me">로그인</a></li>
+					
 
 
 
