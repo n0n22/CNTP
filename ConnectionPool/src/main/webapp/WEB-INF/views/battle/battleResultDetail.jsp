@@ -19,24 +19,50 @@
         div.battleTeam{
             background-color: rgb(28,154,206);
             border-radius: 15px;
+            margin-top: 20px;
         }
 
         div.left{
             float: left;
             width: 50%;
+            padding: 50px;
         }
         div.right{
             float: right;
             width: 50%;
+            padding: 50px;
         }
-       
+        table {
+            border-collapse: collapse;
+            width: 550px;
+        }
         tr {
             height: 25px;
         }
         th {
             width: 100px;
             text-align: center;
+            border-bottom: 1px solid rgb(28,154,206);
+            height: 50px;
         }
+        td {
+            border-bottom: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+            height: 50px;
+        }
+        td:first-child{
+            border-left: 0;
+        }
+        td:last-child{
+            border-right: 0;
+        }
+  
+        div.submit-area{
+            display: inline-block;
+            margin-bottom: 50px;
+        }
+
 
 </style>
 
@@ -46,95 +72,97 @@
 	<jsp:include page="../common/menubar_nosearch.jsp"/>
 	
 	<div class="outer" align="center">
-        <div>
-            
-        </div>
-        <div class="battleTeam row" style="height: 100px;">
-            <div class="col"></div>
-            <div class="col row" style="display: flex; align-items: center;">
-                <div class="col"><h2>A팀</h2></div>
-                <div class="col"><h2>VS</h2></div>
-                <div class="col"><h2>B팀</h2></div>
+        <div class="outer-top">
+            <div class="row" style="height: 100px;">
+                <div class="col"></div>
+                <div class="battleTeam col row" style="display: flex; align-items: center;">
+                    <div class="col">A팀<img src="https://c11.kr/19bd7" style="display: inline; width: 50px; float: right;"></div>
+                    <div class="col"><h2>VS</h2></div>
+                    <div class="col">B팀<img src="https://c11.kr/19bd7" style="display: inline; width: 50px; float: right;"></div>
+                </div>
+                <div class="col"></div>
             </div>
-            <div class="col"></div>
         </div>
-        <hr>
-        <div class="battleHistory">
-            <h2>배틀기록</h2>
 
-            <div>
-                <div class="left">
-                    <h3>A팀</h3>
-                    <table border="1">
-                        <thead>
-                            <tr>
-                                <th>선수</th>
-                                <th>종목</th>
-                                <th style="width: 150px;">기록</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <br>
-                </div>
-        
-                <div class="right">
-                    <h3>B팀</h3>
-                    <table border="1">
-                        <thead>
-                            <tr>
-                                <th>선수</th>
-                                <th>종목</th>
-                                <th style="width: 150px;">기록</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <br>
+        <hr>
+        <div class="outer-main">
+            <div class="battleHistory">
+                <h2>배틀기록</h2>
+    
+                <div class="battleRecord">
+                    <div class="left">
+                        <h3>A팀</h3>
+                        <table>
+                            <thead>
+                                <tr style="text-align: center;">
+                                    <th>선수</th>
+                                    <th>종목</th>
+                                    <th style="width: 150px;">기록</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                    </div>
+            
+                    <div class="right">
+                        <h3>B팀</h3>
+                        <table>
+                            <thead>
+                                <tr style="text-align: center;">
+                                    <th>선수</th>
+                                    <th>종목</th>
+                                    <th style="width: 150px;">기록</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                    </div>
                 </div>
             </div>
-            
-            
+            <br clear="both">
         </div>
-        <br clear="both">
         <hr>
-        <div>
-            <br>
-            <button class="">결과작성</button>
-            <button class="">승인</button>
-            <button class="">이의제기</button>
+        <div class="outer-bottom">
+            <div class="submit-area">
+                <br>
+                <button class="">결과작성</button>
+                <button class="">승인</button>
+                <button class="">이의제기</button>
+            </div>
         </div>
     </div>
 	
