@@ -112,4 +112,17 @@ public class MoimController {
 		mv.setViewName("moim/groupUpdateForm");
 		return mv;
 	}
+	
+	@RequestMapping("groupEnrollForm.mo")
+	public ModelAndView groupEnrollFrom(ModelAndView mv) {
+		
+		mv.setViewName("moim/groupEnrollForm");
+		
+		return mv;
+	}
+	
+	
+	
+	
+	
 }
