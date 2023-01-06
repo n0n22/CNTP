@@ -9,7 +9,7 @@ public class MoimController {
 	
 	// moimController 매핑값은 .mo로 통일!
 	@RequestMapping("teamList.mo")
-	public String teamEnrollFrom() {
+	public String selectTeamList() {
 		return "moim/teamListView";
 		
 		
@@ -48,11 +48,20 @@ public class MoimController {
 		return mv;
 	}
 	
-	@RequestMapping("updateTeam.mo")
+	@RequestMapping("teamUpdateForm.mo")
 	public ModelAndView updateTeamInfo(ModelAndView mv/*, int teamNo*/) {
-		// 일단 페이지 보내는중
+		// teamNo 사용해서 team 정보를 가지고서 updateForm으로 이동
 		
 		mv.setViewName("moim/teamUpdateForm");
+		
+		return mv;
+	}
+	
+	@RequestMapping("teamMemberUpdateForm.mo")
+	public ModelAndView teamMemberUpdateForm(ModelAndView mv/*, int teamNo*/) {
+		// teamNo 사용해서 teamMember 정보를 가지고서 updateForm으로 이동
+		
+		mv.setViewName("moim/teamMemberUpdateForm");
 		
 		return mv;
 	}

@@ -77,7 +77,8 @@
 			<br>
 
 			<div class="enroll-area" align="right">
-				<a href="updateTeam.mo">수정하기</a>
+				<a href="teamUpdateForm.mo">수정하기</a>
+				<!-- <a href="teamUpdateForm.mo?teamNo=${ teamNo }">수정하기</a> -->
 			</div>
 
 		</div>
@@ -103,7 +104,8 @@
 				<br>
 
 				<div class="memberUpdate-area" align="right">
-					<button>팀장/부팀장 수정</button>
+					<a href="teamMemberUpdateForm.mo">팀장/부팀장 수정</a>
+					<!-- <a href="teamMemberUpdateForm.mo?teamNo=${ teamNo }">팀장/부팀장 수정</a> -->
 				</div>
 			</div>
 

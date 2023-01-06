@@ -28,7 +28,10 @@
 
 <body>
 
+	<jsp:include page="../common/menubar_nosearch.jsp"/>
 	
+	<br><br>
+
 	<div class="outer">
 	
 	    <h3 align="center">팀 정보 수정하기</h3>
@@ -38,14 +41,14 @@
 	        <tr height="50">
 	            <th>팀 이름<br>
 	            <td>
-	                <input type="text" name="teamName" disabled>
+					우리팀이름					
 	            </td>
 	            <td></td>
 	        </tr>
 	        <tr height="50">
 	            <th>팀 인원</th>
 	            <td>
-	                <input type="number" name="teamMember" max="12" min="2">명
+	                <input type="number" name="teamMember" value="" max="12" min="2">명
 	            </td>
 	            <td></td>
 	        </tr>
@@ -108,5 +111,11 @@
 	    </div>
 	
 	</div>
+
+	<br><br>
+	
+	<jsp:include page="../common/footer.jsp"/>
+
+
 </body>
 </html>

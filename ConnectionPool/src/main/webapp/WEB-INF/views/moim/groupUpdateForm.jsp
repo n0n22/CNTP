@@ -7,18 +7,18 @@
 <meta charset="UTF-8">
 
 <style>
-	.groupEnrollTable input[type=text], select, textarea{
+	.groupUpdateTable input[type=text], select, textarea{
 		width: 95%;
 		height: 100%;
 		border: 0px;
 		padding: 0px;
 	}
 
-	.groupEnrollTable td{
+	.groupUpdateTable td{
 		padding:0px;
 	}
 
-	.groupEnrollTable textarea{
+	.groupUpdateTable textarea{
 		height:100px;
 	}
 
@@ -36,7 +36,7 @@
 		<br>
 
 		<form action="#">
-			<table class="groupEnrollTable" border="1">
+			<table class="groupUpdateTable" border="1">
 				<tr>
 					<th>제목</th>
 					<td><input type="text" ></td>
