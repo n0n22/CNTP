@@ -65,6 +65,7 @@
 <body>
 
 	<jsp:include page="../common/menubar_nosearch.jsp"/>
+	
 	<br>
 	
 	<div class="outer">

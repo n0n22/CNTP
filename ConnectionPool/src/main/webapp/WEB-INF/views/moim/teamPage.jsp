@@ -77,7 +77,7 @@
 			<br>
 
 			<div class="enroll-area" align="right">
-				<a href="#">수정하기페이지보내주는버튼</a>
+				<a href="updateTeam.mo">수정하기</a>
 			</div>
 
 		</div>
