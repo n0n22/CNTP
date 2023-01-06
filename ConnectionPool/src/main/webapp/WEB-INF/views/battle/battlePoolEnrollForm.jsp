@@ -7,122 +7,134 @@
 <meta charset="UTF-8">
 <title>배틀풀 작성폼</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <style>
+        tr > td:first-child{
+            text-align: right;
+        }
+        tr > td:nth-child(2){
+            width: 300px;
+        }
+        div.submit-area{
+            margin-bottom: 20px;
+        }
+        input:invalid{
+            border-color: red;
+        }
+
+    </style>
+
 </head>
 <body>
+    <jsp:include page="../common/menubar_nosearch.jsp"/>
 
     <div class="outer">
-        <div>
-
-        </div>
-        제목 : <input type="text">
-
-        <div>
-            <h3>배틀 포인트</h3>
-            <table>
-                <tr>
-                    <td>레벨 : </td>
-                    <td>
-						<select name="level">
-							<option>무관</option>
-							<option>초급</option>
-							<option>중급</option>
-							<option>고급</option>
-						</select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>종목 : </td>
-                    <td>
-                        <select>
-                            <option value="">4:4 자유형</option>
-                            <option value="">4:4 혼영</option>
-                            <option value="">4:4 혼계영</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>성별 : </td>
-                    <td>
-                        <select name="gender">
-							<option value="A">무관</option>
-							<option value="M">남자</option>
-							<option value="F">여자</option>
-						</select>
-                    </td>
-                </tr>
-            </table>
+        <div class="battle" style="text-align: center; margin-top: 50px;">
+            <h2>배틀풀 작성</h2>
+            <br>
         </div>
         
-        <div>
-            <h3>배틀 경기장</h3>
-            <table>
-              <tr>
-                <td>길이 : </td>
-                <td><input type="number" min="0"></td>
-              </tr>
-              <tr>
-                <td>폭 : </td>
-                <td><input type="number" min="0"></td>
-              </tr>
-              <tr>
-                <td>깊이 : </td>
-                <td><input type="number" min="0"></td>
-              </tr>
-              <tr>
-                <td>레인 : </td>
-                <td><input type="number" min="0" pattern="[0-12]+"></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-              </tr>
-            </table>
+        <div class="battle-enrollform-area">
+            <div align="center">
+                <table>
+                    <tr>
+                        <td>제목 :&nbsp;</td>
+                        <td><input type="text" required></td>
+                    </tr>
+                </table>
+            </div>
+            <br>
             <hr>
+    
+            <div align="center">
+                <h3 style="display: inline;">배틀 포인트</h3>
+                <br><br>
+                <table>
+                    <tr>
+                        <td width="100px">레벨 :&nbsp;</td>
+                        <td>
+                            <select name="level">
+                                <option>무관</option>
+                                <option>초급</option>
+                                <option>중급</option>
+                                <option>고급</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>종목 :&nbsp;</td>
+                        <td>
+                            <select>
+                                <option value="">4:4 자유형</option>
+                                <option value="">4:4 혼영</option>
+                                <option value="">4:4 혼계영</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>성별 :&nbsp;</td>
+                        <td>
+                            <select name="gender">
+                                <option value="A">무관</option>
+                                <option value="M">남자</option>
+                                <option value="F">여자</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <hr>
+            
+            <div align="center">
+                <h3>배틀 경기장</h3>
+                <br>
+                <table>
+                  <tr>
+                    <td width="100px">길이 :&nbsp;</td>
+                    <td><input type="number" min="0" step="0.1"></td>
+                  </tr>
+                  <tr>
+                    <td>폭 :&nbsp;</td>
+                    <td><input type="number" min="0" step="0.1"></td>
+                  </tr>
+                  <tr>
+                    <td>깊이 :&nbsp;</td>
+                    <td><input type="number" min="0" step="0.1"></td>
+                  </tr>
+                  <tr>
+                    <td>레인 :&nbsp;</td>
+                    <td><input type="number" min="0" pattern="[0-12]"></td>
+                  </tr>
+                  <tr>
+                    <td>수영복 대여 :&nbsp;</td>
+                    <td style="text-align: center;">가능 <input type="radio" name="yesNo" checked> 불가능 <input type="radio" name="yesNo"></td>
+                  </tr>
+                </table>
+                <hr>
+            </div>
+            <div align="center">
+                <h3>배틀 규칙</h3>
+                <br>
+                <table>
+                    <tr>
+                        <td></td>
+                        <td><textarea rows="10" cols="60" style="resize: none;"></textarea><br></td>
+                    </tr>
+                </table>
+                <hr>
+            </div>
+            <div align="center">
+                <input type="file">
+                <hr>
+            </div>
+        </div>
+        <div class="submit-area" align="center">
+            <button class="btn btn-primary">글 작성</button>
+            <button class="btn btn-danger" onclick="history.back()">취소하기</button>
         </div>
 
-
-
-
-
-        매치포인트 <br>
-        레벨 : 
-        <select>
-            <option value="">무관</option>
-            <option value="">초보</option>
-            <option value="">중수</option>
-            <option value="">고수</option>
-        </select>
-        <br>
-        종목 :
-        <select>
-            <option value="">4:4 자유형</option>
-            <option value="">4:4 혼영</option>
-            <option value="">4:4 평형</option>
-        </select>
-        <br>
-        성별 : 
-        <select>
-            <option value="">무관</option>
-            <option value="">남자만</option>
-            <option value="">여자만</option>
-        </select>
-        <br>
-        <hr>
-        경기장정보 <br>
-        길이 : <input type="number" min="0"> <br>
-        폭 : <input type="number" min="0"> <br>
-        깊이 : <input type="number" min="0"> <br>
-        레인 : <input type="number" min="0"> <br>
-        수영복 대여 : 가능 <input type="radio" name="yesnNo" checked> 불가능 <input type="radio" name="yesnNo"><br> 
-        <hr>
-        매치진행<br>
-        <textarea rows="10" cols="100" style="resize: none;"></textarea><br>
-        <input type="file"> <br>
-
-        <button>글 작성</button>
-        <button onclick="history.back()">취소하기</button>
-
     </div>
+
+    <jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>
