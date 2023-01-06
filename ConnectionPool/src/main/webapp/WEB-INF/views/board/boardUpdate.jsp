@@ -38,7 +38,7 @@
             <br>
 
             <form id="updateForm" method="post" action="" enctype="">
-                <table algin="center">
+                <table align="center">
                     <tr>
                         <th><label for="title">제목</label></th>
                         <td><input type="text" id="title" class="form-control" value="게시판제목임ㅋㅋ" name="" required></td>

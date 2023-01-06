@@ -129,7 +129,7 @@
 	        <!-- 입력 div -->
 	        <div class="align-left">
 	            <input type="text" class="form-control form-control-lg" id="chatContent-input" onkeyup="enterFn()" required>
-	            <button class="btn btn-success" style="width:70px" onclick="insertChatContent();"">입력</button>
+	            <button class="btn btn-success" style="width:70px" onclick="insertChatContent();">입력</button>
 	        </div>
 	    </div>
 	</div>

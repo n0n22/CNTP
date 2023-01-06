@@ -41,7 +41,7 @@
             <a class="btn btn-secondary" style="float:right;" href="">목록으로</a>
             <br><br>
 
-            <table id="contentArea" algin="center" class="table">
+            <table id="contentArea" align="center" class="table">
                 <tr>
                     <th width="100">제목</th>
                     <td colspan="3">제목입니다요</td>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ talib prefix=”c” uri=”http://java.sun.com/jsp/jstl/core” %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <!DOCTYPE html>
 <html>
@@ -361,7 +361,7 @@ body {
                                                 </div>
                                                 <p class="timeline-comment-text">Explicabo Nemo enim ipsam voluptatem quia voluptas.</p>
                                             </div>
-                                            <textarea class="form-control" placeholder="Replay" width="780px;" height="200px;" style="resize:none;"></textarea>
+                                            <textarea class="form-control" placeholder="Replay"></textarea>
                                         </div>
                                     </div>
                                 </div>

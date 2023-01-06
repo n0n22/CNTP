@@ -15,6 +15,7 @@
 		padding-top: 5px;
 		padding-bottom: 5px;
 	}
+
 	.teamEnrollFormTable input[type=text], select, textarea{
 		width: 95%;
 		height: 100%;
@@ -34,15 +35,19 @@
 </head>
 <body>
 
+	<!-- 세션 로그인 유저에서 포인트를 뽑아 -->
 	
+	<jsp:include page="../common/menubar_nosearch.jsp"/>
 	
+	<br>
 
 	<div class="outer" align="center">
 	
-		<h4 align="center">팀을 생성하여 팀원들을 모집하고 배틀에 참가해보세요!</h4>
-	
-	
 	    <h3 align="center">팀 만들기 신청</h3>
+	    
+	    <br>
+	    
+		<h6 align="center">팀을 생성하여 팀원들을 모집하고 배틀에 참가해보세요!</h6>
 	    
 		<!-- th태그들 안은 당연하게 중앙 정렬이라 후에 왼쪽 정렬 바꿔주자 -->
 	    <table align="center" border="1" class="teamEnrollFormTable">
@@ -54,9 +59,9 @@
 	            <td></td>
 	        </tr>
 	        <tr height="50">
-	            <th>팀 인원</th>
-	            <td>
-	                <input type="number" name="teamMember" max="12" min="2">
+	            <th width="200">팀 인원</th>
+	            <td width="400">
+	                <input type="number" name="teamMember" max="12" min="2">명
 	            </td>
 	            <td></td>
 	        </tr>
@@ -100,7 +105,7 @@
 	        <tr height="50">
 	            <th>파워등록</th>
 	            <td colspan="2">
-	                <input type="checkbox" name="powerDuration"> 파워 등록 시 10P가 소요됩니다. 
+	                <input type="checkbox" class="powerDuration" name="powerDuration"> 파워 등록 시 10P가 소요됩니다. 
 	            </td>
 	        </tr>
 	
@@ -108,7 +113,7 @@
 	    <br><br>
 	
 	    <div class="TE_point_area" align="center">
-	        <p>소요 포인트 : 50</p>
+	        <p class="cost">소요 포인트 : 50</p>
 	        <!-- checkbox 선택됐을 경우 소요포인트를 변경 -->
 	        <p>현재 내 포인트 : </p>
 	    </div>
@@ -129,7 +134,25 @@
 	        <input type="checkbox"> 위 내용을 숙지하고 동의합니다. <br><br>
 	        <a href="#">취소하기</a> <button>팀 생성하기</button>
 	    </div>
-	
+
 	</div>
+	
+	<br><br>
+	
+	<jsp:include page="../common/footer.jsp"/>
+
+	<script>
+		$(function(){
+			$('.powerDuration').on('change', function(){
+
+				if($('.powerDuration').is(':checked')) {
+					$('.cost').html('소요 포인트 : 60');
+				}
+				else{
+					$('.cost').html('소요 포인트 : 50');
+				}
+			})
+		})
+	</script>
 </body>
 </html>
