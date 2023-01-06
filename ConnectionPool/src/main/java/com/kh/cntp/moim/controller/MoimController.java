@@ -2,14 +2,15 @@ package com.kh.cntp.moim.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class MoimController {
 	
 	// moimController 매핑값은 .mo로 통일!
-	@RequestMapping("teamEnrollForm.mo")
+	@RequestMapping("teamList.mo")
 	public String teamEnrollFrom() {
-		return "moim/groupDetailView";
+		return "moim/teamListView";
 		
 		
 		/*
@@ -35,9 +36,25 @@ public class MoimController {
 		소모임 디테일
 		<!--<jsp:foward page="groupDetailView"/>-->
 		 */
+	}
+	
+	@RequestMapping("teamPage.mo")
+	public ModelAndView teamPage(ModelAndView mv, int teamNo) {
+		// 팀 페이지 갈 때 TEAM, TEAM_MEMBER, APPLY 테이블 다 들고 가야됨 => 어째 이런 일이,,,,,,,,,
+		// 한번의 select문으로 조인해서 가져올 수는 있는데, 3개의 vo에 담아야 하니 이를 어떻게 해야 할까
 		
+		mv.setViewName("moim/teamPage");
 		
+		return mv;
+	}
+	
+	@RequestMapping("updateTeam.mo")
+	public ModelAndView updateTeamInfo(ModelAndView mv/*, int teamNo*/) {
+		// 일단 페이지 보내는중
 		
+		mv.setViewName("moim/teamUpdateForm");
+		
+		return mv;
 	}
 
 }
