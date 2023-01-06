@@ -49,8 +49,11 @@ public class MoimController {
 	}
 	
 	@RequestMapping("teamEnrollFrom.mo")
-	public String teamEnrollFrom() {
-		return "moim/teamEnrollForm";
+	public ModelAndView teamEnrollFrom(ModelAndView mv) {
+		
+		mv.setViewName("moim/teamEnrollForm");
+		
+		return mv;
 	}
 	
 	@RequestMapping("teamUpdateForm.mo")
