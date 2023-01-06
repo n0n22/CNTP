@@ -131,7 +131,7 @@
                     <a href="">ID /</a>
                     <a href="">PWD찾기</a>
                 </span> |
-                <span><a href="">회원가입</a></span>
+                <span><a href="MemberEnrollForm.me">회원가입</a></span>
             </div>
         </div>
     </div>
