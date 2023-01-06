@@ -42,13 +42,6 @@
 		z-index:2;
 	}
 
-	.badge-shop{
-		position:absolute;
-		z-index: 3;
-		top : 250px;
-		left : 175px;
-	}
-
 	.teamImg{
 		border-radius: 10px;
 
@@ -73,17 +66,18 @@
 
 				</div>
 
-				<div class="badge-shop">
-					<a class="btn">뱃지 구매하기</a>
-				</div>
-
 				<div class="img-area" style="width:80%; display:inline-block;">
 					<!-- 팀 이미지 -->
 					<img width="1040px" height="300px" class="teamImg" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbhd1qW%2FbtqUnLpjyqL%2FsRwVDDHp0keOfVq1nKDb11%2Fimg.jpg">
 				</div>
+
+				<div class="badge-shop" align="left" style="width:80%;">
+					<a class="btn" href="badgeShop.mo">뱃지 구매하기</a>
+				</div>
 			</div>
 			
 			<br><br>
+
 
 			<div class="teamInfo" align="center">
 
