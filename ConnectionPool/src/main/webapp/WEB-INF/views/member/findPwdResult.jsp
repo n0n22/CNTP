@@ -73,12 +73,13 @@
 
             <h1 id="main-text">비밀번호 찾기</h1>
             <div>비밀번호 변경이 완료되었습니다. </div>
+            <div>변경된 비밀번호로 다시 로그인해주세요. </div>
 
             <div><button onclick="loginPage();">로그인하기</button></div>
 
             <script>
                 function loginPage() {
-                    location.href = ""
+                    location.href = "loginForm.me"
                 }
             </script>
      
