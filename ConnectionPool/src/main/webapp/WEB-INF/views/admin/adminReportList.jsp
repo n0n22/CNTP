@@ -9,18 +9,11 @@
 
 <style>
 
-	div {
-		border: solid 1px red;
-	}
-
 	.report-outer {
-		
 		margin-left : 150px;
 		height : 90%;
 
 		padding: 20px;
-		
-
 	}
 
 	.report-btn-area {
@@ -29,16 +22,18 @@
 
 
 	.report-table-area {
-
 		padding: 20px;
-
 	}
-
+	
+	
+	.page-area {
+		padding: 20px;
+	}
+	
+	
 	
 
-
-
-
+	
 </style>
 
 
@@ -54,15 +49,15 @@
 	
 		
 		<div class="report-btn-area">
-			<a href="#" class="btn btn-secondary">신고글 목록</a>
-			<a href="#" class="btn btn-secondary">패널티 대상 목록</a>
+			<a href="reportList.ad" class="btn btn-secondary">신고글 목록</a>
+			<a href="penaltyList.ad" class="btn btn-secondary">패널티 대상 목록</a>
 
 			
 		</div>
 		<div class="report-table-area">
 
 			<div class="container">
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover" id="reportTable">
                     <thead>
                         <tr>
                             <th width="5%">번호</th>
@@ -74,7 +69,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr class="clickTr">
                             <td>3</td>
                             <td>user02</td>
                             <td>자유게시판 댓글</td>
@@ -82,7 +77,7 @@
                             <td>user05</td>
                             <td>2022-05-30</td>
                         </tr>
-                        <tr>
+                        <tr class="clickTr">
                             <td>3</td>
                             <td>user02</td>
                             <td>자유게시판 댓글</td>
@@ -90,7 +85,7 @@
                             <td>user05</td>
                             <td>2022-05-30</td>
                         </tr>
-                        <tr>
+                        <tr class="clickTr">
                             <td>3</td>
                             <td>user02</td>
                             <td>자유게시판 댓글</td>
@@ -101,19 +96,52 @@
                     </tbody>
                 </table>
             </div>
-
-
-
+			<div class="page-area">
+				<ul class="pagination justify-content-center">
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">&lt;</a></li>
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
+            	</ul>
+			</div>
 		</div>
-	
-	
-	
-	
-	
 	</div>
 	
 	
 	<jsp:include page="../common/footer.jsp" />
+	
+	<script>
+	
+		$(function() {
+			
+			$('#reportTable tbody .clickTr').click(function() {
+				
+				location.href = 'reportDetail.ad';
+				
+			});
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		});
+	
+	
+	
+	
+	
+	
+	</script>
+	
+	
+	
+	
 
 
 </body>

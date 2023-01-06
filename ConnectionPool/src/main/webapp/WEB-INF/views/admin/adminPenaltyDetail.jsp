@@ -9,12 +9,6 @@
 
 
 <style>
-        
-    div {
-        box-sizing: border-box;
-        border: solid 1px red;
-    }
-
 
     .admin-outer {
         margin-left: 150px;
@@ -23,7 +17,6 @@
     }
 
     .admin-outer .container {
-
         padding: 20px;
     }
 

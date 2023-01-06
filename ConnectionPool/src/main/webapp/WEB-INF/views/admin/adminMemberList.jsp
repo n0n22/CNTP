@@ -13,7 +13,6 @@
             margin-left: 150px;
         }
 
-
         .member-header {
             text-align: center;
         }
@@ -27,6 +26,9 @@
             width: 200px;
         }
 
+		.page-area {
+			padding: 15px;
+		}
 
 
 
@@ -47,16 +49,20 @@
         <div class="member-header">
             <div class="member-search-area">
                 <form>
-                    <select name="" id="">
-                        <option value="">이름</option>
-                        <option value="">아이디</option>
-                        <option value="">닉네임</option>
-                    </select>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">검색</button>
-                        </div>
+                	<div class="search-condition">
+	                    <select name="" id="">
+	                        <option value="">이름</option>
+	                        <option value="">아이디</option>
+	                        <option value="">닉네임</option>
+	                    </select>
+                    </div>
+                    <div>
+	                    <div class="input-group mb-3">
+	                        <input type="text" class="form-control" placeholder="Search">
+	                        <div class="input-group-append">
+	                            <button class="btn btn-primary" type="submit">검색</button>
+	                        </div>
+	                    </div>
                     </div>
                 </form>
             </div>
@@ -122,6 +128,18 @@
                     </tbody>
                 </table>
             </div>
+			<div class="page-area">
+
+	            <ul class="pagination justify-content-center">
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">&lt;</a></li>
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
+	            </ul>
+
+			
+			</div>
 
 
         </div>

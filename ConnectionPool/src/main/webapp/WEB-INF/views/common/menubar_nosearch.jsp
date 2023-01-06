@@ -180,7 +180,7 @@
                     <li><a href="groupList.mo">친목풀-소그룹</a></li>
                     <li>배틀풀</li>
                     <li>커뮤니티</li>
-                    <li>공지사항</li>
+                    <li><a href="list.no">공지사항</a></li>
                 </ul>
             </section>
 
@@ -195,7 +195,7 @@
                     <!-- 로그인 XXX 끝-->
 
                     <!-- 로그인 되어있을때 시작 -->
-                    
+                    <li class="username"><a href="memberList.ad">관리자 페이지</a></li>
                     <li class="username"  data-toggle="modal" data-target="#myModal">커풀님</li>
                     <li><div><a href="myPageInfo.me">마이페이지</a></div></li>
                     <li class="logout">로그아웃</li>
