@@ -17,7 +17,7 @@
 
 		<div style="width:1300px;">
 
-			<h3>팀 멤버 권한 수정하기</h3>
+			<h3 align=left>팀 멤버 권한 수정하기</h3>
 			<hr>
 	
 			<br>
