@@ -85,7 +85,7 @@
 
     <script>
         function loginPage() {
-            location.href="";
+            location.href="loginForm.me";
         };
 
         function mainPage() {

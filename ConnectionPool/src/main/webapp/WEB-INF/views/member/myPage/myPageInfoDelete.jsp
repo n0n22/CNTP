@@ -183,7 +183,7 @@
     <div class="outer">
         <div class="top-bar">
             <div class="inline-block">
-                div id="name-area" style="cursor: default;"><span id="userName">커풀</span> 님
+                <div> id="name-area" style="cursor: default;"><span id="userName">커풀</span> 님
                     <br>🤔<span>무소속</span>
                 </div>
                 <div>

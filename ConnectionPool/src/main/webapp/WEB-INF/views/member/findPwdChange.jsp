@@ -99,7 +99,7 @@
         
         <div class="find-pwd-area">
 
-            <form action="" method="post" class="find-pwd-form">
+            <form action="findPwd" method="post" class="find-pwd-form">
                 
                 <input type="hidden" name="userNo" value="">
                 
@@ -115,7 +115,7 @@
                 <div><button type="submit">비밀번호 재설정</button></div>
               
                 <div>
-                    <div><a href="">로그인</a></div>
+                    <div><a href="loginForm.me">로그인</a></div>
                 </div>
             </form>
         </div>

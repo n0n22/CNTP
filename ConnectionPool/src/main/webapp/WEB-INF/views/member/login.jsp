@@ -128,10 +128,10 @@
             <!-- 네이버 로그인도 추가 할 예정-->
             <div id="link-area">
                 <span>
-                    <a href="">ID /</a>
-                    <a href="">PWD찾기</a>
+                    <a href="findIdForm.me">ID 찾기  / </a>
+                    <a href="findPwdForm.me">PWD 찾기</a>
                 </span> |
-                <span><a href="">회원가입</a></span>
+                <span><a href="memberEnrollForm.me">회원가입</a></span>
             </div>
         </div>
     </div>

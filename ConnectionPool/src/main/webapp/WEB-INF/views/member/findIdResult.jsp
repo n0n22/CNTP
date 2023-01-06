@@ -95,11 +95,11 @@
                 <div id="find-id">test01</div>
 
             <div><button onclick="loginPage();">로그인하기</button></div>
-            <div><a href="" id="find-pwd">비밀번호 찾기</a></div>
+            <div><a href="findPwdForm.me" id="find-pwd">비밀번호 찾기</a></div>
 
             <script>
                 function loginPage() {
-                    location.href = "";
+                    location.href = "loginForm.me";
                 }
             </script>
         </div>
