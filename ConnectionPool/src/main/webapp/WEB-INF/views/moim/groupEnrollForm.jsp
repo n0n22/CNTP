@@ -10,16 +10,20 @@
 	.groupEnrollTable input[type=text], select, textarea{
 		width: 95%;
 		height: 100%;
-		border: 0px;
+		border: 0;
 		padding: 0px;
 	}
 
-	.groupEnrollTable td{
-		padding:0px;
+	.groupEnrollTable input:focus, select:focus, textarea:focus{
+		border: 0;
 	}
 
-	.groupEnrollTable textarea{
-		height:100px;
+	.groupEnrollTable td{
+		padding:0;
+	}
+
+	.groupEnrollTable th{
+		text-align: center;
 	}
 
 </style>
@@ -29,89 +33,97 @@
 
 	<jsp:include page="../common/menubar_nosearch.jsp"></jsp:include>
 
+	<br><br>
+
 	<div class="outer" align="center">
-		
-		<h3 align="left">소모임 수정</h3>
-		<hr>
-		<br>
+		<div style="width:1300px;">
+			<h3 align="left">소모임 글작성</h3>
+			<hr>
+			<br>
 
-		<form action="#">
-			<table class="groupEnrollTable" border="1">
-				<tr>
-					<th>제목</th>
-					<td><input type="text" ></td>
-				</tr>
-				<tr>
-					<th>썸네일</th>
-					<td><input type="text"></td>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td>
-						<textarea name="" id="" cols="30" rows="10"></textarea>						
-					</td>
-				</tr>
-				<tr>
-					<th>지역</th>
-					<td>
-						<select name="groupArea">
-							<option value="Seoul">서울특별시</option>
-							<option value="Gyeonggi">경기도</option>
-							<option value="Gangwon">강원도</option>
-							<option value="Chungbuk">충청북도</option>
-							<option value="Chungnam">충청남도</option>
-							<option value="Jeonabuk">전라북도</option>
-							<option value="Jeonnam">전라남도</option>
-							<option value="Gyeongbuk">경상북도</option>
-							<option value="Gyeongnam">경상남도</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>장소</th>
-					<td>이거 api할 수 있으면 하자</td>
-				</tr>
-				<tr>
-					<th>성별</th>
-					<td>
-						<select name="gender">
-							<option value="A">무관</option>
-							<option value="M">남자</option>
-							<option value="F">여자</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>레벨</th>
-					<td>
-						<select name="level">
-							<option>무관</option>
-							<option>초급</option>
-							<option>중급</option>
-							<option>고급</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>모집인원</th>
-					<td><input type="number" min="2" max="12">명</td>
-				</tr>
-				<tr>
-					<th>일시</th>
-					<td>
-						<input type="datetime-local" id="startTime"> - <input type="datetime-local" id="endTime">
-						<!--후에 5분 단위로 바꿀 수 있다면 바꿔보자-->
-					</td>
-				</tr>
-			</table>
-			<br><br>
+			<form action="#">
+				<table class="groupEnrollTable" border="1">
+					<tr height="50">
+						<th width="200">제목</th>
+						<td width="600"><input type="text" style="height:50px" required></td>
+					</tr>
+					<tr height="50">
+						<th>썸네일</th>
+						<td><input type="text" style="height:50px"></td>
+					</tr>
+					<tr height="200">
+						<th>내용</th>
+						<td>
+							<textarea class="groupContent" name="groupContent" style="resize:none; height:200px" maxlength="300" required></textarea>						
+							<p>글자수 <span class="count"></span> / 300</p>
+						</td>
+					</tr>
+					<tr height="50">
+						<th>지역</th>
+						<td>
+							<select name="groupArea" style="height:50px">
+								<option value="Seoul">서울특별시</option>
+								<option value="Gyeonggi">경기도</option>
+								<option value="Gangwon">강원도</option>
+								<option value="Chungbuk">충청북도</option>
+								<option value="Chungnam">충청남도</option>
+								<option value="Jeonabuk">전라북도</option>
+								<option value="Jeonnam">전라남도</option>
+								<option value="Gyeongbuk">경상북도</option>
+								<option value="Gyeongnam">경상남도</option>
+							</select>
+						</td>
+					</tr>
+					<tr height="50">
+						<th>장소</th>
+						<td>이거 api할 수 있으면 하자</td>
+					</tr>
+					<tr height="50">
+						<th>성별</th>
+						<td>
+							<select name="gender" style="height:50px">
+								<option value="A">무관</option>
+								<option value="M">남자</option>
+								<option value="F">여자</option>
+							</select>
+						</td>
+					</tr>
+					<tr height="50">
+						<th>레벨</th>
+						<td>
+							<select name="level" style="height:50px">
+								<option>무관</option>
+								<option>초급</option>
+								<option>중급</option>
+								<option>고급</option>
+							</select>
+						</td>
+					</tr>
+					<tr height="50">
+						<th>모집인원</th>
+						<td><input type="number" min="2" max="12" style="height:50px" required>명</td>
+					</tr>
+					<tr height="50">
+						<th>일시</th>
+						<td>
+							<input type="datetime-local" id="startTime" required> - <input type="datetime-local" id="endTime" required>
+							<!--후에 5분 단위로 바꿀 수 있다면 바꿔보자-->
+						</td>
+					</tr>
+				</table>
+				<br><br>
 
-			<div align="right">
-				<button>등록하기</button>
-			</div>
-			
-		</form>
+				<div align="right">
+					<button>등록하기</button>
+				</div>
+				
+			</form>
+		</div>
 	</div>
+
+	<br><br>
+	
+	<jsp:include page="../common/footer.jsp"/>
 	
 	<script>
 		
@@ -134,6 +146,16 @@
 			$('#endTime').val($('#startTime').val());
 			//끝일자의 최소를 시작일자로 바꿈
 			$('#endTime').attr('min', $('#startTime').val());
+		})
+
+		$(function(){
+			$('.groupContent').keyup(function(){
+
+				var $content = $(this).val();
+
+				$('.count').text($content.length);
+				
+			})
 		})
 
 	</script>

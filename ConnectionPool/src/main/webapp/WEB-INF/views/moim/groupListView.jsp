@@ -84,8 +84,9 @@
                     </tr>
                 </table>
 
-                <div class="selectBtn" align="right">
-                    <button>검색하기</button>
+                <div class="btn-area" align="right">
+                    <button class="btn">검색하기</button>
+                    <a class="btn" href="groupEnrollForm.mo">글 작성하기</a>
                 </div>
             </div>
 
