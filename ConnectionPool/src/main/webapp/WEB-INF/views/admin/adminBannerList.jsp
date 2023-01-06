@@ -86,14 +86,14 @@
         <div class="page-area">
             
             <div class="banner-btn">
-                <a href="" class="btn btn-primary">등록</a>
+                <a href="bannerEnrollForm.ad" class="btn btn-primary">등록</a>
             </div>
             <div class="banner-page">
                 <ul class="pagination justify-content-center">
-                    <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);">&lt;</a></li>
                     <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
                     <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
                 </ul>
             </div>
             <div class="banner-hidden">

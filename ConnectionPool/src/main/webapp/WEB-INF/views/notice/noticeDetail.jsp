@@ -7,28 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
 
 
     <style>
-
-   
-        div {
-            box-sizing: border-box;
-            border: solid 1px red;
-        }
-
-
-        .admin-outer {
-            margin-left: 150px;
-            width: 1000px;
-            height: 100%;
-        }
-
 
         .notice-title h2 {
             text-align: center;
@@ -46,23 +27,27 @@
             width: 100%;
             height: 80px;
         }
+        
+        .notice-foot {
+        	text-align: center;
+        }
 
         .notice-foot div {
             display: inline-block;
         }
         
         .notice-foot .notice-file {
-            width: 35%;
+            width: 300px;
         }
         
         .notice-foot .notice-hidden {
             text-align: center;
-            width: 28%;
+            width: 300px;
         }
 
         .notice-foot .notice-list {
             width: 35%;
-            text-align: right;
+            text-align: 300px;
         }
 
 
@@ -73,10 +58,10 @@
 </head>
 <body>
 
+	<jsp:include page="../common/menubar_nosearch.jsp" />
 
 
-
-    <div class="admin-outer">
+    <div class="outer">
 
         <div class="notice-title">
 
@@ -112,33 +97,20 @@
                     </tbody>
                 </table>
             </div>
+	        <div class="notice-foot">
+	            <div class="notice-file">
+	                첨부파일 : <a href="" download="">공지사항.jpg</a>
+	            </div>
+	            <div class="notice-hidden">
+	                <button type="button" class="btn btn-sm btn-danger">삭제</button>
+	                <a href="noticeUpdateForm.ad" class="btn btn-sm btn-warning">수정</a>
+	            </div>
+	            <div class="notice-list">
+	                <button class="btn btn-sm btn-secondary" onclick="history.back();">목록으로</button>
+	            </div>
+	
+	        </div>
         </div>
-        <div class="notice-foot">
-            <div class="notice-file">
-                첨부파일 : <a href="" download="">공지사항.jpg</a>
-            </div>
-            <div class="notice-hidden">
-                <button class="btn btn-sm btn-danger">삭제</button>
-                <button class="btn btn-sm btn-warning">수정</button>
-            </div>
-            <div class="notice-list">
-                <button class="btn btn-sm btn-secondary">목록으로</button>
-            </div>
-
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -147,7 +119,7 @@
 
 
 
-
+	<jsp:include page="../common/footer.jsp" />
 
 
 

@@ -7,27 +7,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
-
-
-
     <style>
         
-        div {
-            box-sizing: border-box;
-            border: solid 1px red;
-        }
-
 
         .admin-outer {
             margin-left: 150px;
-            width: 1000px;
             height: 100%;
+            padding: 25px;
         }
 
 
@@ -51,6 +37,12 @@
             width: 700px;
             padding: 10px;
         }
+        
+        .enroll-btn-area {
+        	text-align: center;
+        	padding: 20px;
+        }
+        
 
 
     </style>
@@ -61,7 +53,7 @@
 <body>
 
 
-
+	<jsp:include page="../common/menubar_nosearch.jsp" />=
 
 
     <div class="admin-outer">
@@ -74,47 +66,54 @@
         </div>
         <div class="notice-enroll">
             <div class="container">
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <th>카테고리</th>
-                            <td>
-                                <select name="" id="">
-                                    <option value="">공지</option>
-                                    <option value="">이벤트</option>
-                                    <option value="">대회정보</option>
-                                </select>
-                            
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>제목</th>
-                            <td><input type="text"></td>
-                        </tr>
-                        <tr>
-                            <th>내용</th>
-                            <td>
-                                <textarea class="editor" name="" id=""></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>첨부파일</th>
-                            <td><input type="file"></td>
-                        </tr>
-
-
-                    </tbody>
-
-
-                  
-                </table>
+            	<form>
+	                <table class="table table-bordered">
+	                    <tbody>
+	                        <tr>
+	                            <th>카테고리</th>
+	                            <td>
+	                                <select name="" id="">
+	                                    <option value="">공지</option>
+	                                    <option value="">이벤트</option>
+	                                    <option value="">대회정보</option>
+	                                </select>
+	                            
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <th>제목</th>
+	                            <td><input type="text"></td>
+	                        </tr>
+	                        <tr>
+	                            <th>내용</th>
+	                            <td>
+	                                <textarea class="editor" name="" id=""></textarea>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <th>첨부파일</th>
+	                            <td><input type="file"></td>
+	                        </tr>
+	                    </tbody>                  
+	                </table>
+                </form>     
+                
               </div>
+              
+              <div class="enroll-btn-area">
+              	<button class="btn btn-secondary" onclick="history.back();">취소</button>
+              	<button type="submit" class="btn btn-primary">등록</button>
+              </div>
+              
+              
+              
         </div>
 
 
     </div>
 
-	
+
+	<jsp:include page="../common/footer.jsp" />
 
 
 

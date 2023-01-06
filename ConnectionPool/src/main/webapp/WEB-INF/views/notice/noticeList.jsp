@@ -7,24 +7,7 @@
 <meta charset="UTF-8">
 <title>공지사항</title>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
 	<style>
-
-        div {
-            box-sizing: border-box;
-            border: solid 1px red;
-        }
-
-
-        .admin-outer {
-            margin-left: 150px;
-            width: 1000px;
-            height: 100%;
-        }
 
 
         .notice-title h2 {
@@ -82,10 +65,10 @@
 </head>
 <body>
 
+	<jsp:include page="../common/menubar_nosearch.jsp" />
 
 
-
-	<div class="admin-outer">   
+	<div class="outer">   
         <div class="notice-title">
 
             <h2>공지사항</h2>
@@ -115,7 +98,7 @@
         </div>
         <div class="notice-table">
             <div class="container">
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover" id="noticeTable">
                     <thead>
                         <tr>
                             <th width="10%">번호</th>
@@ -126,21 +109,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr class="clickTr">
                             <td>3</td>
                             <td>공지</td>
                             <td class="title">공지사항 테스트</td>
                             <td>2021-05-03</td>
                             <td>10</td>
                         </tr>
-                        <tr>
+                        <tr class="clickTr">
                             <td>2</td>
                             <td>이벤트</td>
                             <td class="title">공지사항 2</td>
                             <td>2021-05-03</td>
                             <td>10</td>
                         </tr>
-                        <tr>
+                        <tr class="clickTr">
                             <td>1</td>
                             <td>대회공지</td>
                             <td class="title">공지사항 1</td>
@@ -154,8 +137,7 @@
         </div>
 
         <div class="notice-hidden">
-            <a href="#" class="btn btn-sm btn-primary">글작성</a>
-
+            <a href="noticeEnrollForm.ad" class="btn btn-sm btn-primary">글작성</a>
 
         </div>
 
@@ -168,13 +150,33 @@
                 <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
             </ul>
         </div>
-        
-
-
 
 
     </div>
 
+
+	<jsp:include page="../common/footer.jsp" />
+
+	
+	<script>
+	
+	
+		$(function() {
+			
+			$('#noticeTable tbody .clickTr').click(function() {
+				location.href = "detail.no";		
+			});
+			
+			
+			
+			
+		});
+	
+	
+	
+	
+	
+	</script>
 
 
 

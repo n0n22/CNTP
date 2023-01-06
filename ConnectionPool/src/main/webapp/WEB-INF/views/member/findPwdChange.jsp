@@ -114,9 +114,7 @@
                 </div>
                 <div><button type="submit">비밀번호 재설정</button></div>
               
-                <div>
-                    <div><a href="loginForm.me">로그인</a></div>
-                </div>
+               	<div></div>
             </form>
         </div>
     </div>

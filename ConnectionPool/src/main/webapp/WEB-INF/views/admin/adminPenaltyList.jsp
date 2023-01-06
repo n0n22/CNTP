@@ -10,18 +10,12 @@
 
 <style>
 
-	div {
-		border: solid 1px red;
-	}
 
 	.report-outer {
-		
 		margin-left : 150px;
 		height : 90%;
 
 		padding: 20px;
-		
-
 	}
 
 	.report-btn-area {
@@ -30,11 +24,13 @@
 
 
 	.report-table-area {
-
 		padding: 20px;
-
 	}
 
+	
+	.page-area {
+		padding: 20px;
+	}
 	
 
 
@@ -58,8 +54,8 @@
     
         
         <div class="report-btn-area">
-            <a href="#" class="btn btn-secondary">신고글 목록</a>
-            <a href="#" class="btn btn-secondary">패널티 대상 목록</a>
+            <a href="reportList.ad" class="btn btn-secondary">신고글 목록</a>
+            <a href="penaltyList.ad" class="btn btn-secondary">패널티 대상 목록</a>
 
             
         </div>
@@ -102,26 +98,83 @@
                             <td>탈퇴</td>
                             <td>2022-10-05</td>
                         </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>3</td>
+                            <td>user02</td>
+                            <td>10</td>
+                            <td>탈퇴</td>
+                            <td>2022-10-05</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>3</td>
+                            <td>user02</td>
+                            <td>10</td>
+                            <td>탈퇴</td>
+                            <td>2022-10-05</td>
+                        </tr>
                     </tbody>
                 </table>
                 <a href="#" class="btn btn-danger">처리</a>
             </div>
-
+			<div class="page-area">
+				<ul class="pagination justify-content-center">
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">&lt;</a></li>
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+	                <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
+            	</ul>
+			</div>
 
         </div>
 
-
-
-    
-    
-    
-        
         
     </div>
         
         
     <jsp:include page="../common/footer.jsp" />
     
+
+	<script>
+	
+	
+		$(function() {
+			
+			
+			// 전체 checkbox 클릭 시 체크 + 해제
+			$('.report-table-area thead').on('click', 'input[type=checkbox]', function() {
+
+				if($(this).is(':checked')) {
+					$('.report-table-area tbody input[type=checkbox]').each(function() {
+						$(this).attr('checked', true);
+					});
+				}
+				else {
+					$('.report-table-area tbody input[type=checkbox]').each(function() {
+						$(this).attr('checked', false);
+					});
+				}
+			});	
+		
+			// 일부 checkbox 클릭 시 전체 체크 해제
+
+			
+			
+			
+			
+		});
+	
+	
+	
+	
+	
+	
+	</script>
+
+
+
 
 
 
