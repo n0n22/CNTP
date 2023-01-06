@@ -104,8 +104,8 @@
         width: 100px;
         margin-left: 8px;
         margin-top: 0px;
-
     }
+
     #birth-select-area > select {
         font-family: 'Pretendard-Regular';
         height: 40px;
@@ -163,6 +163,7 @@
             <form action="" method="post" class="enroll-form">
                     <div>  
                         <!-- 아이디 -->
+                        <!-- ajax로 중복확인할것-->
                         <div><input type="text" id="userId" name="" maxlength="12" required placeholder="아이디를 입력해주세요"></div>
                         <label class="checkResult" id="idCheck">&nbsp;</label>
                     </div>
@@ -180,6 +181,13 @@
                         <label class="checkResult" id="pwdCheck2">&nbsp;</label>
                     </div>
 
+                    <div>  
+                        <!-- 닉네임 -->
+                        <!-- ajax로 중복확인할것-->
+                        <div><input type="text" id="userNickName" name="" maxlength="12" required placeholder="닉네임 입력해주세요"></div>
+                        <label class="checkResult" id="nickNameCheck">&nbsp;</label>
+                    </div>
+                  
                     <div>
                         <!-- 이름 -->
                         <div>
@@ -243,14 +251,14 @@
                             <select name="address" id="addressForm">
                                 <option value="시/도 선택" hidden="" disabled="disabled" selected="selected" >시/도 선택</option>
                                 <option value="Seoul">서울특별시</option>
-                                <option value="Gyeonggi-do">경기도</option>
-                                <option value="Gangwon-do">강원도</option>
-                                <option value="Chungcheongbuk-do">충청북도</option>
-                                <option value="Chungcheongnam-do">충청남도</option>
-                                <option value="Jeollabuk-do">전라북도</option>
-                                <option value="Jeollanam-do">전라남도</option>
-                                <option value="Gyeongsangbuk-do">경상북도</option>
-                                <option value="Gyeongsangnam-do">경상남도</option>
+                                <option value="Gyeonggi">경기도</option>
+                                <option value="Gangwon">강원도</option>
+                                <option value="Chungbuk">충청북도</option>
+                                <option value="Chungnam">충청남도</option>
+                                <option value="Jeonabuk">전라북도</option>
+                                <option value="Jeonnam">전라남도</option>
+                                <option value="Gyeongbuk">경상북도</option>
+                                <option value="Gyeongnam">경상남도</option>
                             </select>
                             <input type="text" name="detailAddress" placeholder="활동 지역을 입력하세요(읍,면,동)" required style="width: 200px;">
                         </div>
