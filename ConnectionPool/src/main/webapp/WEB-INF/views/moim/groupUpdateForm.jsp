@@ -43,7 +43,7 @@
 				</tr>
 				<tr>
 					<th>썸네일</th>
-					<td><input type="text">이거 파일 어케 하더라 기억이 안나</td>
+					<td><input type="text"></td>
 				</tr>
 				<tr>
 					<th>내용</th>
