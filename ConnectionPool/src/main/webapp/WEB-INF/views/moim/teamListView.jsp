@@ -83,11 +83,15 @@
 			</div>
 			
 			<div align="right">
-				<button>팀 만들기</button>
+				<a href="teamEnrollFrom.mo">팀 만들기</a>
 			</div>
 			
 		</div>
 	</div>
+	
+	<br>
+	
+	<jsp:include page="../common/footer.jsp"/>
 
 	<script>
 		$(function(){
