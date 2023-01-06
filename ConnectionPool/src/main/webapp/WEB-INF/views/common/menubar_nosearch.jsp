@@ -186,8 +186,8 @@
             <section class="user-menu">
                 <ul class="user-list">
                     <!-- 로그인 XXX 시작-->
-                    <!-- <li class="login">로그인</li> -->
-
+                    <li class="login"><a href="loginForm.me">로그인</a></li>
+					
 
 
 
