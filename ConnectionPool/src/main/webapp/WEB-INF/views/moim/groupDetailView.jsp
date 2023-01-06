@@ -196,7 +196,7 @@
 	        	
 	            <br>
 	
-	        	<button>채팅입장</button>
+	        	<a href="chattingRoom.mo">채팅하기</a>
 	        	<a href="groupUpdateForm.mo">수정하기</a>
 	        </div>
 		</div>
