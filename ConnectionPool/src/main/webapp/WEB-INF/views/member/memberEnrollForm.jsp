@@ -160,7 +160,7 @@
 
             <h1 align="center" id="enroll-text">회원가입</h1>
     
-            <form action="" method="post" class="enroll-form">
+            <form action="memberInsert.me" method="post" class="enroll-form">
                     <div>  
                         <!-- 아이디 -->
                         <!-- ajax로 중복확인할것-->

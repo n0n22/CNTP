@@ -111,7 +111,7 @@
 
 			<div class="find-id">
 
-				<form action="" class="find-id-form" method="post">
+				<form action="findId.me" class="find-id-form" method="post">
 					<h1 id="main-text">아이디 찾기</h1>
 					<div>
 						<div><input type="text" name="findName" placeholder="이름을 입력해주세요"></div>
@@ -124,9 +124,9 @@
 					<div><button type="submit" id="fid-btn">아이디 찾기</button></div>
 					
 					<div>
-						<div><a href="">로그인</a></div>
+						<div><a href="loginForm.me">로그인</a></div>
 						<div></div>
-						<div><a href="">비밀번호 찾기</a></div>
+						<div><a href="findPwdForm.me">비밀번호 찾기</a></div>
 					</div>
 				</form>
 		
