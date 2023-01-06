@@ -159,9 +159,9 @@
         <div class="outer-bottom">
             <div class="submit-area">
                 <br>
-                <button class="">결과작성</button>
-                <button class="">승인</button>
-                <button class="">이의제기</button>
+                <button class="btn btn-primary">결과작성</button>
+                <button class="btn btn-info">승인</button>
+                <button class="btn btn-warning">이의제기</button>
             </div>
         </div>
     </div>

@@ -83,5 +83,13 @@ public class MoimController {
 		return mv;
 	}
 	
+	@RequestMapping("badgeShop.mo")
+	public ModelAndView badgeShop(ModelAndView mv) {
+		
+		mv.setViewName("moim/badgeBuyPage");
+		
+		return mv;
+	}
+	
 
 }
