@@ -176,7 +176,7 @@
                     </div>
                 </div>
                 <ul class="landing-list">
-                    <li><a href="teamEnrollForm.mo">친목풀</a></li>
+                    <li><a href="teamList.mo">친목풀</a></li>
                     <li>배틀풀</li>
                     <li>커뮤니티</li>
                     <li>공지사항</li>
