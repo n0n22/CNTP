@@ -21,6 +21,10 @@
 	.teamUpdateFormTable textarea{
 		height:100px;
 	}
+	
+	.teamUpdateFormTable th{
+		text-align: center;
+	}
 
 </style>
 </head>

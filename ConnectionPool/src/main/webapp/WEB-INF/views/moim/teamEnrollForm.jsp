@@ -30,6 +30,10 @@
 	.teamEnrollFormTable textarea{
 		height:100px;
 	}
+	
+	.teamEnrollFormTable th{
+		text-align: center;
+	}
 
 </style>
 </head>

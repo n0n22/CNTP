@@ -96,7 +96,7 @@
 	            </div>
 	
 	            <div class="group-info">
-	                <table border="1">
+	                <table>
 	                    <tr>
 	                        <td width="150">닉네임</td>
 	                        <td width="150">꾸꾸리삐</td>
@@ -115,7 +115,7 @@
 				<br>
 				
 				<div class="apply-area" align="right">
-					<button>채팅하기</button>
+					<a href="chattingRoom.mo">채팅하기</a>
 					<button>신청/대기/완료</button>
 				</div>
 				
