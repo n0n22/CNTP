@@ -9,12 +9,6 @@
 
 	<style>
 
-        .admin-outer {
-            margin-left: 150px;
-            height: 100%;
-            padding: 20px;
-        }
-
 
         .notice-title h2 {
             text-align: center;
@@ -74,7 +68,7 @@
 	<jsp:include page="../common/menubar_nosearch.jsp" />
 
 
-	<div class="admin-outer">   
+	<div class="outer">   
         <div class="notice-title">
 
             <h2>공지사항</h2>

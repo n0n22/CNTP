@@ -37,6 +37,12 @@
             width: 700px;
             padding: 10px;
         }
+        
+        .enroll-btn-area {
+        	text-align: center;
+        	padding: 20px;
+        }
+        
 
 
     </style>
@@ -47,7 +53,7 @@
 <body>
 
 
-	<jsp:include page="../common/menubar_nosearch.jsp" />
+	<jsp:include page="../common/menubar_nosearch.jsp" />=
 
 
     <div class="admin-outer">
@@ -60,41 +66,47 @@
         </div>
         <div class="notice-enroll">
             <div class="container">
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <th>카테고리</th>
-                            <td>
-                                <select name="" id="">
-                                    <option value="">공지</option>
-                                    <option value="">이벤트</option>
-                                    <option value="">대회정보</option>
-                                </select>
-                            
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>제목</th>
-                            <td><input type="text"></td>
-                        </tr>
-                        <tr>
-                            <th>내용</th>
-                            <td>
-                                <textarea class="editor" name="" id=""></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>첨부파일</th>
-                            <td><input type="file"></td>
-                        </tr>
-
-
-                    </tbody>
-
-
-                  
-                </table>
+            	<form>
+	                <table class="table table-bordered">
+	                    <tbody>
+	                        <tr>
+	                            <th>카테고리</th>
+	                            <td>
+	                                <select name="" id="">
+	                                    <option value="">공지</option>
+	                                    <option value="">이벤트</option>
+	                                    <option value="">대회정보</option>
+	                                </select>
+	                            
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <th>제목</th>
+	                            <td><input type="text"></td>
+	                        </tr>
+	                        <tr>
+	                            <th>내용</th>
+	                            <td>
+	                                <textarea class="editor" name="" id=""></textarea>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <th>첨부파일</th>
+	                            <td><input type="file"></td>
+	                        </tr>
+	                    </tbody>                  
+	                </table>
+                </form>     
+                
               </div>
+              
+              <div class="enroll-btn-area">
+              	<button class="btn btn-secondary" onclick="history.back();">취소</button>
+              	<button type="submit" class="btn btn-primary">등록</button>
+              </div>
+              
+              
+              
         </div>
 
 

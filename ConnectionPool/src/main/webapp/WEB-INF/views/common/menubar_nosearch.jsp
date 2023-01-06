@@ -157,7 +157,7 @@
     }
 
     .login{
-        font-family: 'Pretendard-Regular';
+        font-family:'Pretendard-Regular';
         font-style: normal;
     }
 
@@ -188,15 +188,12 @@
                 <ul class="user-list">
                     <!-- 로그인 XXX 시작-->
                     <li class="login"><a href="loginForm.me">로그인</a></li>
-					
-
-
-
+					<!-- 관리자페이지 넣으니까 로그인이 작동이안되네요 ?? 왜인진 모르겠서요 -->
                     <!-- 로그인 XXX 끝-->
 
                     <!-- 로그인 되어있을때 시작 -->
-                    <li class="username"><a href="memberList.ad">관리자 페이지</a></li>
-                    <li class="username"  data-toggle="modal" data-target="#myModal">커풀님</li>
+                    <a href="memberList.ad">관리자 페이지</a>
+                    <li class="username" data-toggle="modal" data-target="#myModal">커풀님</li>
                     <li><div><a href="myPageInfo.me">마이페이지</a></div></li>
                     <li class="logout">로그아웃</li>
                     <div class="basket-icon">

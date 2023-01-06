@@ -17,11 +17,6 @@
 
     <style>
 
-        .admin-outer {
-            margin-left: 150px;
-            height: 100%;
-        }
-
 
         .notice-title h2 {
             text-align: center;
@@ -53,10 +48,10 @@
 <body>
 
 
+	<jsp:include page="../common/menubar_nosearch.jsp" />
 
 
-
-    <div class="admin-outer">
+    <div class="outer">
 
         <div class="notice-title">
 
@@ -66,7 +61,7 @@
         </div>
         <div class="notice-enroll">
             <div class="container">
-                <table class="table">
+                <table class="table table-bordered">
                     <tbody>
                         <tr>
                             <th>카테고리</th>
@@ -107,7 +102,7 @@
     </div>
 
 
-
+	<jsp:include page="../common/footer.jsp" />
 
 
 

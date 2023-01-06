@@ -90,11 +90,25 @@ public class AdminController {
 	
 	
 	
+	
+	
+	
+//------------------------------------------
+//  공지 관련 기능 
+//-------------------------------------------
 
 
+	// 공지 작성 페이지로 이동
 	@RequestMapping("noticeEnrollForm.ad")
 	public String noticeEnrollForm() {
 		return "admin/adminNoticeEnrollForm";
+	}
+	
+	
+	// 공지 수정 페이지로 이동
+	@RequestMapping("noticeUpdateForm.ad")
+	public String noticeUpdateForm() {
+		return "admin/adminNoticeUpdateForm";
 	}
 	
 	
