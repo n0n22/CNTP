@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>술렁술렁 마이페이지</title>
+<title>ConnectionPool 마이페이지</title>
 <style>
     @font-face {
         font-family: 'Pretendard-Regular';
@@ -242,7 +242,7 @@
             </div>
             <div>
                 <ul id="top-ul">
-                    <li><a id="click" href="">회원정보</a></li>
+                    <li><a id="click" href="myPageInfo.me">회원정보</a></li>
                     <li><a href="">출석체크</a></li>
                     <li><a href="">작성글 보기</a></li>
                     <li><a href="">수영일기</a></li>
@@ -262,7 +262,7 @@
                     
                     <div>
                         <div class="subText">이름</div>
-                        <div><input type="text" name="userName" id="userName2" value="" maxlength="5" required placeholder="이름을 입력해주세요"></div>
+                        <div><input type="text" name="userName" id="userName2" value="" maxlength="5" required readonly></div>
                         <label class="checkResult" id="nameCheck">&nbsp;</label>
                     </div>
 
@@ -272,6 +272,15 @@
                         <!-- <td><button type="button" id="idCheck-btn">중복확인</button></td> -->
                         <label class="checkResult" id="idCheck">&nbsp;</label>
                     </div>
+
+                    <div>  
+                        <!-- 닉네임 -->
+                        <!-- ajax로 중복확인할것-->
+                        <div class="subText">닉네임</div>
+                        <div><input type="text" id="userNickName" name="" maxlength="12" required placeholder=""></div>
+                        <label class="checkResult" id="nickNameCheck">&nbsp;</label>
+                    </div>
+                  
 
                     <div>
                         <div class="subText">휴대전화</div>
@@ -288,7 +297,7 @@
 
                     <div>
                         <div class="subText">비밀번호 확인</div>
-                        <div><input type="password" id="userPwd2" maxlength="15" disabled placeholder=""></div>
+                        <div><input type="password" id="userPwd2" maxlength="15"  placeholder=""></div>
                         <label class="checkResult" id="pwdCheck2">&nbsp;</label>
                     </div>
 
@@ -314,15 +323,15 @@
                         <div>
                             <select name="address" id="addressForm">
                                 <option value="시/도 선택" hidden="" disabled="disabled" selected="selected" >시/도 선택</option>
-                                <option value="">서울</option>
-                                <option value="">경기도</option>
-                                <option value="">강원도</option>
-                                <option value="">충청북도</option>
-                                <option value="">충청남도</option>
-                                <option value="">전라북도</option>
-                                <option value="">전라남도</option>
-                                <option value="">경상북도</option>
-                                <option value="">경상남도</option>
+                                <option value="Seoul">서울</option>
+                                <option value="Gyeonggi">경기도</option>
+                                <option value="Gangwon">강원도</option>
+                                <option value="Chungbuk">충청북도</option>
+                                <option value="Chungnam">충청남도</option>
+                                <option value="Jeonabuk">전라북도</option>
+                                <option value="Jeonnam">전라남도</option>
+                                <option value="Gyeongbuk">경상북도</option>
+                                <option value="Gyeongnam">경상남도</option>
                             </select>
                             <input type="text" name="detailAddress" placeholder="상세 지역 (읍,면,동)" required style="width: 200px;">
                         </div>
@@ -336,7 +345,7 @@
                 </form>
 
                 <div><hr></div>
-                <div id="delete-btn"><a href="">탈퇴하기</a></div>
+                <div id="delete-btn"><a href="deleteForm.me">탈퇴하기</a></div>
             </div>
         </div>
 
