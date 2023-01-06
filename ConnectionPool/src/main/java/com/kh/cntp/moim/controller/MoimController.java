@@ -74,5 +74,21 @@ public class MoimController {
 		return mv;
 	}
 	
+	@RequestMapping("chattingRoom.mo")
+	public ModelAndView cahttingRoom(ModelAndView mv/*, int teamNo*/) {
+		// teamNo 이용해서 채팅방 보내주기~
+		
+		mv.setViewName("moim/chatView");
+		
+		return mv;
+	}
+	
+	@RequestMapping("badgeShop.mo")
+	public ModelAndView badgeShop(ModelAndView mv) {
+		
+		mv.setViewName("moim/badgeBuyPage");
+		
+		return mv;
+	}
 
 }

@@ -39,11 +39,11 @@
 	
 	    <table align="center" border="1" class="teamUpdateFormTable">
 	        <tr height="50">
-	            <th>팀 이름<br>
-	            <td>
+	            <th width="150">팀 이름<br>
+	            <td width="300">
 					우리팀이름					
 	            </td>
-	            <td></td>
+	            <td width="150"></td>
 	        </tr>
 	        <tr height="50">
 	            <th>팀 인원</th>
