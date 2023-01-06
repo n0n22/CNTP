@@ -57,7 +57,7 @@ public class MoimController {
 	}
 	
 	@RequestMapping("teamUpdateForm.mo")
-	public ModelAndView updateTeamInfo(ModelAndView mv/*, int teamNo*/) {
+	public ModelAndView teamUpdateForm(ModelAndView mv/*, int teamNo*/) {
 		// teamNo 사용해서 team 정보를 가지고서 updateForm으로 이동
 		
 		mv.setViewName("moim/teamUpdateForm");
@@ -91,5 +91,9 @@ public class MoimController {
 		return mv;
 	}
 	
-
+	@RequestMapping("groupList.mo")
+	public String selectGroupList() {
+		return "moim/groupListView";
+		
+	}
 }
