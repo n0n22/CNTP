@@ -96,4 +96,12 @@ public class MoimController {
 		return "moim/groupListView";
 		
 	}
+	
+	@RequestMapping("groupDetail.mo")
+	public ModelAndView selectGroup(ModelAndView mv/*, int groupNo*/) {
+		
+		mv.setViewName("moim/groupDetailView");
+		
+		return mv;
+	}
 }
