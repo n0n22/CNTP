@@ -84,7 +84,7 @@
         
         <div class="find-pwd-area">
 
-            <form action="" method="post" class="find-pwd-form">
+            <form action="findPwdCert.me" method="post" class="find-pwd-form">
                 <h1 id="main-text">비밀번호 찾기</h1>
                 <div>
                     <div><input type="text" name="findId" placeholder="아이디를 입력해주세요"></div>
@@ -95,8 +95,8 @@
                 <div><button type="submit">본인인증</button></div>
 
                 <div>
-                    <div><a href="">로그인</a></div>
-                    <div><a href="" id="find-pwd">아이디 찾기</a></div>
+                    <div><a href="loginForm.me">로그인</a></div>
+                    <div><a href="findId.me" id="find-pwd">아이디 찾기</a></div>
                 </div>
             </form>
         </div>

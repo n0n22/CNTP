@@ -35,6 +35,10 @@
 </head>
 <body>
 
+	<jsp:include page="../common/menubar_nosearch.jsp"/>
+	
+	<br>
+
 	<div class="outer" align="center">
 
 		<img width="80%" height="300px" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbhd1qW%2FbtqUnLpjyqL%2FsRwVDDHp0keOfVq1nKDb11%2Fimg.jpg">
@@ -131,6 +135,10 @@
 		</div>
 		
 	</div>
+	
+	<br>
+	
+	<jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>

@@ -48,6 +48,11 @@ public class MoimController {
 		return mv;
 	}
 	
+	@RequestMapping("teamEnrollFrom.mo")
+	public String teamEnrollFrom() {
+		return "moim/teamEnrollForm";
+	}
+	
 	@RequestMapping("teamUpdateForm.mo")
 	public ModelAndView updateTeamInfo(ModelAndView mv/*, int teamNo*/) {
 		// teamNo 사용해서 team 정보를 가지고서 updateForm으로 이동
@@ -65,5 +70,6 @@ public class MoimController {
 		
 		return mv;
 	}
+	
 
 }

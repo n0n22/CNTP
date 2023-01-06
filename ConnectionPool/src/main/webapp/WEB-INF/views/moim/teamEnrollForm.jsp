@@ -15,6 +15,7 @@
 		padding-top: 5px;
 		padding-bottom: 5px;
 	}
+	
 	.teamEnrollFormTable input[type=text], select, textarea{
 		width: 95%;
 		height: 100%;
@@ -35,14 +36,17 @@
 <body>
 
 	
+	<jsp:include page="../common/menubar_nosearch.jsp"/>
 	
+	<br>
 
 	<div class="outer" align="center">
 	
-		<h4 align="center">팀을 생성하여 팀원들을 모집하고 배틀에 참가해보세요!</h4>
-	
-	
 	    <h3 align="center">팀 만들기 신청</h3>
+	    
+	    <br>
+	    
+		<h6 align="center">팀을 생성하여 팀원들을 모집하고 배틀에 참가해보세요!</h6>
 	    
 		<!-- th태그들 안은 당연하게 중앙 정렬이라 후에 왼쪽 정렬 바꿔주자 -->
 	    <table align="center" border="1" class="teamEnrollFormTable">
@@ -54,9 +58,9 @@
 	            <td></td>
 	        </tr>
 	        <tr height="50">
-	            <th>팀 인원</th>
-	            <td>
-	                <input type="number" name="teamMember" max="12" min="2">
+	            <th width="200">팀 인원</th>
+	            <td width="400">
+	                <input type="number" name="teamMember" max="12" min="2">명
 	            </td>
 	            <td></td>
 	        </tr>
@@ -129,7 +133,11 @@
 	        <input type="checkbox"> 위 내용을 숙지하고 동의합니다. <br><br>
 	        <a href="#">취소하기</a> <button>팀 생성하기</button>
 	    </div>
-	
+
 	</div>
+	
+	<br><br>
+	
+	<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>
