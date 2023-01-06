@@ -6,6 +6,16 @@
 <meta charset="UTF-8">
 <title>탈퇴 완료</title>
 <style>
+	@font-face {
+        font-family: 'Pretendard-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+        font-weight: 400;
+        font-style: normal;
+    }
+    body{
+        font-family: 'Pretendard-Regular';
+    }
+
     .outer {
         background-color: rgb(244, 244, 244);
         height: 700px;
