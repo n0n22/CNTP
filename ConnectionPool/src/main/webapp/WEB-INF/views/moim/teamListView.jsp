@@ -63,6 +63,10 @@
 		
 		</div>
 		
+		<div align="right">
+			<button>팀 만들기</button>
+		</div>
+		
 	</div>
 	
 	
