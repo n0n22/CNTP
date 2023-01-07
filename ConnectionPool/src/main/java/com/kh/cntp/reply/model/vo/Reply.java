@@ -8,7 +8,7 @@ import lombok.Data;
 public class Reply {
 	private int commentNo;
 	private int diaryNo;
-	private int writer;
+	private String writer;
 	private String commentContent;
 	private Date commentDate;
 	private String status;
