@@ -30,7 +30,7 @@
         background-color: white;
 
         width: 770px;
-        height: 1000px;
+        height: 1100px;
         padding: 90px 50px;
         border-radius: 10px;
         box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
@@ -42,7 +42,7 @@
         align-items: center;
     }
     .enroll-form>div {
-        margin: 20px;
+        margin: 10px;
     }
     .enroll-form input {
         height: 40px;
@@ -54,6 +54,7 @@
         border-top: 0.5px;
         border-left: 0.5px;
         border-right: 0.5px;
+        font-size: 13px;
     }
     .enroll-form button {
         font-family: 'Pretendard-Regular';
@@ -68,7 +69,7 @@
         margin-top: 20px;
      }
     .enroll-form button:hover {
-        background-color: rgb(28,154,206);
+        background-color: rgb(29, 172, 233);
         cursor: pointer;
     }
     #enroll-text{
@@ -98,9 +99,18 @@
         border-top: 0.5px;
         border-left: 0.5px;
         border-right: 0.5px;
+        font-size: 13px;
     }
     #emailCert-btn {
         background-color: rgb(28,154,206);
+        width: 100px;
+        margin-left: 8px;
+        margin-top: 0px;
+    }
+
+    #emailCert-btn:hover {
+        background-color: rgb(29, 172, 233);
+        cursor: pointer;
         width: 100px;
         margin-left: 8px;
         margin-top: 0px;
@@ -114,6 +124,7 @@
         border-top: 0.5px;
         border-left: 0.5px;
         border-right: 0.5px;
+        font-size: 13px;
     }
     .birthdate {
         padding-left: 10px;
@@ -131,8 +142,13 @@
         border-top: 0.5px;
         border-left: 0.5px;
         border-right: 0.5px;
-        
+        font-size: 13px;
     }
+
+    #addressForm > select {
+        font-size: 13px;
+    }
+
 
     #addressForm .option {
         outline: 0 none;
@@ -148,12 +164,34 @@
         border-top: 0.5px;
         border-left: 0.5px;
         border-right: 0.5px;
+        font-size: 13px;
+    }
+
+    .levelForm{
+        font-family: 'Pretendard-Regular';
+        width: 110px;
+        height: 40px;
+        padding: 5px;
+        border-color: rgb(223, 223, 223);
+        border-top: 0.5px;
+        border-left: 0.5px;
+        border-right: 0.5px;
+        font-size: 13px;
+
+    }
+
+    .swimLevel{
+        padding-left: 10px;
+        font-size: 13px;
+        color: RGB(117,117,117);
     }
     
 </style>
 </head>
 <body>
-  
+
+  	<jsp:include page="../common/menubar_nosearch.jsp"/>
+  	
     <div class="outer">
         
         <div class="enroll-area">
@@ -216,7 +254,6 @@
                         <!-- 휴대전화 -->
                         <div style="display: inline-block;"><input type="text" name="phone" maxlength="13" required oninput="this.value=this.value.replace(/[^-0-9]/g,'');" placeholder="핸드폰번호를 입력해주세요 - 포함"></div>
                         <!-- <div style="display: inline-block;"><button type="button" id="phoneCheck-btn" onclick="phoneCheck();">인증번호 발송</button></div> -->
-                        <div><label>&nbsp;</label></div>
                     </div>
 
                     <div>
@@ -262,10 +299,25 @@
                             </select>
                             <input type="text" name="detailAddress" placeholder="활동 지역을 입력하세요(읍,면,동)" required style="width: 200px;">
                         </div>
-                        <div><label>&nbsp;</label></div>
                     </div>
 
-                    <div align="center" style="margin-top: 30px;">
+                    <div>
+                        <!-- 등급 -->
+                        <div>
+                            <div class="swimLevel">수영 실력을 선택해주세요. 팀가입과 소모임에 나타나요
+                                <select class="levelForm">
+                                    <option value="등급" hidden="" disabled="disabled" selected="selected" >등급선택</option>
+                                    <option value="B">초급</option>
+                                    <option value="M">중급</option>
+                                    <option value="S">고급</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                   
+
+
+                    <div align="center">
                         <div><button type="submit" id="enroll-btn" onclick="checkForm();">가입하기</button></div>
                     </div>
 
@@ -353,7 +405,8 @@
             </form>
         </div>
     </div>
-
+	
+	<jsp:include page="../common/footer.jsp"/>
     
 
 </body>

@@ -94,7 +94,7 @@
         font-weight: bold;
     }
     #click {
-        color: rgb(255, 175, 188);
+    	color: rgb(28,154,206);
     }
     #point-text {
         font-size: 18px;
@@ -159,7 +159,19 @@
     .del-area button {
         font-family: 'Pretendard-Regular';
         font-size: 18px;
-        background-color: RGB(63,72,107);
+        background-color: RGB(28,154,206);
+        color: white;
+        height: 40px;
+        width: 150px;
+        border-radius: 5px;
+        border: none;
+        margin: 5px;
+    }
+
+    .del-area button:hover {
+        font-family: 'Pretendard-Regular';
+        font-size: 18px;
+        background-color: rgb(29, 172, 233);
         color: white;
         height: 40px;
         width: 150px;
@@ -181,6 +193,8 @@
 
 </head>
 <body>
+
+	<jsp:include page="../../common/menubar_nosearch.jsp"/>
 
     <div class="outer">
         <div class="top-bar">
@@ -264,6 +278,8 @@
         </div>
 
     </div>
+    
+    <jsp:include page="../../common/footer.jsp"/>
 
 </body>
 </html>

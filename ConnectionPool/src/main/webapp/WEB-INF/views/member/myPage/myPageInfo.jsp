@@ -130,7 +130,7 @@
         justify-content: center;
         align-items: center;
 
-        height: 750px;
+        height: 1000px;
         margin-bottom: 30px;
         margin-top: 80px;
     }
@@ -149,9 +149,7 @@
         font-size: 15px;
 
     }
-    #info-form>div{
-        height: 300px;
-    }
+   
     .info-area button {
         font-family: 'Pretendard-Regular';
         font-size: 15px;
@@ -225,9 +223,24 @@
         outline: 0 none;
         
     }
+
+    #levelForm{
+        height: 40px;
+        width: 200px;
+        padding: 10px;
+        box-sizing: border-box;
+        font-family: 'Pretendard-Regular';
+        border-color: rgb(223, 223, 223);
+        border-top: 0.5px;
+        border-left: 0.5px;
+        border-right: 0.5px;
+
+    }
 </style>
 </head>
 <body>
+
+	<jsp:include page="../../common/menubar_nosearch.jsp"/>
 
     <div class="outer">
         <div class="top-bar">
@@ -334,6 +347,25 @@
                         </div>
                         <div><label>&nbsp;</label></div>
                     </div>
+
+                    
+                    <div>
+                        <div class="subText">수영 등급</div>
+                        <div>
+                            <input type="text" name="swimLevel" value="초급" required style="width: 200px;">
+
+                            <select name="levelForm" id="levelForm">
+                                <option value="등급" hidden="" disabled="disabled" selected="selected" >등급변경</option>
+                                <option value="B">초급</option>
+                                <option value="M">중급</option>
+                                <option value="S">고급</option>
+                            </select>
+                            
+                        </div>
+                        <div><label>&nbsp;</label></div>
+                    </div>
+               
+
 					<br><br>
 					<div>
 						<div class="subText">개인정보 수정을 위해서는 본인 확인이 필요합니다.</div>
@@ -445,6 +477,7 @@
             }
         }
     </script>
-
+    
+	<jsp:include page="../../common/footer.jsp"/>
 </body>
 </html>
