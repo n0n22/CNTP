@@ -42,6 +42,13 @@
         }
 
 
+	    .admin-outer {
+            margin-left: 150px;
+            height: 100%;
+            padding: 25px;
+        }
+	
+
 
 
     </style>

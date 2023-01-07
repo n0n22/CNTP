@@ -14,10 +14,6 @@
             box-sizing: border-box;
         }
 
-        .banner-outer {
-            margin-left: 150px;
-        }
-
         .banner-image {
             padding: 30px;
         }
@@ -55,30 +51,20 @@
 	
 
 
-    <div class="banner-outer">
+    <div class="admin-outer">
         
         <div class="banner-image">
             
-            <div class="banner-image-container">
-                <div class="img-thumbnail">
-                    <img  width="500" src="https://media.istockphoto.com/id/1224108634/ko/%EB%B2%A1%ED%84%B0/%EC%97%AC%EB%A6%84-%EC%88%98%EC%98%81%EC%9E%A5-%ED%8C%8C%ED%8B%B0-%EC%B4%88%EB%8C%80-%EB%B0%B0%EB%84%88%EC%9E%85%EB%8B%88%EB%8B%A4-%EC%95%BC%EC%9E%90%EC%88%98-%EC%9E%8E%EA%B3%BC-%EC%88%98%EC%98%81%EC%9E%A5-%EC%88%98%EB%A0%88%EA%B0%80%EC%9E%88%EB%8A%94-%EC%88%98%EC%98%81%EC%9E%A5.jpg?s=1024x1024&w=is&k=20&c=KjU-kl4id1DWT5MYjY-D_wPZweMzJiQjVY3jxYwMu6U=" alt="">
-                </div>
-                <button type="button" class="btn btn-primary btn-sm btn-block">보이기</button>
-            </div>
-
-            <div class="banner-image-container">
-                <div class="img-thumbnail">
-                    <img  width="500" src="https://media.istockphoto.com/id/1224108634/ko/%EB%B2%A1%ED%84%B0/%EC%97%AC%EB%A6%84-%EC%88%98%EC%98%81%EC%9E%A5-%ED%8C%8C%ED%8B%B0-%EC%B4%88%EB%8C%80-%EB%B0%B0%EB%84%88%EC%9E%85%EB%8B%88%EB%8B%A4-%EC%95%BC%EC%9E%90%EC%88%98-%EC%9E%8E%EA%B3%BC-%EC%88%98%EC%98%81%EC%9E%A5-%EC%88%98%EB%A0%88%EA%B0%80%EC%9E%88%EB%8A%94-%EC%88%98%EC%98%81%EC%9E%A5.jpg?s=1024x1024&w=is&k=20&c=KjU-kl4id1DWT5MYjY-D_wPZweMzJiQjVY3jxYwMu6U=" alt="">
-                </div>
-                <button type="button" class="btn btn-secondary btn-sm btn-block">숨기기</button>
-            </div>
-
-            <div class="banner-image-container">
-                <div class="img-thumbnail">
-                    <img  width="500" src="https://media.istockphoto.com/id/1224108634/ko/%EB%B2%A1%ED%84%B0/%EC%97%AC%EB%A6%84-%EC%88%98%EC%98%81%EC%9E%A5-%ED%8C%8C%ED%8B%B0-%EC%B4%88%EB%8C%80-%EB%B0%B0%EB%84%88%EC%9E%85%EB%8B%88%EB%8B%A4-%EC%95%BC%EC%9E%90%EC%88%98-%EC%9E%8E%EA%B3%BC-%EC%88%98%EC%98%81%EC%9E%A5-%EC%88%98%EB%A0%88%EA%B0%80%EC%9E%88%EB%8A%94-%EC%88%98%EC%98%81%EC%9E%A5.jpg?s=1024x1024&w=is&k=20&c=KjU-kl4id1DWT5MYjY-D_wPZweMzJiQjVY3jxYwMu6U=" alt="">
-                </div>
-                <button type="button" class="btn btn-secondary btn-sm btn-block">숨기기</button>
-            </div>
+            <c:if test="${ not empty list }">
+            	<c:forEach var="banner" items="list">
+		            <div class="banner-image-container">
+		                <div class="img-thumbnail">
+		                    <img  width="500" src="${ banner.changeName }">
+		                </div>
+		                <button type="button" class="btn btn-primary btn-sm btn-block">보이기</button>
+		            </div>
+            	</c:forEach>            
+            </c:if>
 
             <br clear="both">
         </div>
@@ -89,12 +75,29 @@
                 <a href="bannerEnrollForm.ad" class="btn btn-primary">등록</a>
             </div>
             <div class="banner-page">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item"><a class="page-link" href="javascript:void(0);">&lt;</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
-                </ul>
+	        	<ul class="pagination">
+	               	<c:choose>
+	                	<c:when test="${ pi.currentPage eq 1 }">
+	                    	<li class="page-item disabled"><a class="page-link">Previous</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<li class="page-item"><a class="page-link" href="list.bo?${ pi.currentPage - 1 }">Previous</a></li>
+	                    </c:otherwise>
+	                </c:choose>
+	                   
+	                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+	                   	<li class="page-item"><a class="page-link" href="list.bo?cpage=${ cpage }">${ cpage }</a></li>
+	                </c:forEach>
+	                   
+					<c:choose>
+	                	<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    <li class="page-item disabled"><a class="page-link">Next</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+		                    <li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage + 1 }">Next</a></li>
+	                    </c:otherwise>
+	                </c:choose>
+				</ul>
             </div>
             <div class="banner-hidden">
 

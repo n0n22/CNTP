@@ -109,13 +109,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="clickTr">
-                            <td>${ noticeNo }</td>
-                            <td>${ category }</td>
-                            <td class="title">${ title }</td>
-                            <td>${ createDate }</td>
-                            <td>${ count }</td>
-                        </tr>
+                    	<c:if test="${ not empty list }">
+                    		
+                    		<c:forEach var="notice" items="list" >
+		                        <tr class="clickTr">
+		                            <td>${ notice.noticeNo }</td>
+		                            <td>${ notice.category }</td>
+		                            <td class="title">${ title }</td>
+		                            <td>${ notice.createDate }</td>
+		                            <td>${ notice.count }</td>
+		                        </tr>
+                    		
+                    		
+                    		</c:forEach>
+                    	
+                    	</c:if>
                        
                     </tbody>
                 </table>
@@ -132,27 +140,26 @@
         	<ul class="pagination">
                	<c:choose>
                 	<c:when test="${ pi.currentPage eq 1 }">
-                    	<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                    	<li class="page-item disabled"><a class="page-link">Previous</a></li>
                     </c:when>
                     <c:otherwise>
                     	<li class="page-item"><a class="page-link" href="list.bo?${ pi.currentPage - 1 }">Previous</a></li>
                     </c:otherwise>
-                   </c:choose>
+                </c:choose>
                    
-                   <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-                   	<li class="page-item"><a class="page-link" href="list.bo?cpage=${ p }">${ p }</a></li>
-                   </c:forEach>
+                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+                   	<li class="page-item"><a class="page-link" href="list.bo?cpage=${ cpage }">${ cpage }</a></li>
+                </c:forEach>
                    
-                   <c:choose>
+				<c:choose>
                 	<c:when test="${ pi.currentPage eq pi.maxPage }">
-	                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+	                    <li class="page-item disabled"><a class="page-link">Next</a></li>
                     </c:when>
                     <c:otherwise>
 	                    <li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage + 1 }">Next</a></li>
                     </c:otherwise>
-                   </c:choose>
-                   
-            </ul>
+                </c:choose>
+			</ul>
         </div>
 
 
@@ -167,6 +174,8 @@
 	
 		$(function() {
 			
+			
+			// 행을 클릭하면 상세보기
 			$('#noticeTable tbody .clickTr').click(function() {
 				location.href = "detail.no";		
 			});

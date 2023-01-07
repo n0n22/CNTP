@@ -9,9 +9,6 @@
 
     <style>
 
-        .member-list-area {
-            margin-left: 150px;
-        }
 
         .member-header {
             text-align: center;
@@ -19,7 +16,7 @@
 
         .member-header>div {
             display: inline-block;
-            width: 20%;
+            width: 50%;
         }
 
         .member-search-area {
@@ -28,6 +25,15 @@
 
 		.page-area {
 			padding: 15px;
+		}
+		
+		.search-condition, .search-keyword {
+			display: inline-block;
+		}
+		
+		.order-select {
+			width: 150px;
+			padding: 10px;
 		}
 
 
@@ -45,18 +51,18 @@
 	
 
 
-    <div class="member-list-area">
+    <div class="admin-outer">
         <div class="member-header">
             <div class="member-search-area">
                 <form>
                 	<div class="search-condition">
-	                    <select name="" id="">
-	                        <option value="">이름</option>
-	                        <option value="">아이디</option>
-	                        <option value="">닉네임</option>
+	                    <select name="searchCondition" class="custom-select">
+	                        <option value="name">이름</option>
+	                        <option value="id">아이디</option>
+	                        <option value="nickname">닉네임</option>
 	                    </select>
                     </div>
-                    <div>
+                    <div class="search-keyword">
 	                    <div class="input-group mb-3">
 	                        <input type="text" class="form-control" placeholder="Search">
 	                        <div class="input-group-append">
@@ -71,7 +77,7 @@
             </div>
             <div class="order-area">
                 <div class="order-select" align="right">
-                    <select name="" id="">
+                    <select name="" id="" class="custom-select">
                         <option>이름↑</option>
                         <option>이름↓</option>
                         <option>패널티↑</option>
