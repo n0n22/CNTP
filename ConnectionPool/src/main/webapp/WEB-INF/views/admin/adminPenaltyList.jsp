@@ -62,10 +62,10 @@
         <div class="report-table-area">
 
             <div class="container">
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover" id="penaltyTable">
                     <thead>
                         <tr>
-                            <th width="10%"><input type="checkbox"></th>
+                            <th width="10%"><input type="checkbox" id="checkAll"></th>
                             <th width="15%">회원번호</th>
                             <th width="20%">아이디</th>
                             <th width="10%">누적신고</th>
@@ -144,22 +144,41 @@
 			
 			
 			// 전체 checkbox 클릭 시 체크 + 해제
-			$('.report-table-area thead').on('click', 'input[type=checkbox]', function() {
-
-				if($(this).is(':checked')) {
-					$('.report-table-area tbody input[type=checkbox]').each(function() {
-						$(this).attr('checked', true);
+			$('#penaltyTable thead').on('click', '#checkAll', function() {
+				
+				if($(this).prop('checked')) {
+					$('#penaltyTable tbody input[type=checkbox]').each(function() {
+						$(this).prop('checked', true);
 					});
 				}
 				else {
-					$('.report-table-area tbody input[type=checkbox]').each(function() {
-						$(this).attr('checked', false);
+					$('#penaltyTable tbody input[type=checkbox]').each(function() {
+						$(this).prop('checked', false);
 					});
 				}
 			});	
 		
 			// 일부 checkbox 클릭 시 전체 체크 해제
-
+			$('#penaltyTable tbody').on('click', 'input[type=checkbox]', function() {
+				if(!$(this).prop('checked')) {
+					$('#checkAll').prop('checked', false);
+				} 
+				else {
+					var checked = 0;
+					$('#penaltyTable tbody input[type=checkbox]').each(function() {
+						if(!$(this).prop('checked')) {
+							checked++;
+						}
+					});
+					if(checked == 0) {
+						$('#checkAll').prop('checked', true);
+					}
+					
+				}
+				
+			});
+			
+			
 			
 			
 			
