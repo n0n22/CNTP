@@ -110,26 +110,13 @@
                     </thead>
                     <tbody>
                         <tr class="clickTr">
-                            <td>3</td>
-                            <td>공지</td>
-                            <td class="title">공지사항 테스트</td>
-                            <td>2021-05-03</td>
-                            <td>10</td>
+                            <td>${ noticeNo }</td>
+                            <td>${ category }</td>
+                            <td class="title">${ title }</td>
+                            <td>${ createDate }</td>
+                            <td>${ count }</td>
                         </tr>
-                        <tr class="clickTr">
-                            <td>2</td>
-                            <td>이벤트</td>
-                            <td class="title">공지사항 2</td>
-                            <td>2021-05-03</td>
-                            <td>10</td>
-                        </tr>
-                        <tr class="clickTr">
-                            <td>1</td>
-                            <td>대회공지</td>
-                            <td class="title">공지사항 1</td>
-                            <td>2021-05-03</td>
-                            <td>10</td>
-                        </tr>
+                       
                     </tbody>
                 </table>
             </div>
@@ -142,12 +129,29 @@
         </div>
 
         <div class="notice-foot">
-            <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">&lt;</a></li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
+        	<ul class="pagination">
+               	<c:choose>
+                	<c:when test="${ pi.currentPage eq 1 }">
+                    	<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                    </c:when>
+                    <c:otherwise>
+                    	<li class="page-item"><a class="page-link" href="list.bo?${ pi.currentPage - 1 }">Previous</a></li>
+                    </c:otherwise>
+                   </c:choose>
+                   
+                   <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+                   	<li class="page-item"><a class="page-link" href="list.bo?cpage=${ p }">${ p }</a></li>
+                   </c:forEach>
+                   
+                   <c:choose>
+                	<c:when test="${ pi.currentPage eq pi.maxPage }">
+	                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                    </c:when>
+                    <c:otherwise>
+	                    <li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage + 1 }">Next</a></li>
+                    </c:otherwise>
+                   </c:choose>
+                   
             </ul>
         </div>
 
