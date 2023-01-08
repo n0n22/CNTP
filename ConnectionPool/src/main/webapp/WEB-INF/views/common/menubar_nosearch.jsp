@@ -27,6 +27,10 @@
     div{
         box-sizing: border-box;
     }
+    .outer{
+    	min-height: 550px;
+    	
+    }
     .header{
         width: 100%;
         max-height: 80px;
@@ -178,7 +182,7 @@
                 <ul class="landing-list">
                     <li><a href="teamList.mo">친목풀-팀</a></li>
                     <li><a href="groupList.mo">친목풀-소그룹</a></li>
-                    <li>배틀풀</li>
+                    <li><a href="battleList.bt">배틀풀</a></li>
                     <li>커뮤니티</li>
                     <li><a href="list.no">공지사항</a></li>
                 </ul>

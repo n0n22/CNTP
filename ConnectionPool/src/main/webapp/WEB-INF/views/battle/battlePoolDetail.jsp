@@ -8,35 +8,55 @@
 <title>배틀풀 상세보기</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <style>
-    h3 {
-        text-align: center;
-    }
+	body{
 
-    .outer div th {
-        width: 100px;
-        text-align: right;
-    }
-    .content-area {
-        width: 100%;
-    }
-
-    div.left {
-        height: 200px;
-        width: 49.5%;
-        float: left;
-        box-sizing: border-box;
-        border: 1px solid rgb(28,154,206);
-        border-radius: 30px;
-    }
-    div.right {
-        height: 200px;
-        width: 49.5%;
-        float: right;
-        box-sizing: border-box;
-        border: 1px solid rgb(28,154,206);
-        border-radius: 30px;
-    }
-  
+	background-color: #eee;
+	}
+	
+	.project{
+		font-size: 18px;
+	}
+	
+	.totals{
+	
+		font-size: 10px;
+	}
+	
+	.fs-10{
+	
+		font-size: 10px;
+	}
+	
+	.content{
+	
+		font-size: 13px;
+	}
+	
+	.alpha{
+	
+		padding:6px;
+	    font-size: 10px;
+		
+		border-radius: 50%;
+		height: 10px;
+		width: 10px;
+	}
+	
+	.alpha-red{
+	    
+	    color:#D50000;
+	    background-color: #EF9A9A;
+	    border: 1px solid #EF9A9A;
+	
+	}
+	
+	.alpha-green{
+	    
+	    color:#4A148C;
+	    background-color: #E1BEE7;
+	    border: 1px solid #E1BEE7;
+	
+	}
 
     /* 배틀 모달 스타일 */
     .message-background {
@@ -77,7 +97,7 @@
 
         /* 임시 지정 */
         width: 480px;
-        height: 330px;
+        height: 480px;
 
         /* 초기에 약간 아래에 배치 */
         transform: translate(-50%, -50%);
@@ -98,134 +118,335 @@
 
 	<jsp:include page="../common/menubar_nosearch.jsp"/>
 	
-    <div class="outer">
+<div class="outer">
 
-        <div class="image-area">
-            <img src="">
-        </div>
-        <div class="content-area">
-            <div class="left">
-                <h3>배틀 포인트</h3>
-                <div>
-                    <table>
-                        <tr>
-                            <th>레벨 : </th>
-                            <td>무관</td>
-                        </tr>
-                        <tr>
-                            <th>종목 : </th>
-                            <td>4:4 혼영</td>
-                        </tr>
-                        <tr>
-                            <th>성별 : </th>
-                            <td>무관</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="right">
-                <h3>배틀 장소 및 시간</h3>
-                <div>
-                    <table>
-                        <tr>
-                            <th>시간 : </th>
-                            <td>2023년 1월 3일 화요일 11:00</td>
-                        </tr>
-                        <tr>
-                            <th>지역 : </th>
-                            <td>서울시</td>
-                        </tr>
-                        <tr>
-                            <th>장소 : </th>
-                            <td>서울특별시 영등포구 선유로 138</td>
-                        </tr>
-                        <tr>
-                            <th>지도 : </th>
-                            <td><button>지도보기</button></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <br clear="both">
-            <br>
-
-            <div class="left">
-                <h3>배틀 팀 정보</h3>
-                <div>
-                    <table>
-                        <tr>
-                            <th>팀명 : </th>
-                            <td>팀어벤져스</td>
-                        </tr>
-                        <tr>
-                            <th>전적 : </th>
-                            <td>16전 13승 3패 (승률 81.5%)</td>
-                        </tr>
-
-                    </table>
-                </div>
-            </div>
-            <div class="right">
-                <h3>배틀 경기장</h3>
-                <div>
-                    <table>
-                        <tr>
-                            <th>길이 : </th>
-                            <td>50미터</td>
-                        </tr>
-                        <tr>
-                            <th>폭 : </th>
-                            <td>21미터</td>
-                        </tr>
-                        <tr>
-                            <th>깊이 : </th>
-                            <td>2미터</td>
-                        </tr>
-                        <tr>
-                            <th>레인 : </th>
-                            <td>8개</td>
-                        </tr>
-                        <tr>
-                            <th>수영복 대여 : </th>
-                            <td><b>가능</b>/불가능</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <br clear="both">
-            <br>
-            <div class="left">
-                <h3>배틀 규칙</h3>
-                <div style="display: flex;">
-                    <div style="margin : auto; width:90%; height : 120px; overflow: auto;">
-                        SW 4.1 자유형, 평영, 접영 그리고 개인혼영에서 출발은 다이브로 한다. 심판장이 호각을 길게 불면(SW2.1.5) 선수들은 출발대 위에 올라 서 있는다. 스타터가 “차렷(take your marks)"하고 구령하면 곧 선수들은 출발대 앞에 적어도 한 발을 두고 출발 자세를 취한다. 손의 위치는 상관없다. 모든 선수들의 자세가 정지 하였을 때 스타터는 출발신호를 한다.
+	<div class="container mt-5">
+	
+		<div class="d-flex justify-content-between">
+	
+			<div>
+	
+				<span class="font-weight-bold project">배틀풀 상세보기</span>
+				
+			</div>
+	
+			
+		</div>
+	
+	
+		<div class="bg-white border rounded mt-2">
+	
+			<div class=" px-3 mt-3 d-flex flex-row justify-content-between">
+	
+				<span>제목 입력하는 곳</span>
+				
+			</div>
+	
+			<hr>
+	
+			<div class="row px-5 mb-3" style="height: 400px">
+	
+				
+	
+				<img src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg" width="100%" height="100%">
+				
+	
+	
+				
+	
+	
+				
+				
+			</div>
+	
+		</div>
+	
+	
+		     <div class="row mb-5">
+	
+	
+					<div class="col-md-6 mt-3">
+	
+						<div class="bg-white p-3 rounded border">
+							<h6>배틀 포인트</h6>
+							<p class="text-black-50 content mb-5">
+							레벨, 종목, 성별응 꼭 확인해 주세요.
+							</p>
+	
+							<div class="d-flex flex-row">
+	
+								<div class="mr-4">
+									
+									<span>레벨</span>
+									<div class="mt-1">
+										<span class="text-black-50">무관</span>
+									</div>
+	
+								</div>
+	
+	
+								<div class="mr-4">
+									
+									<span>종목</span>
+									<div class="mt-2">
+										<span class="text-black-50">4:4 혼영</span>
+										
+									</div>
+	
+	
+								</div>
+	
+	
+								<div class="mr-4">
+									
+									<span>성별</span>
+									<div class="mt-2">
+										<span class="text-black-50">무관</span>
+									</div>
+	
+								</div>
+	
+	
+							</div>
+							
+						</div>
+						
+	
+					</div>
+	
+	
+					<div class="col-md-6 mt-3">
+	
+						<div class="bg-white p-3 rounded border">
+						<h6>배틀 시간 및 장소</h6>
+						<p class="text-black-50 content mb-5">
+						배틀 시간 및 장소를 꼭 확인해 주세요.
+						</p>
+	
+						<div class="d-flex flex-row">
+	
+							<div class="mr-4">
+								
+								<span>시간</span>
+								<div class="mt-1">
+									<span class="text-black-50">2023년 1월 3일 11:00</span>
+								</div>
+							</div>
+	
+	
+							<div class="mr-4">
+								
+								<span>지역</span>
+								<div class="mt-2">
+									<span class="text-black-50">서울</span>
+									
+								</div>
+	
+	
+							</div>
+	
+	
+							<div class="mr-4">
+								
+								<span>장소</span>
+								<div class="mt-2">
+									<span class="text-black-50">서울 특별시 영등포구 선유로 138</span>
+								</div>
+	
+							</div>
+							
+	
+						</div>
+						
+					</div>
+					
+	
+			    	</div>
+	
+	
+			    	<div class="col-md-6 mt-3">
+	
+						<div class="bg-white p-3 rounded border">
+						<h6>배틀 팀 정보</h6>
+						<p class="text-black-50 content mb-5">
+						배틀 팀 정보를 확인하세요.
+						</p>
+	
+						<div class="d-flex flex-row">
+	
+							<div class="mr-4">
+								
+								<span>팀명</span>
+								<div class="mt-1">
+									<span class="text-black-50">어벤져스</span>
+								</div>
+	
+							</div>
+	
+	
+							<div class="mr-4">
+								
+								<span>전적</span>
+								<div class="mt-2">
+									<span class="text-black-50">16전 13승 3패(승률 81.5%)</span>
+									
+								</div>
+	
+	
+							</div>
+	
+							
+	
+						</div>
+						
+					</div>
+					
+	
+			    	</div>
+	
+	
+			    	<div class="col-md-6 mt-3">
+	
+						<div class="bg-white p-3 rounded border">
+						<h6>배틀 경기장</h6>
+						<p class="text-black-50 content mb-5">
+							경기장 길이, 폭, 깊이, 레인, 수영복 대여 여부를 확인하세요.
+						</p>
+	
+						<div class="d-flex flex-row">
+	
+							<div class="mr-4">
+								
+								<span>길이</span>
+								<div class="mt-1">
+									<span class="text-black-50">50미터</span>
+								</div>
+	
+							</div>
+	
+	
+							<div class="mr-4">
+								
+								<span>폭</span>
+								<div class="mt-2">
+									<span class="text-black-50">21미터</span>
+								</div>
+	
+	
+							</div>
+	
+							<div class="mr-4">
+								
+								<span>길이</span>
+								<div class="mt-2">
+									<span class="text-black-50">2미터</span>
+								</div>
+	
+	
+							</div>
+	
+							<div class="mr-4">
+								
+								<span>레인</span>
+								<div class="mt-2">
+									<span class="text-black-50">8게</span>
+								</div>
+	
+	
+							</div>
+	
+	
+							<div class="mr-4">
+								
+								<span>수영복 대여</span>
+								<div class="mt-2">
+									<span class="text-black-50">가능</span>
+								</div>
+	
+							</div>
+							
+	
+						</div>
+						
+					</div>
+					
+	
+			    	</div>
+	
+			    	<div class="col-md-6 mt-3">
+	
+						<div class="bg-white p-3 rounded border">
+						<h6>배틀 규칙</h6>
+						<p class="text-black-50 content mb-5">
+						                        SW 4.1 자유형, 평영, 접영 그리고 개인혼영에서 출발은 다이브로 한다. 심판장이 호각을 길게 불면(SW2.1.5) 선수들은 출발대 위에 올라 서 있는다. 스타터가 “차렷(take your marks)"하고 구령하면 곧 선수들은 출발대 앞에 적어도 한 발을 두고 출발 자세를 취한다. 손의 위치는 상관없다. 모든 선수들의 자세가 정지 하였을 때 스타터는 출발신호를 한다.
     SW 4.2 배영 및 혼계영에서의 출발은 물속에서 한다. 심판장의 첫 번째 긴 호각소리에 따라(SW2.1.5) 선수들은 즉각 물 속으로 들어가야 한다. 심판장의 두 번째 긴 호각 소리에 지체하지 말고 출발 자세로 들어가야 한다.(SW6.1) 모든 선수들이 출발 자세를 취했다고 인정되면 스타터는 “차렷(take your marks)”라는 구령을 한다. 모든 선수들의 자세가 정지하면 스타터는 출발 신호를 한다.
     
     SW 4.3 어느 선수든지 출발 신호전에 출발을 하면 실격을 당한다. 출발 신호 후 선수의 부정 출발이 확인되어도 역영은 계속되며 그 선수는 역영을 끝내고 실격을 당한다. 만약에 출발신호 전에 실격이 선언되면 스타터는 출발 신호를 해서는 안 되며 남은 선수들을 불러서 다시 시작한다.
-                    </div>
-                </div>
+						</p>
+						
+					</div>
+					
+	
+			    	</div>
+	
+	
+			    	<div class="col-md-6 mt-3">
+	
+						<div class="bg-white p-3 rounded border">
+						<h6>배틀 신청 및 결과보기</h6>
+						<p class="text-black-50 content mb-5">
+							신청은 팀장만 할 수 있습니다.
+						</p>
+	
+						<div class="d-flex flex-row">
+	
+							<div class="mr-4">
+								
+								<span>신청</span>
+								<div class="mt-1">
+									<span class="alpha alpha-red show">신청</span>
+								</div>
+	
+							</div>
+	
+	
+							<div class="mr-4">
+								
+								<span>결과보기</span>
+								<div class="mt-2">
+									<span class="alpha alpha-green" onclick="location.href='battleResult.bt'">결과보기</span>
+								</div>
+	
+	
+							</div>
+	
+	
+							<div class="mr-4">
+								
+								<span>채팅방 입장</span>
+								<div class="mt-2">
+									<span class="alpha alpha-red">채팅방</span>
+								</div>
+	
+							</div>
+							
+	
+						</div>
+						
+					</div>
+					
+	
+			    	</div>
+				
+	
+	
+			</div>
+		
+	</div>
 
-            </div>
-            <div class="right" style="text-align: center;">
-                <h3>배틀 신청 및 결과보기</h3>
-                <div style="display: inline-block;">
-                    <button class="show">신청</button> <button>결과보기</button>
-                    <!--
-                        신청한 사람에게는
-                        <button>취소</button>
-                        신청한 사람이외 + 날짜가 지나면
-                        <button>마감</button>
-                    -->
-                    <br><br>
-                    <!--
-                        게시글 작성자 + 신청한 사람
-                    -->
-                    <button>채팅방 입장</button>
-                </div>
-                
-            </div>
-        </div>
-     </div>
+
+
+</div>
      
      <jsp:include page="../common/footer.jsp"/>
 
@@ -234,7 +455,6 @@
 			<div class="message-popup">
 				<div class="message-area" align="center">
 					<h3>배틀 신청</h3>
-					<hr>
 					<br>
 					<textarea id="msgContent" rows="10"
 						style="width: 400px; resize: none;" placeholder="도발 멘트를 입력해 주세요."></textarea>
