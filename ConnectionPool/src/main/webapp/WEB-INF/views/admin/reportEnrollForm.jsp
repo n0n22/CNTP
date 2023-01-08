@@ -30,14 +30,23 @@
 		</div>
 		<div class="target-area">
 			<p>
-				작성자 : ㅎㅎㅎ
+				작성자 : ${ test }
 				<br>
 				글내용 : ㅎㅎㅎㅎ
 			</p>
 		</div>
-		<
+		
+		<form action="" method="post">
+			<div class="reason-area">
+				<input type="radio" name="reason" id="reason1"><label for="reason1">스팸/홍보</label><br>
+				<input type="radio" name="reason" id="reason2"><label for="reason2">욕설/비방</label><br>
+				<input type="radio" name="reason" id="reason3"><label for="reason3">개인정보노출</label><br>
+			</div>
+			<div class="button-area">
+				<button type="submit" class="btn btn-danger">신고</button>
+			</div>
 
-
+		</form>
 
 
 
