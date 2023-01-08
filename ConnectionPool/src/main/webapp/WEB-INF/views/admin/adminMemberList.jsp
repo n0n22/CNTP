@@ -150,14 +150,43 @@
 
         </div>
 
+		<form id="reportvalue">
+			<input type="hidden" value="hello" name="test">
+		</form>
 
+	    <button class="btn btn-sm btn-danger" onclick="openReportForm();">신고</button>
 
     </div>
+    
 
     
 
     	
 	<jsp:include page="../common/footer.jsp" />
+
+
+
+	<script>
+		
+		function openReportForm() {
+							
+			window.open('', '신고', 'width=300, height=500, resizable=no, location=yes, menubar=yes, scrollbar=yes');
+			
+			reportvalue.action = 'reportForm';
+			reportvalue.target = '신고';
+			reportvalue.method = 'post';
+			reportvalue.submit();
+				
+		};
+		
+	
+		
+	
+	
+	
+	
+	</script>
+
 
 
 </body>

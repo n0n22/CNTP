@@ -250,7 +250,7 @@ textarea{
 </head>
 <body>
 
-    <jsp:include page="" />
+   <jsp:include page="../common/menubar_nosearch.jsp" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <div class="container">
     <div class="page-inner no-page-title">
@@ -362,7 +362,7 @@ textarea{
             <!-- Row -->
         </div>
         <!-- end page main wrapper -->
-        <jsp:include page="" />
+       <jsp:include page="../common/footer.jsp" />
     </div>
     </div>
 
