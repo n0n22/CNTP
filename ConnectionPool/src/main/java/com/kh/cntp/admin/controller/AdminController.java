@@ -61,6 +61,15 @@ public class AdminController {
 		return "admin/adminPenaltyList";
 	}
 	
+	
+	
+	
+	
+	// 신고 등록 폼으로 이동
+	@RequestMapping("reportForm")
+	public String reportEnrollForm() {
+		return "admin/reportEnrollForm";
+	}
 
 	
 	

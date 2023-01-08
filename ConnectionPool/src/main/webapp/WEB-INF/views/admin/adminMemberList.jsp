@@ -151,13 +151,34 @@
         </div>
 
 
+	    <button class="btn btn-sm btn-danger" onclick="openReportForm();">신고</button>
 
     </div>
+    
 
     
 
     	
 	<jsp:include page="../common/footer.jsp" />
+
+
+
+	<script>
+		
+		function openReportForm() {
+							
+			window.open('http://localhost:8484/cntp/reportForm', '신고', 'width=300, height=500, resizable=no, location=yes, menubar=yes, scrollbar=yes');
+			
+		};
+		
+	
+		
+	
+	
+	
+	
+	</script>
+
 
 
 </body>
