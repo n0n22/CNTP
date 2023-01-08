@@ -14,20 +14,32 @@ public class myPageController {
 	}
 	
 	// 마이페이지 회원정보 수정
-	@RequestMapping("update.me")
+	@RequestMapping("myPageUpdate.me")
 	public String myPageInfoUpdate() {
 		return "redirect:mypage.me";
 	}
 	
 	// 마이페이지 회원탈퇴 페이지
-	@RequestMapping("deleteForm.me")
+	@RequestMapping("myPageDeleteForm.me")
 	public String myPageDeleteForm() {
 		return "member/myPage/myPageInfoDelete";
 	}
 	
 	// 마이페이지 회원탈퇴 결과페이지
-	@RequestMapping("delete.me")
+	@RequestMapping("myPageDelete.me")
 	public String myPageDelete() {
 		return "member/myPage/myPageInfoDeleteResult";
+	}
+	
+	// 마이페이지 포인트 내역 조회
+	@RequestMapping("myPagePoint.me")
+	public String myPagePoint() {
+		return "member/myPage/myPagePoint";
+	}
+	
+	// 마이페이지 작성글 조회
+	@RequestMapping("myPageBoard.me")
+	public String myPageBoard() {
+		return "member/myPage/myPageBoard";
 	}
 }

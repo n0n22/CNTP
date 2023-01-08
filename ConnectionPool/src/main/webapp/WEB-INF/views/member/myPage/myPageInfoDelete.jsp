@@ -238,7 +238,7 @@
                     </pre>
 
                     <div class="del-title" style="margin-top: 70px;">[회원 탈퇴 사유]</div>
-                    <form action="delete.me" method="post">
+                    <form action="myPageDelete.me" method="post">
                         <input type="hidden" name="userNo" value="">
                         <div class="del-select" align="center">
                             <select name="" id="">

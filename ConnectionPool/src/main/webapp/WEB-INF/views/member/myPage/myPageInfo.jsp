@@ -257,11 +257,11 @@
                 <ul id="top-ul">
                     <li><a id="click" href="myPageInfo.me">회원정보</a></li>
                     <li><a href="">출석체크</a></li>
-                    <li><a href="">작성글 보기</a></li>
+                    <li><a href="myPageBoard.me">작성글 보기</a></li>
                     <li><a href="">수영일기</a></li>
                     <li><a href="">나의팀 보기</a></li>
                     <li><a href="">소모임 보기</a></li>
-                    <li><a href="">포인트 조회</a></li>
+                    <li><a href="myPagePoint.me">포인트 조회</a></li>
                 </ul>
             </div>
         </div>
@@ -269,7 +269,7 @@
             <div id="title">회원 정보 관리</div>
                 <div id="title-line"><hr></div>
             <div class="info-area">
-                <form action="" method="post" id="info-form">
+                <form action="myPageUpdate.me" method="post" id="info-form">
 
                     <input type="hidden" name="userNo" value="\">
                     
@@ -390,7 +390,7 @@
                 </form>
 				<br><br>
                 <div><hr></div>
-                <div id="delete-btn"><a href="deleteForm.me">탈퇴하기</a></div>
+                <div id="delete-btn"><a href="myPageDeleteForm.me">탈퇴하기</a></div>
                 <div id="delete-btn"><a href="findPwdCert.me">비밀번호 변경 </a></div>
             </div>
         </div>
