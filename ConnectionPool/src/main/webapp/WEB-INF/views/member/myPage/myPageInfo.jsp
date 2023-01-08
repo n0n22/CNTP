@@ -260,7 +260,7 @@
                     <li><a href="myPageBoard.me">작성글 보기</a></li>
                     <li><a href="">수영일기</a></li>
                     <li><a href="">나의팀 보기</a></li>
-                    <li><a href="">소모임 보기</a></li>
+                    <li><a href="myPageMoim.me">소모임 보기</a></li>
                     <li><a href="myPagePoint.me">포인트 조회</a></li>
                 </ul>
             </div>

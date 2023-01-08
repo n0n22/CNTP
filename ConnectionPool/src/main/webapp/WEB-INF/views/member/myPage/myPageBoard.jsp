@@ -218,11 +218,11 @@
                 <ul id="top-ul">
                     <li><a  href="myPageInfo.me">회원정보</a></li>
                     <li><a href="">출석체크</a></li>
-                    <li><a href="">작성글 보기</a></li>
+                    <li><a id="click" href="myPageBoard.me">작성글 보기</a></li>
                     <li><a href="">수영일기</a></li>
                     <li><a href="">나의팀 보기</a></li>
-                    <li><a href="">소모임 보기</a></li>
-                    <li><a id="click" href="myPagePoint.me">포인트 조회</a></li>
+                    <li><a href="myPageMoim.me">소모임 보기</a></li>
+                    <li><a href="myPagePoint.me">포인트 조회</a></li>
                 </ul>
             </div>
         </div>
@@ -260,7 +260,6 @@
                                 <th width="50">작성자</th>
                                 <th width="50">작성일</th>
                                 <th width="20">조회수</th>
-                                <th width="20">좋아요</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -270,7 +269,6 @@
                                 <td>아무개</td>
                                 <td>2022-12-12</td>
                                 <td>35</td>
-                                <td>3</td>
                             </tr>
                             <tr>
                                 <td>2</td>
@@ -278,7 +276,6 @@
                                 <td>아무개</td>
                                 <td>2022-12-12</td>
                                 <td>35</td>
-                                <td>3</td>
                             </tr>
                             <tr>
                                 <td>2</td>
@@ -286,7 +283,6 @@
                                 <td>아무개</td>
                                 <td>2022-12-12</td>
                                 <td>35</td>
-                                <td>3</td>
                             </tr>
                             <tr>
                                 <td>2</td>
@@ -294,7 +290,6 @@
                                 <td>아무개</td>
                                 <td>2022-12-12</td>
                                 <td>35</td>
-                                <td>3</td>
                             </tr>
                             <tr>
                                 <td>2</td>
@@ -302,7 +297,6 @@
                                 <td>아무개</td>
                                 <td>2022-12-12</td>
                                 <td>35</td>
-                                <td>3</td>
                             </tr>
                         </tbody>
                     </table>

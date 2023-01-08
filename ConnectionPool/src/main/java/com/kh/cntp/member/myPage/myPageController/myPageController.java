@@ -42,4 +42,10 @@ public class myPageController {
 	public String myPageBoard() {
 		return "member/myPage/myPageBoard";
 	}
+	
+	// 마이페이지 소모임 조회
+	@RequestMapping("myPageMoim.me")
+	public String myPageMoim() {
+		return "member/myPage/myPageMoim";
+	}
 }
