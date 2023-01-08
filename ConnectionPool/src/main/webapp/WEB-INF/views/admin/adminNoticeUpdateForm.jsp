@@ -60,42 +60,52 @@
 
         </div>
         <div class="notice-enroll">
-            <div class="container">
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <th>카테고리</th>
-                            <td>
-                                <select name="" id="">
-                                    <option value="">공지</option>
-                                    <option value="">이벤트</option>
-                                    <option value="">대회정보</option>
-                                </select>
-                            
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>제목</th>
-                            <td><input type="text"></td>
-                        </tr>
-                        <tr>
-                            <th>내용</th>
-                            <td>
-                                <textarea class="editor" name="" id=""></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>첨부파일</th>
-                            <td><input type="file"></td>
-                        </tr>
-
-
-                    </tbody>
-
-
-                  
-                </table>
-              </div>
+        	<form method="post" action="noticeUpdate.ad">
+        	
+	            <div class="container">
+	                <table class="table table-bordered">
+	                    <tbody>
+	                        <tr>
+	                            <th>카테고리</th>
+	                            <td>
+	                                <select name="category">
+	                                    <option value="notice">공지</option>
+	                                    <option value="event">이벤트</option>
+	                                    <option value="competition">대회정보</option>
+	                                </select>
+	                            
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <th>제목</th>
+	                            <td><input type="text" name="title">${ notice.title }</td>
+	                        </tr>
+	                        <tr>
+	                            <th>내용</th>
+	                            <td>
+	                                <textarea class="editor" name="content">${ notice.content }</textarea>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <th>첨부파일</th>
+	                            <td><input type="file" name="upfile"></td>
+	                        </tr>
+	
+	
+	                    </tbody>
+	                  
+	                </table>
+	        	</div>
+	        	
+        		<div class="enroll-btn-area">
+	                <button type="button" class="btn btn-secondary" onclick="history.back();">취소</button>
+	                <button type="submit" class="btn btn-primary">수정</button>
+	            </div>
+        	
+        	
+        	</form>
+        
+        
         </div>
 
 
@@ -104,7 +114,27 @@
 
 	<jsp:include page="../common/footer.jsp" />
 
-
+	
+	<script>
+	
+		$(function() {
+			
+			$('option').each(function(){
+				if($(this).val() == ${ notice.category }) {
+					$(this).attr('selected', true);
+				}
+				
+			});
+			
+			
+		});
+	
+	
+	
+	</script>
+	
+	
+	
 
 </body>
 </html>

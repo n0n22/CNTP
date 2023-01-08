@@ -15,7 +15,6 @@
     body{
         font-family: 'Pretendard-Regular';
     }
-
    
     *>a {
         text-decoration: none;
@@ -64,6 +63,7 @@
         font-family: 'Pretendard-Regular';
         padding: 10px;
         box-sizing: border-box;
+        font-size: 13px;
     }
 
     .login-area .userInput {
@@ -110,7 +110,9 @@
     }
 </style>
 </head>
-<body>
+<body>	
+
+	<jsp:include page="../common/menubar_nosearch.jsp"/>
 
     <div class="outer" align="center">
         
@@ -135,7 +137,8 @@
             </div>
         </div>
     </div>
-
+	
+	<jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>

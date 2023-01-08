@@ -11,6 +11,7 @@ public class Notice {
 	private String content;		// 내용
 	private String writer;		// 작성자닉네임
 	private String createDate;	// 작성일
+	private int count;			// 조회수
 	private String originName;	// 원본파일명
 	private String changeName;	// 수정파일명
 	private String status;		// 상태

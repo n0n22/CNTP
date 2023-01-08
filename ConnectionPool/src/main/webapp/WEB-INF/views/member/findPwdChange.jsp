@@ -55,6 +55,7 @@
         border-top: 0.5px;
         border-left: 0.5px;
         border-right: 0.5px;
+        font-size:13px;
     }
     #main-text {
         /* margin: 50px; */
@@ -94,7 +95,8 @@
 </head>
 <body>
     
-
+	<jsp:include page="../common/menubar_nosearch.jsp"/>
+	
     <div class="outer" align="center">
         
         <div class="find-pwd-area">
@@ -119,6 +121,6 @@
         </div>
     </div>
 
-   
+   	<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

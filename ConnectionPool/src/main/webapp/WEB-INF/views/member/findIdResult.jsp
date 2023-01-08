@@ -82,6 +82,7 @@
 </head>
 <body>
    
+   	<jsp:include page="../common/menubar_nosearch.jsp"/>
 
     <div class="outer" align="center">
         
@@ -105,6 +106,7 @@
         </div>
     </div>
 
+	<jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>

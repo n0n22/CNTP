@@ -30,15 +30,10 @@
     .result-area{
         margin: auto;
         width: 770px;
-        height: 400px;
-
         padding: 80px;
-
         background-color: white;
         box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
-
         border-radius: 10px;
-
         font-size: 20px;
     }
     .result-area div{
@@ -74,6 +69,8 @@
 </head>
 <body>
 
+	<jsp:include page="../common/menubar_nosearch.jsp"/>
+
     <div class="outer" align="center">
         
         <div class="result-area">
@@ -92,7 +89,8 @@
             location.href="";
         }
     </script>
-
+	
+	<jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>

@@ -31,7 +31,6 @@
     .find-pwd-area{
         background-color: white;
 		width: 450px;
-        height: 350px;
 		padding: 100px 50px;
 
 		border-radius: 10px;
@@ -54,6 +53,7 @@
         border-top: 0.5px;
         border-left: 0.5px;
         border-right: 0.5px;
+        font-size: 13px;
         
         
     }
@@ -67,7 +67,7 @@
         height: 40px;
         border-radius: 7px;
         border: none;
-        font-size: 17px;
+        font-size: 16px;
         font-family: 'Pretendard-Regular';
     }
     .find-pwd-area button:hover {
@@ -83,10 +83,16 @@
         font-size: 12px;
     }
     
+    #emailCert-btn:hover {
+    	background-color: rgb(29, 172, 233);
+        cursor: pointer;
+    }
 </style>
 </head>
 <body>
-
+	
+	<jsp:include page="../common/menubar_nosearch.jsp"/>
+	
     <div class="outer" align="center">
         
         <div class="find-pwd-area">
@@ -113,6 +119,6 @@
         </div>
     </div>
 
-
+	<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

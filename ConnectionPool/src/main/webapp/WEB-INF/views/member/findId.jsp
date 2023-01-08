@@ -16,7 +16,7 @@
 	body{
         font-family: 'Pretendard-Regular';
     }
-	*>a {
+	a {
         text-decoration: none;
         color: rgb(47, 54, 82);
     }
@@ -72,6 +72,7 @@
         border-top: 0.5px;
         border-left: 0.5px;
         border-right: 0.5px;
+        font-size: 13px;
     }
 	.find-area button {
         background-color: RGB(28,154,206);
@@ -103,7 +104,7 @@
 </style>
 </head>
 <body>
-
+	<jsp:include page="../common/menubar_nosearch.jsp"/>
 
 	<div class="outer">
 
@@ -136,7 +137,7 @@
 
 	</div>
 	
-	
+	<jsp:include page="../common/footer.jsp"/>
 	
 	
 </body>

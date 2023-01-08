@@ -76,11 +76,11 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <td colspan="2" align="right">글번호 15  |  조회수 10  |  작성일시 2022-05-03</td>
+                            <td colspan="2" align="right">글번호 ${ notice.noticeNo }  |  조회수 ${ notice.count }  |  작성일시 ${ notice.createDate }</td>
                         </tr>
                         <tr>
                             <th width="20%">제목</th>
-                            <th width="80%">공지사항 1</th>
+                            <th width="80%">${ notice.title }</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,9 +88,7 @@
                             <td colspan="3">
                                 <img src="" alt="">
                                 <p>
-                                    되는 것이다 그들은 앞이 긴지라 착목한는 곳이 원대하고 그들은 피가 더운지라 실현에 대한 자신과 용기가 있다 그러므로 그들은 이상의 보배를 능히 품으며 그들의 이상은 아름답고 소담스러운 열매를 맺어 우리 인생을 풍부하게 하는
-
-
+                                    ${ notice.content }
                                 </p>
                             </td>
                         </tr>
@@ -99,11 +97,13 @@
             </div>
 	        <div class="notice-foot">
 	            <div class="notice-file">
-	                첨부파일 : <a href="" download="">공지사항.jpg</a>
+	                	첨부파일 : <a href="" download="${ originName }">${ originName }</a>
 	            </div>
 	            <div class="notice-hidden">
-	                <button type="button" class="btn btn-sm btn-danger">삭제</button>
-	                <a href="noticeUpdateForm.ad" class="btn btn-sm btn-warning">수정</a>
+	            	<c:if test="${ loginUser.memNo eq notice.memNo }">
+		                <button type="button" class="btn btn-sm btn-danger">삭제</button>
+		                <a href="noticeUpdateForm.ad" class="btn btn-sm btn-warning">수정</a>
+	                </c:if>
 	            </div>
 	            <div class="notice-list">
 	                <button class="btn btn-sm btn-secondary" onclick="history.back();">목록으로</button>

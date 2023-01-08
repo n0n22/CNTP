@@ -44,7 +44,7 @@
         align-items: center;
     }
     .result-area button {
-        background-color: RGB(63,72,107);
+        background-color: RGB(28,154,206);
         color: white;
         width: 250px;
         height: 50px;
@@ -54,7 +54,7 @@
         font-family: 'Pretendard-Regular';
     }
     .result-area button:hover {
-        background-color: rgb(47, 54, 82);
+        background-color: rgb(29, 172, 233);
         cursor: pointer;
     }
     #link-area {
@@ -68,12 +68,15 @@
     #result-content {
         margin-bottom: 50px;
     }
-    
+     #click {
+    	color: rgb(28,154,206);
+    }
 </style>
 </head>
 <body>
     
-
+	<jsp:include page="../../common/menubar_nosearch.jsp"/>
+	
     <div class="outer" align="center">
         
         <div class="result-area">
@@ -88,7 +91,8 @@
             location.href="";
         }
     </script>
-
+	
+	<jsp:include page="../../common/footer.jsp"/>
     
 
 </body>

@@ -109,27 +109,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="clickTr">
-                            <td>3</td>
-                            <td>공지</td>
-                            <td class="title">공지사항 테스트</td>
-                            <td>2021-05-03</td>
-                            <td>10</td>
-                        </tr>
-                        <tr class="clickTr">
-                            <td>2</td>
-                            <td>이벤트</td>
-                            <td class="title">공지사항 2</td>
-                            <td>2021-05-03</td>
-                            <td>10</td>
-                        </tr>
-                        <tr class="clickTr">
-                            <td>1</td>
-                            <td>대회공지</td>
-                            <td class="title">공지사항 1</td>
-                            <td>2021-05-03</td>
-                            <td>10</td>
-                        </tr>
+                    	<c:if test="${ not empty list }">
+                    		
+                    		<c:forEach var="notice" items="list" >
+		                        <tr class="clickTr">
+		                            <td>${ notice.noticeNo }</td>
+		                            <td>${ notice.category }</td>
+		                            <td class="title">${ title }</td>
+		                            <td>${ notice.createDate }</td>
+		                            <td>${ notice.count }</td>
+		                        </tr>
+                    		
+                    		
+                    		</c:forEach>
+                    	
+                    	</c:if>
+                       
                     </tbody>
                 </table>
             </div>
@@ -142,13 +137,29 @@
         </div>
 
         <div class="notice-foot">
-            <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">&lt;</a></li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
-            </ul>
+        	<ul class="pagination">
+               	<c:choose>
+                	<c:when test="${ pi.currentPage eq 1 }">
+                    	<li class="page-item disabled"><a class="page-link">Previous</a></li>
+                    </c:when>
+                    <c:otherwise>
+                    	<li class="page-item"><a class="page-link" href="list.bo?${ pi.currentPage - 1 }">Previous</a></li>
+                    </c:otherwise>
+                </c:choose>
+                   
+                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+                   	<li class="page-item"><a class="page-link" href="list.bo?cpage=${ cpage }">${ cpage }</a></li>
+                </c:forEach>
+                   
+				<c:choose>
+                	<c:when test="${ pi.currentPage eq pi.maxPage }">
+	                    <li class="page-item disabled"><a class="page-link">Next</a></li>
+                    </c:when>
+                    <c:otherwise>
+	                    <li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage + 1 }">Next</a></li>
+                    </c:otherwise>
+                </c:choose>
+			</ul>
         </div>
 
 
@@ -163,6 +174,8 @@
 	
 		$(function() {
 			
+			
+			// 행을 클릭하면 상세보기
 			$('#noticeTable tbody .clickTr').click(function() {
 				location.href = "detail.no";		
 			});

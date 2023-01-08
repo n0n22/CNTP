@@ -10,12 +10,6 @@
     <style>
         
 
-        .admin-outer {
-            margin-left: 150px;
-            height: 100%;
-            padding: 25px;
-        }
-
 
         .notice-title h2 {
             text-align: center;
@@ -65,45 +59,45 @@
 
         </div>
         <div class="notice-enroll">
-            <div class="container">
-            	<form>
+            <form action="noticeInsert.ad" method="post">
+            	<div class="container">
 	                <table class="table table-bordered">
 	                    <tbody>
 	                        <tr>
 	                            <th>카테고리</th>
 	                            <td>
-	                                <select name="" id="">
-	                                    <option value="">공지</option>
-	                                    <option value="">이벤트</option>
-	                                    <option value="">대회정보</option>
+	                                <select name="category">
+	                                    <option value="notice">공지</option>
+	                                    <option value="event">이벤트</option>
+	                                    <option value="competition">대회정보</option>
 	                                </select>
 	                            
 	                            </td>
 	                        </tr>
 	                        <tr>
 	                            <th>제목</th>
-	                            <td><input type="text"></td>
+	                            <td><input type="text" name="title"></td>
 	                        </tr>
 	                        <tr>
 	                            <th>내용</th>
 	                            <td>
-	                                <textarea class="editor" name="" id=""></textarea>
+	                                <textarea class="editor" name="content"></textarea>
 	                            </td>
 	                        </tr>
 	                        <tr>
 	                            <th>첨부파일</th>
-	                            <td><input type="file"></td>
+	                            <td><input type="file" name="upfile"></td>
 	                        </tr>
 	                    </tbody>                  
 	                </table>
-                </form>     
                 
-              </div>
+            	</div>
               
-              <div class="enroll-btn-area">
-              	<button class="btn btn-secondary" onclick="history.back();">취소</button>
-              	<button type="submit" class="btn btn-primary">등록</button>
-              </div>
+	            <div class="enroll-btn-area">
+	                <button type="button" class="btn btn-secondary" onclick="history.back();">취소</button>
+	                <button type="submit" class="btn btn-primary">등록</button>
+	            </div>
+			</form>     
               
               
               

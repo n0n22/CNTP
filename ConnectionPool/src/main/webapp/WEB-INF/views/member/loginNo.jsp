@@ -52,7 +52,7 @@
         box-sizing: border-box;
     }
     .login-area button {
-        background-color: RGB(63,72,107);
+        background-color: rgb(28,154,206);
         color: white;
         width: 250px;
         height: 50px;
@@ -62,7 +62,7 @@
         font-family: 'Pretendard-Regular';
     }
     .login-area button:hover {
-        background-color: rgb(47, 54, 82);
+        background-color: rgb(28,154,206);
         cursor: pointer;
     }
     #link-area {
@@ -83,6 +83,7 @@
 </head>
 <body>
     
+    <jsp:include page="../common/footer.jsp"/>
 
     <div class="outer" align="center">
         
@@ -114,6 +115,7 @@
         </div>
     </div>
 
+	<jsp:include page="../common/footer.jsp"/>
   
 
 </body>
