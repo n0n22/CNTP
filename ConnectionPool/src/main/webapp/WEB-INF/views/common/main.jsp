@@ -12,7 +12,7 @@
 	<jsp:include page="menubar_nosearch.jsp"/>
 	
 	
-	<div class="outer" style="height:550px">
+	<div class="outer">
 	
 	</div>
 	

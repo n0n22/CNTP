@@ -7,19 +7,67 @@
 <meta charset="UTF-8">
 <title>배틀풀 목록</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style>
+    .main-top{
+        width: 100%;
+        height: 120px;
+    }
 
-    .content-area table{
-        text-align: center;
-        border-collapse: collapse;
-        width: 90%;
+    .date{
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    tr{
-        border-bottom: 1px solid #E6E6E6;
+    .p-card {
+    border: 1px solid #eee;
     }
-    .content-area table tbody tr:hover{
-        background-color: rgb(250,116,62);
+
+    .p-details {
+    padding: 10px;
+    border-radius: 0px;
+    background: #000;
+    color: #fff;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
     }
+
+    .spec span {
+    font-size: 13px;
+    }
+
+    .spec h6 {
+    font-size: 16px;
+    font-weight: 500;
+    }
+
+    .carousel-indicators li {
+    box-sizing: content-box;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    width: 12px;
+    height: 12px;
+    margin-right: 3px;
+    margin-left: 3px;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    opacity: .5;
+    transition: opacity .6s ease;
+    }
+
+    .line{
+
+    background-color: #fff;margin-top: 4px;margin-bottom: 4px;height: 0.2px;
+    }
+
 
 </style>
 
@@ -49,21 +97,21 @@
             }
 
             let mainDate = year + '년 ' + month + '월 ' + date + '일 ' + day;
-            $('#mainDate').html('<h3>' + mainDate + '</h3>');
+            $('.mainDate').html(mainDate);
 
         })
     </script>
 
     <div class="outer">
-
-        <div class="top-area">
-            <div align="center">
-                <button id="yesterday">&lt;</button> 
-                <div id="mainDate" style="display: inline-block;"></div>
-                <button id="tomorrow">&gt;</button> 
-            </div>
-        </div>
-        <div class="search-area" align="center">
+    	<br>
+		<div class="outer-top">
+	        <div class="date">
+	            <button class="btn btn-outline-dark" >&lt; prev</button>&nbsp;
+	            <h2 class="mainDate" style="display: inline;"></h2>
+	            &nbsp;<button class="btn btn-outline-dark" style="flex: right;">next &gt;</button>
+	        </div>
+		</div>
+        <div class="search-area" align="center" style="margin-top: 20px">
             <select>
                 <option>모든 지역</option>
                 <option>서울</option>
@@ -91,47 +139,202 @@
                 <option>중수</option>
                 <option>고수</option>
             </select>
+            &nbsp;
         </div>
+        <div class="btn-area" align="right">
+                    <button class="btn">검색하기</button>
+                    <a class="btn" href="enrollForm.bt">글 작성하기</a>
+         </div>
         <br>
-        <div class="content-area" align="center">
-            <table>
-                <thead>
-                    <tr>
-                        <th>시간</th>
-                        <th>제목</th>
-                        <th>신청버튼</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>11:00</td>
-                        <td>
-                            서울 영등포 더에프 필드 B구장 <br>
-                            * 지역 : 서울 / 성별 : 남녀모두 / 종목 : 혼영 4vs4 / 레벨 : 무관
-                        </td>
-                        <td><button>신청</button></td>
-                    </tr>
-                    <tr>
-                        <td>11:00</td>
-                        <td>
-                            서울 영등포 더에프 필드 B구장 <br>
-                            * 지역 : 서울 / 성별 : 남녀모두 / 종목 : 혼영 4vs4 / 레벨 : 무관
-                        </td>
-                        <td><button>마감</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-	
-	
-	
-	
-	
-	
-	
-	
+        
+        <div class="container mt-5 mb-5">
+        
+        <div class="row g-1">
 
+            <div class="col-md-4">
+                <div class="p-card">
+                    <div class="p-carousel">
+                        <div class="carousel slide" data-ride="carousel" id="carousel-1">
+                            <div class="carousel-inner" role="listbox">
+                                <div class="carousel-item active"><img class="w-100 d-block" src="http://i.imgur.com/NwKcuYO.jpg" alt="Slide Image"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-details">
+                        <div class="d-flex justify-content-between align-items-center mx-2">
+                            <h5> [11:00] 서울 영등포 더에프 필드 B구장</h5></div>
+                        <div class="mx-2">
+                            <hr class="line">
+                        </div>
+                        <div class="d-flex justify-content-between mt-2 spec mx-2">
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">지역</h6><span>서울</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">성별</h6><span>남녀모두</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">종목</h6><span>혼영</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">레벨</h6><span>모든</span></div>
+                        </div>
+                        <div class="buy mt-3"><button class="btn btn-primary btn-block" type="button" onclick="location.href='battleDetail.bt'">배틀 신청</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!---->
+            <div class="col-md-4">
+                <div class="p-card">
+                    <div class="p-carousel">
+                        <div class="carousel slide" data-ride="carousel" id="carousel-1">
+                            <div class="carousel-inner" role="listbox">
+                                <div class="carousel-item active"><img class="w-100 d-block" src="https://i.imgur.com/NwKcuYO.jpg" alt="Slide Image"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-details">
+                        <div class="d-flex justify-content-between align-items-center mx-2">
+                            <h5> [11:00] 서울 영등포 더에프 필드 B구장</h5></div>
+                        <div class="mx-2">
+                            <hr class="line">
+                        </div>
+                        <div class="d-flex justify-content-between mt-2 spec mx-2">
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">지역</h6><span>서울</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">성별</h6><span>남녀모두</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">종목</h6><span>혼영</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">레벨</h6><span>모든</span></div>
+                        </div>
+                        <div class="buy mt-3"><button class="btn btn-primary btn-block" type="button">배틀 신청</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-card">
+                    <div class="p-carousel">
+                        <div class="carousel slide" data-ride="carousel" id="carousel-1">
+                            <div class="carousel-inner" role="listbox">
+                                <div class="carousel-item active"><img class="w-100 d-block" src="https://i.imgur.com/NwKcuYO.jpg" alt="Slide Image"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-details">
+                        <div class="d-flex justify-content-between align-items-center mx-2">
+                            <h5> [11:00] 서울 영등포 더에프 필드 B구장</h5></div>
+                        <div class="mx-2">
+                            <hr class="line">
+                        </div>
+                        <div class="d-flex justify-content-between mt-2 spec mx-2">
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">지역</h6><span>서울</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">성별</h6><span>남녀모두</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">종목</h6><span>혼영</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">레벨</h6><span>모든</span></div>
+                        </div>
+                        <div class="buy mt-3"><button class="btn btn-primary btn-block" type="button">배틀 신청</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-card">
+                    <div class="p-carousel">
+                        <div class="carousel slide" data-ride="carousel" id="carousel-1">
+                            <div class="carousel-inner" role="listbox">
+                                <div class="carousel-item active"><img class="w-100 d-block" src="https://i.imgur.com/NwKcuYO.jpg" alt="Slide Image"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-details">
+                        <div class="d-flex justify-content-between align-items-center mx-2">
+                            <h5> [11:00] 서울 영등포 더에프 필드 B구장</h5></div>
+                        <div class="mx-2">
+                            <hr class="line">
+                        </div>
+                        <div class="d-flex justify-content-between mt-2 spec mx-2">
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">지역</h6><span>서울</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">성별</h6><span>남녀모두</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">종목</h6><span>혼영</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">레벨</h6><span>모든</span></div>
+                        </div>
+                        <div class="buy mt-3"><button class="btn btn-primary btn-block" type="button">배틀 신청</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-card">
+                    <div class="p-carousel">
+                        <div class="carousel slide" data-ride="carousel" id="carousel-1">
+                            <div class="carousel-inner" role="listbox">
+                                <div class="carousel-item active"><img class="w-100 d-block" src="https://i.imgur.com/NwKcuYO.jpg" alt="Slide Image"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-details">
+                        <div class="d-flex justify-content-between align-items-center mx-2">
+                            <h5> [11:00] 서울 영등포 더에프 필드 B구장</h5></div>
+                        <div class="mx-2">
+                            <hr class="line">
+                        </div>
+                        <div class="d-flex justify-content-between mt-2 spec mx-2">
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">지역</h6><span>서울</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">성별</h6><span>남녀모두</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">종목</h6><span>혼영</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">레벨</h6><span>모든</span></div>
+                        </div>
+                        <div class="buy mt-3"><button class="btn btn-primary btn-block" type="button">배틀 신청</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-card">
+                    <div class="p-carousel">
+                        <div class="carousel slide" data-ride="carousel" id="carousel-1">
+                            <div class="carousel-inner" role="listbox">
+                                <div class="carousel-item active"><img class="w-100 d-block" src="https://i.imgur.com/NwKcuYO.jpg" alt="Slide Image"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-details">
+                        <div class="d-flex justify-content-between align-items-center mx-2">
+                            <h5> [11:00] 서울 영등포 더에프 필드 B구장</h5></div>
+                        <div class="mx-2">
+                            <hr class="line">
+                        </div>
+                        <div class="d-flex justify-content-between mt-2 spec mx-2">
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">지역</h6><span>서울</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">성별</h6><span>남녀모두</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">종목</h6><span>혼영</span></div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h6 class="mb-0">레벨</h6><span>모든</span></div>
+                        </div>
+                        <div class="buy mt-3"><button class="btn btn-primary btn-block" type="button">배틀 신청</button></div>
+                    </div>
+                </div>
+            </div>
+            
+          </div>
+        </div>
+        
+	
+	
+	</div>
 
     <jsp:include page="../common/footer.jsp"/>
 
