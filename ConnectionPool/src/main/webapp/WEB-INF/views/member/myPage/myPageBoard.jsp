@@ -195,6 +195,10 @@
         justify-content: center;
         align-items: center;
    }
+   .noTitle{
+        font-size: 16px;
+        color: rgb(113, 113, 113);
+   }
 
    
 </style>
@@ -219,8 +223,8 @@
                     <li><a  href="myPageInfo.me">회원정보</a></li>
                     <li><a href="">출석체크</a></li>
                     <li><a id="click" href="myPageBoard.me">작성글 보기</a></li>
-                    <li><a href="">수영일기</a></li>
-                    <li><a href="">나의팀 보기</a></li>
+                    <li><a href="myPageDiary.me">수영일기</a></li>
+                    <li><a href="myPageTeam.me">나의팀 보기</a></li>
                     <li><a href="myPageMoim.me">소모임 보기</a></li>
                     <li><a href="myPagePoint.me">포인트 조회</a></li>
                 </ul>
@@ -234,9 +238,11 @@
                 <div id="myBoardForm">
                     <!-- 없을때-->
                     <div align="center">
-                        <h1>작성한 게시글이 없어요</h1>
-                        <a href="">글 작성하러가기</a>
-                    </div>    
+                        <br><br><br> 
+                        <p class="noTitle">작성한 게시글이 없어요</p>
+                        <a href="">자유게시판으로 이동</a>
+                        <br><br><br>
+                    </div>
                     <!-- 있을때-->
                     <div class="boardselect" align="right">
                         <label>종류별로 보기</label>

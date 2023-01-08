@@ -48,4 +48,16 @@ public class myPageController {
 	public String myPageMoim() {
 		return "member/myPage/myPageMoim";
 	}
+	
+	// 마이페이지 수영일기 조회
+	@RequestMapping("myPageDiary.me")
+	public String myPageDiary() {
+		return "member/myPage/myPageDiary";
+	}
+	
+	// 마이페이지 팀 조회
+	@RequestMapping("myPageTeam.me")
+	public String myPageTeam() {
+		return "member/myPage/myPageTeam";
+	}
 }

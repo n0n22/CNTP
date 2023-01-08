@@ -215,6 +215,10 @@
         align-items: center;
    }
 
+   .noTitle{
+        font-size: 16px;
+        color: rgb(113, 113, 113);
+   }
 </style>
 </head>
 <body>
@@ -237,8 +241,8 @@
                     <li><a  href="myPageInfo.me">회원정보</a></li>
                     <li><a href="">출석체크</a></li>
                     <li><a href="myPageBoard.me">작성글 보기</a></li>
-                    <li><a href="">수영일기</a></li>
-                    <li><a href="">나의팀 보기</a></li>
+                    <li><a href="myPageDiary.me">수영일기</a></li>
+                    <li><a href="myPageTeam.me">나의팀 보기</a></li>
                     <li><a href="myPageMoim.me">소모임 보기</a></li>
                     <li><a id="click" href="myPagePoint.me">포인트 조회</a></li>
                 </ul>
@@ -249,10 +253,12 @@
                 <div id="title-line"><hr></div>
             <div class="info-area" style="margin: auto;">
                <!-- 없을때-->
-               <div align="center">
-                   <h1>포인트 내역이 없어요</h1>
-                   <p>포인트는 출석체크 및 게시글작성과 댓글작성으로 적립이 가능해요</p>
-               </div>
+                <div align="center">
+                    <br><br><br> 
+                    <p class="noTitle">포인트 내역이 없어요</p>
+                    <p class="noTitle">포인트는 출석체크 및 게시글,댓글 작성으로 얻을 수 있어요</p>
+                    <br><br><br>
+                </div>
                <!-- 있을때--> 
                 <div id="pointForm" class="container">
                     <p>포인트 내역은 수정과 삭제가 불가능합니다.</p>            

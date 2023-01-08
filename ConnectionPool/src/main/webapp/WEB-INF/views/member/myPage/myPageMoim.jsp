@@ -231,7 +231,10 @@
     .group-wrap{
         width: 800px;
     }
-
+    .noTitle{
+        font-size: 16px;
+        color: rgb(113, 113, 113);
+   }
 
 </style>
 </head>
@@ -255,8 +258,8 @@
                     <li><a  href="myPageInfo.me">회원정보</a></li>
                     <li><a href="">출석체크</a></li>
                     <li><a href="myPageBoard.me">작성글 보기</a></li>
-                    <li><a href="">수영일기</a></li>
-                    <li><a href="">나의팀 보기</a></li>
+                    <li><a href="myPageDiary.me">수영일기</a></li>
+                    <li><a href="myPageTeam.me">나의팀 보기</a></li>
                     <li><a id="click" href="myPageMoim.me">소모임 보기</a></li>
                     <li><a href="myPagePoint.me">포인트 조회</a></li>
                 </ul>
@@ -268,9 +271,11 @@
             <div class="info-area" style="margin: auto;">
                 <!-- 없을때-->
                 <div align="center">
-                    <h1>참여중인 모임이 없어요</h1>
-                    <a href="">소모임 참여하기</a>
-                </div>    
+                    <br><br><br> 
+                    <p class="noTitle">소속된 소모임이 없어요</p>
+                    <a href="">소모임 페이지로 이동하기</a>
+                    <br><br><br>
+                </div>
                 
                 <!-- 있을때-->
                 
