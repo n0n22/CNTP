@@ -32,7 +32,7 @@
 
 </head>
 <body>
-	 
+<jsp:include page="../common/menubar_nosearch.jsp" />	 
 <div >   
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <div class="card-body">
@@ -88,6 +88,6 @@
 	}
 	// ]]>
 </script>
-
+<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

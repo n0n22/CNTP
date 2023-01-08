@@ -29,7 +29,7 @@
     </style>
 </head>
 <body>
-	<jsp:include page="" />
+	<jsp:include page="../common/menubar_nosearch.jsp" />
 
     <div class="content">
         <br><br>
@@ -72,7 +72,7 @@
 
     </div>
     
-    <jsp:include page="" />
+    <jsp:include page="../common/footer.jsp" />
     
 </body>
 </html>
