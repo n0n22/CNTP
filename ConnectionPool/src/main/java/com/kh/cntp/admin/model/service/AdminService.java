@@ -59,6 +59,8 @@ public interface AdminService {
 	int updateNotice(Notice notice);
 	
 	
+	// 공지사항 삭제
+	int deleteNotice(int nno);
 	
 	
 	
