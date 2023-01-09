@@ -129,7 +129,7 @@
                 <table>
                   <tr>
                     <td width="100px">경기장 :&nbsp;</td>
-                    <td><input type="number" name="poolName" min="0" step="0.1"></td>
+                    <td><input type="text" name="poolName" min="0" step="0.1"></td>
                   </tr>
                   <tr>
                         <td>장소 :&nbsp;</td>

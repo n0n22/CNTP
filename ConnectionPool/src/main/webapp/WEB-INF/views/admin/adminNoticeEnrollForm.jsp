@@ -1,6 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.kh.cntp.member.model.vo.Member" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%
+	Member loginMember = new Member();
+	loginMember.setMemNo(1);
+	loginMember.setMemId("admin");
+	loginMember.setGrade("A");
+	
+	request.setAttribute("loginMember", loginMember);
+	
+	System.out.println(loginMember);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +59,7 @@
 <body>
 
 
-	<jsp:include page="../common/menubar_nosearch.jsp" />=
+	<jsp:include page="../common/menubar_nosearch.jsp" />
 
 
     <div class="admin-outer">
@@ -59,7 +71,8 @@
 
         </div>
         <div class="notice-enroll">
-            <form action="noticeInsert.ad" method="post">
+            <form action="noticeInsert.ad" method="post" enctype="multipart/form-data">
+            	<input type="hidden" name="memNo" value="${ loginMember.memNo }">
             	<div class="container">
 	                <table class="table table-bordered">
 	                    <tbody>
