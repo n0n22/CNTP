@@ -1,6 +1,8 @@
 package com.kh.cntp.common.template;
 
-public class  Pagination{
+import com.kh.cntp.common.model.vo.PageInfo;
+
+public class Pagination{
 
 	public static PageInfo getPageInfo(int listCount, int currentPage, int pageLimit, int boardLimit) {
 		
