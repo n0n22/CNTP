@@ -61,16 +61,30 @@ public class MoimController {
 	@RequestMapping("insertTeam.mo")
 	public ModelAndView insertTeam(ModelAndView mv, Team team, MultipartFile upfile, HttpSession session) {
 		
+		if(team.getPowerDuration() != null) {
+			// 파워 글이 아닐 경우
+			// point(-50);
+			// 이것이 성공했을 때
+		} else {
+			//point(-60);
+			// 이것이 성공했을 때
+		}
+		
+		System.out.println(upfile.getOriginalFilename());
+		
 		if(!upfile.getOriginalFilename().equals("")) {
 			// 파일 등록을 했을 때
 			
 			team.setOriginName(upfile.getOriginalFilename());
-			team.setChangeName("resources/uploadFiles/" + saveFile(upfile, session));
+			team.setChangeName("resources/upfiles/" + saveFile(upfile, session));
 		}
 		
-		moimService.insertTeam(team);
-		
-		
+		if(moimService.insertTeam(team) > 0) {
+			mv.setViewName("moim/teamPage");
+			mv.addObject("alertMsg", "팀 생성이 완료되었습니다.");
+		} else {
+			mv.setViewName("main");
+		}
 		
 		
 		return mv;
