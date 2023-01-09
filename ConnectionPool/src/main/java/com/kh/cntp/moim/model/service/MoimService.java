@@ -20,8 +20,6 @@ public interface MoimService {
 	// 팀 등록 성공 시 팀장 insert, 후에 신청 수락 시에도 team_grade에 M 담아서 해당 메소드 사용
 	int insertTeamMember(TeamMember teamMember);
 	
-	// 팀 등록 성공 시  + point 메소드도 하는 거 잊지 말기!
-	int insertResultHistory(int teamNo);
 	
 	
 	//  --------------- 팀 상세 페이지 조회 관련 메소드 (teamPage) ---------------

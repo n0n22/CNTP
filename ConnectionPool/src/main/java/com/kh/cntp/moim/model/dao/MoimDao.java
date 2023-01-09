@@ -17,5 +17,12 @@ public class MoimDao {
 		return sqlSession.insert("moimMapper.insertTeam", team);
 	}
 	
+	public int insertTeamLeaderMember(SqlSessionTemplate sqlSession, Team team) {
+		return sqlSession.insert("moimMapper.insertTeamLeaderMember", team);
+	}
+	
+	public int insertResultHistory(SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("moimMapper.insertResultHistory");
+	}
 
 }

@@ -33,7 +33,7 @@
     <jsp:include page="../common/menubar_nosearch.jsp"/>
 	<form action="insert.bt" method="post" enctype="multipart/form-data">
 <%-- 	<input type="hidden" name="homeTeam" value="${ loginMember.teamNo }"> --%>
-	<input type="hidden" name="homeTeam" value="T1">
+	<input type="hidden" name="homeTeam" value="${ loginMember.teamNo }">
 	
     <div class="outer">
         <div class="outer-top">

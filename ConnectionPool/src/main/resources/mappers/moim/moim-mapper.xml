@@ -105,4 +105,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       )
 	</insert>
 	
+	<insert id="insertTeamLeaderMember" parameterType="team">
+		INSERT
+		  INTO
+		       TEAM_MEMBER
+		VALUES
+		       (
+		        'T'||SEQ_TNO.CURRVAL
+		        ,'L'
+		        ,#{ memNo }
+		       )
+	</insert>
+	
+	<insert id="insertResultHistory">
+		INSERT
+		  INTO
+		       RESULT_HISTORY
+		VALUES
+		       (
+		        'T'||SEQ_TNO.CURRVAL
+		        ,DEFAULT
+		        ,DEFAULT
+		        ,DEFAULT
+		        ,DEFAULT
+		       )
+	</insert>
+	
 </mapper>
