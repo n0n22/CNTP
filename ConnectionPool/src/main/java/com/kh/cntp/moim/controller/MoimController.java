@@ -4,8 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.cntp.moim.model.vo.Team;
+
 @Controller
 public class MoimController {
+	
+	
+	
 	
 	// moimController 매핑값은 .mo로 통일!
 	@RequestMapping("teamList.mo")
@@ -32,7 +37,12 @@ public class MoimController {
 	}
 	
 	@RequestMapping("insertTeam.mo")
-	public ModelAndView insertTeam(ModelAndView mv) {
+	public ModelAndView insertTeam(ModelAndView mv, Team team) {
+		
+		
+		
+		
+		return mv;
 		
 	}
 	
