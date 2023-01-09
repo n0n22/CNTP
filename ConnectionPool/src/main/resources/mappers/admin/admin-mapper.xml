@@ -19,25 +19,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  INTO
 		       NOTICE
 		       (
-		       NOTICE_NO,
-		       CATEGORY,
-		       TITLE,
-		       CONTENT,
-		       MEM_NO,
-		       CREATE_DATE,
-		       ORIGIN_NAME,
-		       CHANGE_NAME
+		       NOTICE_NO
+		       ,CATEGORY
+		       ,TITLE
+		       ,CONTENT
+		       ,MEM_NO
+		       ,CREATE_DATE
+		       ,ORIGIN_NAME
+		       ,CHANGE_NAME
 		       )
 		VALUES
 		       (
-		       SEQ_NNO.NEXTVAL,
-		       #{category},
-		       #{title},
-		       #{content},
-		       #{memNo},
-		       SYSDATE,
-		       #{originName},
-		       #{changeName}
+		       SEQ_NNO.NEXTVAL
+		       ,#{category}
+		       ,#{title}
+		       ,#{content}
+		       ,#{memNo}
+		       ,SYSDATE
+		       ,#{originName}
+		       ,#{changeName}
 		       )
 	</insert>
 	

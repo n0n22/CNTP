@@ -139,8 +139,8 @@ public class AdminController {
 	@RequestMapping("noticeInsert.ad")  // 첨부파일이 여러개라면? MutipartFile[] upfile (배열로 받을 수 있음)
 	public ModelAndView insertNotice(Notice notice, MultipartFile upfile, HttpSession session, ModelAndView mv) {
 		
-		System.out.println(notice);
-		System.out.println(upfile);
+		// System.out.println(notice);
+		// System.out.println(upfile);
 		
 		if (!upfile.getOriginalFilename().equals("")) { // 첨부파일이 있을 경우
 			notice.setOriginName(upfile.getOriginalFilename());

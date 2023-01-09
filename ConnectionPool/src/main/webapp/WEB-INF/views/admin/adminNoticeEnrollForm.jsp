@@ -11,7 +11,7 @@
 	
 	request.setAttribute("loginMember", loginMember);
 	
-	System.out.println(loginMember);
+	// System.out.println(loginMember);
 %>
 <!DOCTYPE html>
 <html>
@@ -80,9 +80,9 @@
 	                            <th>카테고리</th>
 	                            <td>
 	                                <select name="category">
-	                                    <option value="notice">공지</option>
-	                                    <option value="event">이벤트</option>
-	                                    <option value="competition">대회정보</option>
+	                                    <option value="공지">공지</option>
+	                                    <option value="이벤트">이벤트</option>
+	                                    <option value="대회정보">대회정보</option>
 	                                </select>
 	                            
 	                            </td>
