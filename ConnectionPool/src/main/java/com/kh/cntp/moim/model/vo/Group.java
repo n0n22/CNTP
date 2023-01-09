@@ -9,6 +9,7 @@ public class Group {
 	
 	private int groupNo;
 	private int memNo;
+	private String groupTitle;
 	private String groupContent;
 	private String groupArea;
 	private String place;
