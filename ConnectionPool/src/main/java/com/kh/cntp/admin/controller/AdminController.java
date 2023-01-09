@@ -137,7 +137,7 @@ public class AdminController {
 	
 	// 공지 등록
 	@RequestMapping("noticeInsert.ad")  // 첨부파일이 여러개라면? MutipartFile[] upfile (배열로 받을 수 있음)
-	public String insertNotice(Notice notice, MultipartFile upfile, HttpSession session, ModelAndView mv) {
+	public ModelAndView insertNotice(Notice notice, MultipartFile upfile, HttpSession session, ModelAndView mv) {
 
 		if (!upfile.getOriginalFilename().equals("")) { // 첨부파일이 있을 경우
 			
@@ -148,7 +148,7 @@ public class AdminController {
 		if(adminService.insertNotice(notice) > 0) { 
 			session.setAttribute("alertMsg", "게시글이 등록되었습니다.");
 			mv.setViewName("redirect:list.no");					
-		} else { // 실패 => 에러페이지
+		} else { 
 			mv.addObject("errorMsg", "게시글 작성 실패").setViewName("common/errorPage");
 		}
 		return mv;

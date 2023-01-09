@@ -52,7 +52,7 @@ public interface AdminService {
 
 
 	
-	int inserNotice(Notice notice);
+	int insertNotice(Notice notice);
 	
 	
 	
