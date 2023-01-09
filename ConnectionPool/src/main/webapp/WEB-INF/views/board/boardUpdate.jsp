@@ -37,25 +37,25 @@
             <h2>게시글 수정하기페이지</h2>
             <br>
 
-            <form id="updateForm" method="post" action="" enctype="">
+            <form id="updateForm" method="post" action="update.bo" enctype="">
                 <table align="center">
                     <tr>
                         <th><label for="title">제목</label></th>
-                        <td><input type="text" id="title" class="form-control" value="게시판제목임ㅋㅋ" name="" required></td>
+                        <td><input type="text" id="title" class="form-control" value="게시판제목임ㅋㅋ" name="boardTitle" required></td>
                     </tr>
                     <tr>
                         <th><label for="writer">작성자</label></th>
-                        <td><input type="text" id="writer" class="form-control" value="user01" name="" readonly></td>
+                        <td><input type="text" id="writer" class="form-control" value="${b.boardWriter}" name="boardWriter" readonly></td>
                     </tr>
                     <tr>
                         <th><label for="content">내용</label></th>
-                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="" required>여긴내용쓰</textarea></td>
+                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="boardContent" required>여긴내용쓰</textarea></td>
                     </tr>
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
                         <td>
-                            <input type="file" id="upfile" class="form-control-file border" name="">
-                            현재 업로드된 파일 : 
+                            <input type="file" id="upfile" class="form-control-file border" name="upfile">
+                            	현재 업로드된 파일 : 
                             <a href="" download="">flower.jpg</a>
                         </td>
                     </tr>

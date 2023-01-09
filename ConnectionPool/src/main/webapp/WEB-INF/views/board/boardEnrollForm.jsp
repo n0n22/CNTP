@@ -42,23 +42,23 @@
             <h2>게시글 작성하기</h2>
             <br>
 
-            <form id="enrollForm" method="post" action="" enctype="">
+            <form id="enrollForm" method="post" action="insert.bo" enctype="">
                 <table align="center">
                     <tr>
                         <th><label for="title">제목</label></th>
-                        <td><input type="text" id="title" class="form-control" name="" required></td>
+                        <td><input type="text" id="title" class="form-control" name="boardTitle" required></td>
                     </tr>
                     <tr>
                         <th><label for="writer">작성자</label></th>
-                        <td><input type="text" id="writer" class="form-control" value="user01" name="" readonly></td>
+                        <td><input type="text" id="writer" class="form-control" value="${loginUser.userId }" name="boardWriter" readonly></td>
                     </tr>
                     <tr>
                         <th><label for="content">내용</label></th>
-                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="" required></textarea></td>
+                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="boardContent" required></textarea></td>
                     </tr>
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
-                        <td><input type="file" id="upfile" class="form-control-file border" name=""></td>
+                        <td><input type="file" id="upfile" class="form-control-file border" name="upfile"></td>
                     </tr>
                 </table>
                 <br>
