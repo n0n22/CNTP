@@ -90,23 +90,23 @@
 						<th width="400">주요 활동 지역</th>
 					</tr>
 					<tr>
-						<td>우리팀은 어쩌고</td>
-						<td>활동지역은 어쩌고</td>
+						<td>${ team.teamIntro }</td>
+						<td>${ team.teamArea }</td>
 					</tr>
 					<tr>
 						<th>현재 팀 인원</th>
 						<th>주요 활동시간</th>
 					</tr>
 					<tr>
-						<td>1명</td>
-						<td>평일</td>
+						<td>${ team.teamMember }명</td>
+						<td>${ team.teamTime }</td>
 					</tr>
 					<tr>
 						<th>키워드</th>
 						<th>배틀기록</th>
 					</tr>
 					<tr>
-						<td>배틀</td>
+						<td>${ team.keyword }</td>
 						<td>아직 배틀 참여 기록이 없습니다</td>
 					</tr>
 

@@ -2,6 +2,7 @@ package com.kh.cntp.moim.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.moim.model.vo.Apply;
 import com.kh.cntp.moim.model.vo.Team;
 import com.kh.cntp.moim.model.vo.TeamMember;
@@ -24,14 +25,17 @@ public interface MoimService {
 	
 	//  --------------- 팀 상세 페이지 조회 관련 메소드 (teamPage) ---------------
 	// 팀 정보 select
-	Team selectTeam(int teamNo);
+	Team selectTeam(String teamNo);
 	
 	// teamMember select
-	TeamMember selectTeamMember(int teamNo);
+	ArrayList<TeamMember> selectTeamMemberList(String teamNo);
 	
 	// apply 관련 정보 select
 	// 후에 group 상세 페이지에서도 중복 사용
-	Apply selectApply(int moimNo);
+	ArrayList<Apply> selectApplyList(String moimNo);
+	
+	// 팀 승패 기록 select
+	ResultHistory seletResultHistory(String teamNo);
 	
 	// --------------- 팀 상세 페이지(신청자 입장) ---------------
 	// 신청하는 메소드
@@ -46,17 +50,17 @@ public interface MoimService {
 	int ajaxDeleteApply(int applyNo);
 	
 	// 팀 페이지 수정
-	int updateTeam(int teamNo);
+	int updateTeam(String teamNo);
 	
 	// 팀 멤버 수정(권한 수정도)
-	int updateTeamMember(int teamNo);
+	int updateTeamMember(String teamNo);
 	
 	// 팀장이 아닐 경우에만 탈퇴할 수 있도록 걸어둬야 한다. 팀장이면 권한 수정하라고 alert 예정
 	int deleteTeamMember(int memNo);
 	
 	// 팀 뱃지 status를 N에서 Y로 수정
 	// 성공 시 포인트 -100도 해줘야 한다.
-	int updateTeamBadge(int teamNo);
+	int updateTeamBadge(String teamNo);
 	
 	// --------------- 팀 가입 리스트 조회 ---------------
 	// 조건에 따라 team을 조회해와야 하기 때문에 team을 인자값으로 넣어준다.

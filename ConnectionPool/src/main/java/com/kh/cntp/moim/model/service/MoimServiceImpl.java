@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.moim.model.dao.MoimDao;
 import com.kh.cntp.moim.model.vo.Apply;
 import com.kh.cntp.moim.model.vo.Team;
@@ -33,6 +34,7 @@ public class MoimServiceImpl implements MoimService {
 		return moimDao.insertTeam(sqlSession, team)*moimDao.insertTeamLeaderMember(sqlSession, team)*moimDao.insertResultHistory(sqlSession);
 	}
 
+	// 뭔가 이거 안 쓰게 될 거 같다.
 	@Override
 	public int insertTeamMember(TeamMember teamMember) {
 		return 0;
@@ -40,18 +42,23 @@ public class MoimServiceImpl implements MoimService {
 
 
 	@Override
-	public Team selectTeam(int teamNo) {
-		return null;
+	public Team selectTeam(String teamNo) {
+		return moimDao.SelectTeam(sqlSession, teamNo);
 	}
 
 	@Override
-	public TeamMember selectTeamMember(int teamNo) {
-		return null;
+	public ArrayList<TeamMember> selectTeamMemberList(String teamNo) {
+		return moimDao.selectTeamMemberList(sqlSession, teamNo);
 	}
 
 	@Override
-	public Apply selectApply(int moimNo) {
-		return null;
+	public ArrayList<Apply> selectApplyList(String moimNo) {
+		return moimDao.selectApplyList(sqlSession, moimNo);
+	}
+	
+	@Override
+	public ResultHistory seletResultHistory(String teamNo) {
+		return moimDao.selectResultHistory(sqlSession, teamNo);
 	}
 
 	@Override
@@ -70,12 +77,12 @@ public class MoimServiceImpl implements MoimService {
 	}
 
 	@Override
-	public int updateTeam(int teamNo) {
+	public int updateTeam(String teamNo) {
 		return 0;
 	}
 
 	@Override
-	public int updateTeamMember(int teamNo) {
+	public int updateTeamMember(String teamNo) {
 		return 0;
 	}
 
@@ -85,7 +92,7 @@ public class MoimServiceImpl implements MoimService {
 	}
 
 	@Override
-	public int updateTeamBadge(int teamNo) {
+	public int updateTeamBadge(String teamNo) {
 		return 0;
 	}
 
@@ -98,6 +105,8 @@ public class MoimServiceImpl implements MoimService {
 	public int selectTeamCountList(Team team) {
 		return 0;
 	}
+
+	
 	
 
 }
