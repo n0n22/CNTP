@@ -1,6 +1,7 @@
 package com.kh.cntp.battle.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,10 @@ import com.kh.cntp.battle.model.vo.PoolInfo;
 
 @Service
 public class BattleServiceImpl implements BattleService{
+	
 	@Autowired
 	private BattleDao battleDao;
+	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
@@ -38,6 +41,10 @@ public class BattleServiceImpl implements BattleService{
 	@Override
 	public PoolInfo selectPoolInfo(int battleNo) {
 		return battleDao.selectPoolInfo(sqlSession, battleNo);
+	}
+	@Override
+	public int applyBattle(HashMap<String, String> apply) {
+		return battleDao.applyBattle(sqlSession, apply) * battleDao.provokeMsg(sqlSession, apply);
 	}
 
 	
