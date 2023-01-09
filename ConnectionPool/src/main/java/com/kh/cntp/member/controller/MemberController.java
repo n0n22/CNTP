@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +35,20 @@ public class MemberController {
 	
 	// 로그인
 	@RequestMapping("login.me")
-	public ModelAndView loginMember(Member member, HttpSession session, ModelAndView mv) throws ParseException {
+	public ModelAndView loginMember(Member member,
+									HttpSession session,
+									ModelAndView mv,
+									String checkId,
+									HttpServletResponse response) throws ParseException {
 		
 		Member loginMember = memberService.loginMember(member);
+		
+		// 쿠키발급
+		if(checkId != null) {
+			Cookie saveId = new Cookie("saveId", member.getMemId());
+			saveId.setMaxAge(60 * 60 * 24 * 28 ); // 4주간 유지
+			response.addCookie(saveId);
+		}
 		
 		if(loginMember != null && bcryptPasswordEncoder.matches(member.getMemPwd(), loginMember.getMemPwd())) {
 			
@@ -45,10 +58,10 @@ public class MemberController {
 				Date endDate = DateFormat.parse(loginMember.getEndDate()); // 문자열을 DateFormat에 맞게 Date객체 리턴
 				
 				if(endDate.after(today)) { // 정지일이 오늘 날짜보다 이후라면
-					SimpleDateFormat endViewFormat = new SimpleDateFormat("yyyy년  MM월 dd일"); // 년 월 일 로 표기 안할 시 2023-01-16 KST 00:00:00 로 뜸 
+					SimpleDateFormat endViewFormat = new SimpleDateFormat("yyyy년MM월dd일"); // 년 월 일 로 표기 안할 시 2023-01-16 KST 00:00:00 로 뜸 
 					
-					mv.addObject("errorMsg", "정지된 회원입니다. 기한 :" + endViewFormat.format(endDate) + "까지");
-					mv.setViewName("common/errorPage");
+					session.setAttribute("loginMsg", "정지된 회원입니다. 기한: " + endViewFormat.format(endDate) + "까지");
+					mv.setViewName("member/login");
 				}
 				
 			} else {
@@ -60,8 +73,8 @@ public class MemberController {
 
 		} else {
 			
-			mv.addObject("errorMsg","로그인 실패");
-			mv.setViewName("common/errorPage");
+			session.setAttribute("loginMsg","로그인 실패");
+			mv.setViewName("member/login");
 			
 		}
 		return mv;

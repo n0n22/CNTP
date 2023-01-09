@@ -55,7 +55,7 @@
 		<h6 align="center">팀을 생성하여 팀원들을 모집하고 배틀에 참가해보세요!</h6>
 	    
 	    
-	    <form action="insertTeam.mo" action="post">
+	    <form action="insertTeam.mo" method="post" enctype="multipart/form-data">
 			<!-- th태그들 안은 당연하게 중앙 정렬이라 후에 왼쪽 정렬 바꿔주자 -->
 		    <table align="center" border="1" class="teamEnrollFormTable">
 		        <tr height="50">
@@ -134,9 +134,9 @@
 	    <br><br>
 	
 	    <div class="TE_point_area" align="center">
-	        <p class="cost">소요 포인트 : 545</p>
+	        <p class="cost">소요 포인트 : 50</p>
 	        <!-- checkbox 선택됐을 경우 소요포인트를 변경 -->
-	        <p>현재 내 포인트 : </p>
+	        <p>현재 내 포인트 : ${ loginMember.memPoint }</p>
 	    </div>
 	
 	    <div class="TE_info_area" align="center">
