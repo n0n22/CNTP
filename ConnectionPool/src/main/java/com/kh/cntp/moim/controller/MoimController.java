@@ -80,12 +80,22 @@ public class MoimController {
 		}
 		
 		if(moimService.insertTeam(team) > 0) {
+			
+			// 포인트를 사용해주자
+			if(team.getPowerDuration() != null) {
+				// point(-60);
+			} else {
+				// point(-50);
+			}
+			
+			// 팀멤버 테이블에 팀장 insert
+			// 경기기록도  insert
+			
 			mv.setViewName("moim/teamPage");
 			mv.addObject("alertMsg", "팀 생성이 완료되었습니다.");
 		} else {
 			mv.setViewName("main");
 		}
-		
 		
 		return mv;
 		
