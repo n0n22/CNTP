@@ -9,9 +9,6 @@ import com.kh.cntp.battle.model.vo.PoolInfo;
 @Repository
 public class BattleDao {
 	
-	public String selectTeamNo(SqlSessionTemplate sqlSession, int memNo) {
-		return sqlSession.selectOne("battleMapper.selectTeamNo", memNo);
-	}
 	public int insertBattle(SqlSessionTemplate sqlSession, Battle battle) {
 		return sqlSession.insert("battleMapper.insertBattle", battle);
 	}

@@ -111,7 +111,6 @@
                     </thead>
                     <tbody>
                     	<c:if test="${ not empty list }">
-                    		
                     		<c:forEach var="notice" items="${ list }" >
 		                        <tr class="clickTr">
 		                            <td>${ notice.noticeNo }</td>
@@ -175,7 +174,7 @@
 			
 			// 행을 클릭하면 상세보기
 			$('#noticeTable tbody .clickTr').click(function() {
-				location.href = "detail.no";		
+				location.href = "detail.no?nno=" + $(this).children().eq(0).text();		
 			});
 			
 			

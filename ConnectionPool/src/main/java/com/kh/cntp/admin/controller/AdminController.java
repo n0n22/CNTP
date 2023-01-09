@@ -144,7 +144,7 @@ public class AdminController {
 		
 		if (!upfile.getOriginalFilename().equals("")) { // 첨부파일이 있을 경우
 			notice.setOriginName(upfile.getOriginalFilename());
-			notice.setChangeName("resources/uploadFiles/" + Template.saveFile(upfile, session));
+			notice.setChangeName("resources/upfiles/" + Template.saveFile(upfile, session));
 		}
 		
 		if(adminService.insertNotice(notice) > 0) { 
@@ -155,6 +155,8 @@ public class AdminController {
 		}
 		return mv;
 	}
+	
+	
 	
 	
 	

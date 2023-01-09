@@ -217,21 +217,29 @@
 
             <section class="user-menu">
                 <ul class="user-list">
-                    <!-- 로그인 XXX 시작-->
-                    <li class="login"><a href="loginForm.me">로그인</a></li>
-					<!-- 관리자페이지 넣으니까 로그인이 작동이안되네요 ?? 왜인진 모르겠서요 -->
-                    <!-- 로그인 XXX 끝-->
-
-                    <!-- 로그인 되어있을때 시작 -->
-                    <a href="memberList.ad">관리자 페이지</a>
-                    <li class="username" data-toggle="modal" data-target="#myModal">커풀님</li>
-                    <li><div><a href="myPageInfo.me">마이페이지</a></div></li>
-                    <li class="logout">로그아웃</li>
-                    <div class="basket-icon">
-                        <div class="basket-icon">
-                            <img src="" alt="" width="28" height="28" > <!-- 알림기능 넣는다면 종 모양 들어갈곳-->
-                        </div>
-                     <!-- 로그인 되어있을때 끝 -->
+                    
+                    
+                    <c:choose>
+                    	<c:when test="${ empty loginMember }">
+                    		<!-- 로그인 XXX 시작-->
+                    		<li class="login"><a href="loginForm.me">로그인</a></li>
+							<!-- 관리자페이지 넣으니까 로그인이 작동이안되네요 ?? 왜인진 모르겠서요 -->
+		                    <!-- 로그인 XXX 끝-->
+                    	</c:when>
+                    	<c:otherwise>
+                    	 <!-- 로그인 되어있을때 시작 -->
+		                    <a href="memberList.ad">관리자 페이지</a>
+		                    <li class="username" data-toggle="modal" data-target="#myModal">커풀님</li>
+		                    <li><div><a href="myPageInfo.me">마이페이지</a></div></li>
+		                    <li class="logout"><a href="logout.me">로그아웃</a></li>
+		                    <div class="basket-icon">
+		                        <div class="basket-icon">
+		                            <img src="" alt="" width="28" height="28" > <!-- 알림기능 넣는다면 종 모양 들어갈곳-->
+		                        </div>
+		                     <!-- 로그인 되어있을때 끝 -->
+                    	</c:otherwise>
+                    </c:choose>
+                   
                      
 	                </div>
                 </ul>

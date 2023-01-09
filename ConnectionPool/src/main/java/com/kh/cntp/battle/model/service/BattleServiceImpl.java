@@ -1,5 +1,7 @@
 package com.kh.cntp.battle.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +17,14 @@ public class BattleServiceImpl implements BattleService{
 	private BattleDao battleDao;
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	
+	// BATTLE 조회
 	@Override
-	public String selectTeamNo(int memNo) {
-		return battleDao.selectTeamNo(sqlSession, memNo);
+	public ArrayList<Battle> selectBattle() {
+		// TODO Auto-generated method stub
+		return null;
 	}
+	// BATTLE 테이블에 INSERT & POOLINFO에 INSERT
 	@Override
 	@Transactional
 	public int insertBattle(Battle battle, PoolInfo poolInfo) {
