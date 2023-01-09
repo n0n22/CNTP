@@ -13,8 +13,6 @@ public class NoticeController {
 	@RequestMapping("list.no")
 	public String selectNoticeList(HttpSession session) {
 		
-		session.setAttribute("alertMsg", "알럿테스트");
-		
 		return "notice/noticeList";
 	}
 	
