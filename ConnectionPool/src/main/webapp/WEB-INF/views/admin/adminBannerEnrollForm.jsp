@@ -33,7 +33,8 @@
         
 
         <div class="banner-enroll-table">
-        	<form action="bannerInsert.ad" method="post">
+        	<form action="bannerInsert.ad" method="post" enctype="multipart/form-data">
+        		<input type="hidden" value="${ loginMember.memNo }" name="memNo">
 	            <table class="table table-bordered">
 	                <thead>
 	                  <tr>
@@ -54,7 +55,10 @@
 	                        <th>파일첨부</th>
 	                    </tr>
 	                    <tr>
-	                        <td><input type="file" name="upfile" id="bannerFile" onchange="loadImg(this);"></td>
+	                        <td><input type="file" name="upfile" id="bannerFile" onchange="loadImg(this);" required></td>
+	                    </tr>
+	                    <tr>
+	                    	<td><button type="submit" class="btn btn-primary">등록</button>
 	                    </tr>
 	                </tbody>
 	            </table>
@@ -90,12 +94,11 @@
 					// e의 target => e.target => 이벤트당한놈
 					
 					// e.target.result에 각 파일의 url이 담긴다
-					$('bannerImg').attr('src', e.target.result);
-	
+					$('#bannerImg').attr('src', e.target.result);
 				}
 				
 			} else {
-				$('bannerImg').attr('src', '');
+				$('#bannerImg').attr('src', '');
 			}
 	  	
 	  	}

@@ -8,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.cntp.admin.model.service.AdminService;
+import com.kh.cntp.admin.model.vo.Banner;
+import com.kh.cntp.common.model.vo.PageInfo;
+import com.kh.cntp.common.template.Pagination;
 import com.kh.cntp.common.template.Template;
 import com.kh.cntp.notice.model.service.NoticeService;
 import com.kh.cntp.notice.model.vo.Notice;
@@ -105,10 +109,16 @@ public class AdminController {
 	
 	// 배너목록 조회 -> 배너관리 페이지로 이동
 	@RequestMapping("bannerList.ad")
-	public String selectBannerList() {
-		
-		return "admin/adminBannerList";
+	public ModelAndView selectBannerList(@RequestParam(value="cpage", defaultValue="1") int cpage,@RequestParam(value="status", defaultValue="Y") String status, ModelAndView mv) {
+		// cpage : 요청한 페이지
+		PageInfo pi = Pagination.getPageInfo(adminService.selectBannerListCount(status), cpage, 5, 6);
+		mv.addObject("list", adminService.selectBannerList(status, pi)).addObject("pi", pi).setViewName("admin/adminBannerList");
+		return mv;
 	}
+	
+	
+	
+
 	
 	
 	// 배너등록 페이지로 이동
@@ -117,6 +127,29 @@ public class AdminController {
 		
 		return "admin/adminBannerEnrollForm";
 	}
+	
+	
+	// 배너등록
+	@RequestMapping("bannerInsert.ad")
+	public ModelAndView insertBanner(Banner banner, MultipartFile upfile, HttpSession session, ModelAndView mv) {
+		
+		if (!upfile.getOriginalFilename().equals("")) {
+			banner.setOriginName(upfile.getOriginalFilename());
+			banner.setChangeName("resources/upfiles/" + Template.saveFile(upfile, session));
+		}
+		
+		if(adminService.insertBanner(banner) > 0) { 
+			session.setAttribute("alertMsg", "배너가 등록되었습니다.");
+			mv.setViewName("redirect:bannerList.ad");					
+		} else { 
+			mv.addObject("errorMsg", "배너 등록 실패").setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	
+
+	
 	
 	
 	

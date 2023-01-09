@@ -1,13 +1,9 @@
 package com.kh.cntp.admin.model.service;
 
-import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.kh.cntp.common.template.Template;
+import com.kh.cntp.admin.model.vo.Banner;
+import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.notice.model.vo.Notice;
 
 public interface AdminService {
@@ -42,8 +38,14 @@ public interface AdminService {
 //  배너 관련 기능 
 //-------------------------------------------	
 	
-
+	// 배너 등록
+	int insertBanner(Banner banner);
 	
+	// 배너 목록개수 조회
+	int selectBannerListCount(String status);
+	
+	// 배너 목록 조회
+	ArrayList<Banner> selectBannerList(String status, PageInfo pi);
 	
 	
 //-------------------------------------------

@@ -1,10 +1,14 @@
 package com.kh.cntp.admin.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.cntp.admin.model.dao.AdminDao;
+import com.kh.cntp.admin.model.vo.Banner;
+import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.notice.model.vo.Notice;
 
 @Service
@@ -43,6 +47,30 @@ public class AdminServiceImpl implements AdminService {
 // 배너 관련 기능 
 //-------------------------------------------	
 	
+	// 배너 등록
+	@Override
+	public int insertBanner(Banner banner) {
+		return adminDao.insertBanner(sqlSession, banner);
+	}
+	
+
+	// 배너 목록 개수 조회
+	@Override
+	public int selectBannerListCount(String status) {
+		return adminDao.selectBannerListCount(sqlSession, status);
+	}
+
+
+	// 배너 목록 조회
+	@Override
+	public ArrayList<Banner> selectBannerList(String status, PageInfo pi) {
+		return adminDao.selectBannerList(sqlSession, status, pi);
+	}
+
+
+
+
+	
 
 	
 	
@@ -73,8 +101,11 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.deleteNotice(sqlSession, nno);
 	}
 
-	
-	
+
+
+
+
+
 	
 	
 	

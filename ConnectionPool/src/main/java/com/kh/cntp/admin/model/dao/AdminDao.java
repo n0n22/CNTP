@@ -1,8 +1,13 @@
 package com.kh.cntp.admin.model.dao;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.cntp.admin.model.vo.Banner;
+import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.notice.model.vo.Notice;
 
 @Repository
@@ -37,7 +42,24 @@ public class AdminDao {
 // 배너 관련 기능 
 //-------------------------------------------	
 	
-
+	// 배너 등록
+	public int insertBanner(SqlSessionTemplate sqlSession, Banner banner) {
+		return sqlSession.insert("adminMapper.insertBanner", banner);
+	}
+	
+	// 배너 목록 개수 조회
+	public int selectBannerListCount(SqlSessionTemplate sqlSession, String status) {
+		return sqlSession.selectOne("adminMapper.selectBannerListCount", status);
+	}
+	
+	// 배너 목록 조회
+	public ArrayList<Banner> selectBannerList(SqlSessionTemplate sqlSession, String status, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("adminMapper.selectBannerList", status, rowBounds);		
+	}
+	
 	
 	
 	
