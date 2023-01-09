@@ -75,7 +75,7 @@
 		        <tr>
 		            <th>팀 소개</th>
 		            <td>
-		                <textarea name="teamIntro" cols="30" rows="10" style="resize:none" required placehold="간략하게 팀 소개를 작성해주세요.(최대 300글자)" maxlength="300"></textarea>
+		                <textarea name="teamIntro" cols="30" rows="10" style="resize:none" required placeholder="간략하게 팀 소개를 작성해주세요.(최대 300글자)" maxlength="300"></textarea>
 		            </td>
 		            <td></td>
 		        </tr>
@@ -88,7 +88,7 @@
 							<option value="Gangwon">강원도</option>
 							<option value="Chungbuk">충청북도</option>
 							<option value="Chungnam">충청남도</option>
-							<option value="Jeonabuk">전라북도</option>
+							<option value="Jeonbuk">전라북도</option>
 							<option value="Jeonnam">전라남도</option>
 							<option value="Gyeongbuk">경상북도</option>
 							<option value="Gyeongnam">경상남도</option>

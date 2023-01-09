@@ -1,16 +1,14 @@
 package com.kh.cntp.battle.model.service;
 
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.kh.cntp.battle.model.dao.BattleDao;
+import com.kh.cntp.battle.model.vo.Battle;
+import com.kh.cntp.battle.model.vo.PoolInfo;
 
 public interface BattleService {
-
 	
-	
-	
-	
+	/*
+	 * 배틀풀 작성
+	 */
+	// 1. BATTLE 테이블에 INSERT & POOLINFO에 INSERT
+	int insertBattle(Battle battle, PoolInfo poolInfo);
 
 }

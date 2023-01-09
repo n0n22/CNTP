@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class Team {
 	
-	private int teamNo;
+	private String teamNo;
 	private String teamName;
 	private int memNo; // 팀장
 	private int teamMember; // 팀 모집 인원

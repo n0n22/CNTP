@@ -32,7 +32,7 @@
 <body>
     <jsp:include page="../common/menubar_nosearch.jsp"/>
 	<form action="insert.bt" method="post" enctype="mult-part/form-data">
-	<input type="hidden" name="memNo" value="${ loginMember.memNo }">
+	<input type="hidden" name="homeTeam" value="${ loginMember.teamNo }">
 	
     <div class="outer">
         <div class="outer-top">
@@ -73,7 +73,7 @@
                                 <option value="Gangwon">강원도</option>
                                 <option value="Chungbuk">충청북도</option>
                                 <option value="Chungnam">충청남도</option>
-                                <option value="Jeonabuk">전라북도</option>
+                                <option value="Jeonbuk">전라북도</option>
                                 <option value="Jeonnam">전라남도</option>
                                 <option value="Gyeongbuk">경상북도</option>
                                 <option value="Gyeongnam">경상남도</option>

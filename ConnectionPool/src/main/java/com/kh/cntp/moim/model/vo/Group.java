@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class Group {
 	
-	private int groupNo;
+	private String groupNo;
 	private int memNo;
 	private String groupTitle;
 	private String groupContent;
