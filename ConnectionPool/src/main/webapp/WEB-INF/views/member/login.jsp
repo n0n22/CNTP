@@ -120,19 +120,26 @@
         
         <c:if test="${ not empty loginMsg }">
 		<script>
-			alert('알림', '${loginMsg}');
+			alert('${loginMsg}');
 		</script>
+		
 		<c:remove var="loginMsg" scope="session" />
 		</c:if>
         
         <div class="login-area">
             <h1 id="login-text">로그인</h1>
             <form action="login.me" method="post">
-            
-                <div><input class="userInput" type="text" name="memId" placeholder="아이디"></div>
+            	<c:choose>
+            		<c:when test="${not empty cookie.saveId}">
+		                <div><input class="userInput" type="text" name="memId" value="${ cookie.saveId.value }" placeholder="아이디"></div>
+            		</c:when>
+            		<c:otherwise>
+		                <div><input class="userInput" type="text" name="memId" placeholder="아이디"></div>
+            		</c:otherwise>
+            	</c:choose>
                 <div><input class="userInput" type="password" name="memPwd" placeholder="비밀번호"></div>
                 
-                <div class="checkId"><input type="checkbox">아이디 저장</div>
+                <div class="checkId"><input type="checkbox" name="checkId">아이디 저장</div>
                 
                 <div><button type="submit">로그인</button></div>
                 
