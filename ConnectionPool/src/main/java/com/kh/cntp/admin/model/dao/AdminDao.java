@@ -55,6 +55,10 @@ public class AdminDao {
 		return sqlSession.update("adminMapper.updateNotice", notice);
 	}
 	
+	// 공지사항 삭제
+	public int deleteNotice(SqlSessionTemplate sqlSession, int nno) {
+		return sqlSession.update("adminMapper.deleteNotice", nno);
+	}
 	
 	
 	

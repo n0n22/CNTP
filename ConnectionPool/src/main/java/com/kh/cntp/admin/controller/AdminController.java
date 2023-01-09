@@ -201,26 +201,22 @@ public class AdminController {
 	
 	
 	
-//	// 공지 삭제
-//	@RequestMapping("noticeDelete.ad")
-//	public ModelAndView deleteNotice(int nno, String filePath, ModelAndView mv, HttpSession session) {
-//		
-//		if(adminService.deleteNotice(nno) > 0) { // 삭제 성공 - 서버에 올라간 첨부파일 삭제
-//			
-//			if(!filePath.equals("")) { // 첨부파일이 존재할 때
-//				// 기본에 존재하는 첨부파일을 삭제
-//				new File(session.getServletContext().getRealPath(filePath)).delete();
-//			}
-//			
-//			session.setAttribute("alertMsg", "해당 공지사항을 삭제했습니다.");
-//			return "redirect:list.no";
-//		} else { // 삭제 실패
-//			model.addAttribute("errorMsg", "게시글 삭제 실패");
-//			return "common.errorPage";
-//		}
-//		
-//	}
-//	
+	// 공지 삭제
+	@RequestMapping("noticeDelete.ad")
+	public ModelAndView deleteNotice(int nno, String filePath, ModelAndView mv, HttpSession session) {
+		
+		if(adminService.deleteNotice(nno) > 0) { // 삭제 성공
+			if(!filePath.equals("")) { // 첨부파일이 존재할 때 기존의 첨부파일 삭제
+				new File(session.getServletContext().getRealPath(filePath)).delete();
+			}
+			session.setAttribute("alertMsg", nno +"번 공지사항을 삭제했습니다.");
+			mv.setViewName("redirect:list.no");
+		} else { // 삭제 실패
+			mv.addObject("errorMsg", "게시글 삭제 실패").setViewName("common.errorPage");
+		}
+		return mv;
+	}
+	
 	
 	
 	

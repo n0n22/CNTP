@@ -66,6 +66,16 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	
+
+	// 공지사항 삭제
+	@Override
+	public int deleteNotice(int nno) {
+		return adminDao.deleteNotice(sqlSession, nno);
+	}
+
+	
+	
+	
 	
 	
 	

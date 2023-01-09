@@ -143,11 +143,12 @@
 
 	   	function postFormSubmit(num) {
 	   		
+	   		var msg = ${ notice.noticeNo } + '번 공지사항을 삭제하시겠습니까?'
+	   		
 	   		if(num == 1) { // 삭제 클릭 시
-	   			var check = alertify.confirm('${ notice.noticeNo }번 공지사항을 삭제하시겠습니까?').set('closable', true);
-	   			if(check == true) {
-		   			$('#postForm').attr('action', 'noticeDelete.ad').submit();
-	   			} 
+	   			var check = alertify.confirm(msg, function() {
+	   				$('#postForm').attr('action', 'noticeDelete.ad').submit();		
+	   			}); 
 	   		} else { // 수정 클릭 시
 	   			$('#postForm').attr('action', 'noticeUpdateForm.ad').submit();
 	   		}

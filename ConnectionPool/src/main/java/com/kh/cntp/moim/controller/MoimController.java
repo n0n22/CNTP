@@ -28,9 +28,21 @@ public class MoimController {
 	}
 	
 	@RequestMapping("teamPage.mo")
-	public ModelAndView teamPage(ModelAndView mv, int teamNo) {
+	public ModelAndView teamPage(ModelAndView mv, String teamNo) {
 		// 팀 페이지 갈 때 TEAM, TEAM_MEMBER, APPLY 테이블 다 들고 가야됨 => 어째 이런 일이,,,,,,,,,
 		// 한번의 select문으로 조인해서 가져올 수는 있는데, 3개의 vo에 담아야 하니 이를 어떻게 해야 할까
+		
+		/*
+		System.out.println(moimService.selectTeam(teamNo));
+		System.out.println(moimService.selectTeamMemberList(teamNo));
+		System.out.println(moimService.selectApplyList(teamNo));
+		System.out.println(moimService.seletResultHistory(teamNo));
+		*/
+		
+		mv.addObject("team", moimService.selectTeam(teamNo));
+		mv.addObject("teamMeberList", moimService.selectTeamMemberList(teamNo));
+		mv.addObject("applyList", moimService.selectApplyList(teamNo));
+		mv.addObject("resultHistory", moimService.seletResultHistory(teamNo));
 		
 		mv.setViewName("moim/teamPage");
 		

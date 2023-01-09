@@ -66,7 +66,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>1</td>
+						<td>11</td>
 						<td>파워</td>
 						<td>서울</td>
 						<td>서울짱</td>
@@ -102,7 +102,7 @@
 	<script>
 		$(function(){
 			$('.teamListTable tbody tr').click(function(){
-				location.href = 'teamPage.mo?teamNo=' + $(this).children().eq(0).text();
+				location.href = 'teamPage.mo?teamNo=T' + $(this).children().eq(0).text();
 			})
 		})
 	</script>

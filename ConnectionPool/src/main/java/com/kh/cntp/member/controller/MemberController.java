@@ -58,7 +58,6 @@ public class MemberController {
 				
 				if(endDate.after(today)) { // 정지일이 오늘 날짜보다 이후라면
 					SimpleDateFormat endViewFormat = new SimpleDateFormat("yyyy년MM월dd일"); // 년 월 일 로 표기 안할 시 2023-01-16 KST 00:00:00 로 뜸 
-					
 					session.setAttribute("loginMsg", "정지된 회원입니다. 기한: " + endViewFormat.format(endDate) + "까지");
 					mv.setViewName("member/login");
 				}
@@ -71,6 +70,7 @@ public class MemberController {
 			}
 
 		} else {
+			
 			
 			session.setAttribute("loginMsg","로그인 실패");
 			mv.setViewName("member/login");

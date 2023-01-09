@@ -7,6 +7,6 @@ public class TeamMember {
 	
 	private String teamNo;
 	private int memNo;
-	private String teamGreade;
+	private String teamGrade;
 
 }
