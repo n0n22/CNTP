@@ -29,17 +29,30 @@ public interface MoimService {
 	// teamMember select
 	TeamMember selectTeamMember(int teamNo);
 	
-	// --------------- 
 	// apply 관련 정보 select
 	// 후에 group 상세 페이지에서도 중복 사용
 	Apply selectApply(int moimNo);
 	
+	// --------------- 팀 상세 페이지(신청자 입장) ---------------
 	// 신청하는 메소드
 	// 신청하는 loginUser 번호, 팀 번호로다가
 	int insertApply(Team team);
 	
+	// --------------- 팀 상세페이지(팀장 입장) ---------------
+	// 신청 수락
+	int ajaxUpdateApply(int applyNo);
 	
+	// 신청 거절
+	int ajaxDeleteApply(int applyNo);
 	
+	// 팀 페이지 수정
+	int updateTeam(int teamNo);
+	
+	// 팀 멤버 수정(권한 수정도)
+	int updateTeamMember(int teamNo);
+	
+	// 팀장이 아닐 경우에만 탈퇴할 수 있도록 걸어둬야 한다. 팀장이면 권한 수정하라고 alert 예정
+	int deleteTeamMember(int memNo);
 	
 	
 	
