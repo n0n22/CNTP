@@ -15,10 +15,8 @@ public class BattleServiceImpl implements BattleService{
 	private BattleDao battleDao;
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	@Override
-	public String selectTeamNo(int memNo) {
-		return battleDao.selectTeamNo(sqlSession, memNo);
-	}
+	
+	// 1. BATTLE 테이블에 INSERT & POOLINFO에 INSERT
 	@Override
 	@Transactional
 	public int insertBattle(Battle battle, PoolInfo poolInfo) {

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,26 +36,26 @@ public class BattlePoolController {
 		return "battle/battlePoolEnrollForm";
 	}
 	@RequestMapping("insert.bt")
-	public String insertBattle(int memNo
-							 , Battle battle
-							 , PoolInfo poolInfo
-							 , MultipartFile upfile
-							 , HttpSession session) {
+	public String insertBattle(Battle battle
+							  ,PoolInfo poolInfo
+							  ,MultipartFile upfile
+							  ,HttpSession session
+							  ,Model model) {
 		
 		if(!upfile.getOriginalFilename().equals("")) {
 			battle.setOriginName(upfile.getOriginalFilename());
 			battle.setChangeName("resources/upfiles" + Template.saveFile(upfile, session));
 		}
-		// 1. 팀 번호 조회(SELECT) : memNo => 공통으로 하나로 합칠 수 있을 것 같음
-		String teamNo = battleService.selectTeamNo(memNo);
-		battle.setHomeTeam(teamNo);
-		
-		// 2. battle (INSERT, SEQ_BTNO.NEXTVAL) & poolInfo (INSERT, SEQ_BTNO.CURRVAL)
 		int result = battleService.insertBattle(battle, poolInfo);
-		// 서비스단에서 두 개를 호출
-		// 2.3 하나의 트랜잭션 처리
 		
-		return "redirect: battleList.bt";
+		if(result > 0) {
+			session.setAttribute("alertMsg", "배틀풀 작성 성공");
+			return "redirect: battleList.bt";
+		} else {
+			model.addAttribute("errorMsg", "배틀풀 작성 실패");
+			return "common/errorPage";
+		}
+		
 	}
 	
 	// 배틀풀 결과
