@@ -112,16 +112,17 @@
 	        </div>
 		</div>
         <div class="search-area" align="center" style="margin-top: 20px">
-            <select>
-                <option>모든 지역</option>
-                <option>서울</option>
-                <option>경기/강원</option>
-                <option>인천</option>
-                <option>대전/세종/충청</option>
-                <option>대구/경북</option>
-                <option>부산/울산/경남</option>
-                <option>광주/전라</option>
-                <option>제주</option>
+            <select name="area" id="addressForm">
+                <option value="시/도 선택" hidden="" disabled="disabled" selected="selected" >시/도 선택</option>
+                <option value="Seoul">서울특별시</option>
+                <option value="Gyeonggi">경기도</option>
+                <option value="Gangwon">강원도</option>
+                <option value="Chungbuk">충청북도</option>
+                <option value="Chungnam">충청남도</option>
+                <option value="Jeonbuk">전라북도</option>
+                <option value="Jeonnam">전라남도</option>
+                <option value="Gyeongbuk">경상북도</option>
+                <option value="Gyeongnam">경상남도</option>
             </select>
             <select>
                 <option>남녀모두</option>
@@ -176,7 +177,7 @@
                             <div class="d-flex flex-column align-items-center">
                                 <h6 class="mb-0">레벨</h6><span>모든</span></div>
                         </div>
-                        <div class="buy mt-3"><button class="btn btn-primary btn-block" type="button" onclick="location.href='battleDetail.bt'">배틀 신청</button></div>
+                        <div class="buy mt-3"><button class="btn btn-primary btn-block" type="button" onclick="location.href='battleDetail.bt?battleNo=1'">배틀 신청</button></div>
                     </div>
                 </div>
             </div>
