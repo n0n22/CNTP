@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.cntp.battle.model.service.BattleService;
+import com.kh.cntp.battle.model.vo.Battle;
+import com.kh.cntp.battle.model.vo.PoolInfo;
 
 @Controller
 public class BattlePoolController {
@@ -23,11 +25,18 @@ public class BattlePoolController {
 		return "battle/battlePoolDetail";
 	}
 	
-	// 배틀풀 작성
+	// 배틀풀 작성폼 보기
 	@RequestMapping("enrollForm.bt")
 	public String enrollForm() {
 		return "battle/battlePoolEnrollForm";
 	}
+	@RequestMapping("insert.bt")
+	public String insertBattle(Battle battle, PoolInfo poolInfo) {
+		System.out.println(battle);
+		System.out.println(poolInfo);
+		return "redirect: enrollForm.bt";
+	}
+	
 	// 배틀풀 결과
 	@RequestMapping("battleResult.bt")
 	public String selectBattleResult() {
