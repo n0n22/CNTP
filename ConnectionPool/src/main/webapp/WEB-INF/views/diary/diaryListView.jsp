@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>오운완 리스트 보기</title>
+<title>수영일기 리스트 보기</title>
 <style>
 body {
     background:#eee;
@@ -267,7 +267,7 @@ textarea{
                 <div class="col-lg-7 col-xl-6">
                     <div class="card card-white grid-margin">
                         <div class="card-body">
-                            <div class="post">
+                            < div class="post">
                                 <textarea class="form-control" id="contentInsert" placeholder="내용을 입력해주세요" rows="4"></textarea>
                                 <div class="post-options">
                                     <a href="#"><i class="fa fa-camera"></i></a>
