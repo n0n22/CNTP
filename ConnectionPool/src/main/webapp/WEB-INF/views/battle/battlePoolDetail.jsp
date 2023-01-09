@@ -218,9 +218,9 @@
 					<div class="col-md-6 mt-3">
 	
 						<div class="bg-white p-3 rounded border">
-						<h6>배틀 시간 및 장소</h6>
+						<h6>배틀 시간 및 지역</h6>
 						<p class="text-black-50 content mb-5">
-						배틀 시간 및 장소를 꼭 확인해 주세요.
+						배틀 시간 및 지역을 꼭 확인해 주세요.
 						</p>
 	
 						<div class="d-flex flex-row">
