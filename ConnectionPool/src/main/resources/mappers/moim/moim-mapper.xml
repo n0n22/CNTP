@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="teamMember" id="teamMemberResultMap">
 		<result column="TEAM_NO" 	property="teamNo"/>
 		<result column="TEAM_GRADE" property="teamGrade"/>
-		<result column="MEM_NO" 	property="memNo"/>
+		<result column="NICKNAME" 	property="memNo"/>
 	</resultMap>
 	
 	<resultMap type="group" id="groupResultMap">
@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="apply" id="applyResultMap">
 		<result column="APPLY_NO" 		property="applyNo"/>
 		<result column="MOIM_NO" 		property="moimNo"/>
-		<result column="MEM_NO" 		property="memNo"/>
+		<result column="NICKNAME" 		property="memNo"/>
 		<result column="ACCEPT_YN" 		property="acceptYn"/>
 		<result column="APPLY_DATE" 	property="applyDate"/>
 		<result column="ACCEPT_DATE" 	property="acceptDate"/>
@@ -63,6 +63,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="MEM_NO" 		property="memNo"/>
 		<result column="CHAT_CONTENT" 	property="chatContent"/>
 		<result column="CREATE_DATE" 	property="createDate"/>
+	</resultMap>
+	
+	<resultMap type="resultHistory" id="resultHistoryResultMap">
+		<result column="TEAM_NO" 		property="teamNo"/>
+		<result column="WINNING_STREAK" property="winningStreak"/>
+		<result column="LOSING_STREAK" 	property="losingStreak"/>
+		<result column="VICTORY" 		property="victory"/>
+		<result column="DEFEAT" 		property="defeat"/>
 	</resultMap>
 	
 	<select id="ajaxSelectTeam" resultType="_int" parameterType="string">
@@ -130,5 +138,87 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        ,DEFAULT
 		       )
 	</insert>
+	
+	<select id="selectTeam" parameterType="string" resultMap="teamResultMap">
+		SELECT 
+			   TEAM_NO
+			  ,TEAM_NAME
+			  ,MEM_NO
+			  ,TEAM_MEMBER
+			  ,TEAM_INTRO
+			  ,ORIGIN_NAME
+			  ,CHANGE_NAME
+			  ,TEAM_AREA
+			  ,TEAM_TIME
+			  ,KEYWORD
+			  ,CREATE_DATE
+			  ,BADGE_ORIGIN_NAME
+			  ,BADGE_CHANGE_NAME
+			  ,BADGE_STATUS
+			  ,STATUS
+			  ,POWER_DURATION
+	     FROM
+	          TEAM
+		WHERE
+		      TEAM_NO = #{ teamNo }
+		  AND
+		       STATUS = 'Y'
+	</select>
+	
+	<select id="selectTeamMeberList" resultMap="teamMemberResultMap" parameterType="string">
+		SELECT
+		         TM.TEAM_NO
+		        ,TM.TEAM_GRADE
+		        ,M.NICKNAME
+		  FROM 
+		       TEAM_MEMBER "TM"
+		  JOIN
+		       TEAM "T" ON(TM.TEAM_NO = T.TEAM_NO)
+		  JOIN
+		       MEMBER "M" ON(TM.MEM_NO = M.MEM_NO)
+		 WHERE
+		       T.TEAM_NO = #{ teamNo }
+		   AND
+		       T.STATUS = 'Y'
+			   
+	</select>
+	
+	<select id="selectApplyList" resultMap="applyResultMap" parameterType="string">
+		SELECT
+		        A.APPLY_NO
+		       ,A.MOIM_NO
+		       ,M.NICKNAME
+		       ,A.ACCEPT_YN
+		       ,A.APPLY_DATE
+		       ,A.ACCEPT_DATE
+		  FROM
+		       APPLY "A"
+		  JOIN
+		       TEAM "T" ON(A.MOIM_NO = T.TEAM_NO)
+		  JOIN
+		       MEMBER "M" ON(A.MEM_NO = M.MEM_NO)
+		 WHERE
+		       MOIM_NO = #{ moimNo }
+		   AND
+		       T.STATUS = 'Y'
+		   
+	</select>
+	
+	<select id="selectResultHistory" parameterType="string" resultMap="resultHistoryResultMap">
+		SELECT
+		        R.TEAM_NO
+		       ,R.WINNING_STREAK
+		       ,R.LOSING_STREAK
+		       ,R.VICTORY
+		       ,R.DEFEAT
+		  FROM
+		       RESULT_HISTORY "R"
+		  JOIN
+		       TEAM "T" ON(T.TEAM_NO = R.TEAM_NO)
+		WHERE
+		       R.TEAM_NO = #{ teamNo }
+		  AND
+		       T.STATUS = 'Y'
+	</select>
 	
 </mapper>

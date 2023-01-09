@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>수영일기 리스트 보기</title>
+<title>수영일기 상세보기</title>
 <style>
 body {
     background:#eee;
@@ -243,90 +242,13 @@ textarea{
 }
 
 </style>
-<!--자물쇠 링크입니다-->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
 
 </head>
 <body>
-
-   <jsp:include page="../common/menubar_nosearch.jsp" />
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-    <div class="container">
-    <div class="page-inner no-page-title">
-        <!-- start page main wrapper -->
-        <div id="main-wrapper">
-            <div class="row">
-                <div class="col-lg-5 col-xl-3">
-                    <div class="card card-white grid-margin">
-                        <form name="search-form">
-                            <input type="search" class="search"  placeholder="#검색어를 입력하세요" ><button>검색</button>
-                        </form>         
-                        </div>
-                    </div>
-                <div class="col-lg-7 col-xl-6">
-                    <div class="card card-white grid-margin">
-                        <div class="card-body">
-                            <div class="post">
-                                <textarea class="form-control" id="contentInsert" placeholder="내용을 입력해주세요" rows="4"></textarea>
-                                <div class="post-options">
-                                    <a href="#"><i class="fa fa-camera"></i></a>
-                                    <a href="#"><i class="fas fa-video"></i></a>
-                                   
-                                    <button class="btn btn-outline-primary float-right">등록하기</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="profile-timeline">
-                                <div class="card card-white grid-margin">
-                                    <div class="card-body">
-                                        <div class="timeline-item-header">
-                                            <img src="" alt="" />
-                                            <p>작성자<span> 닉네임</span></p>
-                                            <small>3 시간전</small>
-                                        </div>
-                                        <div class="timeline-item-post">
-                                            <p>오늘 새벽 수영완료.</p>
-                                            <div class="timeline-options">
-                                                <a href="#"><i class="fa fa-comment"></i> 댓글 (4)</a>
-                                                <a href="#"><i class="fa fa-thumbs-up"></i> 좋아요 (15)</a>
-                                                <span class="material-symbols-outlined">lock_open
-                                                  
-                                                </span>
-                                                <select name="scope" id="scope">
-                                                    <option value="">공개범위</option>
-                                                    <option value="A">전체공개</option>
-                                                    <option value="T">팀공개</option>
-                                                    <option value="P">개인공개</option>
-                                                </select>
-                                               
-
-
-                                            </div>
-                                            <div class="timeline-comment">
-                                                <div class="timeline-comment-header">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-                                                    <p>홍길동 <small>1 시간 전</small></p>
-                                                </div>
-                                                <p class="timeline-comment-text">어머 정말 부지런하시네요~! .</p>
-                                            </div>
-                                            <div class="timeline-comment">
-                                                <div class="timeline-comment-header">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-                                                    <p>김길동 <small>3 시간 전</small></p>
-                                                </div>
-                                                <p class="timeline-comment-text">저도 새벽수영 완료입니다~!! 오수완!! </p>
-                                            </div>
-                                            <textarea class="form-control" placeholder="댓글을 입력해주새요"></textarea>
-                                            <div class="post-options">
-                                                <button class="btn btn-outline-primary float-right">등록하기</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            
-                         
+	
+	 <jsp:include page="../common/menubar_nosearch.jsp" />
+	 
                                 <div class="card card-white grid-margin">
                                     <div class="card-body">
                                         <div class="timeline-item-header">
@@ -356,16 +278,19 @@ textarea{
                                         </div>
                                     </div>
                                 </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Row -->
-        </div>
-        <!-- end page main wrapper -->
-       <jsp:include page="../common/footer.jsp" />
-    </div>
-    </div>
-
-
+	
+	
+	<jsp:include page="../common/footer.jsp" />
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </body>
 </html>

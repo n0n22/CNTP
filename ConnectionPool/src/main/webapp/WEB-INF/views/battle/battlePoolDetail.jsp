@@ -97,7 +97,7 @@
 
         /* 임시 지정 */
         width: 480px;
-        height: 480px;
+        height: 280px;
 
         /* 초기에 약간 아래에 배치 */
         transform: translate(-50%, -50%);
@@ -429,7 +429,7 @@
 								
 								<span>결과보기</span>
 								<div class="mt-2">
-									<span class="alpha alpha-green" onclick="location.href='battleResult.bt'">결과보기</span>
+									<span class="alpha alpha-green" onclick="location.href='battleResult.bt?battleNo=${battle.battleNo}&homeTeam=${battle.homeTeam}&awayTeam=${battle.awayTeam}'">결과보기</span>
 								</div>
 	
 	
@@ -449,11 +449,8 @@
 						</div>
 						
 					</div>
-					
 	
 			    	</div>
-				
-	
 	
 			</div>
 		
@@ -471,11 +468,16 @@
 				<div class="message-area" align="center">
 					<h3>배틀 신청</h3>
 					<br>
-					<textarea id="msgContent" rows="10"
-						style="width: 400px; resize: none;" placeholder="도발 멘트를 입력해 주세요."></textarea>
-					<br> <br>
-					<button onclick="insertMessage();">신청</button>
-					<button id="close">취소</button>
+					<form action="battleApply.bt" method="post">
+						<input type="hidden" name="teamNo" value="${ loginMember.teamNo }">
+						<input type="hidden" name="memNo" value="${ loginMember.memNo }">
+						<input type="hidden" name="battleNo" value="${ battle.battleNo }">
+						<textarea id="msgContent" rows="5" name="chatContent"
+							style="width: 400px; resize: none;" placeholder="도발 멘트를 입력해 주세요."></textarea>
+						<br> <br>
+						<button type="submit">신청</button>
+						<button type="button" id="close">취소</button>
+					</form>
 				</div>
 			</div>
 		</div>

@@ -32,6 +32,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="YES_NO"			property="yesNo"/>
 	</resultMap>
 	
+	<resultMap type="team" id="teamResultMap">
+		<result column="TEAM_NO" 			property="teamNo"/>
+		<result column="TEAM_NAME" 			property="teamName"/>
+		<result column="MEM_NO" 			property="memNo"/>
+		<result column="TEAM_MEMBER" 		property="teamMember"/>
+		<result column="TEAM_INTRO" 		property="teamIntro"/>
+		<result column="ORIGIN_NAME" 		property="originName"/>
+		<result column="CHANGE_NAME" 		property="changeName"/>
+		<result column="TEAM_AREA" 			property="teamArea"/>
+		<result column="TEAM_TIME" 			property="teamTime"/>
+		<result column="KEYWORD" 			property="keyword"/>
+		<result column="CREATE_DATE" 		property="createDate"/>
+		<result column="BADGE_ORIGIN_NAME" 	property="badgeOriginName"/>
+		<result column="BADGE_CHANGE_NAME" 	property="badgeChangeName"/>
+		<result column="BADGE_STATUS" 		property="badgeStatus"/>
+		<result column="STATUS" 			property="status"/>
+		<result column="POWER_DURATION" 	property="powerDuration"/>
+	</resultMap>
+	
+	<resultMap type="battleResult" id="battleResultResultSet">
+		<result column="BATTLE_NO"			property="battleNo"/>
+		<result column="victory"			property="VICTORY"/>
+		<result column="defeat"				property="DEFEAT"/>
+		<result column="vicRecord"			property="VIC_RECORD"/>
+		<result column="defRecord"			property="DEF_RECORD"/>
+		<result column="ok"					property="OK"/>
+	</resultMap>
+	
 <!-- 배틀풀 인서트 -->
 	<insert id="insertBattle" parameterType="battle">
 		INSERT
@@ -132,7 +160,76 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE
 		        BATTLE_NO = #{battleNo}
 	</select>
-
-
+	<update id="applyBattle" parameterType="hashmap">
+		UPDATE
+		        BATTLE
+		   SET
+		        AWAY_TEAM = #{teamNo}
+		 WHERE
+		        BATTLE_NO = #{battleNo}
+	</update>
+	
+	<insert id="provokeMsg" parameterType="hashmap">
+		INSERT
+		  INTO
+		        CHATTING
+		        (
+		        CHAT_NO
+		        ,MOIM_NO
+		        ,MEM_NO
+		        ,CHAT_CONTENT
+		        )
+		VALUES
+		        (
+		        SEQ_CNO.NEXTVAL
+		        ,#{battleNo}
+		        ,#{memNo}
+		        ,#{chatContent}
+		        )
+	
+	</insert>
+	
+	<select id="selectTeam" parameterType="string" resultMap="teamResultMap">
+		
+		SELECT
+		        TEAM_NO
+		        ,TEAM_NAME
+		        ,MEM_NO
+		        ,TEAM_MEMBER
+		        ,TEAM_INTRO
+		        ,ORIGIN_NAME
+		        ,CHANGE_NAME
+		        ,TEAM_AREA
+		        ,TEAM_TIME
+		        ,KEYWORD
+		        ,CREATE_DATE
+		        ,BADGE_ORIGIN_NAME
+		        ,BADGE_CHANGE_NAME
+		        ,BADGE_STATUS
+		        ,STATUS
+		        ,POWER_DURATION
+		  FROM
+		        TEAM
+		 WHERE
+		        STATUS = 'Y'
+		   AND
+		        TEAM_NO = #{team}
+	
+	
+	</select>
+	
+	<select id="selectBattleResult" parameterType="_int" resultMap="battleResultResultSet">
+		SELECT
+		        BATTLE_NO
+		        ,VICTORY
+		        ,DEFEAT
+		        ,VIC_RECORD
+		        ,DEF_RECORD
+		        ,OK
+		  FROM
+		        BATTLE_RESULT
+		 WHERE
+		        BATTLE_NO = #{battleNo}
+	</select>
 	
 </mapper>
