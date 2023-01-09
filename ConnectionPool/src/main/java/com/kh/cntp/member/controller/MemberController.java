@@ -37,8 +37,6 @@ public class MemberController {
 		
 		Member loginMember = memberService.loginMember(member);
 		
-		System.out.println(loginMember.toString());
-		
 		if(loginMember != null && bcryptPasswordEncoder.matches(member.getMemPwd(), loginMember.getMemPwd())) {
 			
 			if(loginMember.getEndDate() != null) {

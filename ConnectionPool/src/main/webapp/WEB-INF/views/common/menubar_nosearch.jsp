@@ -218,7 +218,7 @@
             <section class="user-menu">
                 <ul class="user-list">
                     
-                    
+                                       
                     <c:choose>
                     	<c:when test="${ empty loginMember }">
                     		<!-- 로그인 XXX 시작-->
@@ -228,15 +228,24 @@
                     	</c:when>
                     	<c:otherwise>
                     	 <!-- 로그인 되어있을때 시작 -->
-		                    <a href="memberList.ad">관리자 페이지</a>
-		                    <li class="username" data-toggle="modal" data-target="#myModal">커풀님</li>
-		                    <li><div><a href="myPageInfo.me">마이페이지</a></div></li>
-		                    <li class="logout"><a href="logout.me">로그아웃</a></li>
-		                    <div class="basket-icon">
-		                        <div class="basket-icon">
-		                            <img src="" alt="" width="28" height="28" > <!-- 알림기능 넣는다면 종 모양 들어갈곳-->
-		                        </div>
+                    	 	<c:if test="${ loginMember.memId eq 'admin' }">
+                    	 		<li class="username" data-toggle="modal" data-target="#myModal">${ loginMember.nickName }님</li>
+		                    	<li><div><a href="memberList.ad">관리자페이지</a></div></li>
+		                    	<li class="logout"><a href="logout.me">로그아웃</a></li>
+		                    </c:if>
+		                    
+							<c:if test="${ loginMember.memId ne 'admin' }">		                    		                   	 
+			                    <li class="username" data-toggle="modal" data-target="#myModal">${ loginMember.nickName }님</li>
+			                    <li><div><a href="myPageInfo.me">마이페이지</a></div></li>
+			                    <li class="logout"><a href="logout.me">로그아웃</a></li>
+			                    <div class="basket-icon">
+			                        <div class="basket-icon">
+			                            <img src="" alt="" width="28" height="28" > <!-- 알림기능 넣는다면 종 모양 들어갈곳-->
+			                        </div>
+			                    </div>    
 		                     <!-- 로그인 되어있을때 끝 -->
+		                     </c:if>
+		                     
                     	</c:otherwise>
                     </c:choose>
                    
