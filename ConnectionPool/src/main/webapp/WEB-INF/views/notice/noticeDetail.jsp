@@ -88,6 +88,10 @@
                             <td colspan="3">
                                 <img src="" alt="">
                                 <p>
+                                	<c:if test="${ not empty notice.changeName }">
+	                                	<img src="${ notice.changeName }">
+                                	</c:if>
+                                	<br>
                                     ${ notice.content }
                                 </p>
                             </td>
@@ -96,8 +100,18 @@
                 </table>
             </div>
 	        <div class="notice-foot">
+	        
+	        	
 	            <div class="notice-file">
-	                	첨부파일 : <a href="" download="${ originName }">${ originName }</a>
+	            	<c:choose>
+			        	<c:when test="${ not empty notice.originName }">
+		                	첨부파일 : <a href="${ notice.changeName }" download="${ notice.originName }">${ notice.originName }</a>
+		               	</c:when>
+		               	<c:otherwise>
+		               		첨부파일이 없습니다.
+		               	</c:otherwise>
+					</c:choose>
+	               	
 	            </div>
 	            <div class="notice-hidden">
 	            	<c:if test="${ loginUser.memNo eq notice.memNo }">

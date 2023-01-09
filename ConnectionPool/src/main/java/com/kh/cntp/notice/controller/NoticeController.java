@@ -1,9 +1,8 @@
 package com.kh.cntp.notice.controller;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -11,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.common.template.Pagination;
 import com.kh.cntp.notice.model.service.NoticeService;
-import com.kh.cntp.notice.model.vo.Notice;
 
 @Controller
 public class NoticeController {
@@ -37,11 +35,15 @@ public class NoticeController {
 	
 	// 공지사항 상세 조회 -> 공지사항 상세 페이지로 이동
 	@RequestMapping("detail.no")
-	public String selectNoticeDetail() {
+	public String selectNoticeDetail(int nno, Model model) {
 		
+		if(noticeService.increaseCount(nno) > 0) {
+			model.addAttribute("notice", noticeService.selectDetail(nno));			
+		}
 		
 		return "notice/noticeDetail";
 	}
+	
 	
 	
 	

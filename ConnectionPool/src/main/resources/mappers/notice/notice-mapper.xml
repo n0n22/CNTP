@@ -38,12 +38,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       NOTICE_NO
 		       ,CATEGORY
 		       ,TITLE
-		       ,CONTENT
 		       ,NICKNAME
 		       ,to_char(create_date, 'YYYY-MM-DD') as "CREATE_DATE"
 		       ,COUNT
-		       ,ORIGIN_NAME
-		       ,CHANGE_NAME
 		       ,STATUS
 		  FROM
 		       NOTICE
@@ -58,6 +55,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 ORDER
 		    BY
 		       NOTICE_NO DESC
+	</select>
+	<!-- 공지사항 조회수 증가 -->
+	<update id="increaseCount" parameterType="_int">
+		UPDATE
+		       NOTICE
+		   SET
+		       COUNT = COUNT + 1
+		 WHERE
+		       NOTICE_NO = #{nno}
+		   AND
+		       STATUS = 'Y'	
+	</update>
+	
+	<!-- 공지사항 상세조회 -->
+	<select id="selectDetail" parameterType="_int" resultMap="noticeResultSet">
+		SELECT
+		       NOTICE_NO
+		       ,CATEGORY
+		       ,TITLE
+		       ,CONTENT
+		       ,NICKNAME
+		       ,to_char(create_date, 'YYYY-MM-DD') as "CREATE_DATE"
+		       ,COUNT
+		       ,ORIGIN_NAME
+		       ,CHANGE_NAME
+		       ,STATUS
+		  FROM
+		       NOTICE
+		  JOIN
+		       MEMBER USING(MEM_NO)
+		 WHERE
+		       STATUS = 'Y'
+		   AND
+		       NOTICE_NO = #{noticeNo}
 	</select>
 	
 </mapper>

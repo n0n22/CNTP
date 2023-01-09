@@ -33,6 +33,24 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.selectList(sqlSession, cate, pi);
 	}
 
+	// 공지사항 조회수 증기
+	@Override
+	public int increaseCount(int nno) {
+		return noticeDao.increaseCount(sqlSession, nno);
+	}
+	
+	
+	
+	// 공지사항 상세 조회
+	@Override
+	public Notice selectDetail(int nno) {
+		return noticeDao.selectDetail(sqlSession, nno);
+	}
+
+
+
+	
+	
 	
 	
 	
