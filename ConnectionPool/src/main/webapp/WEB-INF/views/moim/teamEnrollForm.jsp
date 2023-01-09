@@ -106,9 +106,13 @@
 		        <tr height="50">
 		            <th>우리팀 키워드</th>
 		            <td colspan="2">
-		                <input type="radio" name="keyword" value="battle"> 배틀
-		                <input type="radio" name="keyword" value="social"> 친목
-		                <input type="radio" name="keyword" value="online"> 온라인모임만
+		            	
+		                <input type="radio" id="battle" name="keyword" value="battle" checked>
+		                <label for="battle">배틀</label>
+		                <input type="radio" id="social" name="keyword" value="social">
+		                <label for="social">친목</label>
+		                <input type="radio" id="online" name="keyword" value="online">
+		                <label for="online">온라인모임만</label>
 		            </td>
 		        </tr>
 		        <tr height="50">
@@ -120,7 +124,8 @@
 		        <tr height="50">
 		            <th>파워등록</th>
 		            <td colspan="2">
-		                <input type="checkbox" class="powerDuration" name="powerDuration" value="true"> 파워 등록 시 10P가 소요됩니다. 
+		                <input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" value="true"> 
+		                <label for="powerDuration"> 파워 등록 시 10P가 소요됩니다. </label> 
 		            </td>
 		        </tr>
 		
@@ -146,7 +151,8 @@
 	    <br>
 	
 	    <div align="center">
-	        <input type="checkbox" class="agreeCheck"> 위 내용을 숙지하고 동의합니다. <br><br>
+	        <input id="agreeCheck" type="checkbox" class="agreeCheck">
+	        <label for="agreeCheck">위 내용을 숙지하고 동의합니다.</label> <br><br>
 	        <a href="#">취소하기</a> <button class="teamEnrollBtn" disabled onclick="return checkAgree();">팀 생성하기</button>
 	    </div>
 
