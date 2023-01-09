@@ -28,8 +28,16 @@ public class BattleServiceImpl implements BattleService{
 	@Override
 	@Transactional
 	public int insertBattle(Battle battle, PoolInfo poolInfo) {
-		battleDao.insertBattle(sqlSession, battle);
-		return battleDao.insertPoolInfo(sqlSession, poolInfo);
+		return battleDao.insertBattle(sqlSession, battle) * battleDao.insertPoolInfo(sqlSession, poolInfo);
+	}
+	
+	@Override
+	public Battle selectBattle(int battleNo) {
+		return battleDao.selectBattle(sqlSession, battleNo);
+	}
+	@Override
+	public PoolInfo selectPoolInfo(int battleNo) {
+		return battleDao.selectPoolInfo(sqlSession, battleNo);
 	}
 
 	

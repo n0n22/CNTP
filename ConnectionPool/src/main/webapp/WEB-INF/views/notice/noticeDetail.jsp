@@ -116,9 +116,13 @@
 	            </div>
 	            <div class="notice-hidden">
 	            	<c:if test="${ loginMember.memNo eq notice.memNo }">
-		                <button type="button" class="btn btn-sm btn-danger">삭제</button>
-		                <a href="noticeUpdateForm.ad?nno=${ notice.noticeNo }" class="btn btn-sm btn-warning">수정</a>
+		                <button type="button" class="btn btn-sm btn-danger" onclick="postFormSubmit(1);">삭제</button>
+		                <button type="button" class="btn btn-sm btn-warning" onclick="postFormSubmit(2);">수정</button>
 	                </c:if>
+	            	<form action="" method="post" id="postForm">
+	            		<input type="hidden" name="nno" value="${ notice.noticeNo }">
+	            		<input type="hidden" name="filePath" value="${ notice.changeName }">
+	            	</form>
 	            </div>
 	            <div class="notice-list">
 	                <button class="btn btn-sm btn-secondary" onclick="location.href='list.no'">목록으로</button>
@@ -134,8 +138,32 @@
 
 
 
-	<jsp:include page="../common/footer.jsp" />
+		                
+    <script>
 
+	   	function postFormSubmit(num) {
+	   		
+	   		if(num == 1) { // 삭제 클릭 시
+	   			var check = alertify.confirm('${ notice.noticeNo }번 공지사항을 삭제하시겠습니까?').set('closable', true);
+	   			if(check == true) {
+		   			$('#postForm').attr('action', 'noticeDelete.ad').submit();
+	   			} 
+	   		} else { // 수정 클릭 시
+	   			$('#postForm').attr('action', 'noticeUpdateForm.ad').submit();
+	   		}
+	   		
+	   		
+	   		// url에서 글번호를 숨기면서 요청을 보낼 수 있음
+	   	};
+	   
+   
+    </script>
+
+
+
+	<jsp:include page="../common/footer.jsp" />
+	
+	
 
 
 

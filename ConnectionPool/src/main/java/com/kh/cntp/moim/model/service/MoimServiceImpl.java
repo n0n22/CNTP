@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.cntp.moim.model.dao.MoimDao;
 import com.kh.cntp.moim.model.vo.Apply;
@@ -26,8 +27,10 @@ public class MoimServiceImpl implements MoimService {
 	}
 
 	@Override
+	@Transactional
 	public int insertTeam(Team team) {
-		return moimDao.insertTeam(sqlSession, team);
+		//return 할 때 곱하기로 해주면 된다 !
+		return moimDao.insertTeam(sqlSession, team)*moimDao.insertTeamLeaderMember(sqlSession, team)*moimDao.insertResultHistory(sqlSession);
 	}
 
 	@Override
@@ -35,10 +38,6 @@ public class MoimServiceImpl implements MoimService {
 		return 0;
 	}
 
-	@Override
-	public int insertResultHistory(int teamNo) {
-		return 0;
-	}
 
 	@Override
 	public Team selectTeam(int teamNo) {

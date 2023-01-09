@@ -4,6 +4,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="battleMapper">
+	
+	<resultMap id="battleResultSet" type="battle" >
+		<result column="BATTLE_NO"  	property="battleNo"/>
+		<result column="AREA"			property="area"/>
+		<result column="GENDER"			property="gender"/>
+		<result column="HOME_TEAM"		property="homeTeam"/>
+		<result column="AWAY_TEAM"		property="awayTeam"/>
+		<result column="LEVEL"			property="level"/>
+		<result column="BATTLE_DATE"	property="battleDate"/>
+		<result column="ORIGIN_NAME"	property="originName"/>
+		<result column="CHANGE_NAME" 	property="changeName"/>
+		<result column="STYLE"			property="style"/>
+		<result column="TITLE"			property="title"/>
+		<result column="BATTLE_TIME"	property="battleTime"/>
+		<result column="BATTLE_RULE" 	property="battleRule"/>
+	</resultMap>
+	
+	<resultMap id="poolInfoResultSet" type="poolInfo" >
+		<result column="BATTLE_NO"		property="battleNo"/>
+		<result column="POOL_NAME" 		property="poolName"/>
+		<result column="LENGTH" 		property="length"/>
+		<result column="WIDTH"			property="width"/>
+		<result column="LANES" 			property="lanes"/>
+		<result column="DEPTH"			property="depth"/>
+		<result column="PLACE"			property="place"/>
+		<result column="YES_NO"			property="yesNo"/>
+	</resultMap>
+	
+<!-- 배틀풀 인서트 -->
 	<insert id="insertBattle" parameterType="battle">
 		INSERT
 		  INTO 
@@ -66,6 +95,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        ,#{yesNo}
 		        )
 	</insert>
+	
+<!-- 배틀풀 상세보기 -->
+	<select id="selectBattle" parameterType="_int" resultMap="battleResultSet">
+		SELECT 
+		        BATTLE_NO
+		        ,AREA
+		        ,GENDER
+		        ,HOME_TEAM
+		        ,AWAY_TEAM
+		        ,"LEVEL"
+		        ,TO_CHAR(BATTLE_DATE, 'YYYY-MM-DD') "BATTLE_DATE"
+		        ,ORIGIN_NAME
+		        ,CHANGE_NAME
+		        ,STYLE
+		        ,TITLE
+		        ,BATTLE_TIME
+		        ,BATTLE_RULE
+		  FROM
+		        BATTLE
+		 WHERE
+		        BATTLE_NO = #{battleNo}
+	</select>
+	<select id="selectPoolInfo" parameterType="_int" resultMap="poolInfoResultSet">
+		SELECT
+		        BATTLE_NO
+		        ,POOL_NAME
+		        ,LENGTH
+		        ,WIDTH
+		        ,LANES
+		        ,DEPTH
+		        ,PLACE
+		        ,YES_NO
+		  FROM
+		        POOL_INFO
+		 WHERE
+		        BATTLE_NO = #{battleNo}
+	</select>
+
 
 	
 </mapper>
