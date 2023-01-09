@@ -42,7 +42,6 @@ public class MemberController {
 									HttpServletResponse response) throws ParseException {
 		
 		Member loginMember = memberService.loginMember(member);
-		
 		// 쿠키발급
 		if(checkId != null) {
 			Cookie saveId = new Cookie("saveId", member.getMemId());

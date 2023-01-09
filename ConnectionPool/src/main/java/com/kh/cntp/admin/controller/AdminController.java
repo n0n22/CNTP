@@ -200,6 +200,11 @@ public class AdminController {
 	}
 	
 	
+	// 공지 삭제
+	@RequsetMapping("noticeDelete.ad")
+	public 
+	
+	
 	
 	
 	
