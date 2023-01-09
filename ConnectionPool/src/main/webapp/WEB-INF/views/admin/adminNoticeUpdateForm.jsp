@@ -131,7 +131,7 @@
 			
 			$('.cate').each(function(){
 				if($(this).val() == '${ notice.category }') {
-					console.log($(this));
+					// console.log($(this));
 					$(this).attr('selected', true);
 				}
 				
