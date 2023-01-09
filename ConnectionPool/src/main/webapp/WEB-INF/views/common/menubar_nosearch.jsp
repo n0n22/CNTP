@@ -210,8 +210,8 @@
                     <li><a href="teamList.mo">친목풀-팀</a></li>
                     <li><a href="groupList.mo">친목풀-소그룹</a></li>
                     <li><a href="battleList.bt">배틀풀</a></li>
-                    <li><a href="boardList.bo">커뮤니티</li>
-                     <li><a href="diaryList.di">수영일기</li>
+                    <li><a href="list.bo">커뮤니티</li>
+                     <li><a href="list.di">수영일기</li>
                     <li><a href="list.no">공지사항</a></li>
                 </ul>
             </section>
