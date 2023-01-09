@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,8 +61,9 @@
 
         </div>
         <div class="notice-enroll">
-        	<form method="post" action="noticeUpdate.ad">
-        	
+        	<form method="post" action="noticeUpdate.ad" enctype="multipart/form-data">
+        		<input type="hidden" name="memNo" value="${ loginMember.memNo }">
+        		<input type="hidden" name="noticeNo" value="${ notice.noticeNo }">
 	            <div class="container">
 	                <table class="table table-bordered">
 	                    <tbody>
@@ -69,16 +71,16 @@
 	                            <th>카테고리</th>
 	                            <td>
 	                                <select name="category">
-	                                    <option value="notice">공지</option>
-	                                    <option value="event">이벤트</option>
-	                                    <option value="competition">대회정보</option>
+	                                    <option class="cate" value="공지">공지</option>
+	                                    <option class="cate" value="이벤트">이벤트</option>
+	                                    <option class="cate" value="대회정보">대회정보</option>
 	                                </select>
 	                            
 	                            </td>
 	                        </tr>
 	                        <tr>
 	                            <th>제목</th>
-	                            <td><input type="text" name="title">${ notice.title }</td>
+	                            <td><input type="text" name="title" value="${ notice.title }"></td>
 	                        </tr>
 	                        <tr>
 	                            <th>내용</th>
@@ -87,10 +89,18 @@
 	                            </td>
 	                        </tr>
 	                        <tr>
-	                            <th>첨부파일</th>
-	                            <td><input type="file" name="upfile"></td>
-	                        </tr>
-	
+	                        	<td colspan="2">
+		                        	<input type="file" name="reUpfile">
+					            	<c:choose>
+							        	<c:when test="${ not empty notice.originName }">
+						                	첨부파일 : <a href="${ notice.changeName }" download="${ notice.originName }">${ notice.originName }</a>
+						               	</c:when>
+						               	<c:otherwise>
+						               		첨부파일이 없습니다.
+						               	</c:otherwise>
+									</c:choose>
+	                        	</td>
+							</tr>
 	
 	                    </tbody>
 	                  
@@ -119,8 +129,9 @@
 	
 		$(function() {
 			
-			$('option').each(function(){
-				if($(this).val() == ${ notice.category }) {
+			$('.cate').each(function(){
+				if($(this).val() == '${ notice.category }') {
+					console.log($(this));
 					$(this).attr('selected', true);
 				}
 				

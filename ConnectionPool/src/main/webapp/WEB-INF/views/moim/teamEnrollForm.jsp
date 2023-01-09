@@ -55,13 +55,14 @@
 		<h6 align="center">팀을 생성하여 팀원들을 모집하고 배틀에 참가해보세요!</h6>
 	    
 	    
-	    <form action="insertTeam.mo" action="post">
+	    <form action="insertTeam.mo" method="post" enctype="multipart/form-data">
 			<!-- th태그들 안은 당연하게 중앙 정렬이라 후에 왼쪽 정렬 바꿔주자 -->
 		    <table align="center" border="1" class="teamEnrollFormTable">
 		        <tr height="50">
 		            <th>팀 이름<br>*팀 이름은 추후 수정 불가</th>
 		            <td>
 		                <input type="text" name="teamName" class="teamName" required>
+		                <input type="hidden" name="memNo" value="${ loginMember.memNo }">
 		                <label class="checkResult"></label>
 		            </td>
 		        </tr>
@@ -106,9 +107,13 @@
 		        <tr height="50">
 		            <th>우리팀 키워드</th>
 		            <td colspan="2">
-		                <input type="radio" name="keyword" value="battle"> 배틀
-		                <input type="radio" name="keyword" value="social"> 친목
-		                <input type="radio" name="keyword" value="online"> 온라인모임만
+		            	
+		                <input type="radio" id="battle" name="keyword" value="battle" checked>
+		                <label for="battle">배틀</label>
+		                <input type="radio" id="social" name="keyword" value="social">
+		                <label for="social">친목</label>
+		                <input type="radio" id="online" name="keyword" value="online">
+		                <label for="online">온라인모임만</label>
 		            </td>
 		        </tr>
 		        <tr height="50">
@@ -120,7 +125,8 @@
 		        <tr height="50">
 		            <th>파워등록</th>
 		            <td colspan="2">
-		                <input type="checkbox" class="powerDuration" name="powerDuration" value="true"> 파워 등록 시 10P가 소요됩니다. 
+		                <input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" value="true"> 
+		                <label for="powerDuration"> 파워 등록 시 10P가 소요됩니다. </label> 
 		            </td>
 		        </tr>
 		
@@ -128,9 +134,9 @@
 	    <br><br>
 	
 	    <div class="TE_point_area" align="center">
-	        <p class="cost">소요 포인트 : 545</p>
+	        <p class="cost">소요 포인트 : 50</p>
 	        <!-- checkbox 선택됐을 경우 소요포인트를 변경 -->
-	        <p>현재 내 포인트 : </p>
+	        <p>현재 내 포인트 : ${ loginMember.memPoint }</p>
 	    </div>
 	
 	    <div class="TE_info_area" align="center">
@@ -146,7 +152,8 @@
 	    <br>
 	
 	    <div align="center">
-	        <input type="checkbox" class="agreeCheck"> 위 내용을 숙지하고 동의합니다. <br><br>
+	        <input id="agreeCheck" type="checkbox" class="agreeCheck">
+	        <label for="agreeCheck">위 내용을 숙지하고 동의합니다.</label> <br><br>
 	        <a href="#">취소하기</a> <button class="teamEnrollBtn" disabled onclick="return checkAgree();">팀 생성하기</button>
 	    </div>
 

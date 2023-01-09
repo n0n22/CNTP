@@ -11,7 +11,7 @@ public class Board {
 	private String category;
 	private String title;
 	private String content;
-	private Date createDate;
+	private String createDate; //Date타입에서 String타입으로 변경
 	private String originName;
 	private String changeName;
 	private int count;

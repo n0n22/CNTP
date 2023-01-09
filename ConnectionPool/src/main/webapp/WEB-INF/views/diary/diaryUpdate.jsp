@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>피드게시판 수정하기</title>
+<title>수영일기 수정하기</title>
 <style>
     div {
     display: block;
@@ -60,26 +60,33 @@ element.style {
 <body>
  <jsp:include page="../common/menubar_nosearch.jsp" />
 
-<div >   
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-<div class="card card-white grid-margin">
-    <div class="card-body">
-        <div class="post">
-            <textarea class="form-control" id="contentInsert"  rows="4"> 수정할 내용이 블라블라~~~~ 있습니다.</textarea>
-            <div class="post-options">
-                <a href="#"><i class="fa fa-camera"></i></a>
-                <a href="#"><i class="fas fa-video"></i></a>
-               
-                <button class="btn btn-outline-primary float-right">수정하기</button>
-                <button class="btn btn-outline-primary float-right">이전으로</button>
-                
-            </div>
-        </div>
-    </div>
-</div>
+
+	<div>
+		<form id="updateForm" method="post" action="update.di"
+			enctype="multipart/form-data">
+			<link
+				href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+				rel="stylesheet" />
+			<div class="card card-white grid-margin">
+				<div class="card-body">
+					<div class="post">
+						<textarea class="form-control" id="contentInsert" rows="4"> 수정할 내용이 블라블라~~~~ 있습니다.</textarea>
+						<div class="post-options">
+							<a href="#"><i class="fa fa-camera"></i></a> <a href="#"><i
+								class="fas fa-video"></i></a>
+
+							<button class="btn btn-outline-primary float-right">수정하기</button>
+							<button class="btn btn-outline-primary float-right">이전으로</button>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
 
 
-<jsp:include page="../common/footer.jsp" />
+	<jsp:include page="../common/footer.jsp" />
 
 
 </body>
