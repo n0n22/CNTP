@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="teamMember" id="teamMemberResultMap">
 		<result column="TEAM_NO" 	property="teamNo"/>
 		<result column="TEAM_GRADE" property="teamGrade"/>
-		<result column="MEM_NO" 	property="memNo"/>
+		<result column="NICKNAME" 	property="memNo"/>
 	</resultMap>
 	
 	<resultMap type="group" id="groupResultMap">
@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="apply" id="applyResultMap">
 		<result column="APPLY_NO" 		property="applyNo"/>
 		<result column="MOIM_NO" 		property="moimNo"/>
-		<result column="MEM_NO" 		property="memNo"/>
+		<result column="NICKNAME" 		property="memNo"/>
 		<result column="ACCEPT_YN" 		property="acceptYn"/>
 		<result column="APPLY_DATE" 	property="applyDate"/>
 		<result column="ACCEPT_DATE" 	property="acceptDate"/>
@@ -169,11 +169,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT
 		         TM.TEAM_NO
 		        ,TM.TEAM_GRADE
-		        ,TM.MEM_NO
+		        ,M.NICKNAME
 		  FROM 
 		       TEAM_MEMBER "TM"
 		  JOIN
 		       TEAM "T" ON(TM.TEAM_NO = T.TEAM_NO)
+		  JOIN
+		       MEMBER "M" ON(TM.MEM_NO = M.MEM_NO)
 		 WHERE
 		       T.TEAM_NO = #{ teamNo }
 		   AND
@@ -185,7 +187,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT
 		        A.APPLY_NO
 		       ,A.MOIM_NO
-		       ,A.MEM_NO
+		       ,M.NICKNAME
 		       ,A.ACCEPT_YN
 		       ,A.APPLY_DATE
 		       ,A.ACCEPT_DATE
@@ -193,6 +195,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       APPLY "A"
 		  JOIN
 		       TEAM "T" ON(A.MOIM_NO = T.TEAM_NO)
+		  JOIN
+		       MEMBER "M" ON(A.MEM_NO = M.MEM_NO)
 		 WHERE
 		       MOIM_NO = #{ moimNo }
 		   AND

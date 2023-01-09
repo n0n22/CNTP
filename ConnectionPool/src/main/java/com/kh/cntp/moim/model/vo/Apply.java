@@ -8,7 +8,7 @@ import lombok.Data;
 public class Apply {
 	private int applyNo;
 	private String moimNo;
-	private int memNo;
+	private String memNo;
 	private String acceptYn;
 	private String applyDate;
 	private String acceptDate;

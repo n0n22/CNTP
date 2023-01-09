@@ -6,7 +6,7 @@ import lombok.Data;
 public class TeamMember {
 	
 	private String teamNo;
-	private int memNo;
+	private String memNo;
 	private String teamGrade;
 
 }
