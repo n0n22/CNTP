@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
+
+
 
 	<meta charset="UTF-8">
 	<title>메뉴바(검색X)</title>
@@ -13,7 +16,22 @@
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-       
+    
+    <!-- ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    
+    
+    <!-- JavaScript -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	
+	<!-- CSS -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+	<!-- Default theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+	<!-- Semantic UI theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+	       
+	    
 
 <style>
     
@@ -170,6 +188,15 @@
 </style>
 </head>
 <body>
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alertify.alert('알림', '${alertMsg}', function(){ alertify.success('확인 완료'); });
+		</script>
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
+
+
+
     <div class="header">
         <div class="header-inner">
             <section class="navigation-menu">
@@ -191,21 +218,38 @@
 
             <section class="user-menu">
                 <ul class="user-list">
-                    <!-- 로그인 XXX 시작-->
-                    <li class="login"><a href="loginForm.me">로그인</a></li>
-					<!-- 관리자페이지 넣으니까 로그인이 작동이안되네요 ?? 왜인진 모르겠서요 -->
-                    <!-- 로그인 XXX 끝-->
-
-                    <!-- 로그인 되어있을때 시작 -->
-                    <a href="memberList.ad">관리자 페이지</a>
-                    <li class="username" data-toggle="modal" data-target="#myModal">커풀님</li>
-                    <li><div><a href="myPageInfo.me">마이페이지</a></div></li>
-                    <li class="logout">로그아웃</li>
-                    <div class="basket-icon">
-                        <div class="basket-icon">
-                            <img src="" alt="" width="28" height="28" > <!-- 알림기능 넣는다면 종 모양 들어갈곳-->
-                        </div>
-                     <!-- 로그인 되어있을때 끝 -->
+                    
+                                       
+                    <c:choose>
+                    	<c:when test="${ empty loginMember }">
+                    		<!-- 로그인 XXX 시작-->
+                    		<li class="login"><a href="loginForm.me">로그인</a></li>
+							<!-- 관리자페이지 넣으니까 로그인이 작동이안되네요 ?? 왜인진 모르겠서요 -->
+		                    <!-- 로그인 XXX 끝-->
+                    	</c:when>
+                    	<c:otherwise>
+                    	 <!-- 로그인 되어있을때 시작 -->
+                    	 	<c:if test="${ loginMember.memId eq 'admin' }">
+                    	 		<li class="username" data-toggle="modal" data-target="#myModal">${ loginMember.nickName }님</li>
+		                    	<li><div><a href="memberList.ad">관리자페이지</a></div></li>
+		                    	<li class="logout"><a href="logout.me">로그아웃</a></li>
+		                    </c:if>
+		                    
+							<c:if test="${ loginMember.memId ne 'admin' }">		                    		                   	 
+			                    <li class="username" data-toggle="modal" data-target="#myModal">${ loginMember.nickName }님</li>
+			                    <li><div><a href="myPageInfo.me">마이페이지</a></div></li>
+			                    <li class="logout"><a href="logout.me">로그아웃</a></li>
+			                    <div class="basket-icon">
+			                        <div class="basket-icon">
+			                            <img src="" alt="" width="28" height="28" > <!-- 알림기능 넣는다면 종 모양 들어갈곳-->
+			                        </div>
+			                    </div>    
+		                     <!-- 로그인 되어있을때 끝 -->
+		                     </c:if>
+		                     
+                    	</c:otherwise>
+                    </c:choose>
+                   
                      
 	                </div>
                 </ul>

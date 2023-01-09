@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +48,7 @@
 <body>
 
 
-	<jsp:include page="../common/menubar_nosearch.jsp" />=
+	<jsp:include page="../common/menubar_nosearch.jsp" />
 
 
     <div class="admin-outer">
@@ -59,7 +60,8 @@
 
         </div>
         <div class="notice-enroll">
-            <form action="noticeInsert.ad" method="post">
+            <form action="noticeInsert.ad" method="post" enctype="multipart/form-data">
+            	<input type="hidden" name="memNo" value="${ loginMember.memNo }">
             	<div class="container">
 	                <table class="table table-bordered">
 	                    <tbody>
@@ -67,9 +69,9 @@
 	                            <th>카테고리</th>
 	                            <td>
 	                                <select name="category">
-	                                    <option value="notice">공지</option>
-	                                    <option value="event">이벤트</option>
-	                                    <option value="competition">대회정보</option>
+	                                    <option value="공지">공지</option>
+	                                    <option value="이벤트">이벤트</option>
+	                                    <option value="대회정보">대회정보</option>
 	                                </select>
 	                            
 	                            </td>

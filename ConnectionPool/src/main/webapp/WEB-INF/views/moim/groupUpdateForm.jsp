@@ -67,7 +67,7 @@
 								<option value="Gangwon">강원도</option>
 								<option value="Chungbuk">충청북도</option>
 								<option value="Chungnam">충청남도</option>
-								<option value="Jeonabuk">전라북도</option>
+								<option value="Jeonbuk">전라북도</option>
 								<option value="Jeonnam">전라남도</option>
 								<option value="Gyeongbuk">경상북도</option>
 								<option value="Gyeongnam">경상남도</option>

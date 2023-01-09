@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="moimMapper">
+	
+	<resultMap type="team" id="teamResultMap">
+		<result column="TEAM_NO" 			property="teamNo"/>
+		<result column="TEAM_NAME" 			property="teamName"/>
+		<result column="MEM_NO" 			property="memNo"/>
+		<result column="TEAM_MEMBER" 		property="teamMember"/>
+		<result column="TEAM_INTRO" 		property="teamIntro"/>
+		<result column="ORIGIN_NAME" 		property="originName"/>
+		<result column="CHANGE_NAME" 		property="changeName"/>
+		<result column="TEAM_AREA" 			property="teamArea"/>
+		<result column="TEAM_TIME" 			property="teamTime"/>
+		<result column="KEYWORD" 			property="keyword"/>
+		<result column="CREATE_DATE" 		property="createDate"/>
+		<result column="BADGE_ORIGIN_NAME" 	property="badgeOriginName"/>
+		<result column="BADGE_CHANGE_NAME" 	property="badgeChangeName"/>
+		<result column="BADGE_STATUS" 		property="badgeStatus"/>
+		<result column="STATUS" 			property="status"/>
+		<result column="POWER_DURATION" 	property="powerDuration"/>
+	</resultMap>
+	
+	<resultMap type="teamMember" id="teamMemberResultMap">
+		<result column="TEAM_NO" 	property="teamNo"/>
+		<result column="TEAM_GRADE" property="teamGrade"/>
+		<result column="MEM_NO" 	property="memNo"/>
+	</resultMap>
+	
+	<resultMap type="group" id="groupResultMap">
+		<result column="GROUP_NO" 			property="groupNo"/>
+		<result column="MEM_NO" 			property="memNo"/>
+		<result column="GROUP_TITLE" 		property="groupTitle"/>
+		<result column="GROUP_CONTENT" 		property="groupContent"/>
+		<result column="GROUP_AREA" 		property="groupArea"/>
+		<result column="PLACE" 				property="place"/>
+		<result column="GROUP_MEMBER" 		property="groupMember"/>
+		<result column="START_TIME" 		property="startTime"/>
+		<result column="END_TIME" 			property="endTime"/>
+		<result column="ORIGIN_NAME" 		property="originName"/>
+		<result column="CHANGE_NAME" 		property="changeName"/>
+		<result column="LEVEL" 				property="levle"/>
+		<result column="GENDER" 			property="gender"/>
+		<result column="CREATE_DATE" 		property="createDate"/>
+		<result column="POWER_DURRATION" 	property="powerDuration"/>
+	</resultMap>
+	
+	<resultMap type="apply" id="applyResultMap">
+		<result column="APPLY_NO" 		property="applyNo"/>
+		<result column="MOIM_NO" 		property="moimNo"/>
+		<result column="MEM_NO" 		property="memNo"/>
+		<result column="ACCEPT_YN" 		property="acceptYn"/>
+		<result column="APPLY_DATE" 	property="applyDate"/>
+		<result column="ACCEPT_DATE" 	property="acceptDate"/>
+	</resultMap>
+	
+	<resultMap type="chatting" id="chattingResultMap">
+		<result column="CHAT_NO" 		property="chatNo"/>
+		<result column="MOIM_NO" 		property="moimNo"/>
+		<result column="MEM_NO" 		property="memNo"/>
+		<result column="CHAT_CONTENT" 	property="chatContent"/>
+		<result column="CREATE_DATE" 	property="createDate"/>
+	</resultMap>
+	
+	<select id="ajaxSelectTeam" resultType="_int" parameterType="string">
+		SELECT
+			   COUNT(*)
+	      FROM
+	           TEAM
+	     WHERE
+	     	   TEAM_NAME = #{ checkName }
+	           
+	</select>
+	
+	<insert id="insertTeam" parameterType="team">
+		INSERT
+		  INTO
+		  	   TEAM
+		VALUES
+		       (
+		        SEQ_TNO.NEXTVAL
+		       ,#{ team.teamName }
+		       ,#{ team.memNo }
+		       ,#{ team.teamMember }
+		       ,#{ team.teamIntro }
+		       ,#{ team.originName }
+		       ,#{ team.changeName }
+		       ,#{ team.teamArea }
+		       ,#{ team.teamTime }
+		       ,#{ team.keyword }
+		       ,SYSDATE
+		       ,NULL
+		       ,NULL
+		       ,DEFAULT
+		       ,DEFAULT
+		       <if test="team.powerDuration != null">
+		       ,SYSDATE + 7
+		       </if>
+		       <if test="team.powerDuration == null">
+		       ,NULL
+		       </if>
+		       )
+	</insert>
+	
+</mapper>

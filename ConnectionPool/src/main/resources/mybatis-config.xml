@@ -10,10 +10,34 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</settings>
 	
 	<typeAliases>
+		<typeAlias type="com.kh.cntp.admin.model.vo.Banner" alias="banner" />
+		<typeAlias type="com.kh.cntp.admin.model.vo.Banner" alias="report" />
+		
+		<typeAlias type="com.kh.cntp.battle.model.vo.Battle" alias="battle" />
+		<typeAlias type="com.kh.cntp.battle.model.vo.BattleResult" alias="battleResult" />
+		<typeAlias type="com.kh.cntp.battle.model.vo.PoolInfo" alias="poolInfo" />
+		<typeAlias type="com.kh.cntp.battle.model.vo.ResultHistory" alias="resultHistory" />
+		
+		<typeAlias type="com.kh.cntp.board.model.vo.Board" alias="board" />
+		
+		<typeAlias type="com.kh.cntp.diary.model.vo.Diary" alias="diary" />
+		
+		<typeAlias type="com.kh.cntp.member.model.vo.Cert" alias="cert" />
+		<typeAlias type="com.kh.cntp.member.model.vo.Ingido" alias="ingido" />
+		<typeAlias type="com.kh.cntp.member.model.vo.Member" alias="member" />
+		
+		<typeAlias type="com.kh.cntp.moim.model.vo.Apply" alias="apply" />
+		<typeAlias type="com.kh.cntp.moim.model.vo.Chatting" alias="chatting" />
+		<typeAlias type="com.kh.cntp.moim.model.vo.Group" alias="group" />
+		<typeAlias type="com.kh.cntp.moim.model.vo.Team" alias="team" />
+		<typeAlias type="com.kh.cntp.moim.model.vo.TeamMember" alias="teamMember" />
+		
+		<typeAlias type="com.kh.cntp.notice.model.vo.Notice" alias="notice" />
 
+		<typeAlias type="com.kh.cntp.reply.model.vo.Reply" alias="reply" />
 	</typeAliases>
 	 <!-- 주의!!! : 미리 등록을 해두려면 해당 클래스가 진짜 존재하고 있는 상태여야함 -->
-	
+
 	<!-- 주의!!! : 미리 등록을 해두려면 해당 mapper파일이 진짜 존재하고있는 상태여야함 + namespace속성까지 작성해놓기-->
 	
 	<!-- 
@@ -23,6 +47,14 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	 -->
 	
 	<mappers>
+		<mapper resource="/mappers/admin/admin-mapper.xml" />
+		<mapper resource="/mappers/battle/battle-mapper.xml" />
+		<mapper resource="/mappers/board/board-mapper.xml" />
+		<mapper resource="/mappers/diary/diary-mapper.xml" />
+		<mapper resource="/mappers/member/member-mapper.xml" />
+		<mapper resource="/mappers/moim/moim-mapper.xml" />
+		<mapper resource="/mappers/notice/notice-mapper.xml" />
+		<mapper resource="/mappers/reply/reply-mapper.xml" />
 	</mappers>
 	
 </configuration>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="battleMapper">
+	<insert id="insertBattle" parameterType="battle">
+		INSERT
+		  INTO 
+		        BATTLE
+		        (
+		        BATTLE_NO
+		        ,AREA
+		        ,GENDER
+		        ,HOME_TEAM
+		        ,"LEVEL"
+		        ,BATTLE_DATE
+		        ,ORIGIN_NAME
+		        ,CHANGE_NAME
+		        ,STYLE
+		        ,TITLE
+		        ,BATTLE_TIME
+		        ,BATTLE_RULE
+		        )
+		VALUES
+		        (
+		        SEQ_BTNO.NEXTVAL
+		        ,#{area}
+		        ,#{gender}
+		        ,#{homeTeam}
+		        ,#{level}
+		        ,#{battleDate}
+		        ,#{originName}
+		        ,#{changeName}
+		        ,#{style}
+		        ,#{title}
+		        ,#{battleTime}
+		        ,#{battleRule}
+		        )
+	
+	</insert>
+	
+	<insert id="insertPoolInfo" parameterType="poolInfo">
+		INSERT 
+		  INTO
+		        POOL_INFO
+		        (
+		        BATTLE_NO
+		        ,POOL_NAME
+		        ,LENGTH
+		        ,WIDTH
+		        ,LANES
+		        ,DEPTH
+		        ,PLACE
+		        ,YES_NO
+		        )
+		VALUES
+		        (
+		        SEQ_BTNO.CURRVAL
+		        ,#{poolName}
+		        ,#{length}
+		        ,#{width}
+		        ,#{lanes}
+		        ,#{depth}
+		        ,#{place}
+		        ,#{yesNo}
+		        )
+	</insert>
+
+	
+</mapper>

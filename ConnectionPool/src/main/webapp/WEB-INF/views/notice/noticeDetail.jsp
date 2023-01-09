@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,6 +89,10 @@
                             <td colspan="3">
                                 <img src="" alt="">
                                 <p>
+                                	<c:if test="${ not empty notice.changeName }">
+	                                	<img src="${ notice.changeName }">
+                                	</c:if>
+                                	<br>
                                     ${ notice.content }
                                 </p>
                             </td>
@@ -96,17 +101,27 @@
                 </table>
             </div>
 	        <div class="notice-foot">
+	        
+	        	
 	            <div class="notice-file">
-	                	첨부파일 : <a href="" download="${ originName }">${ originName }</a>
+	            	<c:choose>
+			        	<c:when test="${ not empty notice.originName }">
+		                	첨부파일 : <a href="${ notice.changeName }" download="${ notice.originName }">${ notice.originName }</a>
+		               	</c:when>
+		               	<c:otherwise>
+		               		첨부파일이 없습니다.
+		               	</c:otherwise>
+					</c:choose>
+	               	
 	            </div>
 	            <div class="notice-hidden">
-	            	<c:if test="${ loginUser.memNo eq notice.memNo }">
+	            	<c:if test="${ loginMember.memNo eq notice.memNo }">
 		                <button type="button" class="btn btn-sm btn-danger">삭제</button>
-		                <a href="noticeUpdateForm.ad" class="btn btn-sm btn-warning">수정</a>
+		                <a href="noticeUpdateForm.ad?nno=${ notice.noticeNo }" class="btn btn-sm btn-warning">수정</a>
 	                </c:if>
 	            </div>
 	            <div class="notice-list">
-	                <button class="btn btn-sm btn-secondary" onclick="history.back();">목록으로</button>
+	                <button class="btn btn-sm btn-secondary" onclick="location.href='list.no'">목록으로</button>
 	            </div>
 	
 	        </div>

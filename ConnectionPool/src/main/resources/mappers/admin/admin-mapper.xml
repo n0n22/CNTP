@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="adminMapper">
+	
+	
+	
+	
+	
+	
+	
+	
+<!-- 공지 관련 기능 -->
+
+	<!-- 공지사항 등록 -->
+	<insert id="insertNotice" parameterType="notice">
+		INSERT
+		  INTO
+		       NOTICE
+		       (
+		       NOTICE_NO
+		       ,CATEGORY
+		       ,TITLE
+		       ,CONTENT
+		       ,MEM_NO
+		       ,CREATE_DATE
+		       ,ORIGIN_NAME
+		       ,CHANGE_NAME
+		       )
+		VALUES
+		       (
+		       SEQ_NNO.NEXTVAL
+		       ,#{category}
+		       ,#{title}
+		       ,#{content}
+		       ,#{memNo}
+		       ,SYSDATE
+		       ,#{originName}
+		       ,#{changeName}
+		       )
+	</insert>
+	
+	<!-- 공지사항 수정 -->
+	<update id="updateNotice" parameterType="notice">
+		UPDATE
+		       NOTICE
+		   SET
+			   CATEGORY = #{category}
+			   ,TITLE = #{title}
+			   ,CONTENT = #{content}
+			   ,ORIGIN_NAME = #{originName}
+			   ,CHANGE_NAME = #{changeName}
+	     WHERE
+	           NOTICE_NO = #{noticeNo}
+	       AND
+	           STATUS = 'Y'
+	</update>
+	
+	
+	
+</mapper>

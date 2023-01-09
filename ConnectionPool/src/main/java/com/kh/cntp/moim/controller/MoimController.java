@@ -1,41 +1,30 @@
 package com.kh.cntp.moim.controller;
 
+import static com.kh.cntp.common.template.Template.saveFile;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.kh.cntp.member.model.vo.Member;
+import com.kh.cntp.moim.model.service.MoimService;
+import com.kh.cntp.moim.model.vo.Team;
 
 @Controller
 public class MoimController {
+	
+	@Autowired
+	private MoimService moimService;
 	
 	// moimController 매핑값은 .mo로 통일!
 	@RequestMapping("teamList.mo")
 	public String selectTeamList() {
 		return "moim/teamListView";
-		
-		
-		/*
-		팀페이지
-		<jsp:foward page="teamPage.jsp"></jsp:foward>
-		팀페이지(정보) 수정
-		<!--<jsp:foward page="teamUpdateForm.jsp"/>-->
-		팀가입(리스트
-		<!--<jsp:foward page="teamListView.jsp"/>-->
-		팀원수정
-		<!--<jsp:foward page="teamMemberUpdate.jsp"/>-->
-		뱃지 구매
-		<!--<jsp:foward page="badgeBuyPage.jsp"/>-->
-		
-		<br><br>
-	
-		소모임 등록
-		<!--<jsp:foward page="groupEnrollForm"/>-->
-		소모임 수정
-		<!--<jsp:foward page="groupUpdateForm"/>-->
-		소모임 리스트
-		<!--<jsp:foward page="groupListView"/>-->
-		소모임 디테일
-		<!--<jsp:foward page="groupDetailView"/>-->
-		 */
 	}
 	
 	@RequestMapping("teamPage.mo")
@@ -54,6 +43,38 @@ public class MoimController {
 		mv.setViewName("moim/teamEnrollForm");
 		
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="checkTeamName.mo")
+	public String ajaxSelectTeam(String checkName) {
+		
+		if(moimService.ajaxSelectTeam(checkName) > 0) {
+			// 중복되는 이름이 있을 경우
+			return "NNNNN";
+		}else {
+			// 중복되는 이름이 없을 경우
+			return "NNNNY";
+		}
+	}
+	
+	@RequestMapping("insertTeam.mo")
+	public ModelAndView insertTeam(ModelAndView mv, Team team, MultipartFile upfile, HttpSession session) {
+		
+		if(!upfile.getOriginalFilename().equals("")) {
+			// 파일 등록을 했을 때
+			
+			team.setOriginName(upfile.getOriginalFilename());
+			team.setChangeName("resources/uploadFiles/" + saveFile(upfile, session));
+		}
+		
+		moimService.insertTeam(team);
+		
+		
+		
+		
+		return mv;
+		
 	}
 	
 	@RequestMapping("teamUpdateForm.mo")
