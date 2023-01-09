@@ -62,6 +62,7 @@
 		            <th>팀 이름<br>*팀 이름은 추후 수정 불가</th>
 		            <td>
 		                <input type="text" name="teamName" class="teamName" required>
+		                <input type="hidden" name="memNo" value="${ loginMember.memNo }">
 		                <label class="checkResult"></label>
 		            </td>
 		        </tr>

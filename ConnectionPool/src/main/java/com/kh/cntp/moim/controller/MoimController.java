@@ -61,29 +61,6 @@ public class MoimController {
 	@RequestMapping("insertTeam.mo")
 	public ModelAndView insertTeam(ModelAndView mv, Team team, MultipartFile upfile, HttpSession session) {
 		
-		// 임시적으로 request에 loginMember 삽입
-		Member loginMember = new Member();
-		loginMember.setMemNo(2);
-		loginMember.setMemId("user01");
-		loginMember.setMemPwd("1234");
-		loginMember.setGender("M");
-		loginMember.setIngido(1);
-		loginMember.setMemPoint(550);
-		loginMember.setEmail("user01@abc.com");
-		loginMember.setNickName("닉네임1");
-		loginMember.setMemName("1길동");
-		loginMember.setMemArea("Gyeonggi");
-		loginMember.setPhone("01012345679");
-		loginMember.setBirthDay("99/01/02");
-		loginMember.setDetailArea("남대문로 2길");
-		loginMember.setMemStatus("Y");
-		loginMember.setEnrollDate("20/01/02");
-		loginMember.setGrade("B");
-		mv.addObject("loginMember", loginMember);
-		// 여기까지 일단 담아
-		
-		team.setMemNo(loginMember.getMemNo());
-		
 		if(!upfile.getOriginalFilename().equals("")) {
 			// 파일 등록을 했을 때
 			
