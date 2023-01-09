@@ -15,4 +15,10 @@ public class BattleDao {
 	public int insertPoolInfo(SqlSessionTemplate sqlSession, PoolInfo poolInfo){
 		return sqlSession.insert("battleMapper.insertPoolInfo", poolInfo);
 	}
+	public Battle selectBattle(SqlSessionTemplate sqlSession, int battleNo) {
+		return sqlSession.selectOne("battleMapper.selectBattle", battleNo);
+	}
+	public PoolInfo selectPoolInfo(SqlSessionTemplate sqlSession, int battleNo) {
+		return sqlSession.selectOne("battleMapper.selectPoolInfo", battleNo);
+	}
 }

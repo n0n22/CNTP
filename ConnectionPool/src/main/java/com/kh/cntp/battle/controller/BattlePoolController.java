@@ -26,7 +26,12 @@ public class BattlePoolController {
 	}
 	// 배틀풀 상세보기
 	@RequestMapping("battleDetail.bt")
-	public String selectBattlePool() {
+	public String selectBattlePool(int battleNo, Model model) {
+		Battle battle = battleService.selectBattle(battleNo);
+		PoolInfo poolInfo = battleService.selectPoolInfo(battleNo);
+		model.addAttribute("battle", battle);
+		model.addAttribute("poolInfo", poolInfo);
+		
 		return "battle/battlePoolDetail";
 	}
 	
