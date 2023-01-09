@@ -44,7 +44,7 @@ public class BattlePoolController {
 		
 		if(!upfile.getOriginalFilename().equals("")) {
 			battle.setOriginName(upfile.getOriginalFilename());
-			battle.setChangeName("resources/upfiles" + Template.saveFile(upfile, session));
+			battle.setChangeName("resources/upfiles/" + Template.saveFile(upfile, session));
 		}
 		int result = battleService.insertBattle(battle, poolInfo);
 		
