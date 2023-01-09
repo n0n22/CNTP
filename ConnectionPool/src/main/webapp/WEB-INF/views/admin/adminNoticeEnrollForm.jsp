@@ -7,8 +7,11 @@
 	Member loginMember = new Member();
 	loginMember.setMemNo(1);
 	loginMember.setMemId("admin");
-	loginMember.setMemGrade();
-
+	loginMember.setGrade("A");
+	
+	request.setAttribute("loginMember", loginMember);
+	
+	System.out.println(loginMember);
 %>
 <!DOCTYPE html>
 <html>
@@ -56,7 +59,7 @@
 <body>
 
 
-	<jsp:include page="../common/menubar_nosearch.jsp" />=
+	<jsp:include page="../common/menubar_nosearch.jsp" />
 
 
     <div class="admin-outer">
@@ -68,7 +71,8 @@
 
         </div>
         <div class="notice-enroll">
-            <form action="noticeInsert.ad" method="post">
+            <form action="noticeInsert.ad" method="post" enctype="multipart/form-data">
+            	<input type="hidden" name="memNo" value="${ loginMember.memNo }">
             	<div class="container">
 	                <table class="table table-bordered">
 	                    <tbody>
