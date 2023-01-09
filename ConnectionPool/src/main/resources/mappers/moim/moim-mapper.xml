@@ -81,25 +81,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  	   TEAM
 		VALUES
 		       (
-		        SEQ_TNO.NEXTVAL
-		       ,#{ team.teamName }
-		       ,#{ team.memNo }
-		       ,#{ team.teamMember }
-		       ,#{ team.teamIntro }
-		       ,#{ team.originName }
-		       ,#{ team.changeName }
-		       ,#{ team.teamArea }
-		       ,#{ team.teamTime }
-		       ,#{ team.keyword }
+		        'T'||SEQ_TNO.NEXTVAL
+		       ,#{ teamName }
+		       ,#{ memNo }
+		       ,#{ teamMember }
+		       ,#{ teamIntro }
+		       ,#{ originName }
+		       ,#{ changeName }
+		       ,#{ teamArea }
+		       ,#{ teamTime }
+		       ,#{ keyword }
 		       ,SYSDATE
 		       ,NULL
 		       ,NULL
 		       ,DEFAULT
 		       ,DEFAULT
-		       <if test="team.powerDuration != null">
+		       <if test="powerDuration != null">
 		       ,SYSDATE + 7
 		       </if>
-		       <if test="team.powerDuration == null">
+		       <if test="powerDuration == null">
 		       ,NULL
 		       </if>
 		       )

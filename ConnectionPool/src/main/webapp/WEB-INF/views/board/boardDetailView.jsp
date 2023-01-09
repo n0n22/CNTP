@@ -88,6 +88,8 @@
                         <td colspan="3">댓글(<span id="rcount">3</span>)</td>
                     </tr>
                 </thead>
+                
+                
                 <tbody>
                     <tr>
                         <th>user02</th>
