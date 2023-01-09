@@ -157,6 +157,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  ,BADGE_STATUS
 			  ,STATUS
 			  ,POWER_DURATION
+	     FROM
+	          TEAM
 		WHERE
 		      TEAM_NO = #{ teamNo }
 		  AND
@@ -213,7 +215,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       R.TEAM_NO = #{ teamNo }
 		  AND
 		       T.STATUS = 'Y'
-	
 	</select>
 	
 </mapper>

@@ -43,7 +43,7 @@ public class MoimDao {
 	}
 	
 	public ResultHistory selectResultHistory(SqlSessionTemplate sqlSession, String teamNo) {
-		return sqlSession.selectOne("moim.selectResultHistory", teamNo);
+		return sqlSession.selectOne("moimMapper.selectResultHistory", teamNo);
 	}
 
 }
