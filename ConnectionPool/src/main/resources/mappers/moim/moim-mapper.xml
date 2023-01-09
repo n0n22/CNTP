@@ -57,4 +57,78 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="ACCEPT_DATE" 	property="acceptDate"/>
 	</resultMap>
 	
+	<resultMap type="chatting" id="chattingResultMap">
+		<result column="CHAT_NO" 		property="chatNo"/>
+		<result column="MOIM_NO" 		property="moimNo"/>
+		<result column="MEM_NO" 		property="memNo"/>
+		<result column="CHAT_CONTENT" 	property="chatContent"/>
+		<result column="CREATE_DATE" 	property="createDate"/>
+	</resultMap>
+	
+	<select id="ajaxSelectTeam" resultType="_int" parameterType="string">
+		SELECT
+			   COUNT(*)
+	      FROM
+	           TEAM
+	     WHERE
+	     	   TEAM_NAME = #{ checkName }
+	           
+	</select>
+	
+	<insert id="insertTeam" parameterType="team">
+		INSERT
+		  INTO
+		  	   TEAM
+		VALUES
+		       (
+		        'T'||SEQ_TNO.NEXTVAL
+		       ,#{ teamName }
+		       ,#{ memNo }
+		       ,#{ teamMember }
+		       ,#{ teamIntro }
+		       ,#{ originName }
+		       ,#{ changeName }
+		       ,#{ teamArea }
+		       ,#{ teamTime }
+		       ,#{ keyword }
+		       ,SYSDATE
+		       ,NULL
+		       ,NULL
+		       ,DEFAULT
+		       ,DEFAULT
+		       <if test="powerDuration != null">
+		       ,SYSDATE + 7
+		       </if>
+		       <if test="powerDuration == null">
+		       ,NULL
+		       </if>
+		       )
+	</insert>
+	
+	<insert id="insertTeamLeaderMember" parameterType="team">
+		INSERT
+		  INTO
+		       TEAM_MEMBER
+		VALUES
+		       (
+		        'T'||SEQ_TNO.CURRVAL
+		        ,'L'
+		        ,#{ memNo }
+		       )
+	</insert>
+	
+	<insert id="insertResultHistory">
+		INSERT
+		  INTO
+		       RESULT_HISTORY
+		VALUES
+		       (
+		        'T'||SEQ_TNO.CURRVAL
+		        ,DEFAULT
+		        ,DEFAULT
+		        ,DEFAULT
+		        ,DEFAULT
+		       )
+	</insert>
+	
 </mapper>

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -44,43 +45,57 @@ public class MoimController {
 		return mv;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="checkTeamName.mo")
+	public String ajaxSelectTeam(String checkName) {
+		
+		if(moimService.ajaxSelectTeam(checkName) > 0) {
+			// 중복되는 이름이 있을 경우
+			return "NNNNN";
+		}else {
+			// 중복되는 이름이 없을 경우
+			return "NNNNY";
+		}
+	}
+	
 	@RequestMapping("insertTeam.mo")
 	public ModelAndView insertTeam(ModelAndView mv, Team team, MultipartFile upfile, HttpSession session) {
 		
-		// 임시적으로 request에 loginMember 삽입
-		Member loginMember = new Member();
-		loginMember.setMemNo(2);
-		loginMember.setMemId("user01");
-		loginMember.setMemPwd("1234");
-		loginMember.setGender("M");
-		loginMember.setIngido(1);
-		loginMember.setMemPoint(550);
-		loginMember.setEmail("user01@abc.com");
-		loginMember.setNickName("닉네임1");
-		loginMember.setMemName("1길동");
-		loginMember.setMemArea("Gyeonggi");
-		loginMember.setPhone("01012345679");
-		loginMember.setBirthDay("99/01/02");
-		loginMember.setDetailArea("남대문로 2길");
-		loginMember.setMemStatus("Y");
-		loginMember.setEnrollDate("20/01/02");
-		loginMember.setGrade("B");
-		mv.addObject("loginMember", loginMember);
-		// 여기까지 일단 담아
+		if(team.getPowerDuration() != null) {
+			// 파워 글이 아닐 경우
+			// point(-50);
+			// 이것이 성공했을 때
+		} else {
+			//point(-60);
+			// 이것이 성공했을 때
+		}
 		
-		team.setMemNo(loginMember.getMemNo());
+		System.out.println(upfile.getOriginalFilename());
 		
 		if(!upfile.getOriginalFilename().equals("")) {
 			// 파일 등록을 했을 때
 			
 			team.setOriginName(upfile.getOriginalFilename());
-			team.setChangeName("resources/uploadFiles/" + saveFile(upfile, session));
+			team.setChangeName("resources/upfiles/" + saveFile(upfile, session));
 		}
 		
-		moimService.insertTeam(team);
-		
-		
-		
+		if(moimService.insertTeam(team) > 0) {
+			
+			// 포인트를 사용해주자
+			if(team.getPowerDuration() != null) {
+				// point(-60);
+			} else {
+				// point(-50);
+			}
+			
+			// 팀멤버 테이블에 팀장 insert
+			// 경기기록도  insert
+			
+			mv.setViewName("moim/teamPage");
+			mv.addObject("alertMsg", "팀 생성이 완료되었습니다.");
+		} else {
+			mv.setViewName("main");
+		}
 		
 		return mv;
 		

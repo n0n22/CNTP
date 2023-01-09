@@ -17,6 +17,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     
+    <!-- ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    
+    
     <!-- JavaScript -->
 	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 	
@@ -206,7 +210,8 @@
                     <li><a href="teamList.mo">친목풀-팀</a></li>
                     <li><a href="groupList.mo">친목풀-소그룹</a></li>
                     <li><a href="battleList.bt">배틀풀</a></li>
-                    <li>커뮤니티</li>
+                    <li><a href="list.bo">커뮤니티</li>
+                     <li><a href="list.di">수영일기</li>
                     <li><a href="list.no">공지사항</a></li>
                 </ul>
             </section>
@@ -214,7 +219,7 @@
             <section class="user-menu">
                 <ul class="user-list">
                     
-                    
+                                       
                     <c:choose>
                     	<c:when test="${ empty loginMember }">
                     		<!-- 로그인 XXX 시작-->
@@ -224,15 +229,24 @@
                     	</c:when>
                     	<c:otherwise>
                     	 <!-- 로그인 되어있을때 시작 -->
-		                    <a href="memberList.ad">관리자 페이지</a>
-		                    <li class="username" data-toggle="modal" data-target="#myModal">커풀님</li>
-		                    <li><div><a href="myPageInfo.me">마이페이지</a></div></li>
-		                    <li class="logout"><a href="logout.me">로그아웃</a></li>
-		                    <div class="basket-icon">
-		                        <div class="basket-icon">
-		                            <img src="" alt="" width="28" height="28" > <!-- 알림기능 넣는다면 종 모양 들어갈곳-->
-		                        </div>
+                    	 	<c:if test="${ loginMember.memId eq 'admin' }">
+                    	 		<li class="username" data-toggle="modal" data-target="#myModal">${ loginMember.nickName }님</li>
+		                    	<li><div><a href="memberList.ad">관리자페이지</a></div></li>
+		                    	<li class="logout"><a href="logout.me">로그아웃</a></li>
+		                    </c:if>
+		                    
+							<c:if test="${ loginMember.memId ne 'admin' }">		                    		                   	 
+			                    <li class="username" data-toggle="modal" data-target="#myModal">${ loginMember.nickName }님</li>
+			                    <li><div><a href="myPageInfo.me">마이페이지</a></div></li>
+			                    <li class="logout"><a href="logout.me">로그아웃</a></li>
+			                    <div class="basket-icon">
+			                        <div class="basket-icon">
+			                            <img src="" alt="" width="28" height="28" > <!-- 알림기능 넣는다면 종 모양 들어갈곳-->
+			                        </div>
+			                    </div>    
 		                     <!-- 로그인 되어있을때 끝 -->
+		                     </c:if>
+		                     
                     	</c:otherwise>
                     </c:choose>
                    

@@ -127,11 +127,12 @@
             </div>
 
         </div>
-
-        <div class="notice-hidden">
-            <a href="noticeEnrollForm.ad" class="btn btn-sm btn-primary">글작성</a>
-
-        </div>
+		
+		<c:if test="${ loginMember.grade eq 'A' }">
+	        <div class="notice-hidden">
+	            <a href="noticeEnrollForm.ad" class="btn btn-sm btn-primary">글작성</a>
+	        </div>
+		</c:if>
 
         <div class="notice-foot">
         	<ul class="pagination">
@@ -170,7 +171,6 @@
 	
 	
 		$(function() {
-			
 			
 			// 행을 클릭하면 상세보기
 			$('#noticeTable tbody .clickTr').click(function() {

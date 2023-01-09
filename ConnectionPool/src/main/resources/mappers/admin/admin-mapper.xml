@@ -14,6 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 <!-- 공지 관련 기능 -->
 
+	<!-- 공지사항 등록 -->
 	<insert id="insertNotice" parameterType="notice">
 		INSERT
 		  INTO
@@ -41,6 +42,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       )
 	</insert>
 	
+	<!-- 공지사항 수정 -->
+	<update id="updateNotice" parameterType="notice">
+		UPDATE
+		       NOTICE
+		   SET
+			   CATEGORY = #{category}
+			   ,TITLE = #{title}
+			   ,CONTENT = #{content}
+			   ,ORIGIN_NAME = #{originName}
+			   ,CHANGE_NAME = #{changeName}
+	     WHERE
+	           NOTICE_NO = #{noticeNo}
+	       AND
+	           STATUS = 'Y'
+	</update>
 	
 	
 	

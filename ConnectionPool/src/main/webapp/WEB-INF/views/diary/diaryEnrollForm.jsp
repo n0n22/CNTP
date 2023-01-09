@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>오운완 글 작성하기</title>
+<title>수영일기 글 작성하기</title>
 <style>
 .post-options {
     overflow: hidden;
@@ -33,8 +33,11 @@
 </head>
 <body>
 <jsp:include page="../common/menubar_nosearch.jsp" />	 
+
+<form id="enrollForm" method="post" action="insert.bo" enctype="multipart/form-data">
 <div >   
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    
     <div class="card-body">
         <div class="post">
             <textarea class="form-control" placeholder="Post" rows="4"></textarea>
@@ -47,7 +50,7 @@
         </div>
     </div>
 </div>    
-
+</form>
 
 
 <!-- Code injected by live-server -->
