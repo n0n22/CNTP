@@ -1,7 +1,5 @@
 package com.kh.cntp.moim.model.vo;
 
-import java.sql.Date;
-
 import lombok.Data;
 
 @Data
