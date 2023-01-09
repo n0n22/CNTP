@@ -14,7 +14,6 @@ public class Team {
 	private String teamIntro;
 	private String originName;
 	private String changeName;
-	
 	private String teamArea;
 	private String teamTime; // 올타임, 평일, 주말
 	private String keyword;

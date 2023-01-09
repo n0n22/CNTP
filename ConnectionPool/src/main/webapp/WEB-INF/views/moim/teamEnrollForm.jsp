@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,28 +61,28 @@
 		        <tr height="50">
 		            <th>팀 이름<br>*팀 이름은 추후 수정 불가</th>
 		            <td>
-		                <input type="text" name="teamName">
+		                <input type="text" name="teamName" required>
 		            </td>
 		            <td></td>
 		        </tr>
 		        <tr height="50">
 		            <th width="200">팀 인원</th>
 		            <td width="400">
-		                <input type="number" name="teamMember" max="12" min="2">명
+		                <input type="number" name="teamMember" max="12" min="2" required value="2">명
 		            </td>
 		            <td></td>
 		        </tr>
 		        <tr>
 		            <th>팀 소개</th>
 		            <td>
-		                <textarea name="teamIntro" cols="30" rows="10" style="resize:none"></textarea>
+		                <textarea name="teamIntro" cols="30" rows="10" style="resize:none" required placehold="간략하게 팀 소개를 작성해주세요.(최대 300글자)" maxlength="300"></textarea>
 		            </td>
 		            <td></td>
 		        </tr>
 		        <tr height="50">
 		            <th>주 활동지역</th>
 		            <td>
-		                <select name="teamArea">
+		                <select name="teamArea" required>
 		                    <option value="Seoul">서울특별시</option>
 							<option value="Gyeonggi">경기도</option>
 							<option value="Gangwon">강원도</option>
@@ -99,7 +100,7 @@
 		            <th>주 활동시간</th>
 		            <td>
 						<select name="teamTime">
-		                    <option value="A">무관</option>
+		                    <option value="all">무관</option>
 		                    <option value="weekday">평일</option>
 		                    <option value="weekend">주말</option>
 		                </select>

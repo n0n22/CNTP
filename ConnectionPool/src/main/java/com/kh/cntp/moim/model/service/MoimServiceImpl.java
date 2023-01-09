@@ -27,7 +27,7 @@ public class MoimServiceImpl implements MoimService {
 
 	@Override
 	public int insertTeam(Team team) {
-		return 0;
+		return moimDao.insertTeam(sqlSession, team);
 	}
 
 	@Override

@@ -78,10 +78,10 @@
         </div>
         <div class="notice-navi">
             <div class="notice-navi-cate">
-                <a href="#">전체</a> |
-                <a href="#">공지</a> |
-                <a href="#">이벤트</a> |
-                <a href="#">대회정보</a>
+                <a href="list.no">전체</a> |
+                <a href="list.no?cate=공지">공지</a> |
+                <a href="list.no?cate=이벤트">이벤트</a> |
+                <a href="list.no?cate=대회정보">대회정보</a>
             </div>
             <div class="notice-navi-middle">
 
@@ -112,18 +112,15 @@
                     <tbody>
                     	<c:if test="${ not empty list }">
                     		
-                    		<c:forEach var="notice" items="list" >
+                    		<c:forEach var="notice" items="${ list }" >
 		                        <tr class="clickTr">
 		                            <td>${ notice.noticeNo }</td>
 		                            <td>${ notice.category }</td>
-		                            <td class="title">${ title }</td>
+		                            <td class="title">${ notice.title }</td>
 		                            <td>${ notice.createDate }</td>
 		                            <td>${ notice.count }</td>
 		                        </tr>
-                    		
-                    		
                     		</c:forEach>
-                    	
                     	</c:if>
                        
                     </tbody>
@@ -149,7 +146,7 @@
                 </c:choose>
                    
                 <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-                   	<li class="page-item"><a class="page-link" href="list.bo?cpage=${ cpage }">${ cpage }</a></li>
+                   	<li class="page-item"><a class="page-link" href="list.bo?cpage=${ p }">${ p }</a></li>
                 </c:forEach>
                    
 				<c:choose>

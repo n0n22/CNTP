@@ -1,5 +1,7 @@
 package com.kh.cntp.notice.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.common.template.Pagination;
 import com.kh.cntp.notice.model.service.NoticeService;
+import com.kh.cntp.notice.model.vo.Notice;
 
 @Controller
 public class NoticeController {
@@ -21,10 +24,12 @@ public class NoticeController {
 	
 	// 공지사항 목록 조회 -> 공지사항 목록 페이지로 이동
 	@RequestMapping("list.no")
-	public ModelAndView selectNoticeList(@RequestParam(value="cpage", defaultValue="1") int cpage, ModelAndView mv) {
+	public ModelAndView selectNoticeList(@RequestParam(value="cpage", defaultValue="1") int cpage, @RequestParam(value="cate", defaultValue="all") String cate, ModelAndView mv) {
+		// cpage : 요청한 페이지
+		// cate : 요청한 카테고리
 		
-		PageInfo pi = Pagination.getPageInfo(noticeService.selectListCount(), cpage, 10, 5);
-		mv.addObject("list", noticeService.selectList()).setViewName("notice/noticeList");		
+		PageInfo pi = Pagination.getPageInfo(noticeService.selectListCount(cate), cpage, 5, 10);	
+		mv.addObject("list", noticeService.selectList(cate, pi)).addObject("pi", pi).setViewName("notice/noticeList");		
 		return mv;
 	}
 	
