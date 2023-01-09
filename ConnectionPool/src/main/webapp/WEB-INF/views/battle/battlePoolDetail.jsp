@@ -429,7 +429,7 @@
 								
 								<span>결과보기</span>
 								<div class="mt-2">
-									<span class="alpha alpha-green" onclick="location.href='battleResult.bt'">결과보기</span>
+									<span class="alpha alpha-green" onclick="location.href='battleResult.bt?battleNo=${battle.battleNo}'">결과보기</span>
 								</div>
 	
 	

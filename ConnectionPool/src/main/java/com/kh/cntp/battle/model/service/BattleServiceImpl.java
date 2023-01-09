@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.cntp.battle.model.dao.BattleDao;
 import com.kh.cntp.battle.model.vo.Battle;
+import com.kh.cntp.battle.model.vo.BattleResult;
 import com.kh.cntp.battle.model.vo.PoolInfo;
 
 @Service
@@ -45,6 +46,10 @@ public class BattleServiceImpl implements BattleService{
 	@Override
 	public int applyBattle(HashMap<String, String> apply) {
 		return battleDao.applyBattle(sqlSession, apply) * battleDao.provokeMsg(sqlSession, apply);
+	}
+	@Override
+	public BattleResult selectBattleResult(int battleNo) {
+		return battleDao.selectBattleResult(sqlSession, battleNo);
 	}
 
 	

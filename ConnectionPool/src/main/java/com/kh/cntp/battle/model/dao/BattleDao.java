@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.cntp.battle.model.vo.Battle;
+import com.kh.cntp.battle.model.vo.BattleResult;
 import com.kh.cntp.battle.model.vo.PoolInfo;
 
 @Repository
@@ -28,6 +29,9 @@ public class BattleDao {
 	}
 	public int provokeMsg(SqlSessionTemplate sqlSession, HashMap<String, String> apply) {
 		return sqlSession.insert("battleMapper.provokeMsg", apply);
+	}
+	public BattleResult selectBattleResult(SqlSessionTemplate sqlSession, int battleNo) {
+		return sqlSession.selectOne("battleMapper.selectBattleResult", battleNo);
 	}
 	
 	

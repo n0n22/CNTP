@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.cntp.battle.model.vo.Battle;
+import com.kh.cntp.battle.model.vo.BattleResult;
 import com.kh.cntp.battle.model.vo.PoolInfo;
 
 public interface BattleService {
@@ -22,6 +23,8 @@ public interface BattleService {
 	// 배틀 신청
 	int applyBattle(HashMap<String, String> apply);
 	
+	// 배틀 결과
+	BattleResult selectBattleResult(int battleNo);
 	
 	
 

@@ -68,7 +68,13 @@ public class BattlePoolController {
 	
 	// 배틀풀 결과
 	@RequestMapping("battleResult.bt")
-	public String selectBattleResult() {
+	public String selectBattleResult(int battleNo) {
+		// battleService.selectBattle(battleNo);
+		// battleService.selectBattleResult(battleNo);
+		
+		System.out.println(battleNo);
+		
+		
 		return "battle/battleResultDetail";
 	}
 	// 배틀결과 작성
