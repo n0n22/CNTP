@@ -138,7 +138,7 @@
 	
 			<div class=" px-3 mt-3 d-flex flex-row justify-content-between">
 	
-				<span>제목 입력하는 곳</span>
+				<span>${battle.title}</span>
 				
 			</div>
 	
@@ -146,17 +146,12 @@
 	
 			<div class="row px-5 mb-3" style="height: 400px">
 	
-				
-	
-				<img src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg" width="100%" height="100%">
-				
-	
-	
-				
-	
-	
-				
-				
+				<c:if test="${ battle.changeName ne null}">
+					<img src="${ battle.changeName }" width="100%" height="100%">
+				</c:if>
+				<c:if test="${ battle.changeName eq null }">
+					<img src="https://url.kr/4sjhnp" width="100%" height="100%">
+				</c:if>
 			</div>
 	
 		</div>
@@ -170,7 +165,7 @@
 						<div class="bg-white p-3 rounded border">
 							<h6>배틀 포인트</h6>
 							<p class="text-black-50 content mb-5">
-							레벨, 종목, 성별응 꼭 확인해 주세요.
+							레벨, 종목, 성별 등을 꼭 확인해 주세요.
 							</p>
 	
 							<div class="d-flex flex-row">
@@ -178,8 +173,16 @@
 								<div class="mr-4">
 									
 									<span>레벨</span>
-									<div class="mt-1">
-										<span class="text-black-50">무관</span>
+									<div class="mt-2">
+										<span class="text-black-50">
+										<c:choose>
+											<c:when test="${battle.level eq 'A'}">무관</c:when>
+											<c:when test="${battle.level eq 'B'}">초급</c:when>
+											<c:when test="${battle.level eq 'M'}">중급</c:when>
+											<c:otherwise>고급</c:otherwise>
+										</c:choose>
+										
+										</span>
 									</div>
 	
 								</div>
@@ -189,7 +192,13 @@
 									
 									<span>종목</span>
 									<div class="mt-2">
-										<span class="text-black-50">4:4 혼영</span>
+										<span class="text-black-50">
+										<c:choose>
+											<c:when test="${battle.style eq 'f4'}">4:4 자유형</c:when>
+											<c:when test="${battle.style eq 'h4'}">4:4 혼영</c:when>
+											<c:when test="${battle.style eq 'hg4'}">4:4 혼계영</c:when>
+										</c:choose>
+										</span>
 										
 									</div>
 	
@@ -201,7 +210,13 @@
 									
 									<span>성별</span>
 									<div class="mt-2">
-										<span class="text-black-50">무관</span>
+										<span class="text-black-50">
+										<c:choose>
+											<c:when test="${battle.gender eq 'A'}">무관</c:when>
+											<c:when test="${battle.gender eq 'M'}">남자만</c:when>
+											<c:when test="${battle.gender eq 'F'}">여자만</c:when>
+										</c:choose>
+										</span>
 									</div>
 	
 								</div>
@@ -228,8 +243,8 @@
 							<div class="mr-4">
 								
 								<span>시간</span>
-								<div class="mt-1">
-									<span class="text-black-50">2023년 1월 3일 11:00</span>
+								<div class="mt-2">
+									<span class="text-black-50">${battle.battleDate} ${battle.battleTime}</span>
 								</div>
 							</div>
 	
@@ -250,7 +265,7 @@
 								
 								<span>장소</span>
 								<div class="mt-2">
-									<span class="text-black-50">서울 특별시 영등포구 선유로 138</span>
+									<span class="text-black-50">${ poolInfo.poolName }</span>
 								</div>
 	
 							</div>
@@ -271,13 +286,13 @@
 						<p class="text-black-50 content mb-5">
 						배틀 팀 정보를 확인하세요.
 						</p>
-	
+						<!-- AJAX로 하고 싶은데 그냥 SELECT문 통해서 할 예정 : TEAM 테이블, RESULT_HISTORY -->
 						<div class="d-flex flex-row">
 	
 							<div class="mr-4">
 								
 								<span>팀명</span>
-								<div class="mt-1">
+								<div class="mt-2">
 									<span class="text-black-50">어벤져스</span>
 								</div>
 	
@@ -318,8 +333,8 @@
 							<div class="mr-4">
 								
 								<span>길이</span>
-								<div class="mt-1">
-									<span class="text-black-50">50미터</span>
+								<div class="mt-2">
+									<span class="text-black-50">${ poolInfo.length }</span>
 								</div>
 	
 							</div>
@@ -329,7 +344,7 @@
 								
 								<span>폭</span>
 								<div class="mt-2">
-									<span class="text-black-50">21미터</span>
+									<span class="text-black-50">${ poolInfo.width }</span>
 								</div>
 	
 	
@@ -337,9 +352,9 @@
 	
 							<div class="mr-4">
 								
-								<span>길이</span>
+								<span>깊이</span>
 								<div class="mt-2">
-									<span class="text-black-50">2미터</span>
+									<span class="text-black-50">${ poolInfo.depth }</span>
 								</div>
 	
 	
@@ -349,7 +364,7 @@
 								
 								<span>레인</span>
 								<div class="mt-2">
-									<span class="text-black-50">8게</span>
+									<span class="text-black-50">${ poolInfo.lanes }개</span>
 								</div>
 	
 	
@@ -360,7 +375,10 @@
 								
 								<span>수영복 대여</span>
 								<div class="mt-2">
-									<span class="text-black-50">가능</span>
+									<span class="text-black-50">
+									<c:if test="${ poolInfo.yesNo eq 'Y' }">가능</c:if>
+									<c:if test="${ poolInfo.yesNo eq 'N' }">불가능</c:if>
+									</span>
 								</div>
 	
 							</div>
@@ -378,10 +396,7 @@
 						<div class="bg-white p-3 rounded border">
 						<h6>배틀 규칙</h6>
 						<p class="text-black-50 content mb-5">
-						                        SW 4.1 자유형, 평영, 접영 그리고 개인혼영에서 출발은 다이브로 한다. 심판장이 호각을 길게 불면(SW2.1.5) 선수들은 출발대 위에 올라 서 있는다. 스타터가 “차렷(take your marks)"하고 구령하면 곧 선수들은 출발대 앞에 적어도 한 발을 두고 출발 자세를 취한다. 손의 위치는 상관없다. 모든 선수들의 자세가 정지 하였을 때 스타터는 출발신호를 한다.
-    SW 4.2 배영 및 혼계영에서의 출발은 물속에서 한다. 심판장의 첫 번째 긴 호각소리에 따라(SW2.1.5) 선수들은 즉각 물 속으로 들어가야 한다. 심판장의 두 번째 긴 호각 소리에 지체하지 말고 출발 자세로 들어가야 한다.(SW6.1) 모든 선수들이 출발 자세를 취했다고 인정되면 스타터는 “차렷(take your marks)”라는 구령을 한다. 모든 선수들의 자세가 정지하면 스타터는 출발 신호를 한다.
-    
-    SW 4.3 어느 선수든지 출발 신호전에 출발을 하면 실격을 당한다. 출발 신호 후 선수의 부정 출발이 확인되어도 역영은 계속되며 그 선수는 역영을 끝내고 실격을 당한다. 만약에 출발신호 전에 실격이 선언되면 스타터는 출발 신호를 해서는 안 되며 남은 선수들을 불러서 다시 시작한다.
+							${ battle.battleRule }
 						</p>
 						
 					</div>
@@ -403,7 +418,7 @@
 							<div class="mr-4">
 								
 								<span>신청</span>
-								<div class="mt-1">
+								<div class="mt-2">
 									<span class="alpha alpha-red show">신청</span>
 								</div>
 	

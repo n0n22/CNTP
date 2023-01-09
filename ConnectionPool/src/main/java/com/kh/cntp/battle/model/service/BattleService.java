@@ -12,5 +12,9 @@ public interface BattleService {
 	
 	// 배틀풀 작성 BATTLE 테이블에 INSERT & POOLINFO에 INSERT
 	int insertBattle(Battle battle, PoolInfo poolInfo);
+	
+	Battle selectBattle(int battleNo);
+	PoolInfo selectPoolInfo(int battleNo);
+	
 
 }
