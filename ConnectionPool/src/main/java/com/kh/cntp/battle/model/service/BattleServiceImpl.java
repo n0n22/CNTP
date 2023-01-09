@@ -12,6 +12,7 @@ import com.kh.cntp.battle.model.dao.BattleDao;
 import com.kh.cntp.battle.model.vo.Battle;
 import com.kh.cntp.battle.model.vo.BattleResult;
 import com.kh.cntp.battle.model.vo.PoolInfo;
+import com.kh.cntp.moim.model.vo.Team;
 
 @Service
 public class BattleServiceImpl implements BattleService{
@@ -46,6 +47,10 @@ public class BattleServiceImpl implements BattleService{
 	@Override
 	public int applyBattle(HashMap<String, String> apply) {
 		return battleDao.applyBattle(sqlSession, apply) * battleDao.provokeMsg(sqlSession, apply);
+	}
+	@Override
+	public Team selectTeam(String team) {
+		return battleDao.selectTeam(sqlSession, team);
 	}
 	@Override
 	public BattleResult selectBattleResult(int battleNo) {

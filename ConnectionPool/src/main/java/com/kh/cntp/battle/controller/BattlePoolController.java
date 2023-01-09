@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.cntp.battle.model.service.BattleService;
 import com.kh.cntp.battle.model.vo.Battle;
+import com.kh.cntp.battle.model.vo.BattleResult;
 import com.kh.cntp.battle.model.vo.PoolInfo;
 import com.kh.cntp.common.template.Template;
 
@@ -68,12 +69,17 @@ public class BattlePoolController {
 	
 	// 배틀풀 결과
 	@RequestMapping("battleResult.bt")
-	public String selectBattleResult(int battleNo) {
-		// battleService.selectBattle(battleNo);
-		// battleService.selectBattleResult(battleNo);
+	public String selectBattleResult(int battleNo
+									,String homeTeam
+									,String awayTeam
+									,Model model
+									,HttpSession session) {
 		
-		System.out.println(battleNo);
-		
+		session.setAttribute("homeTeam", battleService.selectTeam(homeTeam));
+		session.setAttribute("awayTeam", battleService.selectTeam(awayTeam));
+		BattleResult battleResult = battleService.selectBattleResult(battleNo);
+		System.out.println(battleResult);
+		session.setAttribute("battleResult", battleService.selectBattleResult(battleNo));
 		
 		return "battle/battleResultDetail";
 	}
@@ -85,12 +91,12 @@ public class BattlePoolController {
 	// 배틀 신청
 	@RequestMapping("battleApply.bt")
 	public String applyBattle(String teamNo
-								 ,String memNo
-								 ,String chatContent
-								 ,String battleNo
-								 ,HttpSession session
-								 ,Model model
-								 ,RedirectAttributes redirectAttributes) {
+							 ,String memNo
+							 ,String chatContent
+							 ,String battleNo
+							 ,HttpSession session
+							 ,Model model
+							 ,RedirectAttributes redirectAttributes) {
 		
 		HashMap<String, String> apply = new HashMap();
 		apply.put("teamNo", teamNo);
