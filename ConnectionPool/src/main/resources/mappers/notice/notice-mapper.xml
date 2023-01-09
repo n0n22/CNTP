@@ -75,6 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ,CATEGORY
 		       ,TITLE
 		       ,CONTENT
+		       ,MEM_NO
 		       ,NICKNAME
 		       ,to_char(create_date, 'YYYY-MM-DD') as "CREATE_DATE"
 		       ,COUNT
