@@ -31,7 +31,8 @@
 </head>
 <body>
     <jsp:include page="../common/menubar_nosearch.jsp"/>
-	<form action="insert.bt" method="post" enctype="multupart/form-data">
+	<form action="insert.bt" method="post" enctype="mult-part/form-data">
+	<input type="hidden" name="memNo" value="${ loginMember.memNo }">
 	
     <div class="outer">
         <div class="outer-top">
@@ -102,7 +103,7 @@
                     <tr>
                         <td>종목 :&nbsp;</td>
                         <td>
-                            <select>
+                            <select name="style">
                                 <option value="f4">4:4 자유형</option>
                                 <option value="h4">4:4 혼영</option>
                                 <option value="hg4">4:4 혼계영</option>
@@ -153,7 +154,7 @@
                   </tr>
                   <tr>
                     <td>수영복 대여 :&nbsp;</td>
-                    <td style="text-align: left;">가능 <input type="radio" name="yesNo" checked> &nbsp; 불가능 <input type="radio" name="yesNo"></td>
+                    <td style="text-align: left;">가능 <input type="radio" name="yesNo" value="Y" checked> &nbsp; 불가능 <input type="radio" value="N" name="yesNo"></td>
                   </tr>
                 </table>
                 <hr>
@@ -170,7 +171,7 @@
                 <hr>
             </div>
             <div align="center">
-                <input type="file">
+                <input type="file" name="upfile">
                 <hr>
             </div>
         </div>

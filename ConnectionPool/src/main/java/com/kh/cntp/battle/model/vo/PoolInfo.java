@@ -6,10 +6,10 @@ import lombok.Data;
 public class PoolInfo {
 	private int battleNo;
 	private String poolName;
-	private long length;
-	private long width;
+	private float length;
+	private float width;
 	private int lanes;
-	private long depth;
+	private float depth;
 	private String place;
 	private String yesNo;
 
