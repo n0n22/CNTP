@@ -51,10 +51,12 @@ public interface AdminService {
 //-------------------------------------------
 
 
-	
+	// 공지사항 등록
 	int insertNotice(Notice notice);
 	
 	
+	// 공지사항 수정
+	int updateNotice(Notice notice);
 	
 	
 	

@@ -51,14 +51,23 @@ public class AdminServiceImpl implements AdminService {
 // 공지 관련 기능 
 //-------------------------------------------
 
-	
+	// 공지사항 등록
 	@Override
 	public int insertNotice(Notice notice) {		
 		return adminDao.insertNotice(sqlSession, notice);
 	}
 
-	
 
+
+	// 공지사항 수정
+	@Override
+	public int updateNotice(Notice notice) {
+		return adminDao.updateNotice(sqlSession, notice);
+	}
+
+	
+	
+	
 	
 	
 	

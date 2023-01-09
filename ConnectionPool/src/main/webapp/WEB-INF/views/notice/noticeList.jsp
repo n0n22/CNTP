@@ -171,7 +171,6 @@
 	
 		$(function() {
 			
-			
 			// 행을 클릭하면 상세보기
 			$('#noticeTable tbody .clickTr').click(function() {
 				location.href = "detail.no?nno=" + $(this).children().eq(0).text();		

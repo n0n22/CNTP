@@ -1,6 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.kh.cntp.member.model.vo.Member" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	Member loginMember = new Member();
+	loginMember.setMemNo(1);
+	loginMember.setMemId("admin");
+	loginMember.setGrade("A");
+	
+	request.setAttribute("loginMember", loginMember);
+	
+	// System.out.println(loginMember);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -114,13 +125,13 @@
 	               	
 	            </div>
 	            <div class="notice-hidden">
-	            	<c:if test="${ loginUser.memNo eq notice.memNo }">
+	            	<c:if test="${ loginMember.memNo eq notice.memNo }">
 		                <button type="button" class="btn btn-sm btn-danger">삭제</button>
-		                <a href="noticeUpdateForm.ad" class="btn btn-sm btn-warning">수정</a>
+		                <a href="noticeUpdateForm.ad?nno=${ notice.noticeNo }" class="btn btn-sm btn-warning">수정</a>
 	                </c:if>
 	            </div>
 	            <div class="notice-list">
-	                <button class="btn btn-sm btn-secondary" onclick="history.back();">목록으로</button>
+	                <button class="btn btn-sm btn-secondary" onclick="location.href='list.no'">목록으로</button>
 	            </div>
 	
 	        </div>
