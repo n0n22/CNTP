@@ -15,6 +15,12 @@ public interface NoticeService {
 	// 공지사항 목록 조회
 	ArrayList<Notice> selectList(String cate, PageInfo pi);
 	
+	// 공지사항 조회수 증가
+	int increaseCount(int nno);
+	
+	
+	// 공지사항 상세 조회
+	Notice selectDetail(int nno);
 	
 	
 }

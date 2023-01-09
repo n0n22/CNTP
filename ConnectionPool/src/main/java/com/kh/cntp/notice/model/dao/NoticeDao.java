@@ -26,6 +26,18 @@ public class NoticeDao {
 	}
 	
 	
+	// 공지사항 조회수 증가
+	public int increaseCount(SqlSessionTemplate sqlSession, int nno) {
+		return sqlSession.update("noticeMapper.increaseCount", nno);
+	}
+	
+	
+	// 공지사항 상세 조회
+	public Notice selectDetail(SqlSessionTemplate sqlSession, int nno) {
+		return sqlSession.selectOne("noticeMapper.selectDetail", nno);
+	}
+	
+	
 	
 	
 	
