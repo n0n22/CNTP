@@ -14,5 +14,6 @@ public class Battle {
 	private String originName;
 	private String changeName;
 	private String style;
+	private String title;
 
 }

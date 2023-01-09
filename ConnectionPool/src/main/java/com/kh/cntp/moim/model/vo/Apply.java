@@ -10,6 +10,6 @@ public class Apply {
 	private int moimNo;
 	private int memNo;
 	private String acceptYn;
-	private Date applyDate;
-	private Date acceptDate;
+	private String applyDate;
+	private String acceptDate;
 }

@@ -97,6 +97,7 @@
 	            <th>주 활동시간</th>
 	            <td>
 					<select name="teamTime">
+	                    <option value="A">무관</option>
 	                    <option value="weekday">평일</option>
 	                    <option value="weekend">주말</option>
 	                </select>
@@ -108,14 +109,13 @@
 	            <td colspan="2">
 	                <input type="radio" name="keyword" value="battle"> 배틀
 	                <input type="radio" name="keyword" value="social"> 친목
-	                <input type="radio" name="keyword" value="info"> 정보나눔
 	                <input type="radio" name="keyword" value="online"> 온라인모임만
 	            </td>
 	        </tr>
 	        <tr height="50">
 	            <th>파워등록</th>
 	            <td colspan="2">
-	                <input type="checkbox" class="powerDuration" name="powerDuration"> 파워 등록 시 10P가 소요됩니다. 
+	                <input type="checkbox" class="powerDuration" name="powerDuration" value="true"> 파워 등록 시 10P가 소요됩니다. 
 	            </td>
 	        </tr>
 	
@@ -123,7 +123,7 @@
 	    <br><br>
 	
 	    <div class="TE_point_area" align="center">
-	        <p class="cost">소요 포인트 : 50</p>
+	        <p class="cost">소요 포인트 : 545</p>
 	        <!-- checkbox 선택됐을 경우 소요포인트를 변경 -->
 	        <p>현재 내 포인트 : </p>
 	    </div>

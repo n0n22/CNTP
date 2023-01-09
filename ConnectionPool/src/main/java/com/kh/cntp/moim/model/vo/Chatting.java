@@ -11,6 +11,6 @@ public class Chatting {
 	private int moimNo;
 	private int memNo;
 	private String chatContent;
-	private Date createDate;
+	private String createDate;
 
 }
