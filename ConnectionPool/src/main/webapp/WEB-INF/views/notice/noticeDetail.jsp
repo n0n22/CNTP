@@ -121,7 +121,7 @@
 	                </c:if>
 	            	<form action="" method="post" id="postForm">
 	            		<input type="hidden" name="nno" value="${ notice.noticeNo }">
-	            		<input type="hidden" name="nno" value="${ notice.noticeNo }">
+	            		<input type="hidden" name="filePath" value="${ notice.changeName }">
 	            	</form>
 	            </div>
 	            <div class="notice-list">
@@ -144,11 +144,10 @@
 	   	function postFormSubmit(num) {
 	   		
 	   		if(num == 1) { // 삭제 클릭 시
-	   			
-	   			if(alertify.confirm('해당 공지사항을 삭제하시겠습니까?').set('closable', true)) {
+	   			var check = alertify.confirm('${ notice.noticeNo }번 공지사항을 삭제하시겠습니까?').set('closable', true);
+	   			if(check == true) {
 		   			$('#postForm').attr('action', 'noticeDelete.ad').submit();
 	   			} 
-
 	   		} else { // 수정 클릭 시
 	   			$('#postForm').attr('action', 'noticeUpdateForm.ad').submit();
 	   		}
