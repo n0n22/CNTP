@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        ,AREA
 		        ,GENDER
 		        ,HOME_TEAM
-		        ,LEVEL
+		        ,"LEVEL"
 		        ,BATTLE_DATE
 		        ,ORIGIN_NAME
 		        ,CHANGE_NAME
@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        )
 		VALUES
 		        (
-		        SEQ_BNO.NEXTVAL
+		        SEQ_BTNO.NEXTVAL
 		        ,#{area}
 		        ,#{gender}
 		        ,#{homeTeam}
@@ -41,8 +41,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<insert id="insertPoolInfo" parameterType="poolInfo">
-	
-	
+		INSERT 
+		  INTO
+		        POOL_INFO
+		        (
+		        BATTLE_NO
+		        ,POOL_NAME
+		        ,LENGTH
+		        ,WIDTH
+		        ,LANES
+		        ,DEPTH
+		        ,PLACE
+		        ,YES_NO
+		        )
+		VALUES
+		        (
+		        SEQ_BTNO.CURRVAL
+		        ,#{poolName}
+		        ,#{length}
+		        ,#{width}
+		        ,#{lanes}
+		        ,#{depth}
+		        ,#{place}
+		        ,#{yesNo}
+		        )
 	</insert>
 
 	

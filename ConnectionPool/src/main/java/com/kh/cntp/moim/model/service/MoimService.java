@@ -12,7 +12,7 @@ public interface MoimService {
 	// --------------- 팀 등록 관련 메소드 (teamEnrollForm) ---------------
 	
 	// teamEnrollForm 페이지에서 비동기식으로 팀 이름 중복 체크
-	String ajaxSelectTeam(String checkName);
+	int ajaxSelectTeam(String checkName);
 	
 	// 팀 등록
 	int insertTeam(Team team);

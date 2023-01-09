@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,6 +43,19 @@ public class MoimController {
 		mv.setViewName("moim/teamEnrollForm");
 		
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="checkTeamName.mo")
+	public String ajaxSelectTeam(String checkName) {
+		
+		if(moimService.ajaxSelectTeam(checkName) > 0) {
+			// 중복되는 이름이 있을 경우
+			return "NNNNN";
+		}else {
+			// 중복되는 이름이 없을 경우
+			return "NNNNY";
+		}
 	}
 	
 	@RequestMapping("insertTeam.mo")

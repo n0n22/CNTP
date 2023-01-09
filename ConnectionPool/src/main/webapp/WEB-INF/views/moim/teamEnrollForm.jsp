@@ -61,23 +61,21 @@
 		        <tr height="50">
 		            <th>팀 이름<br>*팀 이름은 추후 수정 불가</th>
 		            <td>
-		                <input type="text" name="teamName" required>
+		                <input type="text" name="teamName" class="teamName" required>
+		                <label class="checkResult"></label>
 		            </td>
-		            <td></td>
 		        </tr>
 		        <tr height="50">
 		            <th width="200">팀 인원</th>
 		            <td width="400">
 		                <input type="number" name="teamMember" max="12" min="2" required value="2">명
 		            </td>
-		            <td></td>
 		        </tr>
 		        <tr>
 		            <th>팀 소개</th>
 		            <td>
 		                <textarea name="teamIntro" cols="30" rows="10" style="resize:none" required placeholder="간략하게 팀 소개를 작성해주세요.(최대 300글자)" maxlength="300"></textarea>
 		            </td>
-		            <td></td>
 		        </tr>
 		        <tr height="50">
 		            <th>주 활동지역</th>
@@ -94,7 +92,6 @@
 							<option value="Gyeongnam">경상남도</option>
 		                </select>
 		            </td>
-		            <td></td>
 		        </tr>
 		        <tr height="50">
 		            <th>주 활동시간</th>
@@ -105,14 +102,17 @@
 		                    <option value="weekend">주말</option>
 		                </select>
 		            </td>
-		            <td></td>
 		        </tr>
 		        <tr height="50">
 		            <th>우리팀 키워드</th>
 		            <td colspan="2">
-		                <input type="radio" name="keyword" value="battle"> 배틀
-		                <input type="radio" name="keyword" value="social"> 친목
-		                <input type="radio" name="keyword" value="online"> 온라인모임만
+		            	
+		                <input type="radio" id="battle" name="keyword" value="battle" checked>
+		                <label for="battle">배틀</label>
+		                <input type="radio" id="social" name="keyword" value="social">
+		                <label for="social">친목</label>
+		                <input type="radio" id="online" name="keyword" value="online">
+		                <label for="online">온라인모임만</label>
 		            </td>
 		        </tr>
 		        <tr height="50">
@@ -124,12 +124,12 @@
 		        <tr height="50">
 		            <th>파워등록</th>
 		            <td colspan="2">
-		                <input type="checkbox" class="powerDuration" name="powerDuration" value="true"> 파워 등록 시 10P가 소요됩니다. 
+		                <input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" value="true"> 
+		                <label for="powerDuration"> 파워 등록 시 10P가 소요됩니다. </label> 
 		            </td>
 		        </tr>
 		
 		    </table>
-		</form>
 	    <br><br>
 	
 	    <div class="TE_point_area" align="center">
@@ -151,10 +151,12 @@
 	    <br>
 	
 	    <div align="center">
-	        <input type="checkbox"> 위 내용을 숙지하고 동의합니다. <br><br>
-	        <a href="#">취소하기</a> <button>팀 생성하기</button>
+	        <input id="agreeCheck" type="checkbox" class="agreeCheck">
+	        <label for="agreeCheck">위 내용을 숙지하고 동의합니다.</label> <br><br>
+	        <a href="#">취소하기</a> <button class="teamEnrollBtn" disabled onclick="return checkAgree();">팀 생성하기</button>
 	    </div>
 
+		</form>
 	</div>
 	
 	<br><br>
@@ -163,6 +165,8 @@
 
 	<script>
 		$(function(){
+			
+			// 파워 글 등록 시 60포인트 소멸 안내로 바뀜
 			$('.powerDuration').on('change', function(){
 
 				if($('.powerDuration').is(':checked')) {
@@ -172,7 +176,49 @@
 					$('.cost').html('소요 포인트 : 50');
 				}
 			})
+			
+			// 팀 이름 입력 시 사용 가능한지 라벨 달아줄 것
+			// 팀 이름 적는 input 태그를 변수에 담아줌
+			const $teamName = $('.teamEnrollFormTable .teamName');
+			
+			$teamName.keyup(function(){
+				
+				if($teamName.val().length > 0){
+					$.ajax({
+						url : "checkTeamName.mo",
+						data : {checkName : $teamName.val()},
+						success : function(result){
+							
+							if(result == 'NNNNN'){
+								$('.checkResult').text('이미 사용되고 있는 팀 이름입니다.');
+								$('.teamEnrollBtn').attr('disabled', 'true');
+							}else{
+								$('.checkResult').text('멋진 팀 이름이네요!');
+								$('.teamEnrollBtn').removeAttr('disabled');
+							}
+						},
+						error: function(){
+							console.log('아이디 중복체크용 ajax 통신 실패');
+						}
+					});
+				} else{
+					$('.checkResult').text("팀 이름을 작성해주세요");
+					$('.teamEnrollBtn').attr('disabled', 'true');
+				}
+			})
+			
 		})
+		
+		function checkAgree(){
+			if($('.agreeCheck').is(':checked')){
+				return true;
+			} else{
+				alert('안내사항에 동의해주시기 바랍니다.');
+				return false;
+			}
+		}
+		
+		
 	</script>
 </body>
 </html>
