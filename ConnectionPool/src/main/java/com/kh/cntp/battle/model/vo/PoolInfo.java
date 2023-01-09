@@ -11,5 +11,6 @@ public class PoolInfo {
 	private int lanes;
 	private long depth;
 	private String place;
+	private String yesNo;
 
 }
