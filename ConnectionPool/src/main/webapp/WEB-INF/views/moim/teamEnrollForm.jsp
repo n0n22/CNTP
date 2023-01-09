@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,77 +54,86 @@
 	    
 		<h6 align="center">팀을 생성하여 팀원들을 모집하고 배틀에 참가해보세요!</h6>
 	    
-		<!-- th태그들 안은 당연하게 중앙 정렬이라 후에 왼쪽 정렬 바꿔주자 -->
-	    <table align="center" border="1" class="teamEnrollFormTable">
-	        <tr height="50">
-	            <th>팀 이름<br>*팀 이름은 추후 수정 불가</th>
-	            <td>
-	                <input type="text" name="teamName">
-	            </td>
-	            <td></td>
-	        </tr>
-	        <tr height="50">
-	            <th width="200">팀 인원</th>
-	            <td width="400">
-	                <input type="number" name="teamMember" max="12" min="2">명
-	            </td>
-	            <td></td>
-	        </tr>
-	        <tr>
-	            <th>팀 소개</th>
-	            <td>
-	                <textarea name="teamIntro" cols="30" rows="10" style="resize:none"></textarea>
-	            </td>
-	            <td></td>
-	        </tr>
-	        <tr height="50">
-	            <th>주 활동지역</th>
-	            <td>
-	                <select name="teamArea">
-	                    <option value="Seoul">서울특별시</option>
+	    
+	    <form action="insertTeam.mo" action="post">
+			<!-- th태그들 안은 당연하게 중앙 정렬이라 후에 왼쪽 정렬 바꿔주자 -->
+		    <table align="center" border="1" class="teamEnrollFormTable">
+		        <tr height="50">
+		            <th>팀 이름<br>*팀 이름은 추후 수정 불가</th>
+		            <td>
+		                <input type="text" name="teamName" required>
+		            </td>
+		            <td></td>
+		        </tr>
+		        <tr height="50">
+		            <th width="200">팀 인원</th>
+		            <td width="400">
+		                <input type="number" name="teamMember" max="12" min="2" required value="2">명
+		            </td>
+		            <td></td>
+		        </tr>
+		        <tr>
+		            <th>팀 소개</th>
+		            <td>
+		                <textarea name="teamIntro" cols="30" rows="10" style="resize:none" required placeholder="간략하게 팀 소개를 작성해주세요.(최대 300글자)" maxlength="300"></textarea>
+		            </td>
+		            <td></td>
+		        </tr>
+		        <tr height="50">
+		            <th>주 활동지역</th>
+		            <td>
+		                <select name="teamArea" required>
+		                    <option value="Seoul">서울특별시</option>
 							<option value="Gyeonggi">경기도</option>
 							<option value="Gangwon">강원도</option>
 							<option value="Chungbuk">충청북도</option>
 							<option value="Chungnam">충청남도</option>
-							<option value="Jeonabuk">전라북도</option>
+							<option value="Jeonbuk">전라북도</option>
 							<option value="Jeonnam">전라남도</option>
 							<option value="Gyeongbuk">경상북도</option>
 							<option value="Gyeongnam">경상남도</option>
-	                </select>
-	            </td>
-	            <td></td>
-	        </tr>
-	        <tr height="50">
-	            <th>주 활동시간</th>
-	            <td>
-					<select name="teamTime">
-	                    <option value="weekday">평일</option>
-	                    <option value="weekend">주말</option>
-	                </select>
-	            </td>
-	            <td></td>
-	        </tr>
-	        <tr height="50">
-	            <th>우리팀 키워드</th>
-	            <td colspan="2">
-	                <input type="radio" name="keyword" value="battle"> 배틀
-	                <input type="radio" name="keyword" value="social"> 친목
-	                <input type="radio" name="keyword" value="info"> 정보나눔
-	                <input type="radio" name="keyword" value="online"> 온라인모임만
-	            </td>
-	        </tr>
-	        <tr height="50">
-	            <th>파워등록</th>
-	            <td colspan="2">
-	                <input type="checkbox" class="powerDuration" name="powerDuration"> 파워 등록 시 10P가 소요됩니다. 
-	            </td>
-	        </tr>
-	
-	    </table>
+		                </select>
+		            </td>
+		            <td></td>
+		        </tr>
+		        <tr height="50">
+		            <th>주 활동시간</th>
+		            <td>
+						<select name="teamTime">
+		                    <option value="all">무관</option>
+		                    <option value="weekday">평일</option>
+		                    <option value="weekend">주말</option>
+		                </select>
+		            </td>
+		            <td></td>
+		        </tr>
+		        <tr height="50">
+		            <th>우리팀 키워드</th>
+		            <td colspan="2">
+		                <input type="radio" name="keyword" value="battle"> 배틀
+		                <input type="radio" name="keyword" value="social"> 친목
+		                <input type="radio" name="keyword" value="online"> 온라인모임만
+		            </td>
+		        </tr>
+		        <tr height="50">
+		            <th>팀 사진 등록</th>
+		            <td colspan="2">
+		                <input type="file" id="upfile" name="upfile">
+		            </td>
+		        </tr>
+		        <tr height="50">
+		            <th>파워등록</th>
+		            <td colspan="2">
+		                <input type="checkbox" class="powerDuration" name="powerDuration" value="true"> 파워 등록 시 10P가 소요됩니다. 
+		            </td>
+		        </tr>
+		
+		    </table>
+		</form>
 	    <br><br>
 	
 	    <div class="TE_point_area" align="center">
-	        <p class="cost">소요 포인트 : 50</p>
+	        <p class="cost">소요 포인트 : 545</p>
 	        <!-- checkbox 선택됐을 경우 소요포인트를 변경 -->
 	        <p>현재 내 포인트 : </p>
 	    </div>

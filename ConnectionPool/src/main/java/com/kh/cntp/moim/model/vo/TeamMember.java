@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class TeamMember {
 	
-	private int teamNo;
-	private int teamMemberNo;
+	private String teamNo;
+	private int memNo;
 	private String teamGreade;
 
 }

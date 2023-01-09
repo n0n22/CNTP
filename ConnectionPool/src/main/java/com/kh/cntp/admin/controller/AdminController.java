@@ -24,7 +24,7 @@ public class AdminController {
 	
 	
 	
-//------------------------------------------
+//-------------------------------------------
 //   회원 관련 기능 
 //-------------------------------------------
 	
@@ -41,7 +41,7 @@ public class AdminController {
 
 	
 	
-//------------------------------------------
+//-------------------------------------------
 //  신고 관련 기능 
 //-------------------------------------------	
 	
@@ -88,7 +88,7 @@ public class AdminController {
 	
 	
 	
-//------------------------------------------
+//-------------------------------------------
 //  배너 관련 기능 
 //-------------------------------------------	
 	
@@ -115,7 +115,7 @@ public class AdminController {
 	
 	
 	
-//------------------------------------------
+//-------------------------------------------
 //  공지 관련 기능 
 //-------------------------------------------
 
@@ -138,21 +138,25 @@ public class AdminController {
 	// 공지 등록
 	@RequestMapping("noticeInsert.ad")  // 첨부파일이 여러개라면? MutipartFile[] upfile (배열로 받을 수 있음)
 	public ModelAndView insertNotice(Notice notice, MultipartFile upfile, HttpSession session, ModelAndView mv) {
-
+		
+		// System.out.println(notice);
+		// System.out.println(upfile);
+		
 		if (!upfile.getOriginalFilename().equals("")) { // 첨부파일이 있을 경우
-			
 			notice.setOriginName(upfile.getOriginalFilename());
-			notice.setChangeName("resources/uploadFiles/" + Template.saveFile(upfile, session));
+			notice.setChangeName("resources/upfiles/" + Template.saveFile(upfile, session));
 		}
 		
 		if(adminService.insertNotice(notice) > 0) { 
-			session.setAttribute("alertMsg", "게시글이 등록되었습니다.");
+			session.setAttribute("alertMsg", "공지사항이 등록되었습니다.");
 			mv.setViewName("redirect:list.no");					
 		} else { 
 			mv.addObject("errorMsg", "게시글 작성 실패").setViewName("common/errorPage");
 		}
 		return mv;
 	}
+	
+	
 	
 	
 	

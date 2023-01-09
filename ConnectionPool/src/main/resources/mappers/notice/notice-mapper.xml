@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="noticeMapper">
+	<resultMap type="notice" id="noticeResultSet">
+		<result property="noticeNo" column="NOTICE_NO" />
+		<result property="category" column="CATEGORY" />
+		<result property="title" column="TITLE" />
+		<result property="content" column="CONTENT" />
+		<result property="memNo" column="MEM_NO" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="count" column="COUNT" />
+		<result property="originName" column="ORIGIN_NAME" />
+		<result property="changeName" column="CHANGE_NAME" />
+		<result property="status" column="STATUS" />
+		<result property="nickName" column="NICKNAME" />
+	</resultMap>
+
+	<!-- 공지사항 목록 개수 조회 -->
+	<select id="selectListCount" parameterType="string" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM 
+		       NOTICE
+		 WHERE
+		       STATUS = 'Y'
+		<if test="cate != 'all'">
+		   AND
+		       CATEGORY = #{cate}
+		</if>
+	</select>
+	
+	<!-- 공지사항 목록 조회 -->
+	<select id="selectList" parameterType="string" resultMap="noticeResultSet">
+		SELECT
+		       NOTICE_NO
+		       ,CATEGORY
+		       ,TITLE
+		       ,NICKNAME
+		       ,to_char(create_date, 'YYYY-MM-DD') as "CREATE_DATE"
+		       ,COUNT
+		       ,STATUS
+		  FROM
+		       NOTICE
+		  JOIN
+		       MEMBER USING(MEM_NO)
+		 WHERE
+		       STATUS = 'Y'
+		<if test="cate != 'all'">
+		   AND
+		       CATEGORY = #{cate}
+		</if>
+		 ORDER
+		    BY
+		       NOTICE_NO DESC
+	</select>
+	<!-- 공지사항 조회수 증가 -->
+	<update id="increaseCount" parameterType="_int">
+		UPDATE
+		       NOTICE
+		   SET
+		       COUNT = COUNT + 1
+		 WHERE
+		       NOTICE_NO = #{nno}
+		   AND
+		       STATUS = 'Y'	
+	</update>
+	
+	<!-- 공지사항 상세조회 -->
+	<select id="selectDetail" parameterType="_int" resultMap="noticeResultSet">
+		SELECT
+		       NOTICE_NO
+		       ,CATEGORY
+		       ,TITLE
+		       ,CONTENT
+		       ,NICKNAME
+		       ,to_char(create_date, 'YYYY-MM-DD') as "CREATE_DATE"
+		       ,COUNT
+		       ,ORIGIN_NAME
+		       ,CHANGE_NAME
+		       ,STATUS
+		  FROM
+		       NOTICE
+		  JOIN
+		       MEMBER USING(MEM_NO)
+		 WHERE
+		       STATUS = 'Y'
+		   AND
+		       NOTICE_NO = #{noticeNo}
+	</select>
+	
+</mapper>

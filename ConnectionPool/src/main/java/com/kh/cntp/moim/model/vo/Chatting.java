@@ -8,9 +8,9 @@ import lombok.Data;
 public class Chatting {
 	
 	private int chatNo;
-	private int moimNo;
+	private String moimNo;
 	private int memNo;
 	private String chatContent;
-	private Date createDate;
+	private String createDate;
 
 }
