@@ -14,7 +14,7 @@ public class Template {
 	
 	
 	// 실제 넘어온 파일의 이름을 변경해서 서버에 업로드
-	public String saveFile(MultipartFile upfile, HttpSession session) {
+	public static String saveFile(MultipartFile upfile, HttpSession session) {
 		
 		// 파일명 수정 작업 후 서버에 업로드 시키기("image.png" => 20221238123123.png)
 		

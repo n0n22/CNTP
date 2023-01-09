@@ -1,8 +1,17 @@
 package com.kh.cntp.admin.controller;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.kh.cntp.admin.model.service.AdminService;
+import com.kh.cntp.common.template.Template;
+import com.kh.cntp.notice.model.vo.Notice;
 
 @Controller
 public class AdminController {
@@ -10,7 +19,8 @@ public class AdminController {
 	
 	
 	// 관리자 페이지로 이동 
-
+	@Autowired
+	private AdminService adminService;
 	
 	
 	
@@ -126,7 +136,25 @@ public class AdminController {
 	
 	
 	// 공지 등록
+	@RequestMapping("noticeInsert.ad")  // 첨부파일이 여러개라면? MutipartFile[] upfile (배열로 받을 수 있음)
+	public String insertNotice(Notice notice, MultipartFile upfile, HttpSession session, ModelAndView mv) {
 
+		if (!upfile.getOriginalFilename().equals("")) { // 첨부파일이 있을 경우
+			
+			notice.setOriginName(upfile.getOriginalFilename());
+			notice.setChangeName("resources/uploadFiles/" + Template.saveFile(upfile, session));
+		}
+		
+		if(adminService.insertNotice(notice) > 0) { 
+			session.setAttribute("alertMsg", "게시글이 등록되었습니다.");
+			mv.setViewName("redirect:list.no");					
+		} else { // 실패 => 에러페이지
+			mv.addObject("errorMsg", "게시글 작성 실패").setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	
 	
 	
 	
