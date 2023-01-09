@@ -58,6 +58,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	           STATUS = 'Y'
 	</update>
 	
+	<!-- 공지사항 삭제 -->
+	<update id="deleteNotice" parameterType="_int">
+		UPDATE
+		       NOTICE
+		   SET
+		       STATUS = 'N'
+		 WHERE
+			   NOTICE_NO = #{nno}
+	   	   AND
+	   	       STATUS = 'Y'	
+	</update>
+	
 	
 	
 </mapper>
