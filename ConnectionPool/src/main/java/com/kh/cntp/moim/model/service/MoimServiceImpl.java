@@ -21,8 +21,8 @@ public class MoimServiceImpl implements MoimService {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public String ajaxSelectTeam(String checkName) {
-		return null;
+	public int ajaxSelectTeam(String checkName) {
+		return moimDao.ajaxSelectTeam(sqlSession, checkName);
 	}
 
 	@Override

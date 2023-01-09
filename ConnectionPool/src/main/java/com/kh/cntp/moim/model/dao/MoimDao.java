@@ -8,8 +8,14 @@ import com.kh.cntp.moim.model.vo.Team;
 @Repository
 public class MoimDao {
 	
+	public int ajaxSelectTeam(SqlSessionTemplate sqlSession, String checkName) {
+		return sqlSession.selectOne("moimMapper.ajaxSelectTeam", checkName);
+	}
+	
+	
 	public int insertTeam(SqlSessionTemplate sqlSession, Team team) {
 		return sqlSession.insert("moimMapper.insertTeam", team);
 	}
+	
 
 }
