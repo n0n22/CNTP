@@ -1,7 +1,5 @@
 package com.kh.cntp.member.model.vo;
 
-import java.sql.Date;
-
 import lombok.Data;
 
 @Data
@@ -23,8 +21,9 @@ public class Member {
 	private String memStatus; //	MEM_STATUS	CHAR(1 BYTE)
 	private String enrollDate; //	ENROLL_DATE	DATE
 	private String grade; //	GRADE	CHAR(1 BYTE)
-	private String endDate; //  END_DATE DATE 일단 데이트로 받아보고 어려우면 스트링으로 변경하겠습니다	
-	
+	private String endDate; //  END_DATE DATE 
+	private String teamNo; //팀번호
+	private String teamGrade; // 팀직급
 	
 	
 

@@ -10,10 +10,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</settings>
 	
 	<typeAliases>
-
+		<typeAlias type="com.kh.cntp.member.model.vo.Member" alias="member"/>
 	</typeAliases>
 	 <!-- 주의!!! : 미리 등록을 해두려면 해당 클래스가 진짜 존재하고 있는 상태여야함 -->
-	
+		
 	<!-- 주의!!! : 미리 등록을 해두려면 해당 mapper파일이 진짜 존재하고있는 상태여야함 + namespace속성까지 작성해놓기-->
 	
 	<!-- 
@@ -23,6 +23,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	 -->
 	
 	<mappers>
+		<mapper resource="/mappers/member-mapper.xml"/>
 	</mappers>
 	
 </configuration>

@@ -118,14 +118,15 @@
         
         <div class="login-area">
             <h1 id="login-text">로그인</h1>
-            <form action="" method="post">
-              
+            <form action="login.me" method="post">
             
-                <div><input class="userInput" type="text" name="userId" placeholder="아이디"></div>
-                <div><input class="userInput" name="userPwd" placeholder="비밀번호"></div>
+                <div><input class="userInput" type="text" name="memId" placeholder="아이디"></div>
+                <div><input class="userInput" type="password" name="memPwd" placeholder="비밀번호"></div>
+                
                 <div class="checkId"><input type="checkbox">아이디 저장</div>
                 
                 <div><button type="submit">로그인</button></div>
+                
             </form>
             <!-- 네이버 로그인도 추가 할 예정-->
             <div id="link-area">
