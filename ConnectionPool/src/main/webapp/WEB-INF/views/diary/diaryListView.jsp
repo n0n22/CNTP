@@ -267,7 +267,7 @@ textarea{
                 <div class="col-lg-7 col-xl-6">
                     <div class="card card-white grid-margin">
                         <div class="card-body">
-                            < div class="post">
+                            <div class="post">
                                 <textarea class="form-control" id="contentInsert" placeholder="내용을 입력해주세요" rows="4"></textarea>
                                 <div class="post-options">
                                     <a href="#"><i class="fa fa-camera"></i></a>

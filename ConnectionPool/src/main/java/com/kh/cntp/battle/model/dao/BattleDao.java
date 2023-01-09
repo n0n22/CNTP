@@ -1,5 +1,7 @@
 package com.kh.cntp.battle.model.dao;
 
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -21,4 +23,13 @@ public class BattleDao {
 	public PoolInfo selectPoolInfo(SqlSessionTemplate sqlSession, int battleNo) {
 		return sqlSession.selectOne("battleMapper.selectPoolInfo", battleNo);
 	}
+	public int applyBattle(SqlSessionTemplate sqlSession, HashMap<String, String> apply) {
+		return sqlSession.update("battleMapper.applyBattle", apply);
+	}
+	public int provokeMsg(SqlSessionTemplate sqlSession, HashMap<String, String> apply) {
+		return sqlSession.insert("battleMapper.provokeMsg", apply);
+	}
+	
+	
+	
 }

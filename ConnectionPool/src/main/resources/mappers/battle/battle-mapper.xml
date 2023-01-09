@@ -132,6 +132,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE
 		        BATTLE_NO = #{battleNo}
 	</select>
+	<update id="applyBattle" parameterType="hashmap">
+		UPDATE
+		        BATTLE
+		   SET
+		        AWAY_TEAM = #{teamNo}
+		 WHERE
+		        BATTLE_NO = #{battleNo}
+	</update>
+	
+	<insert id="provokeMsg" parameterType="hashmap">
+		INSERT
+		  INTO
+		        CHATTING
+		        (
+		        CHAT_NO
+		        ,MOIM_NO
+		        ,MEM_NO
+		        ,CHAT_CONTENT
+		        )
+		VALUES
+		        (
+		        SEQ_CNO.NEXTVAL
+		        ,#{battleNo}
+		        ,#{memNo}
+		        ,#{chatContent}
+		        )
+	
+	</insert>
+	
+	
 
 
 	
