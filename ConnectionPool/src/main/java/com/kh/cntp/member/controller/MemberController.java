@@ -33,7 +33,7 @@ public class MemberController {
 	
 	// 로그인
 	@RequestMapping("login.me")
-	public ModelAndView loginMember(Member member, HttpSession Session, ModelAndView mv) throws ParseException {
+	public ModelAndView loginMember(Member member, HttpSession session, ModelAndView mv) throws ParseException {
 		
 		Member loginMember = memberService.loginMember(member);
 		
@@ -55,7 +55,7 @@ public class MemberController {
 				
 			} else {
 				
-				Session.setAttribute("loginMember", loginMember);
+				session.setAttribute("loginMember", loginMember);
 				mv.setViewName("redirect:/");
 				
 			}
@@ -67,6 +67,14 @@ public class MemberController {
 			
 		}
 		return mv;
+	}
+	
+	// 로그아웃
+	@RequestMapping("logout.me")
+	public String logoutMember(HttpSession session) {
+		session.setAttribute("alertMsg", "로그아웃 되었습니다.");
+		session.removeAttribute("loginMember");
+		return "redirect:/";
 	}
 	
 	// ID찾기 페이지
