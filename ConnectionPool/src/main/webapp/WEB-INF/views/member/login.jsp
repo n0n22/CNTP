@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -115,6 +116,14 @@
 	<jsp:include page="../common/menubar_nosearch.jsp"/>
 
     <div class="outer" align="center">
+        
+        
+        <c:if test="${ not empty loginMsg }">
+		<script>
+			alert('알림', '${loginMsg}');
+		</script>
+		<c:remove var="loginMsg" scope="session" />
+		</c:if>
         
         <div class="login-area">
             <h1 id="login-text">로그인</h1>
