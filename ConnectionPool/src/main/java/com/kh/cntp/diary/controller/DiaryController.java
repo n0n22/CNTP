@@ -10,8 +10,6 @@ import com.kh.cntp.diary.model.service.DiaryService;
 @Controller
 public class DiaryController {
 	
-	@Autowired
-	private DiaryService diaryService;
 	
 	//수영일기 리스트 조회
 	@RequestMapping("list.di")
@@ -25,7 +23,7 @@ public class DiaryController {
 	@RequestMapping("enrollForm.di")
 	public String enrollForm() {
 		
-		return "diary/biaryEnrollForm";
+		return "diary/diaryEnrollForm";
 	}
 	
 	//수영일기 작성폼
@@ -34,9 +32,9 @@ public class DiaryController {
 		
 		return "redirect:list.di";
 	}
-	
+	/*
 	//수영일기 상세보기
-	@RequestMapping ("detail.bo")
+	@RequestMapping ("detail.bi")
 	public ModelAndView selectDiary(ModelAndView mv) {
 		
 		return mv;
@@ -47,7 +45,7 @@ public class DiaryController {
 	@RequestMapping("delete.di")
 	public String deleteDiary() {
 		
-		return "redirect:list.bo";
+		return "redirect:list.di";
 	}
 	
 	//수영일기 업데이트폼으로 이동
@@ -65,7 +63,7 @@ public class DiaryController {
 	}
 	
 	
-	
+	*/
 	
 	
 	

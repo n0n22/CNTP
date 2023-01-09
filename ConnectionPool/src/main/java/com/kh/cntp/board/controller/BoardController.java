@@ -9,10 +9,7 @@ import com.kh.cntp.board.model.service.BoardService;
 
 @Controller
 public class BoardController {
-	
-	@Autowired
-	private BoardService boardService;
-	
+
 	
 	//커뮤니티게시판 조회
 	@RequestMapping ("list.bo")
@@ -63,7 +60,7 @@ public class BoardController {
 	@RequestMapping("update.bo")
 	public String updateBoard() {
 		
-		return "redirect:detail.bo?bno";
+		return "redirect:detail";
 	}
 	
 	
