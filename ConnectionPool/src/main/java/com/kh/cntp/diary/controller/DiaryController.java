@@ -32,7 +32,7 @@ public class DiaryController {
 		
 		return "redirect:list.di";
 	}
-	/*
+	
 	//수영일기 상세보기
 	@RequestMapping ("detail.bi")
 	public ModelAndView selectDiary(ModelAndView mv) {
@@ -63,7 +63,7 @@ public class DiaryController {
 	}
 	
 	
-	*/
+	
 	
 	
 	
