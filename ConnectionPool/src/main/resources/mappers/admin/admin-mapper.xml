@@ -8,6 +8,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	
+	
+	
+	
+	
+<!-- 공지 관련 기능 -->
+
 	<insert id="insertNotice" parameterType="notice">
 		INSERT
 		  INTO
