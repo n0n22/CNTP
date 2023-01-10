@@ -123,10 +123,13 @@
 
 				<br>
 
-				<div class="enroll-area" align="right">
-					<a href="teamUpdateForm.mo">수정하기</a>
-					<!-- <a href="teamUpdateForm.mo?teamNo=${ teamNo }">수정하기</a> -->
-				</div>
+				<!-- 팀장만 보이는 팀 정보 수정하기 내역 -->
+				<c:if test="${ loginMember.teamNo eq team.teamNo and loginMember.teamGrade eq 'L' }">
+					<div class="update-area" align="right">
+						<a href="teamUpdateForm.mo" class="btn btn-primary">수정하기</a>
+						<!-- <a href="teamUpdateForm.mo?teamNo=${ teamNo }">수정하기</a> -->
+					</div>
+				</c:if>
 
 			</div>
 
@@ -152,17 +155,18 @@
 					<br>
 
 					<div class="memberUpdate-area" align="right">
+						<!-- 팀장만 보이는 팀원 수정 버튼 -->
 						<!-- <a href="teamMemberUpdateForm.mo?teamNo=${ teamNo }">팀장/부팀장 수정</a> -->
-						<c:if test="${ loginMember.nickName eq teamMemberList[0].memNo }">
-							<a href="teamMemberUpdateForm.mo">팀장/부팀장 수정</a>
+						<c:if test="${ loginMember.teamNo eq team.teamNo and loginMember.teamGrade eq 'L' }">
+							<a href="teamMemberUpdateForm.mo" class="btn btn-primary">팀장/부팀장 수정</a>
 						</c:if>
-						<a href="chattingRoom.mo">팀 채팅방 입장하기</a>
+						
 					</div>
 				</div>
 
-				<!-- 팀장만 보여야 하는 신청 영역 -->
-				<c:if test="${ loginMember.nickName eq teamMemberList[0].memNo }">
-					<div>
+				<div>
+					<!-- 팀장만 보여야 하는 신청 영역 -->
+					<c:if test="${ loginMember.teamNo eq team.teamNo and loginMember.teamGrade eq 'L' }">
 						<p>신청내역</p>
 						<table class="applyTable" border="1">
 							<tr>
@@ -183,11 +187,23 @@
 										<td colspan="3">신청 내역이 없습니다.</td>
 									</c:otherwise>
 								</c:choose>
-							
 							</tr>
 						</table>
-					</div>
-				</c:if>
+						<br>
+					</c:if>
+					<!-- 해당 팀 사람들만 보이는 채팅방 버튼 -->
+					<c:choose>
+						<c:when test="${ loginMember.teamNo eq team.teamNo }">
+							<a href="chattingRoom.mo" class="btn btn-primary">팀 채팅방 입장하기</a>
+						</c:when>
+						<c:otherwise>
+							<a href="chattingRoom.mo" class="btn btn-primary">신청하기</a>
+						</c:otherwise>
+					</c:choose>
+				</div>
+				
+				
+				
 			</div>
 			
 		</div>
