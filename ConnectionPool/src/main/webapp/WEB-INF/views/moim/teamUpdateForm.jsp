@@ -104,6 +104,10 @@
 		            <th>팀 사진 등록</th>
 		            <td colspan="2">
 		                <input type="file" id="reUpfile" name="reUpfile">
+	            		<c:if test="${ not empty team.originName }">
+	            			현재 업로드된 파일 : 
+	            			<a href="${ team.changeName }" download="${ team.originName }">${ team.originName }</a>
+	            		</c:if>
 		            </td>
 		        </tr>
 		        
