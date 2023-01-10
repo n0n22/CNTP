@@ -45,6 +45,7 @@ public class BattleServiceImpl implements BattleService{
 		return battleDao.selectPoolInfo(sqlSession, battleNo);
 	}
 	@Override
+	@Transactional
 	public int applyBattle(HashMap<String, String> apply) {
 		return battleDao.applyBattle(sqlSession, apply) * battleDao.provokeMsg(sqlSession, apply);
 	}

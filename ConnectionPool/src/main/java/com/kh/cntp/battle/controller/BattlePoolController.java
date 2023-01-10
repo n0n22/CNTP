@@ -75,12 +75,12 @@ public class BattlePoolController {
 									,Model model
 									,HttpSession session) {
 		
-		session.setAttribute("homeTeam", battleService.selectTeam(homeTeam));
-		session.setAttribute("awayTeam", battleService.selectTeam(awayTeam));
-		BattleResult battleResult = battleService.selectBattleResult(battleNo);
-		System.out.println(battleResult);
-		session.setAttribute("battleResult", battleService.selectBattleResult(battleNo));
-		
+		System.out.println("homeTeam : " + battleService.selectTeam(homeTeam));
+		System.out.println("awayTeam : " + battleService.selectTeam(awayTeam));
+		System.out.println("battleResult : " + battleService.selectBattleResult(battleNo));
+		// session.setAttribute("homeTeam", battleService.selectTeam(homeTeam));
+		// session.setAttribute("awayTeam", battleService.selectTeam(awayTeam));
+		// session.setAttribute("battleResult", battleService.selectBattleResult(battleNo));
 		return "battle/battleResultDetail";
 	}
 	// 배틀결과 작성
