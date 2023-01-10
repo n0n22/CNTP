@@ -60,6 +60,11 @@ public class MoimServiceImpl implements MoimService {
 	public ResultHistory seletResultHistory(String teamNo) {
 		return moimDao.selectResultHistory(sqlSession, teamNo);
 	}
+	
+	@Override
+	public Apply ajaxSelectApply(int memNo) {
+		return moimDao.ajaxSelectApply(sqlSession, memNo);
+	}
 
 	@Override
 	public int insertApply(Team team) {
@@ -105,6 +110,8 @@ public class MoimServiceImpl implements MoimService {
 	public int selectTeamCountList(Team team) {
 		return 0;
 	}
+
+	
 
 	
 	
