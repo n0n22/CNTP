@@ -18,19 +18,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-	<select id="selectList" resultMap="boardResultSet">
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	</select>
+<!-- 	<select id="selectList" resultMap="boardResultSet"> -->
+<!-- 	</select> -->
 	
 	
 	
