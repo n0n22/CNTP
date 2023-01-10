@@ -220,11 +220,27 @@
             <div class="submit-area">
                 <br>
                 <button class="btn btn-primary" onclick="location.href='resultEnrollForm.bt?battleNo=${battleNo}&homeTeam=${homeTeam.teamNo}&awayTeam=${awayTeam.teamNo}'">결과작성</button>
-                <button class="btn btn-info">승인</button>
+                <button class="btn btn-info" onclick="ok();">승인</button>
                 <button class="btn btn-warning">이의제기</button>
             </div>
         </div>
     </div>
+    
+    <form action="battleResultOk.bt" method="post">
+    	<input type="hidden" name="battleNo" value="${ battleNo }">
+    	<input type="hidden" name="victoryTeamNo" value="${ battleResult.victory }">
+    	<input type="hidden" name="defeatTeamNo" value="${ battleResult.defeat }">
+    </form>
+    
+    <script>
+    	function ok(){
+    		if(confirm('경기 결과에 승인하시겠습니까?')){
+	    		$('form[action="battleResultOk.bt"]').submit();
+    		}
+    		return;
+    	}
+    
+    </script>
 	
 	<jsp:include page="../common/footer.jsp"/>
 

@@ -140,9 +140,19 @@ public class BattlePoolController {
 			return "redirect: battleDetail.bt";
 		} else {
 			model.addAttribute("errorMsg", "배틀 결과 작성 실패");
-			return "index";
+			return "common/errorPage";
 		}
 		
 	}
-
+	
+	// 배틀 결과 승인
+	@RequestMapping("battleResultOk.bt")
+	public String battleResultOk(int battleNo,
+								 String victoryTeamNo,
+								 String defeatTeamNo) {
+		System.out.println("배틀번호 : " + battleNo);
+		System.out.println("승리팀 : " + victoryTeamNo);
+		System.out.println("패배팀 : " + defeatTeamNo);
+		return "/";
+	}
 }
