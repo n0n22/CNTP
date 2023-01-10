@@ -53,11 +53,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<resultMap type="battleResult" id="battleResultResultSet">
 		<result column="BATTLE_NO"			property="battleNo"/>
-		<result column="victory"			property="VICTORY"/>
-		<result column="defeat"				property="DEFEAT"/>
-		<result column="vicRecord"			property="VIC_RECORD"/>
-		<result column="defRecord"			property="DEF_RECORD"/>
-		<result column="ok"					property="OK"/>
+		<result column="VICTORY"			property="victory"/>
+		<result column="DEFEAT"				property="defeat"/>
+		<result column="VIC_RECORD"			property="vicRecord"/>
+		<result column="DEF_RECORD"			property="defRecord"/>
+		<result column="OK"					property="ok"/>
 	</resultMap>
 	
 	<resultMap type="resultHistory" id="resultHistoryResultSet">
@@ -267,10 +267,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES
 		        (
 		        #{battleNo}
-		        #{victory},
-		        #{defeat},
-		        #{vicRecord},
-		        #{defRecord}
+		        ,#{victory}
+		        ,#{defeat}
+		        ,#{vicRecord}
+		        ,#{defRecord}
 		        )
 
 	</insert>
