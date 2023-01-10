@@ -33,5 +33,8 @@ public interface BattleService {
 	// 3. 팀 전적 조회
 	ResultHistory selectResultHistory(String team);
 	
+	// 배틀 결과 작성
+	int insertBattleResult(BattleResult br);
+	
 
 }

@@ -72,7 +72,8 @@
 
 	<jsp:include page="../common/menubar_nosearch.jsp"/>
 		<div class="outer" align="center">
-	<form action="insertResult.bt" method="post">
+	<form action="insertBattleResult.bt" method="post" id="submit">
+			<input type="hidden" name="battleNo" value="${battleNo}"/>
 	        <input type="hidden" id="defeat" name="defeat" />
 	        <input type="hidden" id="vicRecord" name="vicRecord">
 	        <input type="hidden" id="defRecord" name="defRecord">
@@ -98,7 +99,7 @@
 		                            </c:if>
 		                            <p class="text-center"></p>
 		                            <p class="text-center"></p>
-		                            <button id="homeTeamButton" class="btn btn-lg btn-primary" onclick="select(1)">승리팀</button> <input id="homeTeamRadio" type="radio" name="victory" hidden="hidden" value="${ homeTeam.teamNo }" checked>
+		                            <button type="button" id="homeTeamButton" class="btn btn-lg btn-primary" onclick="select(1)">승리팀</button> <input id="homeTeamRadio" type="radio" name="victory" hidden="hidden" value="${ homeTeam.teamNo }" checked>
 		                        </div>
 		                    </div>
 		                </div>
@@ -116,7 +117,7 @@
 		                            </c:if>
 		                            
 		                            <p class="text-center"></p>
-		                            <button id="awayTeamButton" class="btn btn-lg btn-light" onclick="select(2)">승리팀</button> <input id="awayTeamRadio" type="radio" name="victory" hidden="hidden" value="${ homeTeam.teamNo }">
+		                            <button type="button" id="awayTeamButton" class="btn btn-lg btn-light" onclick="select(2)">승리팀</button> <input id="awayTeamRadio" type="radio" name="victory" hidden="hidden" value="${ homeTeam.teamNo }">
 		                        </div>
 		                    </div>
 		                </div>
@@ -139,12 +140,52 @@
 		    		var vicRecord = [
 		    			{
 		    				player : $('#homePlayer1').val(),
-		    				style : $('#')
-		    				},
-		    			{},
-		    			{},
-		    			{}
-		    		]
+		    				style : $('#homeStyle1').val(),
+		    				record : $('#homeRecord1').val()
+		    			},
+		    			{
+		    				player : $('#homePlayer2').val(),
+		    				style : $('#homeStyle2').val(),
+		    				record : $('#homeRecord2').val()
+		    			},
+		    			{
+		    				player : $('#homePlayer3').val(),
+		    				style : $('#homeStyle3').val(),
+		    				record : $('#homeRecord3').val()
+		    			},
+		    			{
+		    				player : $('#homePlayer4').val(),
+		    				style : $('#homeStyle4').val(),
+		    				record : $('#homeRecord4').val()
+		    			}
+		    		];
+		    		$('#vicRecord').val(JSON.stringify(vicRecord));
+		    	})
+		    	
+		    	$('.away').change(function(){
+		    		var vicRecord = [
+		    			{
+		    				player : $('#awayPlayer1').val(),
+		    				style : $('#awayStyle1').val(),
+		    				record : $('#awayRecord1').val()
+		    			},
+		    			{
+		    				player : $('#awayPlayer2').val(),
+		    				style : $('#awayStyle2').val(),
+		    				record : $('#awayRecord2').val()
+		    			},
+		    			{
+		    				player : $('#awayPlayer3').val(),
+		    				style : $('#awayStyle3').val(),
+		    				record : $('#awayRecord3').val()
+		    			},
+		    			{
+		    				player : $('#awayPlayer4').val(),
+		    				style : $('#awayStyle4').val(),
+		    				record : $('#awayRecord4').val()
+		    			}
+		    		];
+		    		$('#defRecord').val(JSON.stringify(vicRecord));
 		    	})
 		    })
 		    
@@ -165,6 +206,9 @@
 	    			$defeat.val('${homeTeam.teamNo}');
 		    		break;
 		    	}
+		    }
+		    function submit(){
+		    	$("#submit").submit();
 		    }
 		    
 		    </script>
@@ -192,17 +236,17 @@
 	                                    <td><input id="homeRecord1" class="home" type="text" style="width: 100%"></td>
 	                                </tr>
 	                                <tr>
-	                                    <td><input id="homeRecord2" class="home" type="text" style="width: 100%"></td>
+	                                    <td><input id="homePlayer2" class="home" type="text" style="width: 100%"></td>
 	                                    <td><input id="homeStyle2" class="home" type="text" style="width: 100%"></td>
 	                                    <td><input id="homeRecord2" class="home" type="text" style="width: 100%"></td>
 	                                </tr>
 	                                <tr>
-	                                    <td><input id="homeRecord3" class="home" type="text" style="width: 100%"></td>
+	                                    <td><input id="homePlayer3" class="home" type="text" style="width: 100%"></td>
 	                                    <td><input id="homeStyle3" class="home" type="text" style="width: 100%"></td>
 	                                    <td><input id="homeRecord3" class="home" type="text" style="width: 100%"></td>
 	                                </tr>
                                     <tr>
-	                                    <td><input id="homeRecord4" class="home" type="text" style="width: 100%"></td>
+	                                    <td><input id="homePlayer4" class="home" type="text" style="width: 100%"></td>
 	                                    <td><input id="homeStyle4" class="home" type="text" style="width: 100%"></td>
 	                                    <td><input id="homeRecord4" class="home" type="text" style="width: 100%"></td>
 	                                </tr>
@@ -222,25 +266,25 @@
 	                                </tr>
 	                            </thead>
 	                            <tbody>
-	                                <tr>
-	                                    <td><input type="text" style="width: 100%"></td>
-	                                    <td><input type="text" style="width: 100%"></td>
-	                                    <td><input type="text" style="width: 100%"></td>
+	                             	                                <tr>
+	                                    <td><input id="awayPlayer1" class="away" type="text" style="width: 100%"></td>
+	                                    <td><input id="awayStyle1" class="away" type="text" style="width: 100%"></td>
+	                                    <td><input id="awayRecord1" class="away" type="text" style="width: 100%"></td>
 	                                </tr>
 	                                <tr>
-	                                    <td><input type="text" style="width: 100%"></td>
-	                                    <td><input type="text" style="width: 100%"></td>
-	                                    <td><input type="text" style="width: 100%"></td>
+	                                    <td><input id="awayPlayer2" class="away" type="text" style="width: 100%"></td>
+	                                    <td><input id="awayStyle2" class="away" type="text" style="width: 100%"></td>
+	                                    <td><input id="awayRecord2" class="away" type="text" style="width: 100%"></td>
 	                                </tr>
 	                                <tr>
-	                                    <td><input type="text" style="width: 100%"></td>
-	                                    <td><input type="text" style="width: 100%"></td>
-	                                    <td><input type="text" style="width: 100%"></td>
+	                                    <td><input id="awayPlayer3" class="away" type="text" style="width: 100%"></td>
+	                                    <td><input id="awayStyle3" class="away" type="text" style="width: 100%"></td>
+	                                    <td><input id="awayRecord3" class="away" type="text" style="width: 100%"></td>
 	                                </tr>
-	                                <tr>
-	                                    <td><input type="text" style="width: 100%"></td>
-	                                    <td><input type="text" style="width: 100%"></td>
-	                                    <td><input type="text" style="width: 100%"></td>
+                                    <tr>
+	                                    <td><input id="awayPlayer4" class="away" type="text" style="width: 100%"></td>
+	                                    <td><input id="awayStyle4" class="away" type="text" style="width: 100%"></td>
+	                                    <td><input id="awayRecord4" class="away" type="text" style="width: 100%"></td>
 	                                </tr>
 	                            </tbody>
 	                        </table>
@@ -254,7 +298,7 @@
 	        <div class="outer-bottom">
 	            <div class="submit-area">
 	                <br>
-	                <button class="btn btn-primary">작성하기</button>
+	                <button class="btn btn-primary" onclick="submit();">작성하기</button>
 	                <button class="btn btn-danger" onclick="history.back();">취소하기</button>
 	            </div>
 	        </div>
