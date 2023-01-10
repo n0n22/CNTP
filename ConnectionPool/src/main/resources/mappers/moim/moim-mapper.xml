@@ -217,6 +217,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       MOIM_NO = #{ moimNo }
 		   AND
 		       T.STATUS = 'Y'
+		   AND
+		       A.ACCEPT_YN = 'N'
 		   
 	</select>
 	
@@ -235,6 +237,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       R.TEAM_NO = #{ teamNo }
 		  AND
 		       T.STATUS = 'Y'
+	</select>
+	
+	<select id="ajaxSelectApply" parameterType="_int" resultMap="applyResultMap">
+		SELECT
+			    APPLY_NO
+			   ,MOIM_NO
+			   ,ACCEPT_YN
+			   ,APPLY_DATE
+			   ,ACCEPT_DATE
+		  FROM
+		       APPLY
+		 WHERE
+		       MEM_NO = #{ memNo }
+           AND
+               MOIM_NO LIKE 'T%'
 	</select>
 	
 </mapper>
