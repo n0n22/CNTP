@@ -42,11 +42,6 @@ public class AdminDao {
 // 배너 관련 기능 
 //-------------------------------------------	
 	
-	// 배너 등록
-	public int insertBanner(SqlSessionTemplate sqlSession, Banner banner) {
-		return sqlSession.insert("adminMapper.insertBanner", banner);
-	}
-	
 	// 배너 목록 개수 조회
 	public int selectBannerListCount(SqlSessionTemplate sqlSession, String status) {
 		return sqlSession.selectOne("adminMapper.selectBannerListCount", status);
@@ -59,6 +54,18 @@ public class AdminDao {
 		
 		return (ArrayList)sqlSession.selectList("adminMapper.selectBannerList", status, rowBounds);		
 	}
+	
+	// 배너 등록
+	public int insertBanner(SqlSessionTemplate sqlSession, Banner banner) {
+		return sqlSession.insert("adminMapper.insertBanner", banner);
+	}
+	
+	
+	// 배너 수정
+	public int updateBanner(SqlSessionTemplate sqlSession, Banner banner) {
+		return sqlSession.update("adminMapper.updateBanner", banner);
+	}
+	
 	
 	
 	

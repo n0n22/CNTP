@@ -41,6 +41,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 배너 관련 기능
 ===============================
 -->	
+
+	
+	<!-- 배너 목록 개수 조회 -->
+	<select id="selectBannerListCount" parameterType="string" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM 
+		       BANNER
+		 WHERE
+			   "STATUS" = #{status}
+	</select>
+	
+	<!-- 배너 목록 조회 -->
+	<select id="selectBannerList" parameterType="string" resultMap="BannerResultSet">
+		SELECT 
+			   BANNER_NO
+               ,MEM_NO
+               ,CREATE_DATE
+               ,ORIGIN_NAME
+               ,CHANGE_NAME
+               ,STATUS
+		  FROM
+		       BANNER
+		 WHERE
+		       "STATUS" = #{status}
+		 ORDER
+		    BY
+		       BANNER_NO DESC
+	</select>
 	
 	<!-- 배너 등록 -->
 	<insert id="insertBanner" parameterType="banner">
@@ -66,32 +95,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       )
 	</insert>
 	
-	<!-- 배너 목록 개수 조회 -->
-	<select id="selectBannerListCount" parameterType="string" resultType="_int">
-		SELECT
-		       COUNT(*)
-		  FROM 
+	<!-- 배너 수정 -->
+	<update id="updateBanner" parameterType="banner">
+		UPDATE
 		       BANNER
+		   SET
+		       STATUS = #{status}
 		 WHERE
-			   "STATUS" = #{status}
-	</select>
-	<!-- 배너 목록 조회 -->
-	<select id="selectBannerList" parameterType="string" resultMap="BannerResultSet">
-		SELECT 
-			   BANNER_NO
-               ,MEM_NO
-               ,CREATE_DATE
-               ,ORIGIN_NAME
-               ,CHANGE_NAME
-               ,STATUS
-		  FROM
-		       BANNER
-		 WHERE
-		       "STATUS" = #{status}
-		 ORDER
-		    BY
-		       BANNER_NO DESC
-	</select>
+		       BANNER_NO = #{bannerNo}
+	</update>
+	
 	
 	
 <!-- 
@@ -156,6 +169,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	   	   AND
 	   	       STATUS = 'Y'	
 	</update>
+	
 	
 	
 	

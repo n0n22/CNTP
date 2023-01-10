@@ -109,17 +109,14 @@ public class AdminController {
 	
 	// 배너목록 조회 -> 배너관리 페이지로 이동
 	@RequestMapping("bannerList.ad")
-	public ModelAndView selectBannerList(@RequestParam(value="cpage", defaultValue="1") int cpage,@RequestParam(value="status", defaultValue="Y") String status, ModelAndView mv) {
+	public ModelAndView selectBannerList(@RequestParam(value="cpage", defaultValue="1") int cpage, @RequestParam(value="status", defaultValue="Y") String status, ModelAndView mv) {
 		// cpage : 요청한 페이지
 		PageInfo pi = Pagination.getPageInfo(adminService.selectBannerListCount(status), cpage, 5, 6);
 		mv.addObject("list", adminService.selectBannerList(status, pi)).addObject("pi", pi).setViewName("admin/adminBannerList");
 		return mv;
 	}
 	
-	
-	
 
-	
 	
 	// 배너등록 페이지로 이동
 	@RequestMapping("bannerEnrollForm.ad")
@@ -147,7 +144,20 @@ public class AdminController {
 		return mv;
 	}
 	
-	
+	// 배너수정
+	@RequestMapping("bannerUpdate.ad")
+	public String updateBanner(Banner banner, HttpSession session) {
+		// System.out.println(bnno);
+		// System.out.println(status);
+		// System.out.println(banner);
+		if(adminService.updateBanner(banner) > 0) {
+			session.setAttribute("errorMsg", "배너를 수정했습니다.");
+		} else {
+			session.setAttribute("errorMsg", "배너 수정 실패");			
+		}
+		
+		return "redirect:bannerList.ad";
+	}
 
 	
 	

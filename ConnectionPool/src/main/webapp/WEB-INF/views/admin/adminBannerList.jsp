@@ -52,7 +52,11 @@
 
 
     <div class="admin-outer">
+        <div>
+        	
         
+        </div>
+                
         <div class="banner-image">
             <c:choose>
 	            <c:when test="${ not empty list }">
@@ -80,36 +84,35 @@
             <br clear="both">
         </div>
         
-        <form method="post" action="" id="postForm">
-        	<input type="hidden" value="" id="hiddenValue">
+        <form method="post" action="bannerUpdate.ad" id="postForm">
+        	<input type="hidden" value="" id="hiddenStatus" name="status">
+        	<input type="hidden" value="" id="hiddenBnno" name="bannerNo">
         </form>
         
         
         <script>
-        	/*
+        	
         	function postFormSubmit(e, status) {
         		
-        		console.log($(e).next().val());
-        		console.log($('#postForm #hiddenValue'));
+        		// console.log($(e).next().val());
+        		// console.log($('#postForm #hiddenValue'));
+        		var bnno = $(e).next().val();
+        		var msg = '';
         		
-        		var msg = $(e).next().val() + '번 배너의 상태를 변경합니다.'
-        		
-        		if(status == 'Y') {
-        			console.log(msg);
-        			
-        			
-        		} else {
-        			
+        		if(status == 'H') { // 숨기기
+        			msg = bnno + '번 배너를 내립니다.';
+        		} else { // 보이기
+        			msg = bnno + '번 배너를 띄웁니다.';
         		}
         		
-        		var check = alertify.confirm(function() {
-	        		$('#postForm #hiddenValue').val(status);
-	        		console.log($('#postForm #hiddenValue').val());
-	   				$('#postForm').attr('action', 'bannerUpdate.ad').submit();		
+        		var check = alertify.confirm(msg,function() {
+	        		$('#postForm #hiddenStatus').val(status);
+	        		$('#postForm #hiddenBnno').val(bnno);
+	   				$('#postForm').submit();		
 	   			}); 
         		
         	}
-        */
+        
         
         
         
