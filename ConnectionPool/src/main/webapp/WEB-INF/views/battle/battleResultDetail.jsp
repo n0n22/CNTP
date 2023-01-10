@@ -84,8 +84,9 @@
 	                    <!-- <div class="card-header">Polar Area chart</div> -->
 	                    <div class="card-body text-center">
 	                        <div style="height: 300px;">
-	                            <h3 class="text-center m-b-10">A팀</h3> <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
-	                            <p class="text-center">20전 12승 8패</p> <button class="btn btn-lg btn-primary" disabled>승리</button>
+	                            <h3 class="text-center m-b-10">${ homeTeam.teamName }</h3> 
+	                            <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
+	                            <p class="text-center">${ homeTeamHistory.victory + homeTeamHistory.defeat }전 ${ homeTeamHistory.victory }승 ${ homeTeamHistory.defeat }패</p> <button class="btn btn-lg btn-primary" disabled>승리</button>
 	                        </div>
 	                    </div>
 	                </div>

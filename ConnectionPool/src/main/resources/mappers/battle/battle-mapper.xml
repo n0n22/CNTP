@@ -60,6 +60,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="ok"					property="OK"/>
 	</resultMap>
 	
+	<resultMap type="resultHistory" id="resultHistoryResultSet">
+		<result column="TEAM_NO" 			property="teamNo"/>
+		<result column="WINNING_STREAK" 	property="winningStreak"/>
+		<result column="LOSING_STREAK" 		property="losingStreak"/>
+		<result column="VICTORY" 			property="victory"/>
+		<result column="DEFEAT" 			property="defeat"/>
+	</resultMap>
+	
 <!-- 배틀풀 인서트 -->
 	<insert id="insertBattle" parameterType="battle">
 		INSERT
@@ -190,7 +198,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="selectTeam" parameterType="string" resultMap="teamResultMap">
-		
 		SELECT
 		        TEAM_NO
 		        ,TEAM_NAME
@@ -202,7 +209,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        ,TEAM_AREA
 		        ,TEAM_TIME
 		        ,KEYWORD
-		        ,CREATE_DATE
+		        ,TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') "CREATE_DATE"
 		        ,BADGE_ORIGIN_NAME
 		        ,BADGE_CHANGE_NAME
 		        ,BADGE_STATUS
@@ -230,6 +237,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        BATTLE_RESULT
 		 WHERE
 		        BATTLE_NO = #{battleNo}
+	</select>
+	
+	<select id="selectResultHistory" parameterType="string" resultMap="resultHistoryResultSet">
+		SELECT
+		        TEAM_NO
+		        ,WINNING_STREAK
+		        ,LOSING_STREAK
+		        ,VICTORY
+		        DEFEAT
+		  FROM
+		        RESULT_HISTORY
+		 WHERE
+		        TEAM_NO = #{team}
 	</select>
 	
 </mapper>
