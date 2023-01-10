@@ -21,6 +21,10 @@
 
 		padding-top: 5px;
 	}
+	
+	.teamInfo{
+		height : 400px;
+	}
 
 	table{
 		border:1px solid black; 
@@ -88,8 +92,8 @@
 			<div class="teamInfo" align="center">
 
 
-
-				<pre>팀장 : <span class="teamLeaderNickname">${ teamMemberList[0].memNo }</span>			팀원(${ teamMemberList.size() } / ${ team.teamMember })</pre> <br>
+				<br>
+				<pre><h5>팀장 : <span class="teamLeaderNickname">${ teamMemberList[0].memNo }</span>			팀원(${ teamMemberList.size() } / ${ team.teamMember })</h5></pre>
 				<table class="teamInfoTable">
 					<tr>
 						<th width="400">팀 소개</th>
@@ -125,9 +129,11 @@
 
 				<!-- 팀장만 보이는 팀 정보 수정하기 내역 -->
 				<c:if test="${ loginMember.teamNo eq team.teamNo and loginMember.teamGrade eq 'L' }">
-					<div class="update-area" align="right">
-						<a href="teamUpdateForm.mo" class="btn btn-primary">수정하기</a>
-						<!-- <a href="teamUpdateForm.mo?teamNo=${ teamNo }">수정하기</a> -->
+					<div class="update-area" align="center">
+						<form action="teamUpdateForm.mo" method="post">
+							<input type="hidden" value="${ team.teamNo }" name="teamNo">
+							<button class="btn btn-primary" style="width:200px">수정하기</button>
+						</form>
 					</div>
 				</c:if>
 
@@ -154,11 +160,11 @@
 					</table>
 					<br>
 
-					<div class="memberUpdate-area" align="right">
+					<div class="memberUpdate-area" align="center">
 						<!-- 팀장만 보이는 팀원 수정 버튼 -->
 						<!-- <a href="teamMemberUpdateForm.mo?teamNo=${ teamNo }">팀장/부팀장 수정</a> -->
 						<c:if test="${ loginMember.teamNo eq team.teamNo and loginMember.teamGrade eq 'L' }">
-							<a href="teamMemberUpdateForm.mo" class="btn btn-primary">팀장/부팀장 수정</a>
+							<a href="teamMemberUpdateForm.mo" class="btn btn-primary" style="width:200px;">팀장/부팀장 수정</a>
 						</c:if>
 						
 					</div>
@@ -191,21 +197,48 @@
 						</table>
 						<br>
 					</c:if>
-					<!-- 해당 팀 사람들만 보이는 채팅방 버튼 -->
+					
 					<c:choose>
-						<c:when test="${ loginMember.teamNo eq team.teamNo }">
-							<a href="chattingRoom.mo" class="btn btn-primary">팀 채팅방 입장하기</a>
+						<c:when test="${ empty loginMember }">
+							<!-- 로그인이 되어 있지 않을 때 -->
+							<div style="height:150px"></div>
+							<a href="loginForm.me" class="btn btn-primary" style="width:200px;">로그인 후 신청 가능</a>
 						</c:when>
 						<c:otherwise>
-							<a href="chattingRoom.mo" class="btn btn-primary">신청하기</a>
+							<c:choose>
+								<c:when test="${ loginMember.teamNo eq team.teamNo }">
+								<!-- 로그인이 되어 있고, 해당 팀에 속해 있을 때 -->
+									<c:choose>
+										<c:when test="${ loginMember.teamGrade eq 'L' }">
+											<!-- 팀장일 때 -->
+											<a href="chattingRoom.mo" class="btn btn-primary" style="width:200px;">채팅하기</a>
+										</c:when>
+										<c:otherwise>
+											<!-- 팀원일 때 -->
+											<div style="height:150px"></div>
+											<a href="deleteTeamMember.mo" class="btn btn-primary" style="width:100px;">팀 탈퇴하기</a>
+											<a href="chattingRoom.mo" class="btn btn-primary" style="width:100px;">채팅하기</a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:otherwise>
+									<c:choose>
+										<c:when test="${ teamMemberList.size() < team.teamMember }">
+										<!-- 모집중일 때 -->
+											<div style="height:150px"></div>
+											<a href="insertApply.mo" class="btn btn-primary" id="apply-btn" style="width:200px;">신청하기</a>
+										</c:when>
+										<c:otherwise>
+											<div style="height:150px"></div>
+											<button class="btn btn-primary" style="width:200px;" disabled>모집마감</button>
+										</c:otherwise>
+									</c:choose>
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 				</div>
-				
-				
-				
 			</div>
-			
 		</div>
 	</div>
 	
@@ -213,15 +246,27 @@
 	
 	<jsp:include page="../common/footer.jsp"/>
 	
-	<!-- 
-	<script>
-		$(function(){
-			var $nickname = $('.teamMemberInfoTable .nickname').eq(0).text();
-			//console.log($nickname);
-			
-			$('.teamLeaderNickname').text($nickname);
-		})
-	</script>
-	 -->
+	<c:if test="${ not empty loginMember and loginMember.teamNo ne team.teamNo and teamMemberList.size() < team.teamMember }">
+		<script>
+			$(function(){
+				$.ajax({
+					url : "selectApply.mo",
+					success : function(obj){
+						if(obj != null){
+							console.log('성공')
+							$('#apply-btn').removeAttr('href');
+							$('#apply-btn').css('width', '300px');
+							$('#apply-btn').html('현재 신청중이거나<br> 다른 팀에 가입되어 있습니다.');
+						}
+					},
+					error : function(){
+						console.log('ajax 통신 실패');
+					}
+				})
+			})
+		</script>
+	</c:if>	
+	 
+	
 </body>
 </html>

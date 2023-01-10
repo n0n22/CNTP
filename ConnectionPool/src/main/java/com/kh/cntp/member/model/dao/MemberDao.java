@@ -11,5 +11,21 @@ public class MemberDao {
 	public Member loginMember(SqlSessionTemplate sqlSession, Member member) {
 		return sqlSession.selectOne("memberMapper.loginMember", member);
 	}
+	
+	public int loginCount(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.update("memberMapper.loginCount", member);
+	}
+	
+	public int loginCountReset(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.update("memberMapper.loginCountReset", member);
+	}
+	
+	public int loginStopped(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.update("memberMapper.loginStopped", member);
+	}
+	
+	public Member findId(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.selectOne("memberMapper.findId", member);
+	}
 
 }

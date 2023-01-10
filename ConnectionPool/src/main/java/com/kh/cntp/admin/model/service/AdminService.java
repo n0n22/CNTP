@@ -1,9 +1,11 @@
 package com.kh.cntp.admin.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.cntp.admin.model.vo.Banner;
 import com.kh.cntp.common.model.vo.PageInfo;
+import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.notice.model.vo.Notice;
 
 public interface AdminService {
@@ -16,8 +18,13 @@ public interface AdminService {
 //-------------------------------------------
 //   회원 관련 기능 
 //-------------------------------------------
-	
 
+	// 회원 목록 개수 조회
+	int selectMemberListCount();
+	
+	
+	// 회원 목록 조회
+	ArrayList<Member> selectMemberList(HashMap map);
 	
 	
 

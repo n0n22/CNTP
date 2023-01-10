@@ -2,7 +2,9 @@ package com.kh.cntp.moim.controller;
 
 import static com.kh.cntp.common.template.Template.saveFile;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,9 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.moim.model.service.MoimService;
 import com.kh.cntp.moim.model.vo.Team;
-import com.kh.cntp.moim.model.vo.TeamMember;
 
 @Controller
 public class MoimController {
@@ -114,8 +117,15 @@ public class MoimController {
 	}
 	
 	@RequestMapping("teamUpdateForm.mo")
-	public ModelAndView teamUpdateForm(ModelAndView mv/*, int teamNo*/) {
-		// teamNo 사용해서 team 정보를 가지고서 updateForm으로 이동
+	public ModelAndView teamUpdateForm(ModelAndView mv, String teamNo) throws ParseException {
+		
+		Team team =  moimService.selectTeam(teamNo);
+		
+		
+		
+		Date powerDuration = new SimpleDateFormat("yyyy-mm-dd").parse(team.getPowerDuration());
+		
+		System.out.println(powerDuration);
 		
 		mv.setViewName("moim/teamUpdateForm");
 		
@@ -178,8 +188,19 @@ public class MoimController {
 		return mv;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="selectApply.mo", produces="application/json; charset=UTF-8")
+	public String ajaxSelectApply(HttpSession session) {
+		//System.out.println(moimService.ajaxSelectApply(((Member)(session.getAttribute("loginMember"))).getMemNo()));
+		return new Gson().toJson(moimService.ajaxSelectApply(((Member)(session.getAttribute("loginMember"))).getMemNo()));
+	}
 	
-	
+	@RequestMapping("updateTeam.mo")
+	public ModelAndView updateTeam(ModelAndView mv, Team team) {
+		
+		return mv;
+		
+	}
 	
 	
 }
