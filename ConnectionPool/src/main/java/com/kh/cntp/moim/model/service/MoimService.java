@@ -42,6 +42,8 @@ public interface MoimService {
 	// 신청하는 loginUser 번호, 팀 번호로다가
 	int insertApply(Team team);
 	
+	Apply ajaxSelectApply(int memNo);
+	
 	// --------------- 팀 상세페이지(팀장 입장) ---------------
 	// 신청 수락
 	int ajaxUpdateApply(int applyNo);

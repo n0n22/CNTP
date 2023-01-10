@@ -2,8 +2,6 @@ package com.kh.cntp.moim.controller;
 
 import static com.kh.cntp.common.template.Template.saveFile;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.moim.model.service.MoimService;
 import com.kh.cntp.moim.model.vo.Team;
-import com.kh.cntp.moim.model.vo.TeamMember;
 
 @Controller
 public class MoimController {
@@ -176,6 +175,13 @@ public class MoimController {
 		mv.setViewName("moim/groupEnrollForm");
 		
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="selectApply.mo", produces="application/json; charset=UTF-8")
+	public String ajaxSelectApply(HttpSession session) {
+		System.out.println(moimService.ajaxSelectApply(((Member)(session.getAttribute("loginMember"))).getMemNo()));
+		return new Gson().toJson(moimService.ajaxSelectApply(((Member)(session.getAttribute("loginMember"))).getMemNo()));
 	}
 	
 	
