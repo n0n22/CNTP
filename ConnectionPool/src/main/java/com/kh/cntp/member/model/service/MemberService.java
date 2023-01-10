@@ -18,5 +18,6 @@ public interface MemberService {
 	// 로그인 실패로 인한 로그인 금지
 	int loginStopped(Member member);
 		
-	
+	// ID찾기
+	Member findId(Member member);
 }

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,12 +89,18 @@
         <div class="find-id-area">
 
             <h1 id="main-text">아이디 찾기</h1>
-            <!-- 조회된 결과 없을때-->
-                <div>조회된 아이디가 없습니다.</div>
-            <!-- 결과있을 때-->
-                <div>고객님의 정보와 일치하는 아이디입니다. </div>
-                <div id="find-id">test01</div>
-
+            
+            <c:choose>
+            	<c:when test="${ empty findId }">
+            		<!-- 조회된 결과 없을때-->
+                	<div>조회된 아이디가 없습니다.</div>
+                </c:when>
+                <c:otherwise>
+	            	<!-- 결과있을 때-->
+	                <div>고객님의 정보와 일치하는 아이디입니다. </div>
+	                <div id="find-id">${ findId.memId }</div>
+                </c:otherwise>
+			</c:choose>
             <div><button onclick="loginPage();">로그인하기</button></div>
             <div><a href="findPwdForm.me" id="find-pwd">비밀번호 찾기</a></div>
 

@@ -41,6 +41,11 @@ public class MemberServiceImpl implements MemberService {
 	public int loginStopped(Member member) {
 		return memberDao.loginStopped(sqlSession, member);
 	}
+
+	@Override
+	public Member findId(Member member) {
+		return memberDao.findId(sqlSession, member);
+	}
 	
 	
 	

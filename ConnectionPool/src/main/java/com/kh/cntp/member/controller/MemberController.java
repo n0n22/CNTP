@@ -29,7 +29,24 @@ public class MemberController {
 
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder; 
+	
+	// 초기화를 위한 난수 생성 메소드
+	public String generatorRandom() {
+		Random r = new Random();
+		int n = r.nextInt(100000); 
+		Format f = new DecimalFormat("0000000");
+		String random = f.format(n);
 		
+		return random;
+	}
+			
+	// 암호문 만드는 메소드
+	public String generatorEncPassword(String input) {
+		String encPwd = bcryptPasswordEncoder.encode(input);
+		
+		return encPwd;
+	}
+	
 	// 로그인 페이지
 	@RequestMapping("loginForm.me")
 	public String loginForm() {
@@ -93,29 +110,24 @@ public class MemberController {
 		return mv;
 	}
 	
-	// 초기화를 위한 난수 생성 메소드
-	public String generatorRandom() {
-		Random r = new Random();
-		int n = r.nextInt(100000); 
-		Format f = new DecimalFormat("0000000");
-		String random = f.format(n);
-		
-		return random;
-	}
-		
-	// 암호문 만드는 메소드
-	public String generatorEncPassword(String input) {
-		String encPwd = bcryptPasswordEncoder.encode(input);
-		
-		return encPwd;
-	}
-	
 	// 로그아웃
 	@RequestMapping("logout.me")
 	public String logoutMember(HttpSession session) {
 		session.setAttribute("alertMsg", "로그아웃 되었습니다.");
 		session.removeAttribute("loginMember");
 		return "redirect:/";
+	}
+	
+	// 회원가입 페이지
+	@RequestMapping("memberEnrollForm.me")
+	public String memberEnrollForm() {
+		return "member/memberEnrollForm";
+	}
+	
+	// 회원가입 
+	@RequestMapping("memberInsert.me")
+	public String insertMember() {
+		return "member/memberEnrollResult";
 	}
 	
 	// ID찾기 페이지
@@ -126,8 +138,12 @@ public class MemberController {
 	
 	// 아이디 찾기 
 	@RequestMapping("findId.me")
-	public String findId() {
-		return "member/findIdResult";
+	public ModelAndView findId(Member member, ModelAndView mv) {
+		
+		mv.addObject("findId" , memberService.findId(member));
+		mv.setViewName("member/findIdResult");
+		
+		return mv;
 	}
 	
 	// 비밀번호 찾기 페이지
@@ -149,17 +165,6 @@ public class MemberController {
 	}
 	
 	
-	// 회원가입 페이지
-	@RequestMapping("memberEnrollForm.me")
-	public String memberEnrollForm() {
-		return "member/memberEnrollForm";
-	}
-	
-	// 회원가입 
-	@RequestMapping("memberInsert.me")
-	public String insertMember() {
-		return "member/memberEnrollResult";
-	}
-	
+
 	
 }
