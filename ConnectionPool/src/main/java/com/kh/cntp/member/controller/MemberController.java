@@ -42,6 +42,7 @@ public class MemberController {
 									HttpServletResponse response) throws ParseException {
 		
 		Member loginMember = memberService.loginMember(member);
+		System.out.println(loginMember.toString());
 		// 쿠키발급
 		if(checkId != null) {
 			Cookie saveId = new Cookie("saveId", member.getMemId());
@@ -51,7 +52,7 @@ public class MemberController {
 		
 		if(loginMember != null && bcryptPasswordEncoder.matches(member.getMemPwd(), loginMember.getMemPwd())) {
 			
-			if(loginMember.getEndDate() != null) {
+			if(loginMember.getEndDate() != null) { // 정지일이 있을때
 				Date today = new Date(); // 오늘 날짜 생성
 				SimpleDateFormat DateFormat = new SimpleDateFormat("yyyy-MM-dd"); // 비교를 위한 날짜 형식 지정
 				Date endDate = DateFormat.parse(loginMember.getEndDate()); // 문자열을 DateFormat에 맞게 Date객체 리턴
@@ -63,15 +64,16 @@ public class MemberController {
 				}
 				
 			} else {
-				
+				// 성공시
+				// FAILCNT = 0 으로 업데이트
 				session.setAttribute("loginMember", loginMember);
 				mv.setViewName("redirect:/");
 				
 			}
 
 		} else {
-			
-			
+			// 실패 시			
+			// FAILCNT = +1로 업데이트
 			session.setAttribute("loginMsg","로그인 실패");
 			mv.setViewName("member/login");
 			

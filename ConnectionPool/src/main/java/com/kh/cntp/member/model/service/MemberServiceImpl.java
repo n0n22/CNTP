@@ -24,6 +24,18 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.loginMember(sqlSession, member);
 	}
 	
+	// 로그인 실패 횟수
+	@Override
+	public int loginCount(Member member) {
+		return 0;
+	}
+	
+	// 로그인 실패횟수 초기화
+	@Override
+	public int loginCountReset(Member member) {
+		return 0;
+	}
+	
 	
 	
 	

@@ -36,16 +36,14 @@ public class MoimController {
 		
 		/*
 		System.out.println(moimService.selectTeam(teamNo));
-		System.out.println(moimService.selectTeamMemberList(teamNo));
 		System.out.println(moimService.selectApplyList(teamNo));
 		System.out.println(moimService.seletResultHistory(teamNo));
 		*/
 		
 		mv.addObject("team", moimService.selectTeam(teamNo));
-		mv.addObject("teamMeberList", moimService.selectTeamMemberList(teamNo));
+		mv.addObject("teamMemberList", moimService.selectTeamMemberList(teamNo));
 		mv.addObject("applyList", moimService.selectApplyList(teamNo));
 		mv.addObject("resultHistory", moimService.seletResultHistory(teamNo));
-		
 		mv.setViewName("moim/teamPage");
 		
 		return mv;
