@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
 	<style>
 
@@ -36,6 +37,24 @@
             text-align: left;
             padding-left: 30px;
         }
+
+
+
+
+		.banner-area {
+			position: relative;
+		}
+
+		.delete-span {
+			position: absolute;
+			top : 10px;
+			right: 10px;
+			z-index: 10;
+		}
+
+		.delete-span:hover {
+			cursor: pointer;
+		}
 
 
     </style>
@@ -70,17 +89,22 @@
 	            <c:when test="${ not empty list }">
 	            	<c:forEach var="banner" items="${ list }">
 			            <div class="banner-image-container">
-			                <div class="img-thumbnail">
+			                <div class="img-thumbnail banner-area">
 			                    <img src="${ banner.changeName }" style="width:400px; height:220px;">
+								<div class="delete-span" onclick="postFormSubmit(this, 'N');">
+									<span class="material-symbols-outlined">
+										delete
+									</span>
+								</div>
+								<input type="hidden" value="${ banner.bannerNo }">
 			                </div>
 			                <c:if test="${ banner.status eq 'Y'}">
 			                	<button type="button" class="btn btn-primary btn-sm btn-block changeBtn" onclick="postFormSubmit(this, 'H')">숨기기</button>
-			                	<input type="hidden" value="${ banner.bannerNo }">
 			                </c:if>
 			                <c:if test="${ banner.status eq 'H'}">
 			                	<button type="button" class="btn btn-primary btn-sm btn-block changeBtn" onclick="postFormSubmit(this, 'Y')">보이기</button>
-			                	<input type="hidden" value="${ banner.bannerNo }">
 			                </c:if>
+							<input type="hidden" value="${ banner.bannerNo }">
 			            </div>
 	            	</c:forEach>            
 	            </c:when>
@@ -104,14 +128,22 @@
         		
         		// console.log($(e).next().val());
         		// console.log($('#postForm #hiddenValue'));
-        		var bnno = $(e).next().val();
+        		var bnno = 0;
         		var msg = '';
         		
         		if(status == 'H') { // 숨기기
+					bnno = $(e).next().val();
         			msg = bnno + '번 배너를 내립니다.';
-        		} else { // 보이기
-        			msg = bnno + '번 배너를 띄웁니다.';
-        		}
+        		} 
+				else if (status == 'H') { // 보이기
+					bnno = $(e).next().val();
+					msg = bnno + '번 배너를 띄웁니다.';
+				}
+				else { // 지우기
+					bnno = $(e).next().val();
+					msg = bnno + '번 배너를 삭제합니다.';
+
+				}
         		
         		var check = alertify.confirm(msg,function() {
 	        		$('#postForm #hiddenStatus').val(status);
