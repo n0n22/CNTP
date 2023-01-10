@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="TEAM_NO" 	property="teamNo"/>
 		<result column="TEAM_GRADE" property="teamGrade"/>
 		<result column="NICKNAME" 	property="memNo"/>
+		<result column="TEAM_ENROLL_DATE" 	property="teamEnrollDate"/>
 	</resultMap>
 	
 	<resultMap type="group" id="groupResultMap">
@@ -149,8 +150,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  ,ORIGIN_NAME
 			  ,CHANGE_NAME
 			  ,TEAM_AREA
-			  ,TEAM_TIME
-			  ,KEYWORD
+			  ,CASE WHEN KEYWORD = 'all' THEN '무관'
+                    WHEN KEYWORD = 'weekday' THEN '평일'
+                    ELSE '주말' END "TEAM_TIME"
+			  ,CASE WHEN KEYWORD = 'social' THEN '친목'
+                    WHEN KEYWORD = 'battle' THEN '배틀'
+                    ELSE '온라인모임만' END "KEYWORD"
 			  ,CREATE_DATE
 			  ,BADGE_ORIGIN_NAME
 			  ,BADGE_CHANGE_NAME
@@ -168,8 +173,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectTeamMeberList" resultMap="teamMemberResultMap" parameterType="string">
 		SELECT
 		         TM.TEAM_NO
-		        ,TM.TEAM_GRADE
+		        ,CASE WHEN TEAM_GRADE = 'L' THEN '팀장'
+		              WHEN TEAM_GRADE = 'S' THEN '부팀장'
+		              ELSE '팀원' END "TEAM_GRADE"
 		        ,M.NICKNAME
+		        
 		  FROM 
 		       TEAM_MEMBER "TM"
 		  JOIN
@@ -180,6 +188,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       T.TEAM_NO = #{ teamNo }
 		   AND
 		       T.STATUS = 'Y'
+		 ORDER
+		    BY
+		       (CASE WHEN TEAM_GRADE = '팀장' THEN 1
+		            WHEN TEAM_GRADE = '부팀장' THEN 2
+		            ELSE 3 END), "TEAM_GRADE"
 			   
 	</select>
 	

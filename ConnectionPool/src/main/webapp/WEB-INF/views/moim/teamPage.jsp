@@ -51,6 +51,10 @@
 		border-radius: 10px;
 
 	}
+	
+	.teamInfoTable th, .applyTable td, .applyTable th, .teamMemberInfo th, .teamMemberInfo td{
+		text-align: center;
+	}
 </style>
 
 </head>
@@ -89,12 +93,12 @@
 
 
 				<pre>팀장 :			팀원(${ teamMeberList.size() } / ${ team.teamMember })</pre> <br>
-				<table class="teamInfoTable" border="1">
+				<table class="teamInfoTable">
 					<tr>
 						<th width="400">팀 소개</th>
 						<th width="400">주요 활동 지역</th>
 					</tr>
-					<tr>
+					<tr height="50">
 						<td>${ team.teamIntro }</td>
 						<td>${ team.teamArea }</td>
 					</tr>
@@ -102,7 +106,7 @@
 						<th>현재 팀 인원</th>
 						<th>주요 활동시간</th>
 					</tr>
-					<tr>
+					<tr height="50">
 						<td>${ team.teamMember }명</td>
 						<td>${ team.teamTime }</td>
 					</tr>
@@ -110,9 +114,12 @@
 						<th>키워드</th>
 						<th>배틀기록</th>
 					</tr>
-					<tr>
+					<tr height="50">
 						<td>${ team.keyword }</td>
-						<td>${ resultHistory }</td>
+						<td>
+							${ resultHistory.winningStreak } 연승 ${ resultHistory.losingStreak } 연패<br>
+							${ resultHistory.victory } 승 ${ resultHistory.defeat } 패
+						</td>
 					</tr>
 
 				</table>
@@ -138,26 +145,9 @@
 							<th width="100">닉네임</th>
 						</tr>
 							<c:forEach items="${ teamMeberList }" var="tm">
-								<c:if test="${ tm.teamGrade eq 'L' }">
-									<td>팀장</td>
+									<td>${tm.teamGrade}</td>
 									<td>${tm.memNo}</td>
-								</c:if>
 							</c:forEach>
-							
-							<c:forEach items="${ teamMeberList }" var="tm">
-								<c:if test="${ tm.teamGrade eq 'S' }">
-									<td>부팀장</td>
-									<td>${tm.memNo}</td>
-								</c:if>
-							</c:forEach>
-							
-							<c:forEach items="${ teamMeberList }" var="tm">
-								<c:if test="${ tm.teamGrade eq 'M' }">
-									<td>팀원</td>
-									<td>${tm.memNo}</td>
-								</c:if>
-							</c:forEach>
-							
 						</tr>
 					</table>
 					<br>
