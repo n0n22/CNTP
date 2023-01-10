@@ -105,6 +105,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       BANNER_NO = #{bannerNo}
 	</update>
 	
+	<!-- 메인페이지 배너 조회 -->
+	<select id="selectMainBannerList" resultMap="BannerResultSet">
+		SELECT 
+			   BANNER_NO
+               ,MEM_NO
+               ,CREATE_DATE
+               ,ORIGIN_NAME
+               ,CHANGE_NAME
+               ,STATUS
+		  FROM
+		       BANNER
+		 WHERE
+		       "STATUS" = 'Y'
+		 ORDER
+		    BY
+		       BANNER_NO DESC
+	</select>
 	
 	
 <!-- 
