@@ -1,18 +1,29 @@
 package com.kh.cntp.board.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.kh.cntp.board.model.service.BoardService;
+import com.kh.cntp.common.model.vo.PageInfo;
+import com.kh.cntp.common.template.Pagination;
 
 @Controller
 public class BoardController {
 
-	
+@Autowired
+private BoardService boardService;
+
 	//커뮤니티게시판 조회
 	@RequestMapping ("list.bo")
-	public String selectBoardList() {
+	public ModelAndView selectList(@RequestParam(value="cpage",defaultValue="1") int currentPage, ModelAndView mv) {
 		
-		return "board/boardListView";
+		PageInfo pi = Pagination.getPageInfo(boardService. selectListCount(),currentPage, 5,3); //int pageLimit 5, int boardLimit : 3
+		mv.addObject("pi", pi).addObject("list", boardService.selectList(pi)).setViewName("board/boardListView");
+		
+		return mv;
 	}
 	
 	//커뮤니티게시판 작성폼으로 이동
