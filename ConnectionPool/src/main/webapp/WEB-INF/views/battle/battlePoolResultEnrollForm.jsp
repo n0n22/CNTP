@@ -139,12 +139,27 @@
 		    		var vicRecord = [
 		    			{
 		    				player : $('#homePlayer1').val(),
-		    				style : $('#')
-		    				},
-		    			{},
-		    			{},
-		    			{}
-		    		]
+		    				style : $('#homeStyle1').val(),
+		    				record : $('#homeRecord1').val()
+		    			},
+		    			{
+		    				player : $('#homePlayer2').val(),
+		    				style : $('#homeStyle2').val(),
+		    				record : $('#homeRecord2').val()
+		    			},
+		    			{
+		    				player : $('#homePlayer3').val(),
+		    				style : $('#homeStyle3').val(),
+		    				record : $('#homeRecord3').val()
+		    			},
+		    			{
+		    				player : $('#homePlayer4').val(),
+		    				style : $('#homeStyle4').val(),
+		    				record : $('#homeRecord4').val()
+		    			}
+		    		];
+		    		
+		    		
 		    	})
 		    })
 		    
