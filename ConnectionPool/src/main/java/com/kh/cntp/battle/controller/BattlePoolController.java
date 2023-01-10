@@ -131,7 +131,7 @@ public class BattlePoolController {
 	public String insertBattleResult(BattleResult br, 
 									 Model model,
 									 RedirectAttributes redirectAttributes) {
-		
+		System.out.println(br);
 		int result = battleService.insertBattleResult(br);
 		
 		if(result > 0) {

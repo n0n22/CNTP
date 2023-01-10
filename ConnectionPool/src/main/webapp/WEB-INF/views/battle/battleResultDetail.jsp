@@ -22,16 +22,11 @@
             margin-top: 20px;
         }
 
-        div.left{
-            float: left;
+        div.content{
             width: 50%;
             padding: 50px;
         }
-        div.right{
-            float: right;
-            width: 50%;
-            padding: 50px;
-        }
+    
         table {
             border-collapse: collapse;
             width: 550px;
@@ -92,7 +87,13 @@
 	                            <c:if test="${ homeTeam.badgeStatus eq 'N'}">
 		                            <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
 	                            </c:if>
-	                            <p class="text-center">${ homeTeamHistory.victory + homeTeamHistory.defeat }전 ${ homeTeamHistory.victory }승 ${ homeTeamHistory.defeat }패</p> <button class="btn btn-lg btn-primary" disabled>승리</button>
+	                            <p class="text-center">${ homeTeamHistory.victory + homeTeamHistory.defeat }전 ${ homeTeamHistory.victory }승 ${ homeTeamHistory.defeat }패</p> 
+	                            <c:if test="${ homeTeam.teamNo eq battleResult.victory }">
+		                            <button class="btn btn-lg btn-primary" disabled>승리</button>
+	                            </c:if>
+	                            <c:if test="${ homeTeam.teamNo eq battleResult.defeat }">
+		                            <button class="btn btn-lg btn-danger" disabled>패배</button>
+	                            </c:if>
 	                        </div>
 	                    </div>
 	                </div>
@@ -108,32 +109,75 @@
 	                            <c:if test="${ awayTeam.badgeStatus eq 'N'}">
 		                            <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
 	                            </c:if>
-	                            <p class="text-center">${ awayTeamHistory.victory + awayTeamHistory.defeat }전 ${ awayTeamHistory.victory }승 ${ awayTeamHistory.defeat }패</p> 
-	                            <button class="btn btn-lg btn-danger" disabled>패배</button>
+	                            <p class="text-center">${ awayTeamHistory.victory + awayTeamHistory.defeat }전 ${ awayTeamHistory.victory }승 ${ awayTeamHistory.defeat }패</p>
+	                            <c:if test="${ awayTeam.teamNo eq battleResult.victory }">
+		                            <button class="btn btn-lg btn-primary" disabled>승리</button>
+	                            </c:if>
+	                            <c:if test="${ awayTeam.teamNo eq battleResult.defeat}">
+		                            <button class="btn btn-lg btn-danger" disabled>패배</button>
+	                            </c:if>
 	                        </div>
 	                    </div>
 	                </div>
 	            </div>
 	        </div>
 	    </div>
+	    <script>
+	    	$(function(){
+		    	let battleResult = ${battleResult.vicRecord};
+		    	for(let i in battleResult){
+		    		
+		    	}
+	    	})
+	    </script>
 	
 
         <hr>
         <div class="outer-main">
             <div class="battleHistory">
             	<br>
-                <h2>배틀기록</h2>
+                <h2>
+                	배틀기록
+                	<c:if test="${ battleResult.ok eq 'N'}">(승인전)</c:if>
+                </h2>
                 <c:if test="${ battleResult == null }">
 	                <div class="battleRecord">
 	                	<h3>경기 전입니다.</h3>
 	                </div>
                 </c:if>
                 <c:if test="${ battleResult != null }">
+                	    <script>
+					    	$(function(){
+						    	let vicRecord = ${battleResult.vicRecord};
+						    	let defRecord = ${battleResult.defRecord};
+						    	let vicResult = '';
+						    	let defResult = '';
+						    	for(let i in vicRecord){
+						    		let v = vicRecord[i];
+						    		vicResult += `<tr>
+						    							<td>\${v.player}</td>
+						    							<td>\${v.style}</td>
+						    							<td>\${v.record}</td>
+						    					  </tr>`
+						    	};
+						    	for(let i in defRecord){
+						    		let v = defRecord[i];
+						    		defResult += `<tr>
+						    							<td>\${v.player}</td>
+						    							<td>\${v.style}</td>
+						    							<td>\${v.record}</td>
+						    					  </tr>`
+						    	};
+						    	$('#victoryTeam tbody').html(vicResult);
+						    	$('#defeatTeam tbody').html(defResult);
+					    	})
+					    </script>
                 
 	                <div class="battleRecord">
-	                    <div class="left">
-	                        <h3>A팀</h3>
-	                        <table>
+	                    <div class="content">
+	                        <button class="btn btn-lg btn-primary" disabled>승리팀</button>
+	                        <br><br>
+	                        <table id="victoryTeam" style="text-align: center;">
 	                            <thead>
 	                                <tr style="text-align: center;">
 	                                    <th>선수</th>
@@ -142,29 +186,16 @@
 	                                </tr>
 	                            </thead>
 	                            <tbody>
-	                                <tr>
-	                                    <td></td>
-	                                    <td></td>
-	                                    <td></td>
-	                                </tr>
-	                                <tr>
-	                                    <td></td>
-	                                    <td></td>
-	                                    <td></td>
-	                                </tr>
-	                                <tr>
-	                                    <td></td>
-	                                    <td></td>
-	                                    <td></td>
-	                                </tr>
+	                                
 	                            </tbody>
 	                        </table>
 	                        <br>
-	                    </div>
-	            
-	                    <div class="right">
-	                        <h3>B팀</h3>
-	                        <table>
+	                        
+	                        <br><br>
+	                        
+	                        <button class="btn btn-lg btn-danger" disabled>패배팀</button>
+	                        <br><br>
+	                        <table id="defeatTeam" style="text-align: center;">
 	                            <thead>
 	                                <tr style="text-align: center;">
 	                                    <th>선수</th>
@@ -173,29 +204,12 @@
 	                                </tr>
 	                            </thead>
 	                            <tbody>
-	                                <tr>
-	                                    <td></td>
-	                                    <td></td>
-	                                    <td></td>
-	                                </tr>
-	                                <tr>
-	                                    <td></td>
-	                                    <td></td>
-	                                    <td></td>
-	                                </tr>
-	                                <tr>
-	                                    <td></td>
-	                                    <td></td>
-	                                    <td></td>
-	                                </tr>
 	                            </tbody>
 	                        </table>
-	                        <br>
 	                    </div>
+	                    
 	                </div>
-	                
                 </c:if>
-                
                 
                 
             </div>

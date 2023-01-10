@@ -117,7 +117,7 @@
 		                            </c:if>
 		                            
 		                            <p class="text-center"></p>
-		                            <button type="button" id="awayTeamButton" class="btn btn-lg btn-light" onclick="select(2)">승리팀</button> <input id="awayTeamRadio" type="radio" name="victory" hidden="hidden" value="${ homeTeam.teamNo }">
+		                            <button type="button" id="awayTeamButton" class="btn btn-lg btn-light" onclick="select(2)">승리팀</button> <input id="awayTeamRadio" type="radio" name="victory" hidden="hidden" value="${ awayTeam.teamNo }">
 		                        </div>
 		                    </div>
 		                </div>
