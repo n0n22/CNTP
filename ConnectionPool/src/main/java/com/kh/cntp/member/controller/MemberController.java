@@ -94,21 +94,21 @@ public class MemberController {
 	}
 	
 	// 초기화를 위한 난수 생성 메소드
-		public String generatorRandom() {
-			Random r = new Random();
-			int n = r.nextInt(100000); 
-			Format f = new DecimalFormat("0000000");
-			String random = f.format(n);
-			
-			return random;
-		}
+	public String generatorRandom() {
+		Random r = new Random();
+		int n = r.nextInt(100000); 
+		Format f = new DecimalFormat("0000000");
+		String random = f.format(n);
 		
-		// 암호문 만드는 메소드
-		public String generatorEncPassword(String input) {
-			String encPwd = bcryptPasswordEncoder.encode(input);
-			
-			return encPwd;
-		}
+		return random;
+	}
+		
+	// 암호문 만드는 메소드
+	public String generatorEncPassword(String input) {
+		String encPwd = bcryptPasswordEncoder.encode(input);
+		
+		return encPwd;
+	}
 	
 	// 로그아웃
 	@RequestMapping("logout.me")
