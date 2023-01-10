@@ -10,9 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.cntp.admin.model.service.AdminService;
 import com.kh.cntp.admin.model.vo.Banner;
 import com.kh.cntp.common.model.vo.PageInfo;
@@ -118,6 +120,13 @@ public class AdminController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("status", status);
 		return "admin/adminBannerList";
+	}
+	
+	// 메인페이지 배너 목록 조회
+	@ResponseBody
+	@RequestMapping(value="mainBanner", produces="application/json; charset=UTF-8")
+	public String selectMainBannerList() {
+		return new Gson().toJson(adminService.selectMainBannerList());
 	}
 	
 

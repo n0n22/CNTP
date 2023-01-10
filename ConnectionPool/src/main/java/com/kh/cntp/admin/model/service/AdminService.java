@@ -50,6 +50,9 @@ public interface AdminService {
 	// 배너 수정
 	int updateBanner(Banner banner);
 	
+	// 메인페이지 배너 조회
+	ArrayList<Banner> selectMainBannerList();
+	
 	
 //-------------------------------------------
 //  공지 관련 기능 

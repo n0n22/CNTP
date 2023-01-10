@@ -75,7 +75,12 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	
-
+	
+	// 메인페이지 배너 조회
+	@Override
+	public ArrayList<Banner> selectMainBannerList() {
+		return adminDao.selectMainBannerList(sqlSession);
+	}
 	
 	
 	
@@ -104,6 +109,8 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteNotice(int nno) {
 		return adminDao.deleteNotice(sqlSession, nno);
 	}
+
+
 
 
 

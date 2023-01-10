@@ -67,6 +67,10 @@ public class AdminDao {
 	}
 	
 	
+	// 메인페이지 배너 조회
+	public ArrayList<Banner> selectMainBannerList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectMainBannerList");
+	}
 	
 	
 	
