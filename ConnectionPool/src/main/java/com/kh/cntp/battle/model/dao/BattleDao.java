@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.cntp.battle.model.vo.Battle;
 import com.kh.cntp.battle.model.vo.BattleResult;
 import com.kh.cntp.battle.model.vo.PoolInfo;
+import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.moim.model.vo.Team;
 
 @Repository
@@ -34,9 +35,11 @@ public class BattleDao {
 	public Team selectTeam(SqlSessionTemplate sqlSession, String team) {
 		return sqlSession.selectOne("battleMapper.selectTeam", team);
 	}
-	
 	public BattleResult selectBattleResult(SqlSessionTemplate sqlSession, int battleNo) {
 		return sqlSession.selectOne("battleMapper.selectBattleResult", battleNo);
+	}
+	public ResultHistory selectResultHistory(SqlSessionTemplate sqlSession, String teamNo) {
+		return sqlSession.selectOne("battleMapper.selectResultHistory", teamNo);
 	}
 	
 	

@@ -27,7 +27,7 @@ public class NoticeController {
 		// cate : 요청한 카테고리
 		
 		PageInfo pi = Pagination.getPageInfo(noticeService.selectListCount(cate), cpage, 5, 10);	
-		mv.addObject("list", noticeService.selectList(cate, pi)).addObject("pi", pi).setViewName("notice/noticeList");		
+		mv.addObject("list", noticeService.selectList(cate, pi)).addObject("pi", pi).addObject("cate", cate).setViewName("notice/noticeList");		
 		return mv;
 	}
 	

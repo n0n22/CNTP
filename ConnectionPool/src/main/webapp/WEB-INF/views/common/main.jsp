@@ -55,6 +55,17 @@
 	
 		$(function() {
 			
+			selectBanner();
+			
+			
+		});
+		
+		
+		
+		
+		
+		function selectBanner() {
+			
 			$.ajax({
 				url : "mainBanner",
 				success : function(result) {
@@ -81,13 +92,10 @@
 				error : function() {
 					console.log('통신 실패');
 				}
-	
-	
-	
-			});			
+		
+			});		
 			
-			
-		});
+		};
 
 
 

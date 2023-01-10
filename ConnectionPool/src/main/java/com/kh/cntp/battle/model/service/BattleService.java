@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.kh.cntp.battle.model.vo.Battle;
 import com.kh.cntp.battle.model.vo.BattleResult;
 import com.kh.cntp.battle.model.vo.PoolInfo;
+import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.moim.model.vo.Team;
 
 public interface BattleService {
@@ -29,7 +30,8 @@ public interface BattleService {
 	Team selectTeam(String team);
 	// 2. 배틀 결과 조회
 	BattleResult selectBattleResult(int battleNo);
-	
+	// 3. 팀 전적 조회
+	ResultHistory selectResultHistory(String team);
 	
 
 }
