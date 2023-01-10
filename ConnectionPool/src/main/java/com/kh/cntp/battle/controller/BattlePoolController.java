@@ -84,7 +84,16 @@ public class BattlePoolController {
 	}
 	// 배틀결과 작성
 	@RequestMapping("resultEnrollForm.bt")
-	public String resultEnrollForm() {
+	public String resultEnrollForm(int battleNo
+								  ,String homeTeam
+								  ,String awayTeam
+								  ,Model model
+								  ,HttpSession session) {
+		
+		session.setAttribute("homeTeam", battleService.selectTeam(homeTeam));
+		session.setAttribute("awayTeam", battleService.selectTeam(awayTeam));
+		
+		
 		return "battle/battlePoolResultEnrollForm";
 	}
 	// 배틀 신청
