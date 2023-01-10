@@ -81,7 +81,7 @@
 		        <tr height="50">
 		            <th>주 활동지역</th>
 		            <td>
-		                <select name="teamArea" required>
+		                <select name="teamArea">
 		                    <option value="Seoul">서울특별시</option>
 							<option value="Gyeonggi">경기도</option>
 							<option value="Gangwon">강원도</option>

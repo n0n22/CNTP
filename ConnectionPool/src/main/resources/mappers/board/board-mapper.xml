@@ -5,5 +5,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="boardMapper">
 	
+	<select id =selectListCount" resultType="_int">
+		
+		select
+				count(*)
+		from
+				board
+		where
+				status = 'Y'				
+	
+	
+	</select>
+	
+	
+	<select id="selectList" resultMap="boardResultSet">
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>
