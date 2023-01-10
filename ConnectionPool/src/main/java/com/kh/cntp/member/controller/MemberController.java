@@ -1,8 +1,11 @@
 package com.kh.cntp.member.controller;
 
+import java.text.DecimalFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +45,7 @@ public class MemberController {
 									HttpServletResponse response) throws ParseException {
 		
 		Member loginMember = memberService.loginMember(member);
-		System.out.println(loginMember.toString());
+				
 		// 쿠키발급
 		if(checkId != null) {
 			Cookie saveId = new Cookie("saveId", member.getMemId());
@@ -63,23 +66,49 @@ public class MemberController {
 					mv.setViewName("member/login");
 				}
 				
-			} else {
-				// 성공시
-				// FAILCNT = 0 으로 업데이트
+			} else { // 성공시 FAILCNT = 0 으로 업데이트
+				memberService.loginCountReset(member); 
 				session.setAttribute("loginMember", loginMember);
 				mv.setViewName("redirect:/");
-				
 			}
 
-		} else {
-			// 실패 시			
-			// FAILCNT = +1로 업데이트
-			session.setAttribute("loginMsg","로그인 실패");
-			mv.setViewName("member/login");
+		} else { // 실패 시 FAILCNT = +1로 업데이트			
+			
+			if(memberService.loginCount(member) > 0 ) {
+				Member failMember = memberService.loginMember(member);
+				if(failMember.getFailCnt() >= 5) { // 로그인시도횟수가 5보다 크거나 같다면 난수만들어서 비밀번호 초기화시키기
+					String randPwd =generatorEncPassword(generatorRandom());
+					failMember.setMemPwd(randPwd);
+					memberService.loginStopped(failMember);
+					session.setAttribute("loginMsg", "5회이상 로그인에 실패하여 보안을 위해 잠김처리 되었습니다.\\n비밀번호 찾기를 통해 비밀번호를 재설정 해주세요.");
+				} else {
+					session.setAttribute("loginMsg", failMember.getFailCnt() + "회 로그인 실패  \\n5회 실패 시 로그인이 제한됩니다.");
+				}
+				mv.setViewName("member/login");
+			} else {
+				session.setAttribute("loginMsg", "알수없는 오류 발생 관리자에게 문의");
+			}
 			
 		}
 		return mv;
 	}
+	
+	// 초기화를 위한 난수 생성 메소드
+		public String generatorRandom() {
+			Random r = new Random();
+			int n = r.nextInt(100000); 
+			Format f = new DecimalFormat("0000000");
+			String random = f.format(n);
+			
+			return random;
+		}
+		
+		// 암호문 만드는 메소드
+		public String generatorEncPassword(String input) {
+			String encPwd = bcryptPasswordEncoder.encode(input);
+			
+			return encPwd;
+		}
 	
 	// 로그아웃
 	@RequestMapping("logout.me")

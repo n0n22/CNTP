@@ -14,4 +14,9 @@ public interface MemberService {
 	
 	// 로그인 실패횟수 초기화
 	int loginCountReset(Member member);
+	
+	// 로그인 실패로 인한 로그인 금지
+	int loginStopped(Member member);
+		
+	
 }
