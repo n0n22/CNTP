@@ -62,4 +62,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       MEM_STATUS = 'Y'
 	</select>
 	
+	<!-- 로그인 횟수 증가 -->
+	<update id="loginCount">
+		UPDATE 
+		       MEMBER
+		   SET  
+		       FAILCNT = FAILCNT + 1
+		 WHERE 
+		       MEM_ID = #{memId}
+	</update>
+	
+	<!-- 로그인 성공시 횟수 초기화 -->
+	<update id="loginCountReset">
+		UPDATE
+		       MEMBER
+		   SET 
+		       FAILCNT = 0
+		 WHERE 
+		       MEM_ID = #{memId}
+	</update>
+	
+	<!-- 로그인실패로 인한 비밀번호 초기화 -->
+	<update id="loginStopped">
+		UPDATE
+			   MEMBER
+		   SET
+		   	   MEM_PWD = #{memPwd}
+		 WHERE 
+		 	   MEM_ID = #{memId}  	   		   
+	</update>
+
 </mapper>
