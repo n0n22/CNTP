@@ -88,16 +88,16 @@
 	        <div class="order-area">
 	            <div class="select-order">
 	                <select name="order" id="orderSelect" class="form-control" align="right" onchange="submitOrderForm();">
-	                    <option value="mem_name desc">회원번호↑</option>
-	                    <option value="mem_name asc">회원번호↓</option>
-	                    <option value="ingido desc">인기도↑</option>
-	                    <option value="ingido asc">인기도↓</option>
-	                    <option value="enroll_date desc">가입일↑</option>
-	                    <option value="enroll_date asc">가입일↓</option>
+	                    <option value="memNo" class="asc">회원번호↑</option>
+	                    <option value="memNo" class="desc">회원번호↓</option>
+	                    <option value="ingido" class="asc">인기도↑</option>
+	                    <option value="ingido" class="desc">인기도↓</option>
+	                    <option value="enrollDate" class="asc">가입일↑</option>
+	                    <option value="enrollDate" class="desc">가입일↓</option>
 	                </select>
 	            </div>
 	        </div>
-	        
+	        <input type="hidden" value="" id="orderCondition" name="orderCondition">
 	        <div class="count-area">
 	        	<div class="count-select">
 	                <select name="bl" id="countSelect" class="form-control" align="right" onchange="submitOrderForm();">
@@ -116,7 +116,7 @@
         		
         		// 정렬기준 선택
         		$('#orderSelect option').each(function() {
-        			if($(this).val() == '${ order }') {
+        			if($(this).val() == '${ order }' && $(this).is('.${ orderCondition }')) {
         				$(this).attr('selected', true);
         			}        			
         		});
@@ -132,7 +132,25 @@
         		
         	});
         	
+        	
+        	// form태그 눌리게 하기
         	function submitOrderForm() {
+        		
+        		var value1 = $('#orderSelect option:selected'); // 선택된 정렬기준이
+        		var test1 = value1.is('.desc'); // 내림차순을 포함하는가
+        		
+        		// console.log(value1);
+        		// console.log(test1);
+        		
+        		if(test1) { // 내림차순
+        			$('#orderCondition').val('desc');
+        		}
+        		else { // 오름차순
+        			$('#orderCondition').val('asc');
+        		}
+				
+        		// console.log($('#orderCondition').val());
+        			
         		$('#orderForm').submit();		        		
         	};
         	

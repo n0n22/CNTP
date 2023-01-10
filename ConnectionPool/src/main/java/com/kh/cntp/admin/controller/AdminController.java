@@ -52,7 +52,8 @@ public class AdminController {
 	@RequestMapping("memberList.ad")
 	public String selectMemberList(@RequestParam(value="cpage", defaultValue="1") int cpage
 								  ,@RequestParam(value="bl", defaultValue="10") int boardLimit
-								  ,@RequestParam(value="order", defaultValue="enroll_date desc") String order
+								  ,@RequestParam(value="order", defaultValue="memNo") String order
+								  ,@RequestParam(value="orderCondition", defaultValue="desc") String orderCondition
 								  ,Model model) {
 		System.out.println(cpage);
 		System.out.println(boardLimit);
@@ -65,12 +66,15 @@ public class AdminController {
 		HashMap map = new HashMap();
 		map.put("pi", pi);
 		map.put("order", order);
+		map.put("orderCondition", orderCondition);
+		
 		
 		ArrayList<Member> list = adminService.selectMemberList(map);
 		System.out.println(list);
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
 		model.addAttribute("order", order);
+		model.addAttribute("orderCondition", orderCondition);
 				
 		return "admin/adminMemberList";
 	}
