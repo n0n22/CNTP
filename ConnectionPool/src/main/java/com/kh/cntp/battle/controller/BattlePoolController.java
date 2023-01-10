@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.cntp.battle.model.service.BattleService;
 import com.kh.cntp.battle.model.vo.Battle;
+import com.kh.cntp.battle.model.vo.BattleResult;
 import com.kh.cntp.battle.model.vo.PoolInfo;
 import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.template.Template;
@@ -125,5 +126,23 @@ public class BattlePoolController {
 			return "common/errorPage";
 		}
 	} 
+	// 배틀 결과 작성
+	@RequestMapping("insertBattleResult.bt")
+	public String insertBattleResult(BattleResult br, 
+									 Model model,
+									 RedirectAttributes redirectAttributes) {
+		
+		int result = battleService.insertBattleResult(br);
+		
+		if(result > 0) {
+			redirectAttributes
+			.addAttribute("battleNo", br.getBattleNo());
+			return "redirect: battleDetail.bt";
+		} else {
+			model.addAttribute("errorMsg", "배틀 결과 작성 실패");
+			return "index";
+		}
+		
+	}
 
 }

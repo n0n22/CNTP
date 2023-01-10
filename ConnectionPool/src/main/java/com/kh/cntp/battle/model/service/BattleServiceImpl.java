@@ -62,6 +62,10 @@ public class BattleServiceImpl implements BattleService{
 	public ResultHistory selectResultHistory(String teamNo) {
 		return battleDao.selectResultHistory(sqlSession, teamNo);
 	}
+	@Override
+	public int insertBattleResult(BattleResult br) {
+		return battleDao.insertBattleResult(sqlSession, br);
+	}
 
 	
 	

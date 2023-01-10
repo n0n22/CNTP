@@ -252,4 +252,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        TEAM_NO = #{team}
 	</select>
 	
+	
+	<insert id="insertBattleResult" parameterType="battleResult">
+		INSERT
+		  INTO
+		        BATTLE_RESULT
+		        (
+		        BATTLE_NO
+		        ,VICTORY
+		        ,DEFEAT
+		        ,VIC_RECORD
+		        ,DEF_RECORD
+		        )
+		VALUES
+		        (
+		        #{battleNo}
+		        #{victory},
+		        #{defeat},
+		        #{vicRecord},
+		        #{defRecord}
+		        )
+
+	</insert>
+	
 </mapper>
