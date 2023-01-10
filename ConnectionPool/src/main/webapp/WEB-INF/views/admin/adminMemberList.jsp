@@ -12,6 +12,7 @@
 
         .member-header {
             text-align: center;
+            padding-top: 15px;
         }
 
         .member-header>div {
@@ -31,11 +32,14 @@
 			display: inline-block;
 		}
 		
-		.order-select {
+		.select-order {
 			width: 150px;
 			padding: 10px;
 		}
 
+		.count-select {
+			width: 100px;
+		}
 
 
     </style>
@@ -52,85 +56,117 @@
 
 
     <div class="admin-outer">
-        <div class="member-header">
-            <div class="member-search-area">
-                <form>
-                	<div class="search-condition">
-	                    <select name="searchCondition" class="custom-select">
-	                        <option value="name">이름</option>
-	                        <option value="id">아이디</option>
-	                        <option value="nickname">닉네임</option>
-	                    </select>
+
+        <form id="searchForm" method="get" action="memberSearch.ad">
+            <div class="member-header">
+                <div class="member-search-area">
+                    <div class="search-condition">
+                        <select name="condition" class="form-control">
+                            <option value="mem_name">이름</option>
+                            <option value="mem_id">아이디</option>
+                            <option value="nickname">닉네임</option>
+                        </select>
                     </div>
                     <div class="search-keyword">
-	                    <div class="input-group mb-3">
-	                        <input type="text" class="form-control" placeholder="Search">
-	                        <div class="input-group-append">
-	                            <button class="btn btn-primary" type="submit">검색</button>
-	                        </div>
-	                    </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="검색어 입력" name="keyword">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">검색</button>
+                            </div>
+                        </div>
                     </div>
-                </form>
-            </div>
-            <div>
-
-            </div>
-            <div class="order-area">
-                <div class="order-select" align="right">
-                    <select name="" id="" class="custom-select">
-                        <option>이름↑</option>
-                        <option>이름↓</option>
-                        <option>패널티↑</option>
-                        <option>패널티↓</option>
-                        <option>인기도↑</option>
-                        <option>인기도↓</option>
-                    </select>
+                </div>
+                <div class="">
+    
                 </div>
             </div>
-        </div>
+        </form>
+    
+    
+    
+    	<form method="get" action="memberList.ad" id="orderForm">	
+	        <div class="order-area">
+	            <div class="select-order">
+	                <select name="order" id="orderSelect" class="form-control" align="right">
+	                    <option value="mem_name desc">회원번호↑</option>
+	                    <option value="mem_name asc">회원번호↓</option>
+	                    <option value="ingido desc">인기도↑</option>
+	                    <option value="ingido asc">인기도↓</option>
+	                    <option value="enroll_date desc">가입일↑</option>
+	                    <option value="enroll_date asc">가입일↓</option>
+	                </select>
+	            </div>
+	        </div>
+	        
+	        <div class="count-area">
+	        	<div class="count-select">
+	                <select name="bl" id="countSelect" class="form-control" align="right">
+	                    <option value="10">10</option>
+	                    <option value="15">15</option>
+	                    <option value="30">30</option>
+	                </select>
+	            </div>
+	        </div>
+        </form>
+        
+        <script>
+        
+        	$(function() {
+        		
+        		
+        		// 정렬기준 선택
+        		$('#orderSelect option').each(function() {
+        			if($(this).val() == '${ order }') {
+        				$(this).attr('selected', true);
+        			}        			
+        		});
+        		
+        		
+        		// 한 페이지에 보여줄 수 선택
+        		$('#countSelect option').each(function() {
+        			if($(this).val() == '${ pi.boardLimit }') {
+        				$(this).attr('selected', true);
+        			}			
+        		});
+        		
+        		
+        		
+        	});
+        
+        
+			
+        
+        
+        </script>
+        
+
 		<div class="member-table-area">
             
 			<div class="container">
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th width="5%">번호</th>
+                            <th width="10%">번호</th>
                             <th width="15%">아이디</th>
-                            <th width="20%">이름</th>
-                            <th width="20%">닉네임</th>
+                            <th width="15%">이름</th>
+                            <th width="15%">닉네임</th>
                             <th width="15%">인기도</th>
-                            <th width="15%">패널티</th>
-                            <th width="15%">탈퇴</th>
+                            <th width="20%">가입일</th>
+                            <th width="10%">탈퇴</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>3</td>
-                            <td>user02</td>
-                            <td>홍길동</td>
-                            <td>안녕</td>
-                            <td>-10</td>
-                            <td>8</td>
-                            <td><a href="" class="btn btn-sm btn-secondary">탈퇴</a></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>user02</td>
-                            <td>홍길동</td>
-                            <td>안녕</td>
-                            <td>-10</td>
-                            <td>8</td>
-                            <td><a href="" class="btn btn-sm btn-secondary">탈퇴</a></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>user02</td>
-                            <td>홍길동</td>
-                            <td>안녕</td>
-                            <td>-10</td>
-                            <td>8</td>
-                            <td><a href="" class="btn btn-sm btn-secondary">탈퇴</a></td>
-                        </tr>
+                    	<c:forEach var="m" items="${ list }">
+	                    	<tr>
+	                            <td>${ m.memNo }</td>
+	                            <td>${ m.memId }</td>
+	                            <td>${ m.memName }</td>
+	                            <td>${ m.nickName }</td>
+	                            <td>${ m.ingido }</td>
+	                            <td>${ m.enrollDate }</td>
+	                            <td><a href="" class="btn btn-sm btn-secondary">탈퇴</a></td>
+	                        </tr>
+                    	</c:forEach>
                     </tbody>
                 </table>
             </div>

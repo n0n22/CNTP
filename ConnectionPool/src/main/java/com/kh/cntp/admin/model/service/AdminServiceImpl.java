@@ -1,6 +1,7 @@
 package com.kh.cntp.admin.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.cntp.admin.model.dao.AdminDao;
 import com.kh.cntp.admin.model.vo.Banner;
 import com.kh.cntp.common.model.vo.PageInfo;
+import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.notice.model.vo.Notice;
 
 @Service
@@ -26,7 +28,19 @@ public class AdminServiceImpl implements AdminService {
 //  회원 관련 기능 
 //-------------------------------------------
 	
-
+	// 회원 목록 개수 조회
+	@Override
+	public int selectMemberListCount() {
+		return adminDao.selectMemberListCount(sqlSession);
+	}
+	
+	// 회원 목록 조회
+	@Override
+	public ArrayList<Member> selectMemberList(HashMap map) {
+		return adminDao.selectMemberList(sqlSession, map);
+	}
+	
+	
 	
 	
 
@@ -109,6 +123,8 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteNotice(int nno) {
 		return adminDao.deleteNotice(sqlSession, nno);
 	}
+
+
 
 
 

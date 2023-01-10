@@ -1,6 +1,7 @@
 package com.kh.cntp.admin.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.cntp.admin.model.vo.Banner;
 import com.kh.cntp.common.model.vo.PageInfo;
+import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.notice.model.vo.Notice;
 
 @Repository
@@ -21,7 +23,22 @@ public class AdminDao {
 //  회원 관련 기능 
 //-------------------------------------------
 	
-
+	// 회원 목록 개수 조회
+	public int selectMemberListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adminMapper.selectMemberListCount");
+	}
+	
+	// 회원 목록 조회
+	public ArrayList<Member> selectMemberList(SqlSessionTemplate sqlSession, HashMap map) {
+		PageInfo pi = (PageInfo)map.get("pi");
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());		
+		
+		String order = (String)map.get("order");
+		
+		return (ArrayList)sqlSession.selectList("adminMapper.selectMemberList", order, rowBounds);
+	}
 	
 	
 
