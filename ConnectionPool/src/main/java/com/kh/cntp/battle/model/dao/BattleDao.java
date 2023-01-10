@@ -41,6 +41,8 @@ public class BattleDao {
 	public ResultHistory selectResultHistory(SqlSessionTemplate sqlSession, String teamNo) {
 		return sqlSession.selectOne("battleMapper.selectResultHistory", teamNo);
 	}
-	
+	public int insertBattleResult(SqlSessionTemplate sqlSession, BattleResult br) {
+		return sqlSession.insert("battleMapper.insertBattleResult", br);
+	}
 	
 }

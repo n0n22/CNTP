@@ -66,7 +66,7 @@
 		        <tr height="50">
 		            <th>주 활동지역</th>
 		            <td>
-		                <select name="teamArea">
+		                <select name="teamArea" id="teamArea">
 		                    <option value="Seoul">서울특별시</option>
 							<option value="Gyeonggi">경기도</option>
 							<option value="Gangwon">강원도</option>
@@ -82,7 +82,7 @@
 		        <tr height="50">
 		            <th>주 활동시간</th>
 		            <td>
-		                <select name="teamTime">
+		                <select name="teamTime" id="teamTime">
 		                    <option value="all">무관</option>
 		                    <option value="weekday">평일</option>
 		                    <option value="weekend">주말</option>
@@ -92,21 +92,24 @@
 		        <tr>
 		            <th>우리팀 키워드</th>
 		            <td colspan="2">
-		                <input type="radio" id="battle" name="keyword" value="battle" checked>
-		                <label for="battle">배틀</label>
+		                <input type="radio" id="battle" name="keyword" value="battle">
+		                <label class="keyword" for="battle">배틀</label>
 		                <input type="radio" id="social" name="keyword" value="social">
-		                <label for="social">친목</label>
+		                <label class="keyword" for="social">친목</label>
 		                <input type="radio" id="online" name="keyword" value="online">
-		                <label for="online">온라인모임만</label>
+		                <label class="keyword" for="online">온라인모임만</label>
 		            </td>
 		        </tr>
 		        <tr height="50">
 		            <th>팀 사진 등록</th>
 		            <td colspan="2">
 		                <input type="file" id="reUpfile" name="reUpfile">
+	            		<c:if test="${ not empty team.originName }">
+	            			현재 업로드된 파일 : 
+	            			<a href="${ team.changeName }" download="${ team.originName }">${ team.originName }</a>
+	            		</c:if>
 		            </td>
 		        </tr>
-		        <!-- 이미 파워 등록을 했는지 확인이 필요 -->
 		        
 		        <tr height="50">
 		            <th>뱃지 등록</th>
@@ -123,23 +126,21 @@
 		            	</c:otherwise>
 		            </c:choose>
 		        </tr>
-		        
-		        <c:set var="current" value="<%= new java.util.Date() %>"/>
-		        <!-- 
-		        <tr>
-		        	<fmt:formatDate value="${ current }" type="date" pattern="yyyy-MM-dd"/>
+		        <!-- 이미 파워 등록을 했는지 확인이 필요 -->
+		        <tr height="50">
+		            <th>파워등록</th>
+		            <td colspan="2">
+		            	<c:choose>
+					        <c:when test="${ team.powerDuration eq 'false' }">
+				                <input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" value="true"> 
+			                	<label for="powerDuration"> 파워 등록 시 10P가 소요됩니다. </label> 
+					        </c:when>
+					        <c:otherwise>
+					        	<label>파워등록기간입니다(${team.powerDuration }까지)</label>
+					        </c:otherwise>
+				        </c:choose>
+		            </td>
 		        </tr>
-		         -->
-		        <c:if test="${ team.powerDuration < current or empty team.powerDuration }">
-			        <tr height="50">
-			            <th>파워등록</th>
-			            <td colspan="2">
-			                 <input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" value="true"> 
-		                	<label for="powerDuration"> 파워 등록 시 10P가 소요됩니다. </label> 
-			            </td>
-			        </tr>
-		        </c:if>
-		
 		    </table>
 		    <br><br>
 		
@@ -152,6 +153,28 @@
 	<br><br>
 	
 	<jsp:include page="../common/footer.jsp"/>
+	
+	<script>
+		$(function(){
+			$('.teamUpdateFormTable #teamArea option').each(function(index, option){
+				if($(this).text() == '${ team.teamArea }'){
+					$(this).attr('selected', 'true');
+				}
+			})
+			
+			$('.teamUpdateFormTable #teamTime option').each(function(index, option){
+				if($(this).text() == '${ team.teamTime }'){
+					$(this).attr('selected', 'true');
+				}
+			})
+			
+			$('.teamUpdateFormTable .keyword').each(function(index, option){
+				if($(this).text() == '${ team.keyword }'){
+					$(this).prev().attr('checked', 'true');
+				}
+			})
+		})
+	</script>
 
 
 </body>

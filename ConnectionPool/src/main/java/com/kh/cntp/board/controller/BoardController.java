@@ -13,8 +13,8 @@ import com.kh.cntp.common.template.Pagination;
 @Controller
 public class BoardController {
 
-@Autowired
-private BoardService boardService;
+	@Autowired
+	private BoardService boardService;
 
 	//커뮤니티게시판 조회
 	@RequestMapping ("list.bo")

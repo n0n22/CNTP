@@ -203,7 +203,7 @@
                 <div class="logo">
                     <div>
                         <!-- 로고 이미지-->
-                        <img src="" width="85" height="25">
+                        <img src="resources/logo/cntp_logo.png" width="120" height="120">
                     </div>
                 </div>
                 <ul class="landing-list">

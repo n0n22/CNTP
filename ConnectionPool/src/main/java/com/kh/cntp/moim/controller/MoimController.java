@@ -121,12 +121,20 @@ public class MoimController {
 		
 		Team team =  moimService.selectTeam(teamNo);
 		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date today = format.parse((format.format(new Date())));	
+		Date powerDuration = format.parse(team.getPowerDuration());
 		
 		
-		Date powerDuration = new SimpleDateFormat("yyyy-mm-dd").parse(team.getPowerDuration());
 		
-		System.out.println(powerDuration);
+		if(today.compareTo(powerDuration) > 0) {
+			//System.out.println("기간이 지남");
+			team.setPowerDuration("false");
+		} else {
+			team.setPowerDuration(format.format(powerDuration));
+		}
 		
+		mv.addObject("team", team);
 		mv.setViewName("moim/teamUpdateForm");
 		
 		return mv;
