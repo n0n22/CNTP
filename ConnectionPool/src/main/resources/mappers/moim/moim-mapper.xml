@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="TEAM_INTRO" 		property="teamIntro"/>
 		<result column="ORIGIN_NAME" 		property="originName"/>
 		<result column="CHANGE_NAME" 		property="changeName"/>
-		<result column="TEAM_AREA" 			property="teamArea"/>
+		<result column="KOR_AREA" 			property="teamArea"/>
 		<result column="TEAM_TIME" 			property="teamTime"/>
 		<result column="KEYWORD" 			property="keyword"/>
 		<result column="CREATE_DATE" 		property="createDate"/>
@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="MEM_NO" 			property="memNo"/>
 		<result column="GROUP_TITLE" 		property="groupTitle"/>
 		<result column="GROUP_CONTENT" 		property="groupContent"/>
-		<result column="GROUP_AREA" 		property="groupArea"/>
+		<result column="KOR_AREA" 		property="groupArea"/>
 		<result column="PLACE" 				property="place"/>
 		<result column="GROUP_MEMBER" 		property="groupMember"/>
 		<result column="START_TIME" 		property="startTime"/>
@@ -123,6 +123,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        'T'||SEQ_TNO.CURRVAL
 		        ,'L'
 		        ,#{ memNo }
+		        ,SYSDATE
 		       )
 	</insert>
 	
@@ -149,21 +150,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  ,TEAM_INTRO
 			  ,ORIGIN_NAME
 			  ,CHANGE_NAME
-			  ,TEAM_AREA
+			  ,KOR_AREA
 			  ,CASE WHEN KEYWORD = 'all' THEN '무관'
                     WHEN KEYWORD = 'weekday' THEN '평일'
                     ELSE '주말' END "TEAM_TIME"
 			  ,CASE WHEN KEYWORD = 'social' THEN '친목'
                     WHEN KEYWORD = 'battle' THEN '배틀'
                     ELSE '온라인모임만' END "KEYWORD"
-			  ,CREATE_DATE
+			  ,TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE"
 			  ,BADGE_ORIGIN_NAME
 			  ,BADGE_CHANGE_NAME
 			  ,BADGE_STATUS
 			  ,STATUS
 			  ,POWER_DURATION
 	     FROM
-	          TEAM
+	          TEAM "T"
+	     JOIN
+	          AREA "A" ON(T.TEAM_AREA = A.ENG_AREA)
 		WHERE
 		      TEAM_NO = #{ teamNo }
 		  AND
@@ -177,7 +180,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		              WHEN TEAM_GRADE = 'S' THEN '부팀장'
 		              ELSE '팀원' END "TEAM_GRADE"
 		        ,M.NICKNAME
-		        
+		        ,TO_CHAR(TEAM_ENROLL_DATE, 'YYYY-MM-DD') AS "TEAM_ENROLL_DATE"
 		  FROM 
 		       TEAM_MEMBER "TM"
 		  JOIN
@@ -202,8 +205,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ,A.MOIM_NO
 		       ,M.NICKNAME
 		       ,A.ACCEPT_YN
-		       ,A.APPLY_DATE
-		       ,A.ACCEPT_DATE
+		       ,TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') AS "APPLY_DATE"
+		       ,TO_CHAR(ACCEPT_DATE, 'YYYY-MM-DD') AS "ACCEPT_DATE"
 		  FROM
 		       APPLY "A"
 		  JOIN
