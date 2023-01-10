@@ -24,6 +24,7 @@ public class Member {
 	private String endDate; //  END_DATE DATE 
 	private String teamNo; //팀번호
 	private String teamGrade; // 팀직급
+	private int failCnt; // 로그인 횟수
 	
 	
 

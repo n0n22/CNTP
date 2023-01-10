@@ -46,13 +46,6 @@ public class AdminServiceImpl implements AdminService {
 //-------------------------------------------
 // 배너 관련 기능 
 //-------------------------------------------	
-	
-	// 배너 등록
-	@Override
-	public int insertBanner(Banner banner) {
-		return adminDao.insertBanner(sqlSession, banner);
-	}
-	
 
 	// 배너 목록 개수 조회
 	@Override
@@ -67,8 +60,19 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.selectBannerList(sqlSession, status, pi);
 	}
 
+	
+	// 배너 등록
+	@Override
+	public int insertBanner(Banner banner) {
+		return adminDao.insertBanner(sqlSession, banner);
+	}
+	
 
-
+	// 배너 수정
+	@Override
+	public int updateBanner(Banner banner) {
+		return adminDao.updateBanner(sqlSession, banner);
+	}
 
 	
 
@@ -100,6 +104,8 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteNotice(int nno) {
 		return adminDao.deleteNotice(sqlSession, nno);
 	}
+
+
 
 
 

@@ -28,6 +28,10 @@
             display: inline-block;
         }
 
+		.banner-select {
+			width: 200px;
+		}
+
         .banner-btn {
             text-align: left;
             padding-left: 30px;
@@ -52,7 +56,15 @@
 
 
     <div class="admin-outer">
-        
+        <div class="banner-select">
+			<form method="get" action="bannerList.ad" id="statusChangeForm">
+				<select class="form-control" id="bannerStatus" name="status">
+					<option value="Y">메인배너</option>
+					<option value="H">숨겨진배너</option>
+				</select>
+			</form>
+        </div>
+                
         <div class="banner-image">
             <c:choose>
 	            <c:when test="${ not empty list }">
@@ -65,7 +77,7 @@
 			                	<button type="button" class="btn btn-primary btn-sm btn-block changeBtn" onclick="postFormSubmit(this, 'H')">숨기기</button>
 			                	<input type="hidden" value="${ banner.bannerNo }">
 			                </c:if>
-			                <c:if test="${ banner.status eq 'N'}">
+			                <c:if test="${ banner.status eq 'H'}">
 			                	<button type="button" class="btn btn-primary btn-sm btn-block changeBtn" onclick="postFormSubmit(this, 'Y')">보이기</button>
 			                	<input type="hidden" value="${ banner.bannerNo }">
 			                </c:if>
@@ -80,36 +92,54 @@
             <br clear="both">
         </div>
         
-        <form method="post" action="" id="postForm">
-        	<input type="hidden" value="" id="hiddenValue">
+        <form method="post" action="bannerUpdate.ad" id="postForm">
+        	<input type="hidden" value="" id="hiddenStatus" name="status">
+        	<input type="hidden" value="" id="hiddenBnno" name="bannerNo">
         </form>
         
         
         <script>
-        	/*
+        	
         	function postFormSubmit(e, status) {
         		
-        		console.log($(e).next().val());
-        		console.log($('#postForm #hiddenValue'));
+        		// console.log($(e).next().val());
+        		// console.log($('#postForm #hiddenValue'));
+        		var bnno = $(e).next().val();
+        		var msg = '';
         		
-        		var msg = $(e).next().val() + '번 배너의 상태를 변경합니다.'
-        		
-        		if(status == 'Y') {
-        			console.log(msg);
-        			
-        			
-        		} else {
-        			
+        		if(status == 'H') { // 숨기기
+        			msg = bnno + '번 배너를 내립니다.';
+        		} else { // 보이기
+        			msg = bnno + '번 배너를 띄웁니다.';
         		}
         		
-        		var check = alertify.confirm(function() {
-	        		$('#postForm #hiddenValue').val(status);
-	        		console.log($('#postForm #hiddenValue').val());
-	   				$('#postForm').attr('action', 'bannerUpdate.ad').submit();		
+        		var check = alertify.confirm(msg,function() {
+	        		$('#postForm #hiddenStatus').val(status);
+	        		$('#postForm #hiddenBnno').val(bnno);
+	   				$('#postForm').submit();		
 	   			}); 
         		
         	}
-        */
+
+
+			$(function() {
+
+				$('#bannerStatus').change(function() {
+					$('#statusChangeForm').submit();
+				});
+
+				
+				$('#bannerStatus option').each(function() {
+					if ($(this).val() == '${status}') {
+						$(this).attr('selected', true);
+					}
+				});
+				
+				
+				
+
+			});
+        
         
         
         

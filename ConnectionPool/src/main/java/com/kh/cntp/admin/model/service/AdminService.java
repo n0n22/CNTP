@@ -38,14 +38,17 @@ public interface AdminService {
 //  배너 관련 기능 
 //-------------------------------------------	
 	
-	// 배너 등록
-	int insertBanner(Banner banner);
-	
 	// 배너 목록개수 조회
 	int selectBannerListCount(String status);
 	
 	// 배너 목록 조회
 	ArrayList<Banner> selectBannerList(String status, PageInfo pi);
+	
+	// 배너 등록
+	int insertBanner(Banner banner);
+	
+	// 배너 수정
+	int updateBanner(Banner banner);
 	
 	
 //-------------------------------------------
