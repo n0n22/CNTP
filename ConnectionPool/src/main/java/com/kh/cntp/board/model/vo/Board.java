@@ -1,7 +1,5 @@
 package com.kh.cntp.board.model.vo;
 
-import java.util.Date;
-
 import lombok.Data;
 
 @Data
