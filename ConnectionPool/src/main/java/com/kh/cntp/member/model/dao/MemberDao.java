@@ -23,5 +23,9 @@ public class MemberDao {
 	public int loginStopped(SqlSessionTemplate sqlSession, Member member) {
 		return sqlSession.update("memberMapper.loginStopped", member);
 	}
+	
+	public Member findId(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.selectOne("memberMapper.findId", member);
+	}
 
 }

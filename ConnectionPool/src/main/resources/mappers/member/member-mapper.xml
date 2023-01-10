@@ -91,5 +91,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE 
 		 	   MEM_ID = #{memId}  	   		   
 	</update>
+	
+	<!-- 아이디찾기 -->
+	<select id="findId" parameterType="member" resultMap="memberResultSet">
+		SELECT 
+			   MEM_ID
+		  FROM	   
+		   	   MEMBER 
+		 WHERE 
+		 	   MEM_NAME = #{memName}   
+		   AND
+		   	   PHONE = #{phone}	   
+	</select>
 
 </mapper>

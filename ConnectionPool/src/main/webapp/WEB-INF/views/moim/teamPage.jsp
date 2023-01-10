@@ -130,8 +130,10 @@
 				<!-- 팀장만 보이는 팀 정보 수정하기 내역 -->
 				<c:if test="${ loginMember.teamNo eq team.teamNo and loginMember.teamGrade eq 'L' }">
 					<div class="update-area" align="center">
-						<a href="teamUpdateForm.mo" class="btn btn-primary" style="width:200px">수정하기</a>
-						<!-- <a href="teamUpdateForm.mo?teamNo=${ teamNo }">수정하기</a> -->
+						<form action="teamUpdateForm.mo" method="post">
+							<input type="hidden" value="${ team.teamNo }" name="teamNo">
+							<button class="btn btn-primary" style="width:200px">수정하기</button>
+						</form>
 					</div>
 				</c:if>
 
@@ -199,20 +201,32 @@
 					<c:choose>
 						<c:when test="${ empty loginMember }">
 							<!-- 로그인이 되어 있지 않을 때 -->
+							<div style="height:150px"></div>
 							<a href="loginForm.me" class="btn btn-primary" style="width:200px;">로그인 후 신청 가능</a>
 						</c:when>
 						<c:otherwise>
 							<c:choose>
 								<c:when test="${ loginMember.teamNo eq team.teamNo }">
 								<!-- 로그인이 되어 있고, 해당 팀에 속해 있을 때 -->
-									<a href="chattingRoom.mo" class="btn btn-primary" style="width:200px;">팀 채팅방 입장하기</a>
+									<c:choose>
+										<c:when test="${ loginMember.teamGrade eq 'L' }">
+											<!-- 팀장일 때 -->
+											<a href="chattingRoom.mo" class="btn btn-primary" style="width:200px;">채팅하기</a>
+										</c:when>
+										<c:otherwise>
+											<!-- 팀원일 때 -->
+											<div style="height:150px"></div>
+											<a href="deleteTeamMember.mo" class="btn btn-primary" style="width:100px;">팀 탈퇴하기</a>
+											<a href="chattingRoom.mo" class="btn btn-primary" style="width:100px;">채팅하기</a>
+										</c:otherwise>
+									</c:choose>
 								</c:when>
 								<c:otherwise>
 									<c:choose>
 										<c:when test="${ teamMemberList.size() < team.teamMember }">
 										<!-- 모집중일 때 -->
 											<div style="height:150px"></div>
-											<a href="insertApply.mo" class="btn btn-primary apply-btn" style="width:200px;">신청하기</a>
+											<a href="insertApply.mo" class="btn btn-primary" id="apply-btn" style="width:200px;">신청하기</a>
 										</c:when>
 										<c:otherwise>
 											<div style="height:150px"></div>
@@ -239,8 +253,10 @@
 					url : "selectApply.mo",
 					success : function(obj){
 						if(obj != null){
-							$('.apply-btn').attr('disabled', 'true');
-							$('.apply-btn').val('이미 신청중이거나 팀에 가입되어 있습니다.');
+							console.log('성공')
+							$('#apply-btn').removeAttr('href');
+							$('#apply-btn').css('width', '300px');
+							$('#apply-btn').html('현재 신청중이거나<br> 다른 팀에 가입되어 있습니다.');
 						}
 					},
 					error : function(){

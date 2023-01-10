@@ -44,20 +44,20 @@
             <table id="contentArea" align="center" class="table">
                 <tr>
                     <th width="100">제목</th>
-                    <td colspan="3">제목입니다요</td>
+                    <td colspan="3">${b.boardTitle }</td>
                 </tr>
                 <tr>
                     <th>작성자</th>
-                    <td>admin</td>
+                    <td>${b.memberNo }</td>
                     <th>작성일</th>
-                    <td>2020-02-07</td>
+                    <td>${b.createDate }</td>
                 </tr>
                 <tr>
                     <th>내용</th>
                     <td colspan="3"></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><p style="height:150px;">게시판 내용이 들어갈 자리!!</p></td>
+                    <td colspan="4"><p style="height:150px;">${b.boardContent }</p></td>
                 </tr>
                 <tr>
                     <th>첨부파일</th>

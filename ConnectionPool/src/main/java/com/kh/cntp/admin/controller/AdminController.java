@@ -1,6 +1,7 @@
 package com.kh.cntp.admin.controller;
 
 import java.io.File;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -47,12 +48,35 @@ public class AdminController {
 	
 	// 회원목록 조회 -> 회원관리 페이지로 이동
 	@RequestMapping("memberList.ad")
-	public String selectMemberList() {
+	public String selectMemberList(@RequestParam(value="cpage", defaultValue="1") int cpage
+								  ,@RequestParam(value="bl", defaultValue="10") int boardLimit
+								  ,@RequestParam(value="order", defaultValue="mem_name asc") String order
+								  ,Model model) {
+//		System.out.println(cpage);
+//		System.out.println(boardLimit);
+//		System.out.println(order);
 		
+		// cpage : 요청페이지
+		PageInfo pi = Pagination.getPageInfo(adminService.selectMemberListCount(), cpage, 5, boardLimit);
+		
+		// 정렬기준과 페이지에 보여줄 개수를 Hashmap에 담아서 조회해옴ㄴ
+		HashMap map = new HashMap();
+		map.put("pi", pi);
+		map.put("order", order);
+		
+		model.addAttribute("list", adminService.selectMemberList(map));
+		model.addAttribute("pi", pi);
+		model.addAttribute("order", order);
+				
 		return "admin/adminMemberList";
 	}
 	
-
+	
+	// 회원 검색 기능
+//	@RequestMapping("memberSearch.ad")
+//	public ModelAndView searchMemb
+	
+	
 	
 	
 

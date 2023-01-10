@@ -64,69 +64,70 @@
                 <td>작성자</td>
                 <td>작성일</td>
                 <td>조회수</td>
-                <td>좋아요</td>
+                
             </tr>
         </thead>
         <tbody>
+        
+        	<c:forEach items="${ list }" var="b">
             <tr>
-                <td>1</td>
-                <td>자유</td>
-                <td>첫 강습 다녀왔습니다</td>
-                <td>뿜뿌뿜뿌</td>
-                <td>23.01.02</td>
-                <td>44</td>
-                <td>2</td>
+                <td class="bno">${b.boardNo }</td>
+                <td>${b.category }</td>
+                <td>${b.boardTitle }</td>
+                <td>${b.memberNo }</td>
+                <td>${b.createDate }</td>
+                <td>${b.count }</td>
+             
+                
+            </c:forEach>    
             </tr>
-            <tr>
-                <td>2</td>
-                <td>자유</td>
-                <td>첫 강습 다녀왔습니다</td>
-                <td>뿜뿌뿜뿌</td>
-                <td>23.01.02</td>
-                <td>44</td>
-                <td>2</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>자유</td>
-                <td>첫 강습 다녀왔습니다</td>
-                <td>뿜뿌뿜뿌</td>
-                <td>23.01.02</td>
-                <td>44</td>
-                <td>2</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>자유</td>
-                <td>첫 강습 다녀왔습니다</td>
-                <td>뿜뿌뿜뿌</td>
-                <td>23.01.02</td>
-                <td>44</td>
-                <td>2</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>자유</td>
-                <td>첫 강습 다녀왔습니다</td>
-                <td>뿜뿌뿜뿌</td>
-                <td>23.01.02</td>
-                <td>44</td>
-                <td>2</td>
-            </tr>
+            
+            
         </tbody>
 
             </table>
             <br>
+            
+            <script>
+            
+            	$(function(){
+					$('#boardList>tbody>tr').click(function(){
+						location.href = 'detail.bo?bno=' + $(this).children('.bno').text();
+					})
+            	})
+            
+            </script>
+            
+            
+            
 
             <div id="pagingArea">
                 <ul class="pagination">
-                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                
+                	<c:choose></c:choose>
+                		<c:when test="${pi.currentPage eq 1 }">
+                    	<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                    	</c:when>
+                    	
+                    	<c:otherwise>
+	                    <li class="page-item"><a class="page-link" href="list.bo?cpage=${pi.currentPage -1}">Previous</a></li>
+                    	</c:otherwise>
+                    
+                    
+                    <c:forEach begin="${pi.startPage }" end="${pi.endPage }" var="p">
+                    	<li class="page-item"><a class="page-link" href="list.bo?cpage=${p }">${ p }</a></li>
+                    </c:forEach>
+                    
+                    
+                    <c:choose>
+                    	<c:when test="${pi.currentPage eq pi.maxPage }">
+	                    	<li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    	</c:when>
+                    	<c:otherwise>
+                    	 	<li class="page-item"><a class="page-link" href="list.bo?cpage=${pi.currentPage + 1 }">Next</a></li>
+                    	</c:otherwise>
+                    </c:choose>
+                    
                 </ul>
             </div>
 
