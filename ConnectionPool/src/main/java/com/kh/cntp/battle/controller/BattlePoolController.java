@@ -74,6 +74,8 @@ public class BattlePoolController {
 									,String awayTeam
 									,Model model
 									,HttpSession session) {
+		
+		session.setAttribute("battleNo", battleNo);
 		session.setAttribute("homeTeam", battleService.selectTeam(homeTeam));
 		session.setAttribute("homeTeamHistory", battleService.selectResultHistory(homeTeam));
 		session.setAttribute("awayTeam", battleService.selectTeam(awayTeam));
@@ -90,9 +92,9 @@ public class BattlePoolController {
 								  ,Model model
 								  ,HttpSession session) {
 		
+		session.setAttribute("battleNo", battleNo);
 		session.setAttribute("homeTeam", battleService.selectTeam(homeTeam));
 		session.setAttribute("awayTeam", battleService.selectTeam(awayTeam));
-		
 		
 		return "battle/battlePoolResultEnrollForm";
 	}

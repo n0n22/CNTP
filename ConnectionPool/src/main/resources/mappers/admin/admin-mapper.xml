@@ -5,6 +5,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="adminMapper">
 
+	<!-- 회원 ResultMap -->
+	<resultMap id="memberResultSet" type="member" >
+		<result column="MEM_NO" property="memNo"/>
+		<result column="MEM_ID" property="memId"/>
+		<result column="MEM_PWD" property="memPwd"/>
+		<result column="GENDER" property="gender"/>
+		<result column="INGIDO" property="ingido"/>
+		<result column="MEM_POINT" property="memPoint"/>
+		<result column="EMAIL" property="email"/>
+		<result column="NICKNAME" property="nickName"/>
+		<result column="MEM_NAME" property="memName"/>
+		<result column="MEM_AREA" property="memArea"/>
+		<result column="PHONE" property="phone"/>
+		<result column="BIRTHDAY" property="birthDay"/>
+		<result column="DETAIL_AREA" property="detailArea"/>
+		<result column="MEM_STATUS" property="memStatus"/>
+		<result column="ENROLL_DATE" property="enrollDate"/>
+		<result column="GRADE" property="grade"/>
+		<result column="END_DATE" property="endDate"/>
+		<result column="TEAM_NO" property="teamNo"/>
+		<result column="TEAM_GRADE" property="teamGrade"/>
+	</resultMap>	
+
+	<!-- 배너 ResultMap -->
 	<resultMap id="BannerResultSet" type="banner">
 		<result property="bannerNo" column="BANNER_NO" />
 		<result property="memNo" column="MEM_NO" />
@@ -22,7 +46,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ===============================
 -->	
 
-
+	<!-- 회원목록 개수 조회 -->
+		<select id="selectMemberListCount" resultType="_int">
+		SELECT 
+			   COUNT(*)
+		  FROM 
+		       MEMBER
+		 WHERE 
+		       MEM_STATUS = 'Y'
+	</select>
+	
+	<!-- 회원목록 조회 -->
+	<select id="selectMemberList" parameterType="string" resultMap="memberResultSet">
+		SELECT 
+		       MEM_NO,
+		       MEM_ID,
+		       INGIDO,
+		       EMAIL,
+		       NICKNAME,
+		       MEM_NAME,
+		       MEM_AREA,
+		       PHONE,
+		       BIRTHDAY,
+		       DETAIL_AREA,
+		       ENROLL_DATE,
+		       TEAM_NO,
+		       TEAM_GRADE
+		  FROM 
+		       MEMBER
+     LEFT JOIN 
+		       PENALTY USING (MEM_NO)
+     LEFT JOIN
+		       TEAM_MEMBER USING (MEM_NO)
+		 WHERE 
+		       MEM_STATUS = 'Y'
+		 ORDER
+		    BY
+		       #{order}
+	</select>
 
 
 

@@ -115,11 +115,11 @@
 				<form action="findId.me" class="find-id-form" method="post">
 					<h1 id="main-text">아이디 찾기</h1>
 					<div>
-						<div><input type="text" name="findName" placeholder="이름을 입력해주세요"></div>
+						<div><input type="text" name="memName" placeholder="이름을 입력해주세요"></div>
 					</div>
 
 					<div>
-						<div><input type="text" name="findPhone" placeholder="핸드폰번호를 입력해주세요 - 포함"></div>
+						<div><input type="text" name="phone" placeholder="핸드폰번호를 입력해주세요 (숫자만)"></div>
 					</div>
 
 					<div><button type="submit" id="fid-btn">아이디 찾기</button></div>

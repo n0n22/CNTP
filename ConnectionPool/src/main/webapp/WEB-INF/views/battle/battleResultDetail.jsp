@@ -108,8 +108,8 @@
 	                            <c:if test="${ awayTeam.badgeStatus eq 'N'}">
 		                            <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
 	                            </c:if>
-	                            
-	                            <p class="text-center">${ awayTeamHistory.victory + awayTeamHistory.defeat }전 ${ awayTeamHistory.victory }승 ${ awayTeamHistory.defeat }패</p> <button class="btn btn-lg btn-danger" disabled>패배</button>
+	                            <p class="text-center">${ awayTeamHistory.victory + awayTeamHistory.defeat }전 ${ awayTeamHistory.victory }승 ${ awayTeamHistory.defeat }패</p> 
+	                            <button class="btn btn-lg btn-danger" disabled>패배</button>
 	                        </div>
 	                    </div>
 	                </div>
@@ -205,7 +205,7 @@
         <div class="outer-bottom">
             <div class="submit-area">
                 <br>
-                <button class="btn btn-primary" onclick="location.href='resultEnrollForm.bt'">결과작성</button>
+                <button class="btn btn-primary" onclick="location.href='resultEnrollForm.bt?battleNo=${battleNo}&homeTeam=${homeTeam.teamNo}&awayTeam=${awayTeam.teamNo}'">결과작성</button>
                 <button class="btn btn-info">승인</button>
                 <button class="btn btn-warning">이의제기</button>
             </div>
