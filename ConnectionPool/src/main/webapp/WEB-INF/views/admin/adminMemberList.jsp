@@ -193,16 +193,38 @@
                 </table>
             </div>
 			<div class="page-area">
-
-	            <ul class="pagination justify-content-center">
-	                <li class="page-item"><a class="page-link" href="javascript:void(0);">&lt;</a></li>
-	                <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-	                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-	                <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-	                <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
-	            </ul>
-
-			
+	        	<ul class="pagination" align="center">
+	               	<c:choose>
+	                	<c:when test="${ pi.currentPage eq 1 }">
+	                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<li class="page-item"><a class="page-link" href="memberList.ad?order=${ order }&orderCondition=${ orderCondition }&bl=${ pi.boardLimit }&cpage=${ pi.currentPage - 1 }">&lt;</a></li>
+	                    </c:otherwise>
+	                </c:choose>
+	                
+	               
+	                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+		                <c:choose>
+		                	<c:when test="${ pi.currentPage eq p }">
+		                   		<li class="page-item disabled"><a class="page-link" href="memberList.ad?order=${ order }&orderCondition=${ orderCondition }&bl=${ pi.boardLimit }&cpage=${ p }">${ p }</a></li>
+		                	</c:when>
+		                	<c:otherwise>
+		                		<li class="page-item"><a class="page-link" href="memberList.ad?order=${ order }&orderCondition=${ orderCondition }&bl=${ pi.boardLimit }&cpage=${ p }">${ p }</a></li>
+		                	</c:otherwise>
+		                </c:choose>
+	                </c:forEach>
+	               
+	                
+					<c:choose>
+	                	<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+		                    <li class="page-item"><a class="page-link" href="memberList.ad?order=${ order }&orderCondition=${ orderCondition }&bl=${ pi.boardLimit }&cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+	                    </c:otherwise>
+	                </c:choose>
+				</ul>			
 			</div>
 
 
