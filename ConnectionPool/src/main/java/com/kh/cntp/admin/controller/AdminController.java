@@ -1,6 +1,7 @@
 package com.kh.cntp.admin.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -21,6 +22,7 @@ import com.kh.cntp.admin.model.vo.Banner;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.common.template.Pagination;
 import com.kh.cntp.common.template.Template;
+import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.notice.model.service.NoticeService;
 import com.kh.cntp.notice.model.vo.Notice;
 
@@ -50,21 +52,23 @@ public class AdminController {
 	@RequestMapping("memberList.ad")
 	public String selectMemberList(@RequestParam(value="cpage", defaultValue="1") int cpage
 								  ,@RequestParam(value="bl", defaultValue="10") int boardLimit
-								  ,@RequestParam(value="order", defaultValue="mem_name asc") String order
+								  ,@RequestParam(value="order", defaultValue="enroll_date desc") String order
 								  ,Model model) {
-//		System.out.println(cpage);
-//		System.out.println(boardLimit);
-//		System.out.println(order);
+		System.out.println(cpage);
+		System.out.println(boardLimit);
+		System.out.println(order);
 		
 		// cpage : 요청페이지
 		PageInfo pi = Pagination.getPageInfo(adminService.selectMemberListCount(), cpage, 5, boardLimit);
-		
-		// 정렬기준과 페이지에 보여줄 개수를 Hashmap에 담아서 조회해옴ㄴ
+
+		// 정렬기준과 페이지에 보여줄 개수를 Hashmap에 담아서 조회해옴
 		HashMap map = new HashMap();
 		map.put("pi", pi);
 		map.put("order", order);
 		
-		model.addAttribute("list", adminService.selectMemberList(map));
+		ArrayList<Member> list = adminService.selectMemberList(map);
+		System.out.println(list);
+		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
 		model.addAttribute("order", order);
 				

@@ -87,7 +87,7 @@
     	<form method="get" action="memberList.ad" id="orderForm">	
 	        <div class="order-area">
 	            <div class="select-order">
-	                <select name="order" id="orderSelect" class="form-control" align="right">
+	                <select name="order" id="orderSelect" class="form-control" align="right" onchange="submitOrderForm();">
 	                    <option value="mem_name desc">회원번호↑</option>
 	                    <option value="mem_name asc">회원번호↓</option>
 	                    <option value="ingido desc">인기도↑</option>
@@ -100,7 +100,7 @@
 	        
 	        <div class="count-area">
 	        	<div class="count-select">
-	                <select name="bl" id="countSelect" class="form-control" align="right">
+	                <select name="bl" id="countSelect" class="form-control" align="right" onchange="submitOrderForm();">
 	                    <option value="10">10</option>
 	                    <option value="15">15</option>
 	                    <option value="30">30</option>
@@ -130,8 +130,12 @@
         		});
         		
         		
-        		
         	});
+        	
+        	function submitOrderForm() {
+        		$('#orderForm').submit();		        		
+        	};
+        	
         
         
 			

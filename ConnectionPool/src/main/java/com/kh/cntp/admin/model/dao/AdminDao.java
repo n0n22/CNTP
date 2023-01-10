@@ -36,6 +36,7 @@ public class AdminDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());		
 		
 		String order = (String)map.get("order");
+		System.out.println("정렬 : " + order);
 		
 		return (ArrayList)sqlSession.selectList("adminMapper.selectMemberList", order, rowBounds);
 	}
