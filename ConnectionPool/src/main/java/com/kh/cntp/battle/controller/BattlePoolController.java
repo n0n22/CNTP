@@ -98,7 +98,7 @@ public class BattlePoolController {
 							 ,Model model
 							 ,RedirectAttributes redirectAttributes) {
 		
-		HashMap<String, String> apply = new HashMap();
+		HashMap<String, String> apply = new HashMap<String, String>();
 		apply.put("teamNo", teamNo);
 		apply.put("memNo", memNo);
 		apply.put("chatContent", chatContent);
