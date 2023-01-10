@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -109,11 +110,14 @@ public class AdminController {
 	
 	// 배너목록 조회 -> 배너관리 페이지로 이동
 	@RequestMapping("bannerList.ad")
-	public ModelAndView selectBannerList(@RequestParam(value="cpage", defaultValue="1") int cpage, @RequestParam(value="status", defaultValue="Y") String status, ModelAndView mv) {
+	public String selectBannerList(@RequestParam(value="cpage", defaultValue="1") int cpage, @RequestParam(value="status", defaultValue="Y") String status, Model model) {
 		// cpage : 요청한 페이지
+		// status : 보여지는 상태
 		PageInfo pi = Pagination.getPageInfo(adminService.selectBannerListCount(status), cpage, 5, 6);
-		mv.addObject("list", adminService.selectBannerList(status, pi)).addObject("pi", pi).setViewName("admin/adminBannerList");
-		return mv;
+		model.addAttribute("list", adminService.selectBannerList(status, pi));
+		model.addAttribute("pi", pi);
+		model.addAttribute("status", status);
+		return "admin/adminBannerList";
 	}
 	
 
@@ -146,7 +150,7 @@ public class AdminController {
 	
 	// 배너수정
 	@RequestMapping("bannerUpdate.ad")
-	public String updateBanner(Banner banner, HttpSession session) {
+	public String updateBanner(@ModelAttribute Banner banner, HttpSession session) {
 		// System.out.println(bnno);
 		// System.out.println(status);
 		// System.out.println(banner);

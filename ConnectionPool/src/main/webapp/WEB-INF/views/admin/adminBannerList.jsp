@@ -28,6 +28,10 @@
             display: inline-block;
         }
 
+		.banner-select {
+			width: 200px;
+		}
+
         .banner-btn {
             text-align: left;
             padding-left: 30px;
@@ -52,9 +56,13 @@
 
 
     <div class="admin-outer">
-        <div>
-        	
-        
+        <div class="banner-select">
+			<form method="get" action="bannerList.ad" id="statusChangeForm">
+				<select class="form-control" id="bannerStatus" name="status">
+					<option value="Y">메인배너</option>
+					<option value="H">숨겨진배너</option>
+				</select>
+			</form>
         </div>
                 
         <div class="banner-image">
@@ -69,7 +77,7 @@
 			                	<button type="button" class="btn btn-primary btn-sm btn-block changeBtn" onclick="postFormSubmit(this, 'H')">숨기기</button>
 			                	<input type="hidden" value="${ banner.bannerNo }">
 			                </c:if>
-			                <c:if test="${ banner.status eq 'N'}">
+			                <c:if test="${ banner.status eq 'H'}">
 			                	<button type="button" class="btn btn-primary btn-sm btn-block changeBtn" onclick="postFormSubmit(this, 'Y')">보이기</button>
 			                	<input type="hidden" value="${ banner.bannerNo }">
 			                </c:if>
@@ -112,6 +120,25 @@
 	   			}); 
         		
         	}
+
+
+			$(function() {
+
+				$('#bannerStatus').change(function() {
+					$('#statusChangeForm').submit();
+				});
+
+				
+				$('#bannerStatus option').each(function() {
+					if ($(this).val() == '${status}') {
+						$(this).attr('selected', true);
+					}
+				});
+				
+				
+				
+
+			});
         
         
         
