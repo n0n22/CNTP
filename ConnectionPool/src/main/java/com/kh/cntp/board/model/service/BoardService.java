@@ -6,7 +6,6 @@ import com.kh.cntp.board.model.vo.Board;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.reply.model.vo.Reply;
 
-
 public interface BoardService {
 	
 	//게시글 리스트 조회 서비스 + 페이징 처리(select)
