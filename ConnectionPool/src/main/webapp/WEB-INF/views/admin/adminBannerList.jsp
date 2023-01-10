@@ -193,17 +193,17 @@
 		                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
 		                    </c:when>
 		                    <c:otherwise>
-		                    	<li class="page-item"><a class="page-link" href="bannerList.ad?${ pi.currentPage - 1 }">&lt;</a></li>
+		                    	<li class="page-item"><a class="page-link" href="bannerList.ad?status=${ status }&cpage=${ pi.currentPage - 1 }">&lt;</a></li>
 		                    </c:otherwise>
 		                </c:choose>
 		                   
 		                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
 		                	<c:choose>
 		                	<c:when test="${ p eq pi.currentPage }">
-			                   	<li class="page-item disabled"><a class="page-link" href="bannerList.ad?cpage=${ p }">${ p }</a></li>
+			                   	<li class="page-item disabled"><a class="page-link" href="bannerList.ad?status=${ status }&cpage=${ p }">${ p }</a></li>
 		                	</c:when>
 		                	<c:otherwise>
-		                		<li class="page-item"><a class="page-link" href="bannerList.ad?cpage=${ p }">${ p }</a></li>	
+		                		<li class="page-item"><a class="page-link" href="bannerList.ad?status=${ status }&cpage=${ p }">${ p }</a></li>	
 		                	</c:otherwise>
 		                	</c:choose>
 		                </c:forEach>
@@ -213,7 +213,7 @@
 			                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
 		                    </c:when>
 		                    <c:otherwise>
-			                    <li class="page-item"><a class="page-link" href="bannerList.ad?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+			                    <li class="page-item"><a class="page-link" href="bannerList.ad?status=${ status }&cpage=${ pi.currentPage + 1 }">&gt;</a></li>
 		                    </c:otherwise>
 		                </c:choose>
 					</ul>

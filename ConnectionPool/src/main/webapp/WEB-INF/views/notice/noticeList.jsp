@@ -135,29 +135,40 @@
 		</c:if>
 
         <div class="notice-foot">
-        	<ul class="pagination">
-               	<c:choose>
-                	<c:when test="${ pi.currentPage eq 1 }">
-                    	<li class="page-item disabled"><a class="page-link">Previous</a></li>
-                    </c:when>
-                    <c:otherwise>
-                    	<li class="page-item"><a class="page-link" href="list.bo?${ pi.currentPage - 1 }">Previous</a></li>
-                    </c:otherwise>
-                </c:choose>
-                   
-                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-                   	<li class="page-item"><a class="page-link" href="list.bo?cpage=${ p }">${ p }</a></li>
-                </c:forEach>
-                   
-				<c:choose>
-                	<c:when test="${ pi.currentPage eq pi.maxPage }">
-	                    <li class="page-item disabled"><a class="page-link">Next</a></li>
-                    </c:when>
-                    <c:otherwise>
-	                    <li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage + 1 }">Next</a></li>
-                    </c:otherwise>
-                </c:choose>
-			</ul>
+        	<div class="page-area">
+	        	<ul class="pagination" align="center">
+	               	<c:choose>
+	                	<c:when test="${ pi.currentPage eq 1 }">
+	                    	<li class="page-item disabled"><a class="page-link">Previous</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<li class="page-item"><a class="page-link" href="list.no?cate=${ cate }&cpage=${ pi.currentPage - 1 }">Previous</a></li>
+	                    </c:otherwise>
+	                </c:choose>
+	                
+	               
+	                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+		                <c:choose>
+		                	<c:when test="${ pi.currentPage eq p }">
+		                   		<li class="page-item disabled"><a class="page-link" href="list.no?cate=${ cate }&cpage=${ p }">${ p }</a></li>
+		                	</c:when>
+		                	<c:otherwise>
+		                		<li class="page-item"><a class="page-link" href="list.no?cate=${ cate }&cpage=${ p }">${ p }</a></li>
+		                	</c:otherwise>
+		                </c:choose>
+	                </c:forEach>
+	               
+	                
+					<c:choose>
+	                	<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    <li class="page-item disabled"><a class="page-link">Next</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+		                    <li class="page-item"><a class="page-link" href="list.no?cate=${ cate }&cpage=${ pi.currentPage + 1 }">Next</a></li>
+	                    </c:otherwise>
+	                </c:choose>
+				</ul>
+        	</div>
         </div>
 
 
