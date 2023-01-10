@@ -13,8 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.cntp.battle.model.service.BattleService;
 import com.kh.cntp.battle.model.vo.Battle;
-import com.kh.cntp.battle.model.vo.BattleResult;
 import com.kh.cntp.battle.model.vo.PoolInfo;
+import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.template.Template;
 
 @Controller
@@ -75,17 +75,27 @@ public class BattlePoolController {
 									,Model model
 									,HttpSession session) {
 		
-		System.out.println("homeTeam : " + battleService.selectTeam(homeTeam));
-		System.out.println("awayTeam : " + battleService.selectTeam(awayTeam));
-		System.out.println("battleResult : " + battleService.selectBattleResult(battleNo));
-		// session.setAttribute("homeTeam", battleService.selectTeam(homeTeam));
-		// session.setAttribute("awayTeam", battleService.selectTeam(awayTeam));
-		// session.setAttribute("battleResult", battleService.selectBattleResult(battleNo));
+		session.setAttribute("battleNo", battleNo);
+		session.setAttribute("homeTeam", battleService.selectTeam(homeTeam));
+		session.setAttribute("homeTeamHistory", battleService.selectResultHistory(homeTeam));
+		session.setAttribute("awayTeam", battleService.selectTeam(awayTeam));
+		session.setAttribute("awayTeamHistory", battleService.selectResultHistory(awayTeam));
+		session.setAttribute("battleResult", battleService.selectBattleResult(battleNo));
+		
 		return "battle/battleResultDetail";
 	}
 	// 배틀결과 작성
 	@RequestMapping("resultEnrollForm.bt")
-	public String resultEnrollForm() {
+	public String resultEnrollForm(int battleNo
+								  ,String homeTeam
+								  ,String awayTeam
+								  ,Model model
+								  ,HttpSession session) {
+		
+		session.setAttribute("battleNo", battleNo);
+		session.setAttribute("homeTeam", battleService.selectTeam(homeTeam));
+		session.setAttribute("awayTeam", battleService.selectTeam(awayTeam));
+		
 		return "battle/battlePoolResultEnrollForm";
 	}
 	// 배틀 신청

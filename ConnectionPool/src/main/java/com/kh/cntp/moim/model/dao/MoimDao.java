@@ -45,5 +45,9 @@ public class MoimDao {
 	public ResultHistory selectResultHistory(SqlSessionTemplate sqlSession, String teamNo) {
 		return sqlSession.selectOne("moimMapper.selectResultHistory", teamNo);
 	}
+	
+	public Apply ajaxSelectApply(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("moimMapper.ajaxSelectApply", memNo);
+	}
 
 }

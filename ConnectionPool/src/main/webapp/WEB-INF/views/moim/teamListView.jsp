@@ -104,9 +104,10 @@
 			$('.teamListTable tbody tr').click(function(){
 				location.href = 'teamPage.mo?teamNo=T' + $(this).children().eq(0).text();
 			})
+			
 		})
 	</script>
-	
+
 	
 	
 	

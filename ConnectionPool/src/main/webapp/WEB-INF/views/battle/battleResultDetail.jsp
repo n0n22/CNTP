@@ -6,7 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+<script src=""></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
  
 <style>
 
@@ -84,8 +85,14 @@
 	                    <!-- <div class="card-header">Polar Area chart</div> -->
 	                    <div class="card-body text-center">
 	                        <div style="height: 300px;">
-	                            <h3 class="text-center m-b-10">A팀</h3> <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
-	                            <p class="text-center">20전 12승 8패</p> <button class="btn btn-lg btn-primary" disabled>승리</button>
+	                            <h3 class="text-center m-b-10">${ homeTeam.teamName }</h3> 
+	                            <c:if test="${ homeTeam.badgeStatus eq 'Y'}">
+		                            <img class="m-b-10" src="${ homeTeam.badgeChangeName }" height="100" width="100">
+	                            </c:if>
+	                            <c:if test="${ homeTeam.badgeStatus eq 'N'}">
+		                            <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
+	                            </c:if>
+	                            <p class="text-center">${ homeTeamHistory.victory + homeTeamHistory.defeat }전 ${ homeTeamHistory.victory }승 ${ homeTeamHistory.defeat }패</p> <button class="btn btn-lg btn-primary" disabled>승리</button>
 	                        </div>
 	                    </div>
 	                </div>
@@ -94,8 +101,15 @@
 	                <div class="card">
 	                    <div class="card-body text-center">
 	                        <div style="height: 300px;">
-	                            <h3 class="text-center m-b-10">B팀</h3> <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
-	                            <p class="text-center">전적 16전 7승 9패</p> <button class="btn btn-lg btn-danger" disabled>패배</button>
+	                            <h3 class="text-center m-b-10">${ awayTeam.teamName }</h3> 
+	                            <c:if test="${ awayTeam.badgeStatus eq 'Y'}">
+		                            <img class="m-b-10" src="${ awayTeam.badgeChangeName }" height="100" width="100">
+	                            </c:if>
+	                            <c:if test="${ awayTeam.badgeStatus eq 'N'}">
+		                            <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
+	                            </c:if>
+	                            <p class="text-center">${ awayTeamHistory.victory + awayTeamHistory.defeat }전 ${ awayTeamHistory.victory }승 ${ awayTeamHistory.defeat }패</p> 
+	                            <button class="btn btn-lg btn-danger" disabled>패배</button>
 	                        </div>
 	                    </div>
 	                </div>
@@ -103,81 +117,87 @@
 	        </div>
 	    </div>
 	
-	
-	
-	
-	
-	
-       
 
         <hr>
         <div class="outer-main">
             <div class="battleHistory">
             	<br>
                 <h2>배틀기록</h2>
-                <div class="battleRecord">
-                    <div class="left">
-                        <h3>A팀</h3>
-                        <table>
-                            <thead>
-                                <tr style="text-align: center;">
-                                    <th>선수</th>
-                                    <th>종목</th>
-                                    <th style="width: 150px;">기록</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <br>
-                    </div>
-            
-                    <div class="right">
-                        <h3>B팀</h3>
-                        <table>
-                            <thead>
-                                <tr style="text-align: center;">
-                                    <th>선수</th>
-                                    <th>종목</th>
-                                    <th style="width: 150px;">기록</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <br>
-                    </div>
-                </div>
+                <c:if test="${ battleResult == null }">
+	                <div class="battleRecord">
+	                	<h3>경기 전입니다.</h3>
+	                </div>
+                </c:if>
+                <c:if test="${ battleResult != null }">
+                
+	                <div class="battleRecord">
+	                    <div class="left">
+	                        <h3>A팀</h3>
+	                        <table>
+	                            <thead>
+	                                <tr style="text-align: center;">
+	                                    <th>선수</th>
+	                                    <th>종목</th>
+	                                    <th style="width: 150px;">기록</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                                <tr>
+	                                    <td></td>
+	                                    <td></td>
+	                                    <td></td>
+	                                </tr>
+	                                <tr>
+	                                    <td></td>
+	                                    <td></td>
+	                                    <td></td>
+	                                </tr>
+	                                <tr>
+	                                    <td></td>
+	                                    <td></td>
+	                                    <td></td>
+	                                </tr>
+	                            </tbody>
+	                        </table>
+	                        <br>
+	                    </div>
+	            
+	                    <div class="right">
+	                        <h3>B팀</h3>
+	                        <table>
+	                            <thead>
+	                                <tr style="text-align: center;">
+	                                    <th>선수</th>
+	                                    <th>종목</th>
+	                                    <th style="width: 150px;">기록</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                                <tr>
+	                                    <td></td>
+	                                    <td></td>
+	                                    <td></td>
+	                                </tr>
+	                                <tr>
+	                                    <td></td>
+	                                    <td></td>
+	                                    <td></td>
+	                                </tr>
+	                                <tr>
+	                                    <td></td>
+	                                    <td></td>
+	                                    <td></td>
+	                                </tr>
+	                            </tbody>
+	                        </table>
+	                        <br>
+	                    </div>
+	                </div>
+	                
+                </c:if>
+                
+                
+                
             </div>
             <br clear="both">
         </div>
@@ -185,7 +205,7 @@
         <div class="outer-bottom">
             <div class="submit-area">
                 <br>
-                <button class="btn btn-primary" onclick="location.href='resultEnrollForm.bt'">결과작성</button>
+                <button class="btn btn-primary" onclick="location.href='resultEnrollForm.bt?battleNo=${battleNo}&homeTeam=${homeTeam.teamNo}&awayTeam=${awayTeam.teamNo}'">결과작성</button>
                 <button class="btn btn-info">승인</button>
                 <button class="btn btn-warning">이의제기</button>
             </div>
