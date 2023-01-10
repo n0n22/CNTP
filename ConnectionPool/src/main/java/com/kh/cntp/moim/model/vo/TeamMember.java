@@ -8,5 +8,6 @@ public class TeamMember {
 	private String teamNo;
 	private String memNo;
 	private String teamGrade;
-
+	private String teamEnrollDate;
+	
 }

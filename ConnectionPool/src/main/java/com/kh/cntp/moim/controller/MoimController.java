@@ -2,6 +2,8 @@ package com.kh.cntp.moim.controller;
 
 import static com.kh.cntp.common.template.Template.saveFile;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.moim.model.service.MoimService;
 import com.kh.cntp.moim.model.vo.Team;
+import com.kh.cntp.moim.model.vo.TeamMember;
 
 @Controller
 public class MoimController {
