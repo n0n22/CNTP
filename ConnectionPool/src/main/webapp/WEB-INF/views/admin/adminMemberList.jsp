@@ -133,15 +133,12 @@
         	});
         	
         	
-        	// form태그 눌리게 하기
+        	// 정렬기준에 변화가 생기면 form태그 눌리게 하기
         	function submitOrderForm() {
         		
         		var value1 = $('#orderSelect option:selected'); // 선택된 정렬기준이
         		var test1 = value1.is('.desc'); // 내림차순을 포함하는가
-        		
-        		// console.log(value1);
-        		// console.log(test1);
-        		
+
         		if(test1) { // 내림차순
         			$('#orderCondition').val('desc');
         		}
