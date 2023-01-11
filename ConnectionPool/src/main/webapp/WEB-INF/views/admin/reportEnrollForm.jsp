@@ -59,11 +59,12 @@
 
 	</div>
 
-
-
-
-
-
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alertify.alert('알림', '${alertMsg}', function(){ alertify.success('확인 완료'); });
+			window.close();	
+		</script>
+	</c:if>
 
 
     	

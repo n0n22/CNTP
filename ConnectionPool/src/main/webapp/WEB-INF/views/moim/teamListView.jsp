@@ -33,6 +33,7 @@
 			<div class="teamListCondition" align="right">
 				지역
 				<select name="teamArea">
+					<option value="all">전체</option>
 					<option value="Seoul">서울특별시</option>
 					<option value="Gyeonggi">경기도</option>
 					<option value="Gangwon">강원도</option>
@@ -45,6 +46,7 @@
 				</select>
 				키워드
 				<select name="keyword">
+					<option value="all">전체</option>
 					<option value="battle">배틀</option>
 					<option value="social">친목</option>
 					<option value="online">온라인만</option>

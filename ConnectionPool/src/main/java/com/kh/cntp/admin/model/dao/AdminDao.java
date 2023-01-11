@@ -70,8 +70,7 @@ public class AdminDao {
 	
 	// 신고 등록
 	public int insertReport(SqlSessionTemplate sqlSession, Report report) {
-		System.out.println(report);
-		return sqlSession.selectOne("adminMapper.insertReport", report);
+		return sqlSession.insert("adminMapper.insertReport", report);
 	}
 	
 

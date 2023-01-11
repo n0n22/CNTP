@@ -439,7 +439,8 @@
 			reportvalue.target = '신고';
 			reportvalue.method = 'post';
 			reportvalue.submit();
-				
+			
+			
 		};
 		
 	
