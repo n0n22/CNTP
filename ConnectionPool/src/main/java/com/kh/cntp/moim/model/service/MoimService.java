@@ -52,7 +52,7 @@ public interface MoimService {
 	int ajaxDeleteApply(int applyNo);
 	
 	// 팀 페이지 수정
-	int updateTeam(String teamNo);
+	int updateTeam(Team team);
 	
 	// 팀 멤버 수정(권한 수정도)
 	int updateTeamMember(String teamNo);

@@ -49,5 +49,9 @@ public class MoimDao {
 	public Apply ajaxSelectApply(SqlSessionTemplate sqlSession, int memNo) {
 		return sqlSession.selectOne("moimMapper.ajaxSelectApply", memNo);
 	}
+	
+	public int updateTeam(SqlSessionTemplate sqlSession, Team team) {
+		return sqlSession.update("moimMapper.updateTeam", team);
+	}
 
 }
