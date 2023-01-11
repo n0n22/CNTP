@@ -280,7 +280,7 @@
 										<c:when test="${ teamMemberList.size() < team.teamMember }">
 										<!-- 모집중일 때 -->
 											<div style="height:150px"></div>
-											<a disabled class="btn btn-primary" id="apply-a" style="width:300px;">이미 다른 팀에<br> 소속되어 있습니다.</a>
+											<a class="btn btn-primary disabled" id="apply-a" style="width:300px;">이미 다른 팀에<br> 소속되어 있습니다.</a>
 										</c:when>
 										<c:otherwise>
 										<!-- 모집 마감일 때 -->
