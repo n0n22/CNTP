@@ -53,6 +53,16 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.selectSearchMemberList(sqlSession, map);
 	}
 	
+	// 회원 전체 목록 조회
+	@Override
+	public ArrayList<Member> allMemberList() {
+		return adminDao.allMemberList(sqlSession);
+	}
+	
+	
+	
+	
+	
 	
 
 	
@@ -134,8 +144,6 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteNotice(int nno) {
 		return adminDao.deleteNotice(sqlSession, nno);
 	}
-
-
 
 
 
