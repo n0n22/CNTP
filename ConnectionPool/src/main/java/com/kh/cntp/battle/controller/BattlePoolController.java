@@ -150,9 +150,11 @@ public class BattlePoolController {
 	public String battleResultOk(int battleNo,
 								 String victoryTeamNo,
 								 String defeatTeamNo) {
-		System.out.println("배틀번호 : " + battleNo);
-		System.out.println("승리팀 : " + victoryTeamNo);
-		System.out.println("패배팀 : " + defeatTeamNo);
+		// System.out.println("배틀번호 : " + battleNo); 		// 1
+		// System.out.println("승리팀 : " + victoryTeamNo);	// T3
+		// System.out.println("패배팀 : " + defeatTeamNo);		// T1
+		battleService.battleResultOk(battleNo, victoryTeamNo, defeatTeamNo);
+	
 		return "/";
 	}
 }

@@ -44,5 +44,20 @@ public class BattleDao {
 	public int insertBattleResult(SqlSessionTemplate sqlSession, BattleResult br) {
 		return sqlSession.insert("battleMapper.insertBattleResult", br);
 	}
+	public int battleResultOk(SqlSessionTemplate sqlSession, int battleNo) {
+		return sqlSession.update("battleMapper.battleResultOk", battleNo);
+	}
+	public int updateVictoryTeam(SqlSessionTemplate sqlSession, String victoryTeamNo) {
+		return sqlSession.update("battleMapper.updateVictoryTeam", victoryTeamNo);
+	}
+	public int updateDefeatTeam(SqlSessionTemplate sqlSession, String defeatTeamNo) {
+		return sqlSession.update("battleMapper.updateDefeatTeam", defeatTeamNo);
+	}
+	
+	
+	
+	
+	
+	
 	
 }

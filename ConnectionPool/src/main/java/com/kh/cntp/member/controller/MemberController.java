@@ -30,7 +30,7 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder; 
 	
-	// 초기화를 위한 난수 생성 메소드
+	// 비밀번호 초기화 및 메일인증을 위한 난수 생성 메소드
 	public String generatorRandom() {
 		Random r = new Random();
 		int n = r.nextInt(100000); 
