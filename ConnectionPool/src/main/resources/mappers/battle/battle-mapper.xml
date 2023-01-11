@@ -289,7 +289,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   SET
 		        OK = 'Y'
 		 WHERE
-		        BATTLE_NO = #{battleNO};
+		        BATTLE_NO = #{battleNO}
 	</update>
 	
 	<!-- 2. 승리팀 기록 갱신  -->
