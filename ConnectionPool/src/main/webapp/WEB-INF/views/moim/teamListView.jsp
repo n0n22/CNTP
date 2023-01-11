@@ -81,6 +81,14 @@
 						<td>(4/8)</td>
 						<td>배틀</td>
 					</tr>
+					<tr>
+						<td>9</td>
+						<td>일반</td>
+						<td>경기</td>
+						<td>경기짱</td>
+						<td>(4/8)</td>
+						<td>배틀</td>
+					</tr>
 				</tbody>
 			</table>
 			

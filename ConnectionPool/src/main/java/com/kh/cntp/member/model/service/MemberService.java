@@ -20,4 +20,7 @@ public interface MemberService {
 		
 	// ID찾기
 	Member findId(Member member);
+	
+	// 비밀번호 찾기 (인증메일요청)
+	int findPwdMailRequest(Member member);
 }

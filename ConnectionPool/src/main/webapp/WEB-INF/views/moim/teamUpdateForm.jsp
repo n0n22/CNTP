@@ -122,6 +122,10 @@
 		            	<c:otherwise>
 		            		<td colspan="2">
 				                <input type="file" id="badgeImg" name="reUpfile">
+				                <c:if test="${ not empty team.badgeOriginName }">
+	            				현재 업로드된 파일 : 
+	            			<a href="${ team.badgeChangeName }" download="${ team.badgeOriginName }">${ team.badgeOriginName }</a>
+	            		</c:if>
 				            </td>
 		            	</c:otherwise>
 		            </c:choose>
