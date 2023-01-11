@@ -35,7 +35,6 @@
 							<tr>
 								<td>
 									${tm.nickname}
-									<input type="hidden" name="memNo" value="${tm.memNo}">
 								</td>
 								<td>${tm.teamEnrollDate}</td>
 								<td>

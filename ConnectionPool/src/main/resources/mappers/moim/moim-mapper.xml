@@ -283,6 +283,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE TEAM_NO = #{ teamNo }
 	</update>
 	
+	<update id="updateTeamMemberGradeM" parameterType="string">
+		UPDATE
+			   TEAM_MEMBER
+		   SET
+		       TEAM_GRADE = 'M'
+		 WHERE
+		       TEAM_NO = #{ teamNo }
+	</update>
+	
 	<update id="updateTeamMember" parameterType="teamMember">
 		UPDATE
 		       TEAM_MEMBER

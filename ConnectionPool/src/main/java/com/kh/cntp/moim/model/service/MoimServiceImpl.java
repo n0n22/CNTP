@@ -86,9 +86,15 @@ public class MoimServiceImpl implements MoimService {
 		return moimDao.updateTeam(sqlSession, team);
 	}
 
+	@Transactional
 	@Override
-	public int updateTeamMember(TeamMember tm) {
-		return moimDao.updateTeamMember(sqlSession, tm);
+	public int updateTeamMember(ArrayList<TeamMember> teamMemberList) {
+				// 해당 팀의 모든 팀원의 등급을 "M"으로 바꿈
+		int result = moimDao.updateTeamMemberGradeM(sqlSession, teamMemberList.get(0).getTeamNo());
+		for(TeamMember tm : teamMemberList) {
+			result *= moimDao.updateTeamMember(sqlSession, tm);
+		}
+		return  result;
 	}
 
 	@Override
