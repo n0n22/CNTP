@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kh.cntp.member.model.service.MemberService;
+import com.kh.cntp.member.model.vo.Cert;
 import com.kh.cntp.member.model.vo.Member;
 
 @Controller
@@ -60,9 +61,16 @@ public class MemberController {
 	
 	// 메일 보내는 메소드
 	public void sendMail(String email, HttpServletRequest request) throws MessagingException {
-		// ip주소 
+		
+		// ip주소 가져오기 근데 왜 IPv6로 뜸??? 해결했음 
+		// Run - Run Configurations.. - tomcat - Arguments -  VM arguments - -Djava.net.preferIPv4Stack=true 
 		String ip = request.getRemoteAddr();
-		System.out.println(ip);
+		String secret = generatorRandom();
+		
+		// builder 패턴 적용 .. setter랑 비슷함 setter + 기본생성자 느낌 
+		Cert cert = Cert.builder().certIp(ip).secretNo(secret).build();
+		memberService.sendMail(cert); // cert에 추가함
+		
 		// 메일보내기
 		MimeMessage message = sender.createMimeMessage(); // sender == 전송도구 로 부터 MimeMessage객체 생성 
 		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -79,7 +87,7 @@ public class MemberController {
 		helper.setSubject("ConnectionPool 본인확인 메일입니다"); // 메일제목
 		helper.setText(
 						"<h1>" + "인증번호를 입력해주세요" + "<h1>"
-						+"<div style='color:blue;'>" + "<h2>" + generatorRandom() + "</h2>" + "</div>"
+						+"<div style='color:blue;'>" + "<h2>" + secret + "</h2>" + "</div>"
 						+"<a style='text-decoration: none; font-size:13px' href="+url+">" +"ConnectionPool 바로가기"+ "</a>" 
 						, true); 	
 						
@@ -197,7 +205,7 @@ public class MemberController {
 	// 비밀번호 재설정 인증(아이디와 이메일 체크 후 메일 전송)
 	@ResponseBody
 	@RequestMapping("findPwdCert.me")
-	public String findPwdCert(String checkId, String checkEmail, Member member, HttpServletRequest request) throws MessagingException {
+	public String findPwdMailRequest(String checkId, String checkEmail, Member member, HttpServletRequest request) throws MessagingException {
 		
 		member.setMemId(checkId);
 		member.setEmail(checkEmail);

@@ -57,7 +57,7 @@ public class BattleDao {
 	public int updateDefeatTeam(SqlSessionTemplate sqlSession, String defeatTeamNo) {
 		return sqlSession.update("battleMapper.updateDefeatTeam", defeatTeamNo);
 	}
-	
-	
-	
+	public ArrayList<Battle> searchBattle(SqlSessionTemplate sqlSession, HashMap<String, String> condition){
+		return (ArrayList)sqlSession.selectList("battleMapper.searchBattle", condition);
+	}
 }

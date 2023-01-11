@@ -18,10 +18,6 @@ public interface MoimService {
 	// 팀 등록
 	int insertTeam(Team team);
 	
-	// 팀 등록 성공 시 팀장 insert, 후에 신청 수락 시에도 team_grade에 M 담아서 해당 메소드 사용
-	int insertTeamMember(TeamMember teamMember);
-	
-	
 	
 	//  --------------- 팀 상세 페이지 조회 관련 메소드 (teamPage) ---------------
 	// 팀 정보 select
@@ -40,16 +36,16 @@ public interface MoimService {
 	// --------------- 팀 상세 페이지(신청자 입장) ---------------
 	// 신청하는 메소드
 	// 신청하는 loginUser 번호, 팀 번호로다가
-	int insertApply(Team team);
+	int insertApply(Apply ap);
 	
 	Apply ajaxSelectApply(int memNo);
 	
 	// --------------- 팀 상세페이지(팀장 입장) ---------------
 	// 신청 수락
-	int ajaxUpdateApply(int applyNo);
+	int UpdateApply(Apply ap);
 	
 	// 신청 거절
-	int ajaxDeleteApply(int applyNo);
+	int DeleteApply(int memNo);
 	
 	// 팀 페이지 수정
 	int updateTeam(Team team);
@@ -66,7 +62,7 @@ public interface MoimService {
 	
 	// --------------- 팀 가입 리스트 조회 ---------------
 	// 조건에 따라 team을 조회해와야 하기 때문에 team을 인자값으로 넣어준다.
-	ArrayList<Team> selectTeamList(Team team);
+	ArrayList<Team> selectTeamList(int cpage, String teamArea, String keyword);
 	
 	// 페이징을 위해 조건에 맞는 TeamListcount를 구해야 한다.
 	int selectTeamCountList(Team team);

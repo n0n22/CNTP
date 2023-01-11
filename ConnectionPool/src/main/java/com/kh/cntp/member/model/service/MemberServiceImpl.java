@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.cntp.member.model.dao.MemberDao;
+import com.kh.cntp.member.model.vo.Cert;
 import com.kh.cntp.member.model.vo.Member;
 
 @Service
@@ -48,11 +49,21 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.findId(sqlSession, member);
 	}
 	
-	// 비밀번호 변경 시 메일인증
+	// 메일보내기 전 Cert테이블에 추가
+	@Override
+	public void sendMail(Cert cert) {
+		memberDao.sendMail(sqlSession, cert); 
+	}
+	
+	// 비밀번호 변경 시 메일 인증번호 요청
 	@Override
 	public int findPwdMailRequest(Member member) {
 		return memberDao.findPwdMailRequest(sqlSession, member);
 	}
+
+	
+	
+	
 	
 	
 

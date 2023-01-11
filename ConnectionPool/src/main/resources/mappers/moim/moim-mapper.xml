@@ -301,4 +301,58 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       MEM_NO = #{ memNo }
 	</update>
 	
+	<delete id="deleteTeamMember" parameterType="_int">
+		DELETE
+		       TEAM_MEMBER
+		 WHERE
+		       MEM_NO = #{ memNo }
+	</delete>
+	
+	<delete id="deleteApply" parameterType="_int">
+		DELETE
+			   APPLY
+		 WHERE
+		       MEM_NO = #{ memNo }
+	</delete>
+	
+	<insert id="insertApply">
+		INSERT
+		  INTO
+		       APPLY
+		VALUES
+		       (
+		        SEQ_ANO.NEXTVAL
+		       ,#{ moimNo }
+		       ,#{ memNo }
+		       ,DEFAULT
+		       ,SYSDATE
+		       ,NULL
+		       )
+	</insert>
+	
+	<update id="updateApply" parameterType="_int">
+		UPDATE 
+		       APPLY
+		   SET
+		       ACCEPT_YN = 'Y'
+		      ,ACCEPT_DATE = SYSDATE
+		 WHERE
+		       APPLY_NO = #{ applyNo }
+	</update>
+	
+	<insert id="insertTeamMember">
+		INSERT
+		  INTO
+		        TEAM_MEMBER
+		VALUES
+		       (
+		        #{ moimNo }
+		       ,'M'
+		       ,#{ memNo }
+		       ,SYSDATE
+		       )
+	</insert>
+	
+	
+	
 </mapper>
