@@ -121,6 +121,7 @@
 	            <button class="btn btn-outline-dark" onclick="page(1);">next &gt;</button>
 	        </div>
 		</div>
+		
         <div class="search-area" align="center" style="margin-top: 20px">
             <select name="area" id="addressForm">
                 <option value="시/도 선택" hidden="" disabled="disabled" selected="selected" >시/도 선택</option>
@@ -134,27 +135,27 @@
                 <option value="Gyeongbuk">경상북도</option>
                 <option value="Gyeongnam">경상남도</option>
             </select>
-            <select>
-                <option>남녀모두</option>
-                <option>남자만</option>
-                <option>여자만</option>
+            <select name="gender">                         
+                <option value="A">남녀모두</option>
+                <option value="M">남자만</option>
+                <option value="F">여자만</option>
             </select>
-            <select>
-                <option>4:4계영 400m</option>
-                <option>4:4계영 800m</option>
-                <option>4:4혼계영 400m</option>
+            <select name="style">
+                <option value="f4">4:4 자유형</option>
+                <option value="h4">4:4 혼영</option>
+                <option value="hg4">4:4 혼계영</option>
             </select>
-            <select>
-                <option>무관</option>
-                <option>초보</option>
-                <option>중수</option>
-                <option>고수</option>
+            <select name="level">
+                <option value="A">무관</option>
+                <option value="B">초보</option>
+                <option value="M">중수</option>
+                <option value="S">고수</option>
             </select>
             &nbsp;
         </div>
-        <div class="btn-area" align="right">
-                    <button class="btn">검색하기</button>
-                    <a class="btn" href="enrollForm.bt">글 작성하기</a>
+        <div class="btn-area" align="center">
+	            <button class="btn">검색하기</button>
+	            <a class="btn" href="enrollForm.bt">글 작성하기</a>
          </div>
         <br>
         
