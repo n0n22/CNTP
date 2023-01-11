@@ -215,10 +215,10 @@
         		var test2 = $('#orderSelect option:selected').is('.desc'); // 선택된 정렬기준이 내림차순을 포함하는가
 
         		if(test2) { // 내림차순
-        			$('#searchOrderCondition').val('desc');
+        			$('#orderCondition').val('desc');
         		}
         		else { // 오름차순
-        			$('#searchOrderCondition').val('asc');
+        			$('#orderCondition').val('asc');
         		}
         		
         		// 화면에 몇 개 보여줄 건지 넣기
@@ -309,6 +309,7 @@
         <div>
         
         	<button type="button" class="btn btn-outline-success" onclick="excelDownloadByHtml();">현재 목록 exel로</button>
+        	<button type="button" class="btn btn-success" onclick="allMemberList();">전체 목록 exel로</button>
         
         </div>    
 
@@ -318,12 +319,18 @@
 			function setFileName() {
 				
 				let dt = new Date();
-				let month = dt.getMonth() + 1
-				if(month < 10) {
-					month = "0" + month.toString();
-				}
+				let month = dt.getMonth() + 1;
+				if(month < 10) {month = "0" + month;}
+				let day = dt.getDate();
+				if(day < 10) {day = "0" + day;}
+				let hours = dt.getHours();
+				if(hours < 10) {hours = "0" + hours;}
+				let minutes =  dt.getMinutes();
+				if(minutes < 10) {minutes = "0" + minutes;}
+				let seconds = dt.getSeconds();
+				if(seconds < 10) {seconds = "0" + seconds;}
 				
-				let date = dt.getFullYear() + month + dt.getDate() + '_' + dt.getHours() + dt.getMinutes() + dt.getSeconds();
+				let date = dt.getFullYear() + month + day + '_' + hours + minutes + seconds;
 				let fileName = 'cntp_' + date + '.xlsx';
 											
 				return fileName;
@@ -331,20 +338,61 @@
 		
 		
 			function excelDownloadByHtml() {
-
-				var fileName = setFileName();
+	
+				// 파일명 설정
+				let fileName = setFileName();
 				
+				// 시트 설정을 전달하면서 엑셀 파일 생성
 				let wb = XLSX.utils.table_to_book(document.getElementById('memberTable'), {sheet: '회원 목록', raw: true});
-				XLSX.writeFile(wb, (fileName));
-				count++;
+				
+			    // 엑셀 다운로드
+				XLSX.writeFile(wb, fileName);
 			};
 		
+			
+			function excelDownloadByJson(result) {
+
+				// 파일명 설정
+			    let fileName = setFileName();
+				
+				// 엑셀 파일 생성
+			    const book = XLSX.utils.book_new();
+				
+			    // sheet 생성 - json_to_sheet 방식
+			    const worksheetByJson = XLSX.utils.json_to_sheet(result);
+				
+			    // 엑셀 파일에 sheet set(엑셀파일, 시트데이터, 시트명)
+			    XLSX.utils.book_append_sheet(book, worksheetByJson, '회원 전체 목록');  
+			    				
+			    // 엑셀 다운로드
+			    XLSX.writeFile(book, fileName);
+			};
+			
+			
+			function allMemberList() {
+				
+				$.ajax({
+					
+					url : 'allMemberList.ad',
+					success : function(result) {
+						console.log(result);
+						excelDownloadByJson(result);
+					},
+					error : function() {
+						// console.log('ajax 통신 실패');						
+					}
+					
+					
+					
+				});							
+				
+				
+				
+				
+			}
+			
 		
-		
-		
-		
-		
-		
+
 		
 		</script>
 
