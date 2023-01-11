@@ -58,6 +58,10 @@ public class MoimDao {
 		return sqlSession.update("moimMapper.updateTeamBadgeStatus", team);
 	}
 	
+	public int updateTeamMemberGradeM(SqlSessionTemplate sqlSession, String teamNo) {
+		return sqlSession.update("moimMapper.updateTeamMemberGradeM", teamNo);
+	}
+	
 	public int updateTeamMember(SqlSessionTemplate sqlSession, TeamMember tm) {
 		return sqlSession.update("moimMapper.updateTeamMember", tm);
 	}

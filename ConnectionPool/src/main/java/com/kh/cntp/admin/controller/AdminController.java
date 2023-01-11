@@ -108,6 +108,14 @@ public class AdminController {
 	}
 	
 	
+	// 회원 전체 목록 조회
+	@ResponseBody
+	@RequestMapping(value="allMemberList.ad", produces="application/json; charset=UTF-8")
+	public String allMemberList() {
+		return new Gson().toJson(adminService.allMemberList());		
+	}
+	
+	
 	
 	
 

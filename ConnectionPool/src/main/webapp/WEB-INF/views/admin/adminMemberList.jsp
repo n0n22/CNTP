@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<script type="text/javascript" src="//cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+
     <style>
 
 
@@ -40,6 +42,8 @@
 		.count-select {
 			width: 100px;
 		}
+		
+		
 
 
     </style>
@@ -211,10 +215,10 @@
         		var test2 = $('#orderSelect option:selected').is('.desc'); // 선택된 정렬기준이 내림차순을 포함하는가
 
         		if(test2) { // 내림차순
-        			$('#searchOrderCondition').val('desc');
+        			$('#orderCondition').val('desc');
         		}
         		else { // 오름차순
-        			$('#searchOrderCondition').val('asc');
+        			$('#orderCondition').val('asc');
         		}
         		
         		// 화면에 몇 개 보여줄 건지 넣기
@@ -234,9 +238,8 @@
         
 
 		<div class="member-table-area">
-            
 			<div class="container">
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover" id="memberTable">
                     <thead>
                         <tr>
                             <th width="10%">번호</th>
@@ -263,53 +266,151 @@
                     </tbody>
                 </table>
             </div>
-			<div class="page-area">
-	        	<ul class="pagination" align="center">
-	               	<c:choose>
-	                	<c:when test="${pi.currentPage eq 1}">
-	                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
-	                    </c:when>
-	                    <c:otherwise>
-	                    	<li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${pi.currentPage - 1}&keyword=${keyword}&condition=${condition}">&lt;</a></li>
-	                    </c:otherwise>
-	                </c:choose>
-	                
-	               
-	                <c:forEach begin="${pi.startPage}" end="${pi.endPage}" var="p">
-		                <c:choose>
-		                	<c:when test="${pi.currentPage eq p}">
-		                   		<li class="page-item disabled"><a class="page-link">${ p }</a></li>
-		                	</c:when>
-		                	<c:otherwise>
-		                		<li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${p}&keyword=${keyword}&condition=${condition}">${p}</a></li>
-		                	</c:otherwise>
-		                </c:choose>
-	                </c:forEach>
-	               
-	                
-					<c:choose>
-	                	<c:when test="${pi.currentPage eq pi.maxPage}">
-		                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
-	                    </c:when>
-	                    <c:otherwise>
-		                    <li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${pi.currentPage + 1}&keyword=${keyword}&condition=${condition}">&gt;</a></li>
-	                    </c:otherwise>
-	                </c:choose>
-				</ul>			
-			</div>
-
-
+             
         </div>
+           
+            
+		<div class="page-area">
+        	<ul class="pagination" align="center">
+               	<c:choose>
+                	<c:when test="${pi.currentPage eq 1}">
+                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
+                    </c:when>
+                    <c:otherwise>
+                    	<li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${pi.currentPage - 1}&keyword=${keyword}&condition=${condition}">&lt;</a></li>
+                    </c:otherwise>
+                </c:choose>
+                
+               
+                <c:forEach begin="${pi.startPage}" end="${pi.endPage}" var="p">
+	                <c:choose>
+	                	<c:when test="${pi.currentPage eq p}">
+	                   		<li class="page-item disabled"><a class="page-link">${ p }</a></li>
+	                	</c:when>
+	                	<c:otherwise>
+	                		<li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${p}&keyword=${keyword}&condition=${condition}">${p}</a></li>
+	                	</c:otherwise>
+	                </c:choose>
+                </c:forEach>
+               
+                
+				<c:choose>
+                	<c:when test="${pi.currentPage eq pi.maxPage}">
+	                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
+                    </c:when>
+                    <c:otherwise>
+	                    <li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${pi.currentPage + 1}&keyword=${keyword}&condition=${condition}">&gt;</a></li>
+                    </c:otherwise>
+                </c:choose>
+			</ul>			
+		</div>
 
-		<form id="reportvalue">
-			<input type="hidden" value="hello" name="test">
-		</form>
+        
+        <div>
+        
+        	<button type="button" class="btn btn-outline-success" onclick="excelDownloadByHtml();">현재 목록 exel로</button>
+        	<button type="button" class="btn btn-success" onclick="allMemberList();">전체 목록 exel로</button>
+        
+        </div>    
 
-	    <button class="btn btn-sm btn-danger" onclick="openReportForm();">신고</button>
+		<script>
+		
+
+			function setFileName() {
+				
+				let dt = new Date();
+				let month = dt.getMonth() + 1;
+				if(month < 10) {month = "0" + month;}
+				let day = dt.getDate();
+				if(day < 10) {day = "0" + day;}
+				let hours = dt.getHours();
+				if(hours < 10) {hours = "0" + hours;}
+				let minutes =  dt.getMinutes();
+				if(minutes < 10) {minutes = "0" + minutes;}
+				let seconds = dt.getSeconds();
+				if(seconds < 10) {seconds = "0" + seconds;}
+				
+				let date = dt.getFullYear() + month + day + '_' + hours + minutes + seconds;
+				let fileName = 'cntp_' + date + '.xlsx';
+											
+				return fileName;
+			}
+		
+		
+			function excelDownloadByHtml() {
+	
+				// 파일명 설정
+				let fileName = setFileName();
+				
+				// 시트 설정을 전달하면서 엑셀 파일 생성
+				let wb = XLSX.utils.table_to_book(document.getElementById('memberTable'), {sheet: '회원 목록', raw: true});
+				
+			    // 엑셀 다운로드
+				XLSX.writeFile(wb, fileName);
+			};
+		
+			
+			function excelDownloadByJson(result) {
+
+				// 파일명 설정
+			    let fileName = setFileName();
+				
+				// 엑셀 파일 생성
+			    const book = XLSX.utils.book_new();
+				
+			    // sheet 생성 - json_to_sheet 방식
+			    const worksheetByJson = XLSX.utils.json_to_sheet(result);
+				
+			    // 엑셀 파일에 sheet set(엑셀파일, 시트데이터, 시트명)
+			    XLSX.utils.book_append_sheet(book, worksheetByJson, '회원 전체 목록');  
+			    				
+			    // 엑셀 다운로드
+			    XLSX.writeFile(book, fileName);
+			};
+			
+			
+			function allMemberList() {
+				
+				$.ajax({
+					
+					url : 'allMemberList.ad',
+					success : function(result) {
+						console.log(result);
+						excelDownloadByJson(result);
+					},
+					error : function() {
+						// console.log('ajax 통신 실패');						
+					}
+					
+					
+					
+				});							
+				
+				
+				
+				
+			}
+			
+		
+
+		
+		</script>
+
+
+
+
 
     </div>
     
+      
 
+
+	<form id="reportvalue">
+		<input type="hidden" value="hello" name="test">
+	</form>
+
+    <button class="btn btn-sm btn-danger" onclick="openReportForm();">신고</button>
+    
     
 
     	

@@ -1,5 +1,9 @@
 package com.kh.cntp.battle.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -8,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -15,7 +20,6 @@ import com.kh.cntp.battle.model.service.BattleService;
 import com.kh.cntp.battle.model.vo.Battle;
 import com.kh.cntp.battle.model.vo.BattleResult;
 import com.kh.cntp.battle.model.vo.PoolInfo;
-import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.template.Template;
 
 @Controller
@@ -26,7 +30,20 @@ public class BattlePoolController {
 	
 	// 배틀풀 리스트 조회
 	@RequestMapping("battleList.bt")
-	public String selectBattlePoolList() {
+	public String selectBattlePoolList(Model model,
+									   @RequestParam(value ="cpage", defaultValue="today") String cpage) {
+		
+		if(cpage.equals("today")) {
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			cpage = df.format(new Date());
+		}
+		System.out.println(cpage);
+		
+		ArrayList<Battle> battleList = battleService.selectBattlePoolList(cpage);
+		System.out.println(battleList);
+		model.addAttribute("battleList", battleList);
+		model.addAttribute("now", cpage);
+		
 		return "battle/battlePoolList";
 	}
 	// 배틀풀 상세보기
@@ -46,11 +63,11 @@ public class BattlePoolController {
 		return "battle/battlePoolEnrollForm";
 	}
 	@RequestMapping("insert.bt")
-	public String insertBattle(Battle battle
-							  ,PoolInfo poolInfo
-							  ,MultipartFile upfile
-							  ,HttpSession session
-							  ,Model model) {
+	public String insertBattle(Battle battle,
+							   PoolInfo poolInfo,
+							   MultipartFile upfile,
+							   HttpSession session,
+							   Model model) {
 		
 		if(!upfile.getOriginalFilename().equals("")) {
 			battle.setOriginName(upfile.getOriginalFilename());
@@ -70,11 +87,11 @@ public class BattlePoolController {
 	
 	// 배틀풀 결과
 	@RequestMapping("battleResult.bt")
-	public String selectBattleResult(int battleNo
-									,String homeTeam
-									,String awayTeam
-									,Model model
-									,HttpSession session) {
+	public String selectBattleResult(int battleNo,
+									 String homeTeam,
+									 String awayTeam,
+									 Model model,
+									 HttpSession session) {
 		
 		session.setAttribute("battleNo", battleNo);
 		session.setAttribute("homeTeam", battleService.selectTeam(homeTeam));
@@ -87,11 +104,11 @@ public class BattlePoolController {
 	}
 	// 배틀결과 작성
 	@RequestMapping("resultEnrollForm.bt")
-	public String resultEnrollForm(int battleNo
-								  ,String homeTeam
-								  ,String awayTeam
-								  ,Model model
-								  ,HttpSession session) {
+	public String resultEnrollForm(int battleNo,
+								   String homeTeam,
+								   String awayTeam,
+								   Model model,
+								   HttpSession session) {
 		
 		session.setAttribute("battleNo", battleNo);
 		session.setAttribute("homeTeam", battleService.selectTeam(homeTeam));
@@ -101,13 +118,13 @@ public class BattlePoolController {
 	}
 	// 배틀 신청
 	@RequestMapping("battleApply.bt")
-	public String applyBattle(String teamNo
-							 ,String memNo
-							 ,String chatContent
-							 ,String battleNo
-							 ,HttpSession session
-							 ,Model model
-							 ,RedirectAttributes redirectAttributes) {
+	public String applyBattle(String teamNo,
+							  String memNo,
+							  String chatContent,
+							  String battleNo,
+							  HttpSession session,
+							  Model model,
+							  RedirectAttributes redirectAttributes) {
 		
 		HashMap<String, String> apply = new HashMap<String, String>();
 		apply.put("teamNo", teamNo);
@@ -153,9 +170,7 @@ public class BattlePoolController {
 								 HttpSession session,
 								 Model model,
 								 RedirectAttributes redirectAttributes) {
-		// System.out.println("배틀번호 : " + battleNo); 		// 1
-		// System.out.println("승리팀 : " + victoryTeamNo);	// T3
-		// System.out.println("패배팀 : " + defeatTeamNo);		// T1
+		
 		int result = battleService.battleResultOk(battleNo, victoryTeamNo, defeatTeamNo);
 		if(result > 0) {
 			session.setAttribute("alertMsg", "배틀 결과 승인이 완료되었습니다.");
@@ -165,6 +180,5 @@ public class BattlePoolController {
 			model.addAttribute("errorMsg", "배틀 결과 승인 실패");
 			return "common/errorPage";
 		}
-		
 	}
 }

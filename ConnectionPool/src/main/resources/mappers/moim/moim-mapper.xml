@@ -27,7 +27,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="teamMember" id="teamMemberResultMap">
 		<result column="TEAM_NO" 	property="teamNo"/>
 		<result column="TEAM_GRADE" property="teamGrade"/>
-		<result column="NICKNAME" 	property="memNo"/>
+		<result column="NICKNAME" 	property="nickname"/>
+		<result column="MEM_NO" 	property="memNo"/>
 		<result column="TEAM_ENROLL_DATE" 	property="teamEnrollDate"/>
 	</resultMap>
 	
@@ -52,7 +53,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="apply" id="applyResultMap">
 		<result column="APPLY_NO" 		property="applyNo"/>
 		<result column="MOIM_NO" 		property="moimNo"/>
-		<result column="NICKNAME" 		property="memNo"/>
+		<result column="NICKNAME" 		property="nickname"/>
+		<result column="MEM_NO" 		property="memNo"/>
 		<result column="ACCEPT_YN" 		property="acceptYn"/>
 		<result column="APPLY_DATE" 	property="applyDate"/>
 		<result column="ACCEPT_DATE" 	property="acceptDate"/>
@@ -180,6 +182,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		              WHEN TEAM_GRADE = 'S' THEN '부팀장'
 		              ELSE '팀원' END "TEAM_GRADE"
 		        ,M.NICKNAME
+		        ,TM.MEM_NO
 		        ,TO_CHAR(TEAM_ENROLL_DATE, 'YYYY-MM-DD') AS "TEAM_ENROLL_DATE"
 		  FROM 
 		       TEAM_MEMBER "TM"
@@ -204,6 +207,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        A.APPLY_NO
 		       ,A.MOIM_NO
 		       ,M.NICKNAME
+		       ,A.MEM_NO
 		       ,A.ACCEPT_YN
 		       ,TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') AS "APPLY_DATE"
 		       ,TO_CHAR(ACCEPT_DATE, 'YYYY-MM-DD') AS "ACCEPT_DATE"
@@ -279,18 +283,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE TEAM_NO = #{ teamNo }
 	</update>
 	
+	<update id="updateTeamMemberGradeM" parameterType="string">
+		UPDATE
+			   TEAM_MEMBER
+		   SET
+		       TEAM_GRADE = 'M'
+		 WHERE
+		       TEAM_NO = #{ teamNo }
+	</update>
+	
 	<update id="updateTeamMember" parameterType="teamMember">
 		UPDATE
 		       TEAM_MEMBER
 		   SET
 		       TEAM_GRADE = #{ teamGrade }
 		 WHERE
-		       MEM_NO = (SELECT
-		                        MEM_NO
-		                   FROM
-		                        MEMBER
-		                  WHERE
-		                        NICKNAME = #{ memNo })
+		       MEM_NO = #{ memNo }
 	</update>
 	
 </mapper>

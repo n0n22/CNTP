@@ -12,7 +12,7 @@ import com.kh.cntp.moim.model.vo.Team;
 public interface BattleService {
 	
 	
-	ArrayList<Battle> selectBattle();
+	ArrayList<Battle> selectBattlePoolList(String cpage);
 	
 	// 배틀풀 작성 BATTLE 테이블에 INSERT & POOLINFO에 INSERT
 	int insertBattle(Battle battle, PoolInfo poolInfo);

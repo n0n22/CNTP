@@ -34,8 +34,7 @@
 						<c:forEach items="${teamMemberList }" var="tm">
 							<tr>
 								<td>
-									${tm.memNo}
-									<input type="hidden" name="nickname" value="${tm.memNo}">
+									${tm.nickname}
 								</td>
 								<td>${tm.teamEnrollDate}</td>
 								<td>

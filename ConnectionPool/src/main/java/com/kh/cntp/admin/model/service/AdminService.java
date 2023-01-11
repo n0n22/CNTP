@@ -35,6 +35,9 @@ public interface AdminService {
 	ArrayList<Member> selectSearchMemberList(HashMap map);
 
 	
+	// 회원 전체 목록 조회
+	ArrayList<Member> allMemberList();
+	
 	
 //-------------------------------------------
 //  신고 관련 기능 

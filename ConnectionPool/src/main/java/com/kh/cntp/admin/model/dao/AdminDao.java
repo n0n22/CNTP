@@ -54,6 +54,10 @@ public class AdminDao {
 		return (ArrayList)sqlSession.selectList("adminMapper.selectSearchMemberList", map, rowBounds);
 	}
 	
+	// 회원 전체 목록 조회
+	public ArrayList<Member> allMemberList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("adminMapper.allMemberList");
+	}
 	
 
 	

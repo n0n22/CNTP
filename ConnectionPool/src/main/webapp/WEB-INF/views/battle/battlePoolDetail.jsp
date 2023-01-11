@@ -150,7 +150,7 @@
 					<img src="${ battle.changeName }" width="100%" height="100%">
 				</c:if>
 				<c:if test="${ battle.changeName eq null }">
-					<img src="https://url.kr/4sjhnp" width="100%" height="100%">
+					<img src="resources/images/cntp_flamingo.png" width="100%" height="100%">
 				</c:if>
 			</div>
 	
