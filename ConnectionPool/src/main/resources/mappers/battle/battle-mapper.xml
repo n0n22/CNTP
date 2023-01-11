@@ -71,6 +71,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<select id="selectBattlePoolList" parameterType="string" resultMap="battleResultSet">
+		SELECT
+		        BATTLE_NO
+		        ,KOR_AREA AS AREA
+		        ,GENDER
+		        ,HOME_TEAM
+		        ,"LEVEL"
+		        ,BATTLE_DATE
+		        ,CHANGE_NAME
+		        ,STYLE
+		        ,TITLE
+		        ,BATTLE_TIME
+		  FROM
+		        BATTLE
+		  JOIN
+		        AREA ON (AREA = ENG_AREA)
+		 WHERE
+		        BATTLE_DATE = #{cpage}
+		 ORDER
+		    BY
+		    	BATTLE_TIME
 	
 	</select>
 	
