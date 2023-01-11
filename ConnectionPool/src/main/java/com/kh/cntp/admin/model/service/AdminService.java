@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.cntp.admin.model.vo.Banner;
+import com.kh.cntp.admin.model.vo.Report;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.notice.model.vo.Notice;
@@ -43,7 +44,11 @@ public interface AdminService {
 //  신고 관련 기능 
 //-------------------------------------------	
 	
-
+	// 신고 등록
+	int insertReport(Report report);
+	
+	
+	
 	
 
 	

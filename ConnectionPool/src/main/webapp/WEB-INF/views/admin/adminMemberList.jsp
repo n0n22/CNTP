@@ -399,6 +399,7 @@
 
 
 
+	    <button class="btn btn-sm btn-danger" onclick="openReportForm();">신고</button>
 
     </div>
     
@@ -406,10 +407,13 @@
 
 
 	<form id="reportvalue">
-		<input type="hidden" value="hello" name="test">
+		<input type="hidden" value="" name="memNo" id="memNo">
+		<input type="hidden" value="" name="memNickname" id="memNickname">
+		<input type="hidden" value="" name="content" id="content">
+		<input type="hidden" value="" name="reportBoard" id="reportBoard">
+		<input type="hidden" value="" name="boardNo" id="boardNo">
 	</form>
 
-    <button class="btn btn-sm btn-danger" onclick="openReportForm();">신고</button>
     
     
 
@@ -422,7 +426,14 @@
 		
 		function openReportForm() {
 							
-			window.open('', '신고', 'width=300, height=500, resizable=no, location=yes, menubar=yes, scrollbar=yes');
+			window.open('', '신고', 'width=300,height=500,resizable=no,location=yes,menubar=yes,scrollbar=no');
+			
+			$('#memNo').val(4);
+			$('#memNickname').val('닉네임3');
+			$('#content').val('바보야');
+			$('#reportBoard').val('board');
+			$('#boardNo').val(3);
+			
 			
 			reportvalue.action = 'reportForm';
 			reportvalue.target = '신고';
