@@ -69,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="RECORD" 			property="record"/>
 		<result column="WIN_RATE" 			property="winRate"/>
 	</resultMap>
-	
+<!-- 배틀풀 리스트 조회 -->
 	<select id="selectBattlePoolList" parameterType="string" resultMap="battleResultSet">
 		SELECT
 		        BATTLE_NO
@@ -94,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	</select>
 	
-<!-- 배틀풀 인서트 -->
+<!-- 배틀풀 작성 -->
 	<insert id="insertBattle" parameterType="battle">
 		INSERT
 		  INTO 
@@ -162,7 +162,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectBattle" parameterType="_int" resultMap="battleResultSet">
 		SELECT 
 		        BATTLE_NO
-		        ,AREA
+		        ,KOR_AREA AS AREA
 		        ,GENDER
 		        ,HOME_TEAM
 		        ,AWAY_TEAM
@@ -176,6 +176,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        ,BATTLE_RULE
 		  FROM
 		        BATTLE
+		  JOIN
+		  		AREA ON (AREA = ENG_AREA)
 		 WHERE
 		        BATTLE_NO = #{battleNo}
 	</select>

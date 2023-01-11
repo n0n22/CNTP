@@ -253,7 +253,7 @@
 								
 								<span>지역</span>
 								<div class="mt-2">
-									<span class="text-black-50">서울</span>
+									<span class="text-black-50">${battle.area}</span>
 									
 								</div>
 	
@@ -289,21 +289,13 @@
 						<!-- AJAX로 하고 싶은데 그냥 SELECT문 통해서 할 예정 : TEAM 테이블, RESULT_HISTORY -->
 						<div class="d-flex flex-row">
 	
-							<div class="mr-4">
-								
-								<span>팀명</span>
-								<div class="mt-2">
-									<span class="text-black-50">어벤져스</span>
-								</div>
-	
-							</div>
-	
+					
 	
 							<div class="mr-4">
 								
 								<span>전적</span>
 								<div class="mt-2">
-									<span class="text-black-50">16전 13승 3패(승률 81.5%)</span>
+									<span class="text-black-50">${homeTeamRecord.record}전  ${homeTeamRecord.victory}승  ${homeTeamRecord.defeat}패 승률(${homeTeamRecord.winRate}%)</span>
 									
 								</div>
 	
