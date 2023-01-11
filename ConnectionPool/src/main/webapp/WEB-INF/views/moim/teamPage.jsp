@@ -72,7 +72,7 @@
 			<div>
 				<div class="badge-area" style="width:20%; float:left">
 					<!-- 팀 뱃지 -->
-					<img class="badge-img" width="200px" height="200px"  src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbhd1qW%2FbtqUnLpjyqL%2FsRwVDDHp0keOfVq1nKDb11%2Fimg.jpg">
+					<img class="badge-img" width="200px" height="200px"  src="${ team.badgeChangeName }">
 
 				</div>
 
@@ -80,10 +80,11 @@
 					<!-- 팀 이미지 -->
 					<img width="1040px" height="300px" class="teamImg" src="${ team.changeName }">
 				</div>
-
-				<div class="badge-shop" align="left" style="width:80%;">
-					<a class="btn" href="badgeShop.mo">뱃지 구매하기</a>
-				</div>
+				<c:if test="${ loginMember.teamGrade eq 'L' and loginMember.teamNo eq team.teamNo and team.badgeStatus eq 'N'}">
+					<div class="badge-shop" align="left" style="width:80%;">
+						<a class="btn" href="badgeShop.mo" class="btn btn-primary" style="width:200px">뱃지 구매하기</a>
+					</div>
+				</c:if>
 			</div>
 			
 			<br><br>
@@ -164,7 +165,10 @@
 						<!-- 팀장만 보이는 팀원 수정 버튼 -->
 						<!-- <a href="teamMemberUpdateForm.mo?teamNo=${ teamNo }">팀장/부팀장 수정</a> -->
 						<c:if test="${ loginMember.teamNo eq team.teamNo and loginMember.teamGrade eq 'L' }">
-							<a href="teamMemberUpdateForm.mo" class="btn btn-primary" style="width:200px;">팀장/부팀장 수정</a>
+							<form action="teamMemberUpdateForm.mo" method="post">
+								<input type="hidden" name="teamNo" value="${ team.teamNo }">
+								<button class="btn btn-primary" style="width:200px;">팀장/부팀장 수정</button>
+							</form>
 						</c:if>
 						
 					</div>

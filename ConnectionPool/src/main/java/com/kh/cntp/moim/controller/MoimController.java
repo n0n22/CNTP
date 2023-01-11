@@ -142,8 +142,10 @@ public class MoimController {
 	}
 	
 	@RequestMapping("teamMemberUpdateForm.mo")
-	public ModelAndView teamMemberUpdateForm(ModelAndView mv/*, int teamNo*/) {
+	public ModelAndView teamMemberUpdateForm(ModelAndView mv, String teamNo) {
 		// teamNo 사용해서 teamMember 정보를 가지고서 updateForm으로 이동
+		
+		mv.addObject("teamMemberList", moimService.selectTeamMemberList(teamNo));
 		
 		mv.setViewName("moim/teamMemberUpdateForm");
 		
@@ -251,6 +253,18 @@ public class MoimController {
 		} else {
 			// 실패
 			mv.addObject("errorMsg", "팀 정보 수정 실패").setViewName("common/errorPage");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("updateBadge.mo")
+	public ModelAndView updateTeamBadgeStatus(ModelAndView mv, Team team, HttpSession session) {
+		if(moimService.updateTeamBadgeStatus(team) > 0) {
+			session.setAttribute("alterMsg", "뱃지 구매 성공");
+			mv.setViewName("redirect:teamPage.mo?teamNo=" + team.getTeamNo());
+		} else {
+			mv.addObject("errorMsg", "뱃지 구매 실패").setViewName("common/errorPage");
 		}
 		
 		return mv;

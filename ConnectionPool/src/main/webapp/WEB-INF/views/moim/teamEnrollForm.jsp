@@ -125,8 +125,16 @@
 		        <tr height="50">
 		            <th>파워등록</th>
 		            <td colspan="2">
-		                <input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" value="true"> 
-		                <label for="powerDuration"> 파워 등록 시 10P가 소요됩니다. </label> 
+		            	<c:choose>
+		            		<c:when test="${ loginMember.memPoint >= 60 }">
+				                <input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" value="true"> 
+				                <label for="powerDuration"> 파워 등록 시 10P가 소요됩니다. </label> 
+		            		</c:when>
+		            		<c:otherwise>
+		            			<input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" value="true" disabled> 
+				                <label for="powerDuration"> 파워 등록 시 10P가 소요됩니다. </label> 
+		            		</c:otherwise>
+		            	</c:choose>
 		            </td>
 		        </tr>
 		
@@ -154,7 +162,14 @@
 	    <div align="center">
 	        <input id="agreeCheck" type="checkbox" class="agreeCheck">
 	        <label for="agreeCheck">위 내용을 숙지하고 동의합니다.</label> <br><br>
-	        <a href="#">취소하기</a> <button class="teamEnrollBtn" disabled onclick="return checkAgree();">팀 생성하기</button>
+	        <c:choose>
+	        	<c:when test="${ loginMember.memPoint >= 50 }">
+	        		<a href="#">취소하기</a> <button class="teamEnrollBtn" disabled onclick="return checkAgree();">팀 생성하기</button>
+	        	</c:when>
+	        	<c:otherwise>
+	        		<p>포인트가 부족합니다 ㅠㅠ</p>
+	        	</c:otherwise>
+	        </c:choose>
 	    </div>
 
 		</form>

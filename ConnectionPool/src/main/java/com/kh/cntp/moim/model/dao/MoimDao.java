@@ -53,5 +53,9 @@ public class MoimDao {
 	public int updateTeam(SqlSessionTemplate sqlSession, Team team) {
 		return sqlSession.update("moimMapper.updateTeam", team);
 	}
+	
+	public int updateTeamBadgeStatus(SqlSessionTemplate sqlSession, Team team) {
+		return sqlSession.update("moimMapper.updateTeamBadgeStatus", team);
+	}
 
 }

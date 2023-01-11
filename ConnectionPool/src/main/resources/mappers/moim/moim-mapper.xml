@@ -273,4 +273,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       TEAM_NO =  #{ teamNo }
 	</update>	
 	
+	<update id="updateTeamBadgeStatus" parameterType="team">
+		UPDATE TEAM
+		   SET BADGE_STATUS = 'Y'
+		 WHERE TEAM_NO = #{ teamNo }
+	</update>
+	
 </mapper>

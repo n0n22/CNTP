@@ -62,7 +62,7 @@ public interface MoimService {
 	
 	// 팀 뱃지 status를 N에서 Y로 수정
 	// 성공 시 포인트 -100도 해줘야 한다.
-	int updateTeamBadge(String teamNo);
+	int updateTeamBadgeStatus(Team team);
 	
 	// --------------- 팀 가입 리스트 조회 ---------------
 	// 조건에 따라 team을 조회해와야 하기 때문에 team을 인자값으로 넣어준다.
