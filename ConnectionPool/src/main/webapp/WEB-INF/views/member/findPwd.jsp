@@ -87,6 +87,25 @@
     	background-color: rgb(29, 172, 233);
         cursor: pointer;
     }
+    
+    #checkResult{
+    	font-size : 14px;
+    	color: red;
+    	
+    }
+    
+    #CertNum-btn{
+     	background-color: rgb(28,154,206);
+        width: 57px;
+        margin-left: 8px;
+        margin-top: 0px;
+        font-size: 12px;
+    }
+    #CertNum-btn:hover{
+      	background-color: rgb(29, 172, 233);
+        cursor: pointer;
+    }
+     
 </style>
 </head>
 <body>
@@ -100,22 +119,90 @@
             <form action="findPwdCert.me" method="post" class="find-pwd-form">
                 <h1 id="main-text">비밀번호 찾기</h1>
                 <div>
-                    <div><input type="text" name="findId" placeholder="아이디를 입력해주세요"></div>
+                    <div><input id="checkId" type="text" name="memId" placeholder="아이디를 입력해주세요"></div>
+                    
                 </div>
                 <div>
-                    <div>
-	                     <input type="text" name="" placeholder="등록한 이메일을 입력해주세요" style="width: 183px;">
-                         <button type="button" id="emailCert-btn" onclick="emailCert();">인증번호 요청</button>
+                    <div id="emailForm">
+	                     <input id="checkEmail" type="text" name="email" placeholder="등록한 이메일을 입력해주세요" style="width: 183px;">
+                         <button type="button" id="emailCert-btn" onclick="emailCert();">인증 요청</button>
                          <!-- ajax로 요청시 인증번호 입력받을 수 있는 인풋태그만들것-->
+                    	 <div id="checkResult"></div>
                     </div>
                 </div>
-                <div><button type="submit" id="submit">본인인증</button></div>
+                
+                <div>
+                	
+                	<button type="submit" id="submit" disabled>본인인증</button>
+               	</div>
 
                 <div>
                     <div><a href="loginForm.me">로그인</a></div>
                     <div><a href="findIdForm.me" id="find-pwd">아이디 찾기</a></div>
                 </div>
             </form>
+            
+            <script>
+            	
+            	function emailCert(){
+            		
+            		const $idInput = $('#checkId').val();
+            		const $emailInput = $('#checkEmail').val();
+            	
+            		
+            		if($emailInput != ''){ // 이메일 입력했다면 
+            			
+            			$('#checkResult').hide();
+            			$('#emailCert-btn').html('재요청');	
+            			
+            			
+            			$.ajax({
+            				method : 'post',
+                			url : 'findPwdCert.me', 
+                			data : { checkId : $idInput,
+                					 checkEmail : $emailInput },
+                			success : function(result){
+                				if(result == 'successEmail'){
+                					$('#emailForm').append(
+									'<input id="checkCertNum" type="text" name="checkCertNum" placeholder="인증번호를 입력해주세요" style="width: 183px; margin-top:8px;">'+
+									'<button type="button" id="CertNum-btn" onclick="CertNum();" style="margin-left:13px;">확인</button>'+
+									'<div style="font-size : 11px; color: red; margin: 5px;">남은시간 : 05:00<div>'
+									);
+                					
+                				}
+                				else {
+                					$('#checkResult').show();
+                					$('#checkResult').html('일치하는 회원이 없습니다');
+                				}
+                			},
+                			error : function(){
+                				console.log("실패임");
+                			}
+                			
+                		});
+            		}
+            		else { // 이메일을 입력안했다면
+            			$('#checkResult').html('이메일을 입력해주세요');
+    					$('.find-pwd-form :submit').attr('disabled', true);
+            		}
+            		
+            	}
+            	
+            	function CertNum(){
+            		
+            		const $certNum = $('#checkCertNum').val();
+            		
+            		if($certNum != ''){
+            			
+            		}
+            		else {
+            			console.log('입력하라로')
+            			
+            		}
+            		
+            	}
+            
+            </script>
         </div>
     </div>
 

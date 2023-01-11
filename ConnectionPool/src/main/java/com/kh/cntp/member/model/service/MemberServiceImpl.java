@@ -46,6 +46,12 @@ public class MemberServiceImpl implements MemberService {
 	public Member findId(Member member) {
 		return memberDao.findId(sqlSession, member);
 	}
+
+	@Override
+	public int findPwdMailRequest(Member member) {
+		return memberDao.findPwdMailRequest(sqlSession, member);
+	}
+
 	
 	
 	

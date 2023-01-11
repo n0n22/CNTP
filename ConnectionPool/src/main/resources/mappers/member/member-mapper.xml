@@ -103,5 +103,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   AND
 		   	   PHONE = #{phone}	   
 	</select>
+	
+	<!-- 비밀번호 찾기 시 메일요청을 위한  아이디,이메일 확인-->
+	<select id="findPwdMailRequest" parameterType="member" resultType="_int">
+		SELECT 
+		       COUNT(*)
+		  FROM
+		       MEMBER
+		 WHERE 
+		       MEM_ID = #{memId}
+		   AND 
+		       EMAIL = #{email} 
+	</select>
 
 </mapper>
