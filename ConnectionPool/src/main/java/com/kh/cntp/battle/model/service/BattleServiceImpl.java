@@ -24,11 +24,10 @@ public class BattleServiceImpl implements BattleService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	// BATTLE 조회
+	// 배틀풀 리스트 조회
 	@Override
-	public ArrayList<Battle> selectBattle() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Battle> selectBattlePoolList(String cpage) {
+		return battleDao.selectBattlePoolList(sqlSession, cpage);
 	}
 	// BATTLE 테이블에 INSERT & POOLINFO에 INSERT
 	@Override

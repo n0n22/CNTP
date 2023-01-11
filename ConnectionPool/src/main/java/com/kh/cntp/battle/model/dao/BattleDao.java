@@ -1,7 +1,9 @@
 package com.kh.cntp.battle.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +15,9 @@ import com.kh.cntp.moim.model.vo.Team;
 
 @Repository
 public class BattleDao {
+	public ArrayList<Battle> selectBattlePoolList(SqlSession sqlSession, String cpage){
+		return (ArrayList)sqlSession.selectList("battleMapper.selectBattlePoolList", cpage);
+	}
 	
 	public int insertBattle(SqlSessionTemplate sqlSession, Battle battle) {
 		return sqlSession.insert("battleMapper.insertBattle", battle);
