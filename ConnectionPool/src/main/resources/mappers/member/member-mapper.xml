@@ -133,5 +133,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		      SYSDATE
 		      )
 	</insert>
+	
+	<!-- 인증번호 확인 -->
+	<select id="certNumCheck" parameterType="cert" resultType="cert">
+		SELECT
+		       CERT_IP,
+		       SECRET_NO,
+		       VALID_TIME
+		  FROM 
+		       CERT
+		 WHERE 
+		       CERT_IP = #{certIp}
+		   AND 
+		       SECRET_NO = #{secretNo}
+	</select>
 
 </mapper>

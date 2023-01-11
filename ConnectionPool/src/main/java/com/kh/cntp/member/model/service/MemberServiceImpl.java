@@ -60,6 +60,12 @@ public class MemberServiceImpl implements MemberService {
 	public int findPwdMailRequest(Member member) {
 		return memberDao.findPwdMailRequest(sqlSession, member);
 	}
+	
+	// 인증번호 확인
+	@Override
+	public boolean certNumCheck(Cert cert) {
+		return memberDao.certNumCheck(sqlSession, cert);
+	}
 
 	
 	
