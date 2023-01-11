@@ -18,7 +18,6 @@ public class BattleDao {
 	public ArrayList<Battle> selectBattlePoolList(SqlSession sqlSession, String cpage){
 		return (ArrayList)sqlSession.selectList("battleMapper.selectBattlePoolList", cpage);
 	}
-	
 	public int insertBattle(SqlSessionTemplate sqlSession, Battle battle) {
 		return sqlSession.insert("battleMapper.insertBattle", battle);
 	}

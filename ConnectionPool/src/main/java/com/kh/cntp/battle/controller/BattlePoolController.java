@@ -2,6 +2,7 @@ package com.kh.cntp.battle.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -38,7 +39,9 @@ public class BattlePoolController {
 		}
 		System.out.println(cpage);
 		
-		// battleService.selectBattlePoolList(cpage);
+		ArrayList<Battle> battleList = battleService.selectBattlePoolList(cpage);
+		System.out.println(battleList);
+		model.addAttribute("battleList", battleList);
 		model.addAttribute("now", cpage);
 		
 		return "battle/battlePoolList";

@@ -116,11 +116,10 @@
         
         <div class="find-pwd-area">
 
-            <form action="findPwdCert.me" method="post" class="find-pwd-form">
+            <form action="" method="post" class="find-pwd-form">
                 <h1 id="main-text">비밀번호 찾기</h1>
                 <div>
                     <div><input id="checkId" type="text" name="memId" placeholder="아이디를 입력해주세요"></div>
-                    
                 </div>
                 <div>
                     <div id="emailForm">
@@ -166,7 +165,7 @@
                 					$('#emailForm').append(
 									'<input id="checkCertNum" type="text" name="checkCertNum" placeholder="인증번호를 입력해주세요" style="width: 183px; margin-top:8px;">'+
 									'<button type="button" id="CertNum-btn" onclick="CertNum();" style="margin-left:13px;">확인</button>'+
-									'<div style="font-size : 11px; color: red; margin: 5px;">남은시간 : 05:00<div>'
+									'<div id="certMessage" style="font-size : 11px; color: red; margin: 5px;"><div>'
 									);
                 					
                 				}
@@ -192,12 +191,11 @@
             		
             		const $certNum = $('#checkCertNum').val();
             		
-            		if($certNum != ''){
-            			
+            		if($certNum != ''){ // 인증번호 입력시	
+            			$('#certMessage').hide();
             		}
-            		else {
-            			console.log('입력하라로')
-            			
+            		else { // 인증번호 미입력시 
+            			$('#certMessage').html('인증번호를 입력하세요');
             		}
             		
             	}
