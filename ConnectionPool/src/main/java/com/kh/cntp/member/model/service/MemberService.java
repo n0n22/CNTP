@@ -28,5 +28,7 @@ public interface MemberService {
 	// 비밀번호 찾기 (인증메일요청)
 	int findPwdMailRequest(Member member);
 	
+	// 인증번호 확인 
+	boolean certNumCheck(Cert cert);
 	
 }

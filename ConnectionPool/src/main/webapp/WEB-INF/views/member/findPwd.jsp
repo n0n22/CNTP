@@ -157,7 +157,7 @@
             			
             			$.ajax({
             				method : 'post',
-                			url : 'findPwdCert.me', 
+                			url : 'findPwdMailRequest.me', 
                 			data : { checkId : $idInput,
                 					 checkEmail : $emailInput },
                 			success : function(result){
@@ -175,7 +175,7 @@
                 				}
                 			},
                 			error : function(){
-                				console.log("실패임");
+                				console.log("실패");
                 			}
                 			
                 		});
@@ -193,6 +193,18 @@
             		
             		if($certNum != ''){ // 인증번호 입력시	
             			$('#certMessage').hide();
+            			$.ajax({
+            				method : 'post',
+            				url : 'certNum.me',
+            				data : { certNum : $certNum },
+            				success : function(result){
+            					console.log('성공~')
+            				},
+            				error : function(){
+            					console.log('실패');
+            				}
+            				
+            			})
             		}
             		else { // 인증번호 미입력시 
             			$('#certMessage').html('인증번호를 입력하세요');

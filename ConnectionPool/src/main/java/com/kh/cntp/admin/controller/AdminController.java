@@ -170,12 +170,13 @@ public class AdminController {
 	
 	// 신고 등록
 	@RequestMapping("insertReport.ad")
-	public ModelAndView insertReport(@ModelAttribute Report report, HttpSession session, ModelAndView mv) {
-		System.out.println(report);
+	public ModelAndView insertReport(@ModelAttribute Report report, ModelAndView mv) {
+		// System.out.println(report);
 		
 		if(adminService.insertReport(report) > 0) {
-			session.setAttribute("alertMsg", "신고가 정상적으로 처리되었습니다.");
-			mv.setViewName("/");
+			mv.addObject("alertMsg", "신고가 정상적으로 처리되었습니다.");
+			mv.addObject("check", "check");
+			mv.setViewName("redirect:reportForm");
 		} else {
 			mv.addObject("errorMsg", "신고가 실패하였습니다.").setViewName("common/errorPage");
 		}		
