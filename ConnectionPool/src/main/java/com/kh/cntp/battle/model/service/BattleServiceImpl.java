@@ -70,6 +70,10 @@ public class BattleServiceImpl implements BattleService{
 	public int battleResultOk(int battleNo, String victoryTeamNo, String defeatTeamNo) {
 		return battleDao.battleResultOk(sqlSession, battleNo) * battleDao.updateVictoryTeam(sqlSession, victoryTeamNo) * battleDao.updateDefeatTeam(sqlSession, defeatTeamNo);
 	}
+	@Override
+	public ArrayList<Battle> searchBattle(HashMap<String, String> condition) {
+		return battleDao.searchBattle(sqlSession, condition);
+	}
 
 	
 	

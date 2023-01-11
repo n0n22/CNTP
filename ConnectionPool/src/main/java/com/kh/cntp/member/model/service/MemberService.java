@@ -1,5 +1,6 @@
 package com.kh.cntp.member.model.service;
 
+import com.kh.cntp.member.model.vo.Cert;
 import com.kh.cntp.member.model.vo.Member;
 
 public interface MemberService {
@@ -21,6 +22,11 @@ public interface MemberService {
 	// ID찾기
 	Member findId(Member member);
 	
+	// 메일보내기 전 Cert테이블에 추가
+	void sendMail(Cert cert);
+	
 	// 비밀번호 찾기 (인증메일요청)
 	int findPwdMailRequest(Member member);
+	
+	
 }

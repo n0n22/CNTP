@@ -3,6 +3,7 @@ package com.kh.cntp.member.model.dao;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.cntp.member.model.vo.Cert;
 import com.kh.cntp.member.model.vo.Member;
 
 @Repository
@@ -30,6 +31,10 @@ public class MemberDao {
 	
 	public int findPwdMailRequest(SqlSessionTemplate sqlSession, Member member) {
 		return sqlSession.selectOne("memberMapper.findPwdMailRequest", member);
+	}
+	
+	public void sendMail(SqlSessionTemplate sqlSession, Cert cert) {
+		sqlSession.insert("memberMapper.sendMail", cert);
 	}
 
 }

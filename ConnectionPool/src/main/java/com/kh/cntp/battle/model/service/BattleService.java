@@ -39,5 +39,7 @@ public interface BattleService {
 	// 배틀 결과 승인
 	int battleResultOk(int battleNo, String victoryTeamNo, String defeatTeamNo);
 	
+	ArrayList<Battle> searchBattle(HashMap<String, String> condition);
+	
 
 }

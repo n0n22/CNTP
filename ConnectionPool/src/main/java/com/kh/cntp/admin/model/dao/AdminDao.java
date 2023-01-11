@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.cntp.admin.model.vo.Banner;
+import com.kh.cntp.admin.model.vo.Report;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.notice.model.vo.Notice;
@@ -66,7 +67,12 @@ public class AdminDao {
 // 신고 관련 기능 
 //-------------------------------------------	
 	
-
+	
+	// 신고 등록
+	public int insertReport(SqlSessionTemplate sqlSession, Report report) {
+		System.out.println(report);
+		return sqlSession.selectOne("adminMapper.insertReport", report);
+	}
 	
 
 	

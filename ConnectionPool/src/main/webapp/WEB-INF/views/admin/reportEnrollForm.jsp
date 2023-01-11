@@ -30,17 +30,24 @@
 		</div>
 		<div class="target-area">
 			<p>
-				작성자 : ${ test }
+				작성자 : ${ report.memNickname }
 				<br>
-				글내용 : ㅎㅎㅎㅎ
+				글내용 : ${ report.content }
 			</p>
 		</div>
 		
-		<form action="" method="post">
+		<form action="insertReport.ad" method="post">
+
+			<input type="hidden" value="${ report.memNo }" name="memNo" id="memNo">
+			<input type="hidden" value="${ report.reportBoard }" name="reportBoard" id="reportBoard">
+			<input type="hidden" value="${ report.boardNo }" name="boardNo" id="boardNo">
+			
+			<input type="hidden" value="${ loginMember.memNo }" name="reporter" id="reporter">
+
 			<div class="reason-area">
-				<input type="radio" name="reason" id="reason1"><label for="reason1">스팸/홍보</label><br>
-				<input type="radio" name="reason" id="reason2"><label for="reason2">욕설/비방</label><br>
-				<input type="radio" name="reason" id="reason3"><label for="reason3">개인정보노출</label><br>
+				<input type="radio" name="reportReason" id="reason1" value="스팸/홍보"><label for="reason1">스팸/홍보</label><br>
+				<input type="radio" name="reportReason" id="reason2" value="욕설/비방"><label for="reason2">욕설/비방</label><br>
+				<input type="radio" name="reportReason" id="reason3" value="개인정보노출"><label for="reason3">개인정보노출</label><br>
 			</div>
 			<div class="button-area">
 				<button type="submit" class="btn btn-danger">신고</button>

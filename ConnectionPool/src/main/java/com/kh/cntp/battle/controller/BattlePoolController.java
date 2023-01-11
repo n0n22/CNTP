@@ -2,6 +2,7 @@ package com.kh.cntp.battle.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -36,9 +37,9 @@ public class BattlePoolController {
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			cpage = df.format(new Date());
 		}
-		System.out.println(cpage);
 		
-		// battleService.selectBattlePoolList(cpage);
+		ArrayList<Battle> battleList = battleService.selectBattlePoolList(cpage);
+		model.addAttribute("battleList", battleList);
 		model.addAttribute("now", cpage);
 		
 		return "battle/battlePoolList";
@@ -158,7 +159,6 @@ public class BattlePoolController {
 		}
 		
 	}
-	
 	// 배틀 결과 승인
 	@RequestMapping("battleResultOk.bt")
 	public String battleResultOk(int battleNo,
@@ -178,4 +178,34 @@ public class BattlePoolController {
 			return "common/errorPage";
 		}
 	}
+	// 배틀 리스트 검색 
+	@RequestMapping("search.bt")
+	public String searchBattle(String cpage,
+							   @RequestParam(value = "area", defaultValue="") String area,
+							   @RequestParam(value = "gender", defaultValue="") String gender,
+							   @RequestParam(value = "style", defaultValue="") String style,
+							   @RequestParam(value = "level", defaultValue="") String level,
+							   Model model) {
+		//System.out.println("cpage" + cpage); // 빈문자열이 담긴 경우와 그외
+		//System.out.println("area" + area);
+		//System.out.println("gender" + gender);
+		//System.out.println("style" + style);
+		//System.out.println("level" + level);
+		
+		HashMap<String, String> condition = new HashMap<String, String>();
+		condition.put("cpage", cpage);
+		condition.put("area", area);
+		condition.put("gender", gender);
+		condition.put("style", style);
+		condition.put("level", level);
+		//System.out.println(condition);
+		ArrayList<Battle> battleList = battleService.searchBattle(condition);
+		//System.out.println(battleList);
+		model.addAttribute("battleList", battleList);
+		model.addAttribute("now", cpage);
+		
+		return "battle/battlePoolList";
+		
+	}
+	
 }

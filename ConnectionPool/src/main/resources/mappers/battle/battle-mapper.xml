@@ -71,6 +71,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<select id="selectBattlePoolList" parameterType="string" resultMap="battleResultSet">
+		SELECT
+		        BATTLE_NO
+		        ,KOR_AREA AS AREA
+		        ,GENDER
+		        ,HOME_TEAM
+		        ,"LEVEL"
+		        ,BATTLE_DATE
+		        ,CHANGE_NAME
+		        ,STYLE
+		        ,TITLE
+		        ,BATTLE_TIME
+		  FROM
+		        BATTLE
+		  JOIN
+		        AREA ON (AREA = ENG_AREA)
+		 WHERE
+		        BATTLE_DATE = #{cpage}
+		 ORDER
+		    BY
+		    	BATTLE_TIME
 	
 	</select>
 	
@@ -319,5 +339,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE
 		        TEAM_NO = #{defeatTeamNo}
 	</update>
+<!-- 배틀풀 검색 기능  -->
+	<select id="searchBattle" parameterType="hashmap" resultMap="battleResultSet">
+		SELECT
+		        BATTLE_NO
+		        ,KOR_AREA AS AREA
+		        ,GENDER
+		        ,HOME_TEAM
+		        ,"LEVEL"
+		        ,BATTLE_DATE
+		        ,CHANGE_NAME
+		        ,STYLE
+		        ,TITLE
+		        ,BATTLE_TIME
+		    
+		  FROM
+		        BATTLE
+		  JOIN
+		        AREA ON (AREA = ENG_AREA)
+		 WHERE
+		        BATTLE_DATE = #{cpage}
+			<if test="area != ''">
+			    AND AREA = #{area}
+			</if>
+			<if test="gender != ''">
+			    AND GENDER = #{gender}
+			</if> 
+			<if test="level != ''">
+			    AND "LEVEL" = #{level}
+			</if> 
+			<if test="style != ''">
+			    AND STYLE = #{style}
+			</if> 
+		 ORDER 
+		    BY
+		        BATTLE_TIME DESC
+	
+	
+	</select>
+	
 	
 </mapper>
