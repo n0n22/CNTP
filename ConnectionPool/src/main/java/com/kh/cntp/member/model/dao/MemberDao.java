@@ -36,5 +36,10 @@ public class MemberDao {
 	public void sendMail(SqlSessionTemplate sqlSession, Cert cert) {
 		sqlSession.insert("memberMapper.sendMail", cert);
 	}
+	
+	public boolean certNumCheck(SqlSessionTemplate sqlSession, Cert cert) {
+		Cert result = sqlSession.selectOne("memberMapper.certNumCheck", cert);
+		return result != null;
+	}
 
 }

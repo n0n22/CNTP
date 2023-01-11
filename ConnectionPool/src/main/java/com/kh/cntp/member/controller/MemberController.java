@@ -204,7 +204,7 @@ public class MemberController {
 			
 	// 비밀번호 재설정 인증(아이디와 이메일 체크 후 메일 전송)
 	@ResponseBody
-	@RequestMapping("findPwdCert.me")
+	@RequestMapping("findPwdMailRequest.me")
 	public String findPwdMailRequest(String checkId, String checkEmail, Member member, HttpServletRequest request) throws MessagingException {
 		
 		member.setMemId(checkId);
@@ -223,8 +223,12 @@ public class MemberController {
 	
 	// 메일 인증번호 확인
 	@ResponseBody
-	@RequestMapping("CertNum.me")
-	public String CertNum() {
+	@RequestMapping("certNum.me")
+	public String certNumCheck(String certNum, HttpServletRequest request ) {
+		
+		// cert builder
+		Cert cert = Cert.builder().certIp(request.getRemoteAddr()).secretNo(certNum).build();
+		memberService.certNumCheck(cert);
 		
 		return "gg";
 	}

@@ -99,23 +99,27 @@
 	                    </div>
 	                </div>
 	            </div>
+	            
 	            <div class="col-sm-8 col-md-6">
 	                <div class="card">
 	                    <div class="card-body text-center">
 	                        <div style="height: 300px;">
-	                            <h3 class="text-center m-b-10">${ awayTeam.teamName }</h3> 
+	                            <h3 class="text-center m-b-10"><c:out value="${ awayTeam.teamName }" default="아직 대전 상대가 없습니다."/></h3> 
 	                            <c:if test="${ awayTeam.badgeStatus eq 'Y'}">
 		                            <img class="m-b-10" src="${ awayTeam.badgeChangeName }" height="100" width="100">
 	                            </c:if>
-	                            <c:if test="${ awayTeam.badgeStatus eq 'N'}">
+	                            <c:if test="${ awayTeam.badgeStatus eq 'N' or empty awayTeam}">
 		                            <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
 	                            </c:if>
-	                            <p class="text-center">${ awayTeamHistory.record }전 ${ awayTeamHistory.victory }승 ${ awayTeamHistory.defeat }패
-	                            	<br>승률(${ awayTeamHistory.winRate }%)</p>
-	                            <c:if test="${ awayTeam.teamNo eq battleResult.victory }">
+	                            <p class="text-center">
+		                            <c:out value="${awayTeamHistory.record}" default="0"/>전 
+		                            <c:out value="${awayTeamHistory.victory}" default="0"/>승 
+		                            <c:out value="${awayTeamHistory.defeat}" default="0"/>패
+	                            	<br>승률(<c:out value="${awayTeamHistory.winRate}" default="0.0"/>%)</p>
+	                            <c:if test="${ awayTeam.teamNo eq battleResult.victory and not empty awayTeam }">
 		                            <button class="btn btn-lg btn-primary" disabled>승리</button>
 	                            </c:if>
-	                            <c:if test="${ awayTeam.teamNo eq battleResult.defeat}">
+	                            <c:if test="${ awayTeam.teamNo eq battleResult.defeat and not empty awayTeam}">
 		                            <button class="btn btn-lg btn-danger" disabled>패배</button>
 	                            </c:if>
 	                        </div>
@@ -124,15 +128,6 @@
 	            </div>
 	        </div>
 	    </div>
-	    <script>
-	    	$(function(){
-		    	let battleResult = ${battleResult.vicRecord};
-		    	for(let i in battleResult){
-		    		
-		    	}
-	    	})
-	    </script>
-	
 
         <hr>
         <div class="outer-main">

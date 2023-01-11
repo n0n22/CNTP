@@ -20,7 +20,9 @@ import com.kh.cntp.battle.model.service.BattleService;
 import com.kh.cntp.battle.model.vo.Battle;
 import com.kh.cntp.battle.model.vo.BattleResult;
 import com.kh.cntp.battle.model.vo.PoolInfo;
+import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.template.Template;
+import com.kh.cntp.moim.model.vo.Team;
 
 @Controller
 public class BattlePoolController {
@@ -49,6 +51,9 @@ public class BattlePoolController {
 	public String selectBattlePool(int battleNo, Model model) {
 		Battle battle = battleService.selectBattle(battleNo);
 		PoolInfo poolInfo = battleService.selectPoolInfo(battleNo);
+		ResultHistory homeTeamRecord = battleService.selectResultHistory(battle.getHomeTeam());
+		
+		model.addAttribute("homeTeamRecord", homeTeamRecord);
 		model.addAttribute("battle", battle);
 		model.addAttribute("poolInfo", poolInfo);
 		
@@ -66,7 +71,7 @@ public class BattlePoolController {
 							   MultipartFile upfile,
 							   HttpSession session,
 							   Model model) {
-		
+		System.out.println(battle);
 		if(!upfile.getOriginalFilename().equals("")) {
 			battle.setOriginName(upfile.getOriginalFilename());
 			battle.setChangeName("resources/upfiles/" + Template.saveFile(upfile, session));
@@ -203,6 +208,7 @@ public class BattlePoolController {
 		//System.out.println(battleList);
 		model.addAttribute("battleList", battleList);
 		model.addAttribute("now", cpage);
+		model.addAttribute("condition", condition);
 		
 		return "battle/battlePoolList";
 		
