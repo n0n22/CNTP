@@ -14,9 +14,11 @@ public class Report {
 	private int reporter;			// 신고자 회원번호
 	private String completionDate;	// 처리일
 	private String reportResult;	// 처리결과
+	
 	private String memNickname;		// 신고대상자 닉네임
 	private String reporterName;	// 신고자 닉네임
 	
 	
+	private String content;			// 신고 글 내용
 
 }

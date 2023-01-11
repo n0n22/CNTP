@@ -213,6 +213,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ===============================
 -->	
 
+	<!-- 신고 등록 -->
+	<insert id="insertReport" parameterType="report">
+		INSERT
+		  INTO
+		       REPORT
+		  	   (
+		  	   REPORT_NO
+			   ,MEM_NO
+			   ,BOARD_NO
+			   ,REPORT_BOARD
+			   ,REPORT_REASON
+			   ,REPORTER
+			   ,REPORT_DATE		  	   
+		  	   )
+		VALUES
+		       (
+		       SEQ_RNO.NEXTVAL
+		       ,#{memNo}
+		       ,#{boardNo}
+		       ,#{reportBoard}
+		       ,#{reportReason}
+		       ,#{reporter}
+		       ,SYSDATE	       
+		       )
+	</insert>
+
+
+
 
 
 	

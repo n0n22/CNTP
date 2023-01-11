@@ -115,5 +115,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   AND 
 		       EMAIL = #{email} 
 	</select>
+	
+	<!-- 인증번호 cert테이블에 입력 -->
+	<insert id="sendMail" parameterType="cert">
+		INSERT
+		  INTO
+		      CERT
+		      (
+		      CERT_IP,
+		      SECRET_NO,
+		      VALID_TIME
+		      )
+		      VALUES
+		      (
+		      #{certIp},
+		      #{secretNo},
+		      SYSDATE
+		      )
+	</insert>
 
 </mapper>
