@@ -82,8 +82,8 @@ public class MoimServiceImpl implements MoimService {
 	}
 
 	@Override
-	public int updateTeam(String teamNo) {
-		return 0;
+	public int updateTeam(Team team) {
+		return moimDao.updateTeam(sqlSession, team);
 	}
 
 	@Override
@@ -97,8 +97,8 @@ public class MoimServiceImpl implements MoimService {
 	}
 
 	@Override
-	public int updateTeamBadge(String teamNo) {
-		return 0;
+	public int updateTeamBadgeStatus(Team team) {
+		return moimDao.updateTeamBadgeStatus(sqlSession, team);
 	}
 
 	@Override

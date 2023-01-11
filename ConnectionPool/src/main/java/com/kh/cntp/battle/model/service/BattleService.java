@@ -36,5 +36,8 @@ public interface BattleService {
 	// 배틀 결과 작성
 	int insertBattleResult(BattleResult br);
 	
+	// 배틀 결과 승인
+	int battleResultOk(int battleNo, String victoryTeamNo, String defeatTeamNo);
+	
 
 }

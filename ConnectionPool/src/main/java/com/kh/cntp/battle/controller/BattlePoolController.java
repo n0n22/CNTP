@@ -149,10 +149,22 @@ public class BattlePoolController {
 	@RequestMapping("battleResultOk.bt")
 	public String battleResultOk(int battleNo,
 								 String victoryTeamNo,
-								 String defeatTeamNo) {
-		System.out.println("배틀번호 : " + battleNo);
-		System.out.println("승리팀 : " + victoryTeamNo);
-		System.out.println("패배팀 : " + defeatTeamNo);
-		return "/";
+								 String defeatTeamNo,
+								 HttpSession session,
+								 Model model,
+								 RedirectAttributes redirectAttributes) {
+		// System.out.println("배틀번호 : " + battleNo); 		// 1
+		// System.out.println("승리팀 : " + victoryTeamNo);	// T3
+		// System.out.println("패배팀 : " + defeatTeamNo);		// T1
+		int result = battleService.battleResultOk(battleNo, victoryTeamNo, defeatTeamNo);
+		if(result > 0) {
+			session.setAttribute("alertMsg", "배틀 결과 승인이 완료되었습니다.");
+			redirectAttributes.addAttribute("battleNo", battleNo);
+			return "redirect: battleDetail.bt";
+		} else {
+			model.addAttribute("errorMsg", "배틀 결과 승인 실패");
+			return "common/errorPage";
+		}
+		
 	}
 }

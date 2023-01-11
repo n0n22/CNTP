@@ -151,8 +151,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  ,ORIGIN_NAME
 			  ,CHANGE_NAME
 			  ,KOR_AREA
-			  ,CASE WHEN KEYWORD = 'all' THEN '무관'
-                    WHEN KEYWORD = 'weekday' THEN '평일'
+			  ,CASE WHEN TEAM_TIME = 'all' THEN '무관'
+                    WHEN TEAM_TIME = 'weekday' THEN '평일'
                     ELSE '주말' END "TEAM_TIME"
 			  ,CASE WHEN KEYWORD = 'social' THEN '친목'
                     WHEN KEYWORD = 'battle' THEN '배틀'
@@ -253,5 +253,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
            AND
                MOIM_NO LIKE 'T%'
 	</select>
+
+	<update id="updateTeam" parameterType="team">
+		UPDATE
+		       TEAM
+		   SET TEAM_MEMBER = #{ teamMember }
+		      ,TEAM_INTRO = #{ teamIntro }
+		      ,ORIGIN_NAME = #{ originName }
+		      ,CHANGE_NAME = #{ changeName }
+		      ,TEAM_AREA = #{ teamArea }
+		      ,TEAM_TIME = #{ teamTime }
+		      ,KEYWORD = #{ keyword }
+		      ,BADGE_ORIGIN_NAME = #{ badgeOriginName }
+		      ,BADGE_CHANGE_NAME = #{ badgeChangeName }
+		      <if test="powerDuration == 'true'">
+		      	,POWER_DURATION = SYSDATE + 7
+		      </if>
+		 WHERE
+		       TEAM_NO =  #{ teamNo }
+	</update>	
+	
+	<update id="updateTeamBadgeStatus" parameterType="team">
+		UPDATE TEAM
+		   SET BADGE_STATUS = 'Y'
+		 WHERE TEAM_NO = #{ teamNo }
+	</update>
 	
 </mapper>

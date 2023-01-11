@@ -66,6 +66,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="LOSING_STREAK" 		property="losingStreak"/>
 		<result column="VICTORY" 			property="victory"/>
 		<result column="DEFEAT" 			property="defeat"/>
+		<result column="RECORD" 			property="record"/>
+		<result column="WIN_RATE" 			property="winRate"/>
 	</resultMap>
 	
 <!-- 배틀풀 인서트 -->
@@ -240,14 +242,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectResultHistory" parameterType="string" resultMap="resultHistoryResultSet">
+	
+	
 		SELECT
 		        TEAM_NO
 		        ,WINNING_STREAK
 		        ,LOSING_STREAK
 		        ,VICTORY
-		        DEFEAT
+		        ,DEFEAT
+		        ,VICTORY + DEFEAT AS RECORD
+		        ,CASE WHEN VICTORY + DEFEAT = 0 THEN 0 -- 0으로 나누는 경우 예외처리
+		              ELSE TRUNC((VICTORY / (VICTORY + DEFEAT)), 4) * 100 END AS WIN_RATE
 		  FROM
-		        RESULT_HISTORY
+		  		RESULT_HISTORY
 		 WHERE
 		        TEAM_NO = #{team}
 	</select>
@@ -274,5 +281,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        )
 
 	</insert>
+<!-- 배틀 결과 승인 -->
+	<!-- 1. 배틀 결과 승인  -->
+	<update id="battleResultOk" parameterType="_int">
+		UPDATE
+		        BATTLE_RESULT
+		   SET
+		        OK = 'Y'
+		 WHERE
+		        BATTLE_NO = #{battleNO}
+	</update>
+	
+	<!-- 2. 승리팀 기록 갱신  -->
+	<update id="updateVictoryTeam" parameterType="string">
+		UPDATE
+		        RESULT_HISTORY
+		   SET
+		        WINNING_STREAK = WINNING_STREAK + 1
+		        ,LOSING_STREAK = 0
+		        ,VICTORY = VICTORY + 1
+		 WHERE
+		        TEAM_NO = #{victoryTeamNo}
+	</update>
+		
+	<!-- 3. 패배팀 기록 갱신-->
+	<update id="updateDefeatTeam" parameterType="string">
+		UPDATE
+		        RESULT_HISTORY
+		   SET
+		        WINNING_STREAK = 0
+		        ,LOSING_STREAK = LOSING_STREAK + 1
+		        ,DEFEAT = DEFEAT + 1
+		 WHERE
+		        TEAM_NO = #{defeatTeamNo}
+	</update>
 	
 </mapper>
