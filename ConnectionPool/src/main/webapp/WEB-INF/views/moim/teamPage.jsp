@@ -18,7 +18,7 @@
 		border-radius: 10px;
 		width: 80%;
 		height : 300px;
-
+		border : 1px solid black;
 		padding-top: 5px;
 	}
 	
@@ -46,11 +46,12 @@
 		border-radius: 50%;
 		position:absolute;
 		z-index:2;
+		border : 1px solid black;
 	}
 
 	.teamImg{
 		border-radius: 10px;
-
+		border : 1px solid black;
 	}
 	
 	.teamInfoTable th, .applyTable td, .applyTable th, .teamMemberInfo th, .teamMemberInfo td{
@@ -94,7 +95,7 @@
 
 
 				<br>
-				<pre><h5>팀장 : <span class="teamLeaderNickname">${ teamMemberList[0].memNo }</span>			팀원(${ teamMemberList.size() } / ${ team.teamMember })</h5></pre>
+				<pre><h5>팀장 : <span class="teamLeaderNickname">${ teamMemberList[0].nickname }</span>			팀원(${ teamMemberList.size() } / ${ team.teamMember })</h5></pre>
 				<table class="teamInfoTable">
 					<tr>
 						<th width="400">팀 소개</th>
@@ -155,7 +156,7 @@
 						<c:forEach items="${ teamMemberList }" var="tm">
 							<tr>
 								<td>${tm.teamGrade}</td>
-								<td class="nickname">${tm.memNo}</td>
+								<td class="nickname">${tm.nickname}</td>
 								<td class>${tm.teamEnrollDate}</td>
 							</tr>
 						</c:forEach>
@@ -189,7 +190,7 @@
 								<c:when test="${ not empty applyList }">
 									<c:forEach items="${ applyList }" var="ap">
 										<tr>
-											<td>${ ap.memNo }</td>
+											<td>${ ap.nickname }</td>
 											<td>${ ap.applyDate }</td>
 											<td><button>수락</button><button>거절</button></td>
 										</tr>

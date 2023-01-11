@@ -6,7 +6,8 @@ import lombok.Data;
 public class Apply {
 	private int applyNo;
 	private String moimNo;
-	private String memNo;
+	private int memNo;
+	private String nickname;
 	private String acceptYn;
 	private String applyDate;
 	private String acceptDate;
