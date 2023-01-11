@@ -203,6 +203,7 @@ public class BattlePoolController {
 		//System.out.println(battleList);
 		model.addAttribute("battleList", battleList);
 		model.addAttribute("now", cpage);
+		model.addAttribute("condition", condition);
 		
 		return "battle/battlePoolList";
 		

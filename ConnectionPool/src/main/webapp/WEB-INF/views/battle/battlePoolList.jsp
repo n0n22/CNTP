@@ -74,7 +74,7 @@
 </head>
 <body>
 	<jsp:include page="../common/menubar_nosearch.jsp"/>
-	
+		
 	    <script>
 	    let p = '';
 	    let n = '';
@@ -108,8 +108,27 @@
         	case 1 : location.href = 'battleList.bt?cpage=' + n; break;
         	}
         }
-  
-    </script>
+        function enrollForm(){
+        	$('#enrollFormSubmit').attr("action", "enrollForm.bt").submit();
+        }
+   	 	</script>
+   	 	
+	   	 	<c:if test="${not empty condition }">
+   	 		<script>
+   	 			$(function(){
+   	 				console.log('검색 후 실행');
+   	 				console.log($('.search-area select[name="area"] option[value="${condition.area}"]').text())
+	   	 			$('.search-area select[name="area"] option[value="${condition.area}"]').attr('selected',true);
+	   	 			$('.search-area select[name="gender"] option[value="${condition.gender}"]').attr('selected',true);
+	   	 			$('.search-area select[name="style"] option[value="${condition.style}"]').attr('selected',true);
+	   	 			$('.search-area select[name="level"] option[value="${condition.level}"]').attr('selected',true);
+   	 			})
+   	 		</script>
+   	 	
+   	 	</c:if>
+   	 	<form method="post" id="enrollFormSubmit"></form>
+    
+    
 
     <div class="outer">
     	<br>
@@ -124,49 +143,63 @@
 		<form action="search.bt" method="get">
 			<input type="hidden" name="cpage" value="${now}">
 	        <div class="search-area" align="center" style="margin-top: 20px">
-	            <select name="area" id="addressForm">
-	                <option value="" hidden="hidden" disabled="disabled">시/도 선택</option>
-	                <option value="">전체</option>
-	                <option value="Seoul">서울특별시</option>
-	                <option value="Gyeonggi">경기도</option>
-	                <option value="Gangwon">강원도</option>
-	                <option value="Chungbuk">충청북도</option>
-	                <option value="Chungnam">충청남도</option>
-	                <option value="Jeonbuk">전라북도</option>
-	                <option value="Jeonnam">전라남도</option>
-	                <option value="Gyeongbuk">경상북도</option>
-	                <option value="Gyeongnam">경상남도</option>
-	            </select>
-	            <select name="gender">
-		            <option value="" hidden="hidden" disabled="disabled" selected="selected" >성별 선택</option>                         
-	                <option value="">전체</option>
-	                <option value="A">남녀모두</option>
-	                <option value="M">남자만</option>
-	                <option value="F">여자만</option>
-	            </select>
-	            <select name="style">
-		            <option value="" hidden="hidden" disabled="disabled" selected="selected" >종목 선택</option>                         
-	                <option value="">전체</option>
-	                <option value="f4">4:4 자유형</option>
-	                <option value="h4">4:4 혼영</option>
-	                <option value="hg4">4:4 혼계영</option>
-	            </select>
-	            <select name="level">
-		            <option value="" hidden="hidden" disabled="disabled" selected="selected" >레벨 선택</option>                         
-	                <option value="">전체</option>
-	                <option value="A">무관</option>
-	                <option value="B">초보</option>
-	                <option value="M">중수</option>
-	                <option value="S">고수</option>
-	            </select>
+	        	<table>
+		        	<tr align="center">
+		        		<td>시/도 선택</td>
+		        		<td>성별 선택</td>
+		        		<td>종목 선택</td>
+		        		<td>레벨 선택</td>
+		        	</tr>
+		        	<tr>
+		        		<td>
+				            <select name="area" id="addressForm">
+				                <option value="">전체</option>
+				                <option value="Seoul">서울특별시</option>
+				                <option value="Gyeonggi">경기도</option>
+				                <option value="Gangwon">강원도</option>
+				                <option value="Chungbuk">충청북도</option>
+				                <option value="Chungnam">충청남도</option>
+				                <option value="Jeonbuk">전라북도</option>
+				                <option value="Jeonnam">전라남도</option>
+				                <option value="Gyeongbuk">경상북도</option>
+				                <option value="Gyeongnam">경상남도</option>
+				            </select>
+		        		</td>
+		        		<td>
+				            <select name="gender">
+				                <option value="">전체</option>
+				                <option value="A">남녀모두</option>
+				                <option value="M">남자만</option>
+				                <option value="F">여자만</option>
+				            </select>
+		        		</td>
+		        		<td>
+				            <select name="style">
+				                <option value="">전체</option>
+				                <option value="f4">4:4 자유형</option>
+				                <option value="h4">4:4 혼영</option>
+				                <option value="hg4">4:4 혼계영</option>
+				            </select>
+		        		</td>
+		        		<td>
+				            <select name="level">
+				                <option value="">전체</option>
+				                <option value="A">무관</option>
+				                <option value="B">초보</option>
+				                <option value="M">중수</option>
+				                <option value="S">고수</option>
+				            </select>
+		        		</td>
+		        	</tr>
+	        	</table>
+	        	<br>
 	            &nbsp;
 	        </div>
 	        <div class="btn-area" align="center">
 		            <button class="btn">검색하기</button>
-		            <a class="btn" href="enrollForm.bt">글 작성하기</a>
+		            <a class="btn" onclick="enrollForm()">글 작성하기</a>
 	         </div>
 	        <br>
-		
 		</form>
         
         <div class="container mt-5 mb-5">
