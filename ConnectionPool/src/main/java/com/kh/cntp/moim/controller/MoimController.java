@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +21,7 @@ import com.google.gson.Gson;
 import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.moim.model.service.MoimService;
 import com.kh.cntp.moim.model.vo.Team;
+import com.kh.cntp.moim.model.vo.TeamMember;
 
 @Controller
 public class MoimController {
@@ -270,7 +272,36 @@ public class MoimController {
 		return mv;
 	}
 	
+	@RequestMapping("teamMemberUpdate.mo")
+	public ModelAndView updateTeamMember(ModelAndView mv, String teamNo, @RequestParam(value="nickname")String[] nicknameArr, String leader, String subLeader) {
 
+		TeamMember tm = new TeamMember();
+		int result = 1;
+		
+		for(int i = 0; i < nicknameArr.length; i++) {
+			tm.setMemNo(nicknameArr[i]);
+			
+			if(leader.equals(nicknameArr[i])) {
+				tm.setTeamGrade("L");
+			} else if(subLeader.equals(nicknameArr[i])) {
+				tm.setTeamGrade("S");
+			} else {
+				tm.setTeamGrade("M");
+			}
+
+			result *= moimService.updateTeamMember(tm);
+			
+		}
+		
+		if(result > 0) {
+			// 모두 성공
+			
+		} else {
+			// 실패
+		}
+		
+		return mv;
+	}
 	
 	
 }

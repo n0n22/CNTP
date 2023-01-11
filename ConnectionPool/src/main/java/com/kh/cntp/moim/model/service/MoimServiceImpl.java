@@ -87,8 +87,8 @@ public class MoimServiceImpl implements MoimService {
 	}
 
 	@Override
-	public int updateTeamMember(String teamNo) {
-		return 0;
+	public int updateTeamMember(TeamMember tm) {
+		return moimDao.updateTeamMember(sqlSession, tm);
 	}
 
 	@Override
