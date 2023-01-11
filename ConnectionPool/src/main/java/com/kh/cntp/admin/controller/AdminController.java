@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.kh.cntp.admin.model.service.AdminService;
 import com.kh.cntp.admin.model.vo.Banner;
+import com.kh.cntp.admin.model.vo.Report;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.common.template.Pagination;
 import com.kh.cntp.common.template.Template;
@@ -158,10 +159,28 @@ public class AdminController {
 	
 	// 신고 등록 폼으로 이동
 	@RequestMapping("reportForm")
-	public String reportEnrollForm(String test, Model model) {
+	public String reportEnrollForm(@ModelAttribute Report report, Model model) {
+		// System.out.println(report);
 		
-		model.addAttribute("test", test);
+		model.addAttribute("report", report);
 		return "admin/reportEnrollForm";
+	}
+	
+	
+	
+	// 신고 등록
+	@RequestMapping("insertReport.ad")
+	public ModelAndView insertReport(@ModelAttribute Report report, HttpSession session, ModelAndView mv) {
+		System.out.println(report);
+		
+		if(adminService.insertReport(report) > 0) {
+			session.setAttribute("alertMsg", "신고가 정상적으로 처리되었습니다.");
+			mv.setViewName("/");
+		} else {
+			mv.addObject("errorMsg", "신고가 실패하였습니다.").setViewName("common/errorPage");
+		}		
+		
+		return mv;
 	}
 
 	

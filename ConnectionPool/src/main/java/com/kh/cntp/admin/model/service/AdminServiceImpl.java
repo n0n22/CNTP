@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.cntp.admin.model.dao.AdminDao;
 import com.kh.cntp.admin.model.vo.Banner;
+import com.kh.cntp.admin.model.vo.Report;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.notice.model.vo.Notice;
@@ -71,7 +72,12 @@ public class AdminServiceImpl implements AdminService {
 // 신고 관련 기능 
 //-------------------------------------------	
 	
-
+	
+	// 신고 등록
+	@Override
+	public int insertReport(Report report) {
+		return adminDao.insertReport(sqlSession, report);
+	}
 	
 
 	
@@ -144,6 +150,7 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteNotice(int nno) {
 		return adminDao.deleteNotice(sqlSession, nno);
 	}
+
 
 
 
