@@ -273,8 +273,11 @@ public class MoimController {
 	}
 	
 	@RequestMapping("teamMemberUpdate.mo")
-	public ModelAndView updateTeamMember(ModelAndView mv, String teamNo, @RequestParam(value="nickname")String[] nicknameArr, String leader, String subLeader) {
+	public ModelAndView updateTeamMember(ModelAndView mv, String teamNo, @RequestParam(value="nickname")String[] nicknameArr, String leader, String subLeader, HttpSession session) {
 
+		System.out.println(leader);
+		System.out.println(subLeader);
+		
 		TeamMember tm = new TeamMember();
 		int result = 1;
 		
@@ -295,9 +298,11 @@ public class MoimController {
 		
 		if(result > 0) {
 			// 모두 성공
-			
+			session.setAttribute("alterMsg", "뱃지 구매 성공");
+			mv.setViewName("redirect:teamPage.mo?teamNo=" + teamNo);
 		} else {
 			// 실패
+			mv.addObject("errorMsg", "팀원 정보 수정 실패").setViewName("common/errorPage");
 		}
 		
 		return mv;

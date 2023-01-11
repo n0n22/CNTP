@@ -22,7 +22,7 @@
 	
 			<br>
 			<form action="teamMemberUpdate.mo" method="post">
-				<table border="1" class="table">
+				<table border="1" class="table teamMemberUpdateTable">
 					<thead class="thead-dark">
 						<tr>
 							<th width="200">닉네임</th>
@@ -104,6 +104,20 @@
 					}
 				})
 			});
+			
+			// 팀장일 경우 체크박스 체크
+			// 부팀장이 없게 가고 싶을 수도 있기 때문에 일부러 부팀장은 체크하지 않음.
+			$('.teamMemberUpdateTable input[class=L]').each(function(index, option){
+				if($(this).val() == '${ teamMemberList[0].memNo }'){
+					$(this).attr('checked', 'true');
+				}
+			})
+			
+			
+			
+			
+			
+			
 		})
 	</script>
 
