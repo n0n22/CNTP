@@ -7,7 +7,7 @@ public class Team {
 	
 	private String teamNo;
 	private String teamName;
-	private int memNo; // 팀장
+	private int memNo; // 번호
 	private int teamMember; // 팀 모집 인원
 	private String teamIntro;
 	private String originName;

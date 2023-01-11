@@ -273,20 +273,23 @@ public class MoimController {
 	}
 	
 	@RequestMapping("teamMemberUpdate.mo")
-	public ModelAndView updateTeamMember(ModelAndView mv, String teamNo, @RequestParam(value="nickname")String[] nicknameArr, String leader, String subLeader, HttpSession session) {
+	public ModelAndView updateTeamMember(ModelAndView mv, String teamNo, @RequestParam(value="memNo")int[] memNoArr, int leader, int subLeader, HttpSession session) {
 
-		System.out.println(leader);
-		System.out.println(subLeader);
+		// 현재 수정중 한번에 트랜잭션 할 수 있는 방법으로 수정 필요
+		
+		//System.out.println(leader);
+		//System.out.println(subLeader);
 		
 		TeamMember tm = new TeamMember();
 		int result = 1;
 		
-		for(int i = 0; i < nicknameArr.length; i++) {
-			tm.setMemNo(nicknameArr[i]);
+		for(int i = 0; i < memNoArr.length; i++) {
+			tm.setMemNo(memNoArr[i]);
+			tm.setTeamNo(teamNo);
 			
-			if(leader.equals(nicknameArr[i])) {
+			if(leader == (memNoArr[i])) {
 				tm.setTeamGrade("L");
-			} else if(subLeader.equals(nicknameArr[i])) {
+			} else if(subLeader == memNoArr[i]) {
 				tm.setTeamGrade("S");
 			} else {
 				tm.setTeamGrade("M");
