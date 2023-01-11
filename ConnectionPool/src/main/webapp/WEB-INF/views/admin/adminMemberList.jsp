@@ -379,7 +379,7 @@
 						excelDownloadByJson(result);
 					},
 					error : function() {
-						// console.log('ajax 통신 실패');						
+						console.log('ajax 멤버 전체 목록 조회 실패');						
 					}
 					
 					
@@ -425,20 +425,35 @@
 	<script>
 		
 		function openReportForm() {
-							
-			window.open('', '신고', 'width=300,height=500,resizable=no,location=yes,menubar=yes,scrollbar=no');
 			
-			$('#memNo').val(4);
-			$('#memNickname').val('닉네임3');
-			$('#content').val('바보야');
-			$('#reportBoard').val('board');
-			$('#boardNo').val(3);
-			
-			
-			reportvalue.action = 'reportForm';
-			reportvalue.target = '신고';
-			reportvalue.method = 'post';
-			reportvalue.submit();
+			// ------------- 수정해야함 ---------------------------------
+			if (${loginMember.memNo} == 4) {
+				alertify.alert('알림', '본인의 글은 신고할 수 없습니다.', function(){ alertify.success('확인 완료'); });
+			} else {
+				
+				// var customWindow = window.open('', '_blank', 'width=300,height=500');							
+				window.open('', '신고', 'width=450,height=300,location=yes,menubar=yes,scrollbar=no');
+				
+				$('#memNo').val(4);
+				$('#memNickname').val('닉네임3');
+				$('#content').val('바보야');
+				$('#reportBoard').val('board');
+				$('#boardNo').val(3);
+				
+				
+				
+				// console.log(reportvalue);
+				
+				reportvalue.action = 'reportForm';
+				// reportvalue.target = '_blank';
+				reportvalue.target = '신고';
+				reportvalue.method = 'post';
+				reportvalue.submit();
+				
+				
+			   // customWindow.close();
+
+			}
 			
 			
 		};

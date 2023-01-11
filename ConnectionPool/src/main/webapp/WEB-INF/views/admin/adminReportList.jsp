@@ -9,12 +9,6 @@
 
 <style>
 
-	.report-outer {
-		margin-left : 150px;
-		height : 90%;
-
-		padding: 20px;
-	}
 
 	.report-btn-area {
 		padding: 15px;
@@ -45,14 +39,19 @@
 	<jsp:include page="../common/menubar_nosearch.jsp" />
 	<jsp:include page="adminMenubar.jsp" />
 
-	<div class="report-outer">
+	<div class="admin-outer">
 	
 		
 		<div class="report-btn-area">
 			<a href="reportList.ad" class="btn btn-secondary">신고글 목록</a>
 			<a href="penaltyList.ad" class="btn btn-secondary">패널티 대상 목록</a>
-
-			
+		
+		</div>
+		<div>
+	        <select name="result" class="form-control" id="result">
+	            <option value="yet">처리전</option>
+	            <option value="end">처리완료</option>
+	        </select>
 		</div>
 		<div class="report-table-area">
 

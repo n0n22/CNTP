@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+
     <style>
 
 		.report-outer {
@@ -59,9 +60,11 @@
 
 	</div>
 
-	<c:if test="${ not empty alertMsg }">
-		<script>
-			alertify.alert('알림', '${alertMsg}', function(){ alertify.success('확인 완료'); });
+	<c:if test="${ not empty alert }">
+		<script>		
+			alert('${alert}');
+			// alertify.alert('알림', '${alertMsg}', function(){ alertify.success('확인 완료'); });
+			// opener.location.reload();
 			window.close();	
 		</script>
 	</c:if>

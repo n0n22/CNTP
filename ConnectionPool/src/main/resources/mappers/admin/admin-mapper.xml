@@ -213,6 +213,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ===============================
 -->	
 
+	<!-- 신고 목록 개수 조회 -->
+	<select id="selectReportListCount" parameterType="string" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       REPORT
+		 WHERE
+		       REPORT_RESULT 
+		<if test="result == 'yet'">
+			   is null			 
+		</if>
+		<if test="result == 'end'">
+			   is not null
+		</if>
+	</select>
+
+
+
+
+
+
+
 	<!-- 신고 등록 -->
 	<insert id="insertReport" parameterType="report">
 		INSERT

@@ -130,9 +130,17 @@ public class AdminController {
 	
 	// 신고글 목록 조회 -> 신고글 목록 페이지로 이동
 	@RequestMapping("reportList.ad")
-	public String selectReportList() {
+	public ModelAndView selectReportList(@RequestParam(value="cpage", defaultValue="1") int cpage
+									    ,@RequestParam(value="result", defaultValue="yet") String result
+										,ModelAndView mv) {
 		
-		return "admin/adminReportList";
+		
+		System.out.println(adminService.selectReportListCount(result));
+		//PageInfo pi = Pagination.getPageInfo(adminService.selectReportListCount(result), cpage, 5, 10);
+		
+		// mv.addObject("list", adminService.selectReportList(pi, result));
+		mv.setViewName("admin/adminReportList");
+		return mv;
 	}
 	
 	
@@ -157,6 +165,10 @@ public class AdminController {
 	
 	
 	
+	// --------------- 신고 등록 ---------------
+	
+	
+	
 	// 신고 등록 폼으로 이동
 	@RequestMapping("reportForm")
 	public String reportEnrollForm(@ModelAttribute Report report, Model model) {
@@ -174,9 +186,9 @@ public class AdminController {
 		// System.out.println(report);
 		
 		if(adminService.insertReport(report) > 0) {
-			mv.addObject("alertMsg", "신고가 정상적으로 처리되었습니다.");
+			mv.addObject("alert", "신고가 정상적으로 처리되었습니다.");
 			mv.addObject("check", "check");
-			mv.setViewName("redirect:reportForm");
+			mv.setViewName("admin/reportEnrollForm");
 		} else {
 			mv.addObject("errorMsg", "신고가 실패하였습니다.").setViewName("common/errorPage");
 		}		

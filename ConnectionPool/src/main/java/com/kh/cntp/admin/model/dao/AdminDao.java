@@ -68,6 +68,16 @@ public class AdminDao {
 //-------------------------------------------	
 	
 	
+	// 신고 목록 개수 조회
+	public int selectReportListCount(SqlSessionTemplate sqlSession, String result) {
+		return sqlSession.selectOne("adminMapper.selectReportListCount", result);
+	}
+	
+	
+	
+	
+	
+	
 	// 신고 등록
 	public int insertReport(SqlSessionTemplate sqlSession, Report report) {
 		return sqlSession.insert("adminMapper.insertReport", report);

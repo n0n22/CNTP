@@ -72,6 +72,26 @@ public class AdminServiceImpl implements AdminService {
 // 신고 관련 기능 
 //-------------------------------------------	
 	
+	// 신고 목록 개수 조회
+	@Override
+	public int selectReportListCount(String result) {
+		return adminDao.selectReportListCount(sqlSession, result);
+	}
+	
+	
+	// 신고 목록 조회
+	@Override
+	public ArrayList<Report> selectReportList(PageInfo pi, String result) {
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	// 신고 등록
 	@Override
@@ -150,9 +170,6 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteNotice(int nno) {
 		return adminDao.deleteNotice(sqlSession, nno);
 	}
-
-
-
 
 
 
