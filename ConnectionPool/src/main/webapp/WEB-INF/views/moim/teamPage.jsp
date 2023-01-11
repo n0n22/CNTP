@@ -152,12 +152,13 @@
 							<th width="100">닉네임</th>
 							<th width="100">가입일시</th>
 						</tr>
-							<c:forEach items="${ teamMemberList }" var="tm">
-									<td>${tm.teamGrade}</td>
-									<td class="nickname">${tm.memNo}</td>
-									<td class>${tm.teamEnrollDate}</td>
-							</c:forEach>
-						</tr>
+						<c:forEach items="${ teamMemberList }" var="tm">
+							<tr>
+								<td>${tm.teamGrade}</td>
+								<td class="nickname">${tm.memNo}</td>
+								<td class>${tm.teamEnrollDate}</td>
+							</tr>
+						</c:forEach>
 					</table>
 					<br>
 
@@ -184,20 +185,22 @@
 								<th width="100">신청일시</th>
 								<th width="100">수락/거절</th>
 							</tr>
-							<tr>
-								<c:choose>
-									<c:when test="${ not empty applyList }">
-										<c:forEach items="${ applyList }" var="ap">
-												<td>${ ap.memNo }</td>
-												<td>${ ap.applyDate }</td>
-												<td><button>수락</button><button>거절</button></td>
-										</c:forEach>
-									</c:when>
-									<c:otherwise>
+							<c:choose>
+								<c:when test="${ not empty applyList }">
+									<c:forEach items="${ applyList }" var="ap">
+										<tr>
+											<td>${ ap.memNo }</td>
+											<td>${ ap.applyDate }</td>
+											<td><button>수락</button><button>거절</button></td>
+										</tr>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr>
 										<td colspan="3">신청 내역이 없습니다.</td>
-									</c:otherwise>
-								</c:choose>
-							</tr>
+									</tr>
+								</c:otherwise>
+							</c:choose>
 						</table>
 						<br>
 					</c:if>
@@ -225,7 +228,8 @@
 										</c:otherwise>
 									</c:choose>
 								</c:when>
-								<c:otherwise>
+								<c:when test="${ empty loginMember.teamGrade }">
+									<!-- 로그인이 되어 있고 팀 소속이 없을 때 -->
 									<c:choose>
 										<c:when test="${ teamMemberList.size() < team.teamMember }">
 										<!-- 모집중일 때 -->
@@ -233,6 +237,22 @@
 											<a href="insertApply.mo" class="btn btn-primary" id="apply-btn" style="width:200px;">신청하기</a>
 										</c:when>
 										<c:otherwise>
+										<!-- 모집 마감일 때 -->
+											<div style="height:150px"></div>
+											<button class="btn btn-primary" style="width:200px;" disabled>모집마감</button>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:otherwise>
+									<!-- 다른 팀 소속일 때 -->
+									<c:choose>
+										<c:when test="${ teamMemberList.size() < team.teamMember }">
+										<!-- 모집중일 때 -->
+											<div style="height:150px"></div>
+											<button disabled class="btn btn-primary" id="apply-btn" style="width:200px;">이미 다른 팀에<br> 소속되어 있습니다.</a>
+										</c:when>
+										<c:otherwise>
+										<!-- 모집 마감일 때 -->
 											<div style="height:150px"></div>
 											<button class="btn btn-primary" style="width:200px;" disabled>모집마감</button>
 										</c:otherwise>
@@ -260,7 +280,7 @@
 							console.log('성공')
 							$('#apply-btn').removeAttr('href');
 							$('#apply-btn').css('width', '300px');
-							$('#apply-btn').html('현재 신청중이거나<br> 다른 팀에 가입되어 있습니다.');
+							$('#apply-btn').html('현재 신청내역이 있습니다.');
 						}
 					},
 					error : function(){
