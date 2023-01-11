@@ -5,6 +5,7 @@ import static com.kh.cntp.common.template.Template.saveFile;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
@@ -12,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -273,30 +273,28 @@ public class MoimController {
 	}
 	
 	@RequestMapping("teamMemberUpdate.mo")
-	public ModelAndView updateTeamMember(ModelAndView mv, String teamNo, @RequestParam(value="nickname")String[] nicknameArr, String leader, String subLeader, HttpSession session) {
+	public ModelAndView updateTeamMember(ModelAndView mv, String teamNo, int leader, String subLeader, HttpSession session) {
 
-		System.out.println(leader);
-		System.out.println(subLeader);
+		// 팀멤버 정보 보낼 배열을 만든ㄴ다.
+		ArrayList<TeamMember> teamMemberList = new ArrayList();
 		
-		TeamMember tm = new TeamMember();
-		int result = 1;
+		// 먼저 팀장 정보를 담는다.
+		TeamMember leaderInfo = new TeamMember();
+		leaderInfo.setMemNo(leader);
+		leaderInfo.setTeamGrade("L");
+		leaderInfo.setTeamNo(teamNo);
+		teamMemberList.add(leaderInfo);
 		
-		for(int i = 0; i < nicknameArr.length; i++) {
-			tm.setMemNo(nicknameArr[i]);
-			
-			if(leader.equals(nicknameArr[i])) {
-				tm.setTeamGrade("L");
-			} else if(subLeader.equals(nicknameArr[i])) {
-				tm.setTeamGrade("S");
-			} else {
-				tm.setTeamGrade("M");
-			}
-
-			result *= moimService.updateTeamMember(tm);
-			
+		// 만약 부리더가 있다면 부리더의 정보도 담는다.
+		if(subLeader != null) {
+			TeamMember subLeaderInfo = new TeamMember();
+			subLeaderInfo.setMemNo(Integer.parseInt(subLeader));
+			subLeaderInfo.setTeamGrade("S");
+			teamMemberList.add(subLeaderInfo);
 		}
 		
-		if(result > 0) {
+		
+		if(moimService.updateTeamMember(teamMemberList) > 0) {
 			// 모두 성공
 			session.setAttribute("alterMsg", "뱃지 구매 성공");
 			mv.setViewName("redirect:teamPage.mo?teamNo=" + teamNo);
