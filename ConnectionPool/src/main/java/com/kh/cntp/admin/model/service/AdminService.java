@@ -27,6 +27,12 @@ public interface AdminService {
 	ArrayList<Member> selectMemberList(HashMap map);
 	
 	
+	// 검색한 회원 목록 개수 조회
+	int selectSearchMemberListCount(HashMap map);
+	
+	
+	// 검색한 회원 정보 조회
+	ArrayList<Member> selectSearchMemberList(HashMap map);
 
 	
 	

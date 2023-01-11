@@ -52,17 +52,17 @@ public interface MoimService {
 	int ajaxDeleteApply(int applyNo);
 	
 	// 팀 페이지 수정
-	int updateTeam(String teamNo);
+	int updateTeam(Team team);
 	
 	// 팀 멤버 수정(권한 수정도)
-	int updateTeamMember(String teamNo);
+	int updateTeamMember(TeamMember tm);
 	
 	// 팀장이 아닐 경우에만 탈퇴할 수 있도록 걸어둬야 한다. 팀장이면 권한 수정하라고 alert 예정
 	int deleteTeamMember(int memNo);
 	
 	// 팀 뱃지 status를 N에서 Y로 수정
 	// 성공 시 포인트 -100도 해줘야 한다.
-	int updateTeamBadge(String teamNo);
+	int updateTeamBadgeStatus(Team team);
 	
 	// --------------- 팀 가입 리스트 조회 ---------------
 	// 조건에 따라 team을 조회해와야 하기 때문에 team을 인자값으로 넣어준다.

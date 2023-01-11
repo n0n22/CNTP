@@ -21,7 +21,7 @@
 			<hr>
 	
 			<br>
-			<form action="#">
+			<form action="teamMemberUpdate.mo" method="post">
 				<table border="1" class="table">
 					<thead class="thead-dark">
 						<tr>
@@ -31,36 +31,26 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>일길동</td>
-							<td>2020-01-01</td>
-							<td>
-								팀장<input type="radio" name="L">
-								부팀장<input type="radio" name="S">
-							</td>
-						</tr>
-						<tr>
-							<td>이길동</td>
-							<td>2020-01-01</td>
-							<td>
-								팀장<input type="radio" name="L">
-								부팀장<input type="radio" name="S">
-							</td>
-						</tr>
-						<tr>
-							<td>삼길동</td>
-							<td>2020-01-01</td>
-							<td>
-								팀장<input type="radio" name="L">
-								부팀장<input type="radio" name="S">
-							</td>
-						</tr>
+						<c:forEach items="${teamMemberList }" var="tm">
+							<tr>
+								<td>
+									${tm.memNo}
+									<input type="hidden" name="nickname" value="${tm.memNo}">
+								</td>
+								<td>${tm.teamEnrollDate}</td>
+								<td>
+									팀장<input type="radio" name="leader" class="L" value="${tm.memNo}">
+									부팀장<input type="radio" name="subLeader" class="S" value="${tm.memNo}">
+								</td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 				
 				<br><br>
 				<div class="teamMeberUpdate-area" align="right"> 
-					<button>취소하기</button>
+					<a href="teamPage.mo?teamNo=${ loginMember.teamNo }">취소하기</a>
+					<input type="hidden" name="teamNo" value="${loginMember.teamNo }">
 					<button>수정하기</button>
 				</div>
 			</form>
@@ -73,11 +63,11 @@
 
 	<script>
 		$(function(){
-			$('input[name=L]').on('change', function(){
+			$('input[class=L]').on('change', function(){
 				
 				var $name = $(this).parent().parent().children().eq(0).text();
 				
-				$('input[name=S]').each(function(index, option){
+				$('input[class=S]').each(function(index, option){
 
 					//window.alert($(this).parent().parent().children().eq(0).text());
 
@@ -94,11 +84,11 @@
 				})
 			});
 
-			$('input[name=S]').on('change', function(){
+			$('input[class=S]').on('change', function(){
 
 				var $name = $(this).parent().parent().children().eq(0).text();
 				
-				$('input[name=L]').each(function(index, option){
+				$('input[class=L]').each(function(index, option){
 
 					//window.alert($(this).parent().parent().children().eq(0).text());
 

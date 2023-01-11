@@ -103,7 +103,7 @@
 		        <tr height="50">
 		            <th>팀 사진 등록</th>
 		            <td colspan="2">
-		                <input type="file" id="reUpfile" name="reUpfile">
+		                <input type="file" id="teamImg" name="reUpfile">
 	            		<c:if test="${ not empty team.originName }">
 	            			현재 업로드된 파일 : 
 	            			<a href="${ team.changeName }" download="${ team.originName }">${ team.originName }</a>
@@ -114,7 +114,7 @@
 		        <tr height="50">
 		            <th>뱃지 등록</th>
 		            <c:choose>
-		            	<c:when test="${ empty team.originName }">
+		            	<c:when test="${ team.badgeStatus eq 'N' }">
 				            <td colspan="2">
 				                *팀 페이지에서 뱃지 구매 시 사용 가능합니다 
 				            </td>
@@ -122,6 +122,10 @@
 		            	<c:otherwise>
 		            		<td colspan="2">
 				                <input type="file" id="badgeImg" name="reUpfile">
+				                <c:if test="${ not empty team.badgeOriginName }">
+	            				현재 업로드된 파일 : 
+	            			<a href="${ team.badgeChangeName }" download="${ team.badgeOriginName }">${ team.badgeOriginName }</a>
+	            		</c:if>
 				            </td>
 		            	</c:otherwise>
 		            </c:choose>
@@ -132,7 +136,7 @@
 		            <td colspan="2">
 		            	<c:choose>
 					        <c:when test="${ team.powerDuration eq 'false' }">
-				                <input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" value="true"> 
+				                <input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" value="true"><br>
 			                	<label for="powerDuration"> 파워 등록 시 10P가 소요됩니다. </label> 
 					        </c:when>
 					        <c:otherwise>
@@ -144,8 +148,14 @@
 		    </table>
 		    <br><br>
 		
+			<input name="originName" value="${ team.originName }" type="hidden">
+			<input name="changeName" value="${ team.changeName }" type="hidden">
+			<input type="hidden" name="badgeOriginName" value="${ team.badgeOriginName }">
+            <input type="hidden" name="badgeChangeName" value="${ team.badgeChangeName }">
+            <input type="hidden" name="badgeStatus" value="${ team.badgeStatus }">
+			<input name="teamNo" value="${ team.teamNo }" type="hidden">
 		    <div align="center">
-		        <a href="#">취소하기</a> <button>수정하기</button>
+		        <a href="teamPage.mo?teamNo=${ team.teamNo }">취소하기</a> <button>수정하기</button>
 		    </div>
 		</form>
 	</div>

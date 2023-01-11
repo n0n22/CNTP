@@ -87,7 +87,8 @@
 	                            <c:if test="${ homeTeam.badgeStatus eq 'N'}">
 		                            <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
 	                            </c:if>
-	                            <p class="text-center">${ homeTeamHistory.victory + homeTeamHistory.defeat }전 ${ homeTeamHistory.victory }승 ${ homeTeamHistory.defeat }패</p> 
+	                            <p class="text-center">${ homeTeamHistory.record }전 ${ homeTeamHistory.victory }승 ${ homeTeamHistory.defeat }패 
+	                            	<br>승률(${ homeTeamHistory.winRate }%)</p> 
 	                            <c:if test="${ homeTeam.teamNo eq battleResult.victory }">
 		                            <button class="btn btn-lg btn-primary" disabled>승리</button>
 	                            </c:if>
@@ -109,7 +110,8 @@
 	                            <c:if test="${ awayTeam.badgeStatus eq 'N'}">
 		                            <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
 	                            </c:if>
-	                            <p class="text-center">${ awayTeamHistory.victory + awayTeamHistory.defeat }전 ${ awayTeamHistory.victory }승 ${ awayTeamHistory.defeat }패</p>
+	                            <p class="text-center">${ awayTeamHistory.record }전 ${ awayTeamHistory.victory }승 ${ awayTeamHistory.defeat }패
+	                            	<br>승률(${ awayTeamHistory.winRate }%)</p>
 	                            <c:if test="${ awayTeam.teamNo eq battleResult.victory }">
 		                            <button class="btn btn-lg btn-primary" disabled>승리</button>
 	                            </c:if>

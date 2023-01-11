@@ -48,41 +48,64 @@ public class AdminController {
 //   회원 관련 기능 
 //-------------------------------------------
 	
-	// 회원목록 조회 -> 회원관리 페이지로 이동
+//	// 회원목록 조회 -> 회원관리 페이지로 이동
+//	@RequestMapping("memberList.ad")
+//	public ModelAndView selectMemberList(@RequestParam(value="cpage", defaultValue="1") int cpage
+//								  ,@RequestParam(value="bl", defaultValue="10") int boardLimit
+//								  ,@RequestParam(value="order", defaultValue="memNo") String order
+//								  ,@RequestParam(value="orderCondition", defaultValue="desc") String orderCondition
+//								  ,ModelAndView mv) {
+//		
+//		// cpage : 요청페이지
+//		PageInfo pi = Pagination.getPageInfo(adminService.selectMemberListCount(), cpage, 5, boardLimit);
+//
+//		// 정렬기준과 페이지에 보여줄 개수를 Hashmap에 담아서 조회해옴
+//		HashMap map = new HashMap();
+//		map.put("pi", pi);
+//		map.put("order", order);
+//		map.put("orderCondition", orderCondition);
+//				
+//		ArrayList<Member> list = adminService.selectMemberList(map);
+//
+//		mv.addObject("list", list).addObject("pi", pi).addObject("order", order).addObject("orderCondition", orderCondition);
+//		mv.setViewName("admin/adminMemberList");
+//
+//		return mv;
+//	}
+	
+	
+	// 회원 검색 기능
 	@RequestMapping("memberList.ad")
-	public String selectMemberList(@RequestParam(value="cpage", defaultValue="1") int cpage
-								  ,@RequestParam(value="bl", defaultValue="10") int boardLimit
-								  ,@RequestParam(value="order", defaultValue="memNo") String order
-								  ,@RequestParam(value="orderCondition", defaultValue="desc") String orderCondition
-								  ,Model model) {
-		System.out.println(cpage);
-		System.out.println(boardLimit);
-		System.out.println(order);
-		
-		// cpage : 요청페이지
-		PageInfo pi = Pagination.getPageInfo(adminService.selectMemberListCount(), cpage, 5, boardLimit);
-
-		// 정렬기준과 페이지에 보여줄 개수를 Hashmap에 담아서 조회해옴
+	public ModelAndView selectSearchMemberList(@RequestParam(value="cpage", defaultValue="1") int cpage                           // 요청 페이지
+											  ,@RequestParam(value="bl", defaultValue="10") int boardLimit
+											  ,@RequestParam(value="order", defaultValue="memNo") String order
+											  ,@RequestParam(value="orderCondition", defaultValue="asc") String orderCondition	  // 정렬
+											  ,@RequestParam(value="keyword", defaultValue="") String keyword
+											  ,@RequestParam(value="condition", defaultValue="") String condition                 // 검색
+										      ,ModelAndView mv) {
 		HashMap map = new HashMap();
+		map.put("keyword", keyword);
+		map.put("condition", condition);
+		
+		
+		// System.out.println(boardLimit + order + orderCondition + keyword + condition);
+		// System.out.println(adminService.selectSearchMemberListCount(map));
+		
+		PageInfo pi = Pagination.getPageInfo(adminService.selectSearchMemberListCount(map), cpage, 5, boardLimit);
+		
 		map.put("pi", pi);
 		map.put("order", order);
 		map.put("orderCondition", orderCondition);
 		
+		ArrayList<Member> list = adminService.selectSearchMemberList(map);
 		
-		ArrayList<Member> list = adminService.selectMemberList(map);
-		System.out.println(list);
-		model.addAttribute("list", list);
-		model.addAttribute("pi", pi);
-		model.addAttribute("order", order);
-		model.addAttribute("orderCondition", orderCondition);
-				
-		return "admin/adminMemberList";
+		// System.out.println(list);
+		mv.addObject("list", list).addObject("pi", pi).addObject("order", order).addObject("orderCondition", orderCondition);
+		mv.addObject("keyword", keyword).addObject("condition", condition);
+		mv.setViewName("admin/adminMemberList");
+		
+		return mv;
 	}
-	
-	
-	// 회원 검색 기능
-//	@RequestMapping("memberSearch.ad")
-//	public ModelAndView searchMemb
 	
 	
 	
