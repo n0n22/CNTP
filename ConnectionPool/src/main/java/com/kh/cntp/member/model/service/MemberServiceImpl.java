@@ -41,16 +41,20 @@ public class MemberServiceImpl implements MemberService {
 	public int loginStopped(Member member) {
 		return memberDao.loginStopped(sqlSession, member);
 	}
-
+	
+	// 아이디 찾기
 	@Override
 	public Member findId(Member member) {
 		return memberDao.findId(sqlSession, member);
 	}
-
+	
+	// 비밀번호 변경 시 메일인증
 	@Override
 	public int findPwdMailRequest(Member member) {
 		return memberDao.findPwdMailRequest(sqlSession, member);
 	}
+	
+	
 
 	
 	
