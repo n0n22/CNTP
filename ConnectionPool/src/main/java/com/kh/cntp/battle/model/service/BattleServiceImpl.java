@@ -69,10 +69,7 @@ public class BattleServiceImpl implements BattleService{
 	@Override
 	@Transactional
 	public int battleResultOk(int battleNo, String victoryTeamNo, String defeatTeamNo) {
-		battleDao.battleResultOk(sqlSession, battleNo);
-		battleDao.updateVictoryTeam(sqlSession, victoryTeamNo);
-		battleDao.updateDefeatTeam(sqlSession, defeatTeamNo);
-		return 0;
+		return battleDao.battleResultOk(sqlSession, battleNo) * battleDao.updateVictoryTeam(sqlSession, victoryTeamNo) * battleDao.updateDefeatTeam(sqlSession, defeatTeamNo);
 	}
 
 	
