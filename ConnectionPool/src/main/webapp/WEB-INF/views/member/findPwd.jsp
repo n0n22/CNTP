@@ -197,8 +197,18 @@
             				method : 'post',
             				url : 'certNum.me',
             				data : { certNum : $certNum },
-            				success : function(result){
-            					console.log('성공~')
+            				success : function(certYN){
+            					
+            					if (certYN == 'certY'){
+            						$('#certMessage').html('메일인증 완료');
+            						// 성공이면 본인인증 버튼 enabled
+                					console.log('성공~')
+            					}
+            					else{
+            						console.log('ajax성공 db실패')
+            					}
+            					
+            					
             				},
             				error : function(){
             					console.log('실패');

@@ -39,6 +39,9 @@ public class MemberDao {
 	
 	public boolean certNumCheck(SqlSessionTemplate sqlSession, Cert cert) {
 		Cert result = sqlSession.selectOne("memberMapper.certNumCheck", cert);
+		if (result != null) {
+			sqlSession.delete("memberMapper.remove", cert);
+		}
 		return result != null;
 	}
 

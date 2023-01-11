@@ -146,6 +146,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       CERT_IP = #{certIp}
 		   AND 
 		       SECRET_NO = #{secretNo}
+		   AND
+		   	   WHEN BETWEEN SYSDATE - 5/24/60 AND SYSDATE 	    
 	</select>
+	
+	<!-- Cert table 한 행 지우기 -->
+	<delete id="remove" parameterType="cert">
+		DELETE
+			   CERT
+		 WHERE
+		 	   CERT_TP = #{certIp}	
+		   AND 
+		       SECRET_NO = #{secretNo}	      	
+	</delete>
+	
 
 </mapper>

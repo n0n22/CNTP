@@ -227,10 +227,13 @@ public class MemberController {
 	public String certNumCheck(String certNum, HttpServletRequest request ) {
 		
 		// cert builder
-		Cert cert = Cert.builder().certIp(request.getRemoteAddr()).secretNo(certNum).build();
-		memberService.certNumCheck(cert);
+		Cert cert = Cert.builder()
+		.certIp(request.getRemoteAddr())
+		.secretNo(certNum).build();
+		// DB에 맞는 정보가 있으면 certY 없으면 certN 
+		String certYN = (memberService.certNumCheck(cert)) ? "certY" : "certN";
 		
-		return "gg";
+		return "certCheck";
 	}
 	
 	
