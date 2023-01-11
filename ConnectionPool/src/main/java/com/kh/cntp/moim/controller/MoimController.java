@@ -18,8 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.kh.cntp.member.model.service.MemberService;
 import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.moim.model.service.MoimService;
+import com.kh.cntp.moim.model.vo.Apply;
 import com.kh.cntp.moim.model.vo.Team;
 import com.kh.cntp.moim.model.vo.TeamMember;
 
@@ -28,6 +30,8 @@ public class MoimController {
 	
 	@Autowired
 	private MoimService moimService;
+	@Autowired
+	private MemberService memberService;
 	
 	// moimController 매핑값은 .mo로 통일!
 	@RequestMapping("teamList.mo")
@@ -296,7 +300,8 @@ public class MoimController {
 		
 		if(moimService.updateTeamMember(teamMemberList) > 0) {
 			// 모두 성공
-			session.setAttribute("alterMsg", "뱃지 구매 성공");
+			session.setAttribute("loginMember", memberService.loginMember((Member)session.getAttribute("loginMember")));
+			session.setAttribute("alterMsg", "팀원 정보 수정 성공");
 			mv.setViewName("redirect:teamPage.mo?teamNo=" + teamNo);
 		} else {
 			// 실패
@@ -306,5 +311,55 @@ public class MoimController {
 		return mv;
 	}
 	
+	@RequestMapping("deleteTeamMember.mo")
+	public ModelAndView deleteTeamMember(ModelAndView mv, int memNo, HttpSession session) {
+		
+		moimService.deleteTeamMember(memNo);
+		
+		session.setAttribute("loginMember", memberService.loginMember((Member)session.getAttribute("loginMember")));
+		
+		return mv;
+	}
 	
+	@RequestMapping("deleteApply.mo")
+	public ModelAndView deleteApply(HttpSession session, ModelAndView mv, Apply ap) {
+		
+		if(moimService.DeleteApply(ap.getMemNo()) > 0) {
+			// 성공
+			session.setAttribute("alterMsg", "신청 취소 완료");
+			mv.setViewName("redirect:teamPage.mo?teamNo=" + ap.getMoimNo());
+		} else {
+			mv.addObject("errorMsg", "신청 취소 실패").setViewName("common/errorPage");
+		}
+		
+		
+		return mv;
+	}
+	
+	@RequestMapping("insertApply.mo")
+	public ModelAndView insertApply(ModelAndView mv, Apply ap) {
+		
+		if(moimService.insertApply(ap) > 0) {
+			// 성공
+			mv.setViewName("redirect:teamPage.mo?teamNo=" + ap.getMoimNo());
+		} else {
+			mv.addObject("errorMsg", "신청 실패").setViewName("common/errorPage");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("updateApply.mo")
+	public ModelAndView updateApply(ModelAndView mv, Apply ap) {
+		
+		System.out.println(ap);
+		
+		if(moimService.UpdateApply(ap) > 0) {
+			mv.setViewName("redirect:teamPage.mo?teamNo=" + ap.getMoimNo());
+		}else {
+			mv.addObject("errorMsg", "수락 실패").setViewName("common/errorPage");
+		}
+		
+		return mv;
+	}
 }

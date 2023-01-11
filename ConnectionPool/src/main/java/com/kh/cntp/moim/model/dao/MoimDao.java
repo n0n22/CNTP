@@ -65,5 +65,25 @@ public class MoimDao {
 	public int updateTeamMember(SqlSessionTemplate sqlSession, TeamMember tm) {
 		return sqlSession.update("moimMapper.updateTeamMember", tm);
 	}
+	
+	public int deleteTeamMember(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.delete("moimMapper.deleteTeamMember", memNo);
+	}
+	
+	public int deleteApply(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.delete("moimMapper.deleteApply", memNo);
+	}
+	
+	public int insertApply(SqlSessionTemplate sqlSession, Apply ap) {
+		return sqlSession.insert("moimMapper.insertApply", ap);
+	}
+	
+	public int updateApply(SqlSessionTemplate sqlSession, int applyNo) {
+		return sqlSession.update("moimMapper.updateApply", applyNo);
+	}
+	
+	public int insertTeamMember(SqlSessionTemplate sqlSession, Apply ap) {
+		return sqlSession.insert("moimMapper.insertTeamMember", ap);
+	}
 
 }

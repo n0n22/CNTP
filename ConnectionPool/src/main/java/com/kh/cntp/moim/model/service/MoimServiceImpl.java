@@ -34,13 +34,6 @@ public class MoimServiceImpl implements MoimService {
 		return moimDao.insertTeam(sqlSession, team)*moimDao.insertTeamLeaderMember(sqlSession, team)*moimDao.insertResultHistory(sqlSession);
 	}
 
-	// 뭔가 이거 안 쓰게 될 거 같다.
-	@Override
-	public int insertTeamMember(TeamMember teamMember) {
-		return 0;
-	}
-
-
 	@Override
 	public Team selectTeam(String teamNo) {
 		return moimDao.SelectTeam(sqlSession, teamNo);
@@ -67,18 +60,18 @@ public class MoimServiceImpl implements MoimService {
 	}
 
 	@Override
-	public int insertApply(Team team) {
-		return 0;
+	public int insertApply(Apply ap) {
+		return moimDao.insertApply(sqlSession, ap);
 	}
 
 	@Override
-	public int ajaxUpdateApply(int applyNo) {
-		return 0;
+	public int UpdateApply(Apply ap) {
+		return moimDao.updateApply(sqlSession, ap.getApplyNo()) * moimDao.insertTeamMember(sqlSession, ap);
 	}
 
 	@Override
-	public int ajaxDeleteApply(int applyNo) {
-		return 0;
+	public int DeleteApply(int memNo) {
+		return moimDao.deleteApply(sqlSession, memNo);
 	}
 
 	@Override
@@ -97,9 +90,10 @@ public class MoimServiceImpl implements MoimService {
 		return  result;
 	}
 
+	@Transactional
 	@Override
 	public int deleteTeamMember(int memNo) {
-		return 0;
+		return moimDao.deleteTeamMember(sqlSession, memNo) * moimDao.deleteApply(sqlSession, memNo);
 	}
 
 	@Override

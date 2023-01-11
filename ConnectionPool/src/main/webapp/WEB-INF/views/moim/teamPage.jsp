@@ -79,7 +79,7 @@
 
 				<div class="img-area" style="width:80%; display:inline-block;">
 					<!-- 팀 이미지 -->
-					<img width="1040px" height="300px" class="teamImg" src="${ team.changeName }">
+					<img width="1040px" height="200px" class="teamImg" src="${ team.changeName }">
 				</div>
 				<c:if test="${ loginMember.teamGrade eq 'L' and loginMember.teamNo eq team.teamNo and team.badgeStatus eq 'N'}">
 					<div class="badge-shop" align="left" style="width:80%;">
@@ -133,8 +133,8 @@
 				<c:if test="${ loginMember.teamNo eq team.teamNo and loginMember.teamGrade eq 'L' }">
 					<div class="update-area" align="center">
 						<form action="teamUpdateForm.mo" method="post">
-							<input type="hidden" value="${ team.teamNo }" name="teamNo">
-							<button class="btn btn-primary" style="width:200px">수정하기</button>
+							<input type="hidden" value="${ team.teamNo }" name="teamNo" id="hiddenTeamNo">
+							<button class="btn btn-primary" style="width:300px">수정하기</button>
 						</form>
 					</div>
 				</c:if>
@@ -169,7 +169,7 @@
 						<c:if test="${ loginMember.teamNo eq team.teamNo and loginMember.teamGrade eq 'L' }">
 							<form action="teamMemberUpdateForm.mo" method="post">
 								<input type="hidden" name="teamNo" value="${ team.teamNo }">
-								<button class="btn btn-primary" style="width:200px;">팀장/부팀장 수정</button>
+								<button class="btn btn-primary" style="width:300px;">팀장/부팀장 수정</button>
 							</form>
 						</c:if>
 						
@@ -184,7 +184,7 @@
 							<tr>
 								<th width="100">닉네임</th>
 								<th width="100">신청일시</th>
-								<th width="100">수락/거절</th>
+								<th width="150">수락/거절</th>
 							</tr>
 							<c:choose>
 								<c:when test="${ not empty applyList }">
@@ -192,7 +192,23 @@
 										<tr>
 											<td>${ ap.nickname }</td>
 											<td>${ ap.applyDate }</td>
-											<td><button>수락</button><button>거절</button></td>
+											<td>
+												<div style="display:inline-block;">
+													<form action="updateApply.mo">
+														<input type="hidden" value="${ ap.applyNo }" name="applyNo">
+														<input type="hidden" value="${ team.teamNo }" name="moimNo">
+														<input type="hidden" value="${ ap.memNo }" name="memNo">
+														<button onclick="return confirmBtn('수락')">수락</button>
+													</form>
+												</div>
+												<div style="display:inline-block;">
+													<form action="deleteApply.mo">
+														<input type="hidden" value="${ ap.memNo }" name="memNo">
+														<input type="hidden" value="${ team.teamNo }" name="moimNo">
+														<button onclick="return confirmBtn('거절')">거절</button>
+													</form>
+												</div>
+											</td>
 										</tr>
 									</c:forEach>
 								</c:when>
@@ -210,7 +226,7 @@
 						<c:when test="${ empty loginMember }">
 							<!-- 로그인이 되어 있지 않을 때 -->
 							<div style="height:150px"></div>
-							<a href="loginForm.me" class="btn btn-primary" style="width:200px;">로그인 후 신청 가능</a>
+							<a href="loginForm.me" class="btn btn-primary" style="width:300px;">로그인 후 신청 가능</a>
 						</c:when>
 						<c:otherwise>
 							<c:choose>
@@ -219,13 +235,22 @@
 									<c:choose>
 										<c:when test="${ loginMember.teamGrade eq 'L' }">
 											<!-- 팀장일 때 -->
-											<a href="chattingRoom.mo" class="btn btn-primary" style="width:200px;">채팅하기</a>
+											<a href="chattingRoom.mo" class="btn btn-primary" style="width:300px;">채팅하기</a>
 										</c:when>
 										<c:otherwise>
 											<!-- 팀원일 때 -->
 											<div style="height:150px"></div>
-											<a href="deleteTeamMember.mo" class="btn btn-primary" style="width:100px;">팀 탈퇴하기</a>
-											<a href="chattingRoom.mo" class="btn btn-primary" style="width:100px;">채팅하기</a>
+											<div style="display:inline-block;">
+												<form action="deleteTeamMember.mo">
+													<input type="hidden" name="memNo" value="${ loginMember.memNo }">
+													<input type="hidden" name="teamNo" value="${ team.teamNo }">
+													<input type="hidden" name="moimNo" value="${ team.teamNo }">
+													<button class="btn btn-primary" style="width:150px;" onclick="return confirmBtn('탈퇴')">팀 탈퇴하기</button>
+												</form>
+											</div>
+											<div style="display:inline-block;">
+												<a href="chattingRoom.mo" class="btn btn-primary" style="width:150px;">채팅하기</a>
+											</div>
 										</c:otherwise>
 									</c:choose>
 								</c:when>
@@ -235,12 +260,17 @@
 										<c:when test="${ teamMemberList.size() < team.teamMember }">
 										<!-- 모집중일 때 -->
 											<div style="height:150px"></div>
-											<a href="insertApply.mo" class="btn btn-primary" id="apply-btn" style="width:200px;">신청하기</a>
+											<form action="insertApply.mo" method="post" id="apply-form">
+												<input type="hidden" name="memNo" value="${ loginMember.memNo }">
+												<input type="hidden" name="teamNo" value="${ team.teamNo }">
+												<input type="hidden" name="moimNo" value="${ team.teamNo }">
+												<button id="apply-btn" class="btn btn-primary" style="width:300px;" onclick="return confirmBtn('신청')">신청하기</button>
+											</form>
 										</c:when>
 										<c:otherwise>
 										<!-- 모집 마감일 때 -->
 											<div style="height:150px"></div>
-											<button class="btn btn-primary" style="width:200px;" disabled>모집마감</button>
+											<button class="btn btn-primary" style="width:300px;" disabled>모집마감</button>
 										</c:otherwise>
 									</c:choose>
 								</c:when>
@@ -250,12 +280,12 @@
 										<c:when test="${ teamMemberList.size() < team.teamMember }">
 										<!-- 모집중일 때 -->
 											<div style="height:150px"></div>
-											<button disabled class="btn btn-primary" id="apply-btn" style="width:200px;">이미 다른 팀에<br> 소속되어 있습니다.</a>
+											<a disabled class="btn btn-primary" id="apply-a" style="width:300px;">이미 다른 팀에<br> 소속되어 있습니다.</a>
 										</c:when>
 										<c:otherwise>
 										<!-- 모집 마감일 때 -->
 											<div style="height:150px"></div>
-											<button class="btn btn-primary" style="width:200px;" disabled>모집마감</button>
+											<button class="btn btn-primary" style="width:300px;" disabled>모집마감</button>
 										</c:otherwise>
 									</c:choose>
 								</c:otherwise>
@@ -278,11 +308,20 @@
 					url : "selectApply.mo",
 					success : function(obj){
 						if(obj != null){
-							console.log('성공')
-							$('#apply-btn').removeAttr('href');
-							$('#apply-btn').css('width', '300px');
-							$('#apply-btn').html('현재 신청내역이 있습니다.');
+							console.log('들어왔다.');
+							if(obj.moimNo == "${ team.teamNo }"){
+								$('#apply-btn').css('width', '300px');
+								$('#apply-btn').html('신청취소');
+								$('#apply-btn').removeAttr('disabled');
+								$('#apply-form').attr('action', 'deleteApply.mo');
+							} else{
+								$('#apply-btn').attr('disabled', 'true');
+								$('#apply-btn').removeAttr('onclick');
+								$('#apply-btn').css('width', '300px');
+								$('#apply-btn').html('현재 신청내역이 있습니다.');
+							}
 						}
+						
 					},
 					error : function(){
 						console.log('ajax 통신 실패');
@@ -292,6 +331,15 @@
 		</script>
 	</c:if>	
 	 
+	 <script>
+	 	function confirmBtn(keyword){
+	 		if(confirm('정말 ' + keyword + '하시겠습니까?')){
+	 			return true;
+	 		} else{
+	 			return false;
+	 		}
+	 	}
+	 </script>
 	
 </body>
 </html>
