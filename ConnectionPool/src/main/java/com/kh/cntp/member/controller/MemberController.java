@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.cntp.member.model.service.MemberService;
@@ -151,12 +152,36 @@ public class MemberController {
 	public String findPwdForm() {
 		return "member/findPwd";
 	}
-		
-	// 비밀번호 재설정 인증(인증받고 재설정)
+			
+	// 비밀번호 재설정 인증(아이디와 이메일 체크 후 메일 전송)
+	@ResponseBody
 	@RequestMapping("findPwdCert.me")
-	public String findPwdCert() {
-		return "member/findPwdChange";
+	public String findPwdCert(String checkId, String checkEmail, Member member) {
+		
+		member.setMemId(checkId);
+		member.setEmail(checkEmail);
+		
+		String result = "";
+		
+		if(memberService.findPwdMailRequest(member) > 0) {
+			result = "successEmail";
+			// 메일보내기
+			
+		} else {
+			result = "failEmail";
+		}
+		
+		return result;
 	}
+	
+	// 메일 인증번호 확인
+	@ResponseBody
+	@RequestMapping("CertNum.me")
+	public String CertNum() {
+		
+		return "gg";
+	}
+	
 	
 	// 비밀번호 재설정 
 	@RequestMapping("findPwd")

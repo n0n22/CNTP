@@ -76,39 +76,49 @@
 	<jsp:include page="../common/menubar_nosearch.jsp"/>
 	
 	    <script>
+	    let p = '';
+	    let n = '';
+	    
         $(function(){
-
-            let today = new Date();
-    
-            let year = today.getFullYear();
-            let month = today.getMonth() + 1;
-            month = month < 10 ? '0' + month : month;  
-            let date = today.getDate();
-            date = date < 10 ? '0' + date : date;
-            let day = '';
-            switch(today.getDay()){
-                case 1 : day = '월요일'; break; 
-                case 2 : day = '화요일'; break;
-                case 3 : day = '수요일'; break;
-                case 4 : day = '목요일'; break;
-                case 5 : day = '금요일'; break;
-                case 6 : day = '토요일'; break;
-                case 7 : day = '일요일'; break;
-            }
-
-            let mainDate = year + '년 ' + month + '월 ' + date + '일 ' + day;
-            $('.mainDate').html(mainDate);
+        	
+            let now = new Date('${now}');	// 현재 페이지 날짜
+            let a = formatDate(now);  // yyyy-mm-dd
+            $('.mainDate').html(a);
+            
+            let prev = new Date(now.setDate(now.getDate() - 1)); // 전날 날짜
+            p = formatDate(prev); // yyyy-mm-dd
+            
+            let next = new Date(now.setDate(now.getDate() + 2)); // 다음날 날짜
+            n = formatDate(next); // yyyy-mm-dd
 
         })
+        // 날짜 형식을 'YYYY-MM-DD로 바꿔주는 함수'
+        function formatDate(date){
+        	let year = date.getFullYear();
+        	let month =
+        		date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+        	let day =
+        		date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+        	return `\${year}-\${month}-\${day}`;
+        }
+        // page 이동을 해줄 함수
+        function page(num){
+        	switch(num){
+        	case 0 : location.href = 'battleList.bt?cpage=' + p; break;
+        	case 1 : location.href = 'battleList.bt?cpage=' + n; break;
+        	}
+        }
+  
     </script>
 
     <div class="outer">
     	<br>
 		<div class="outer-top">
 	        <div class="date">
-	            <button class="btn btn-outline-dark" >&lt; prev</button>&nbsp;
+	            <button class="btn btn-outline-dark" onclick="page(0);">&lt; prev</button>&nbsp;
 	            <h2 class="mainDate" style="display: inline;"></h2>
-	            &nbsp;<button class="btn btn-outline-dark" style="flex: right;">next &gt;</button>
+	            &nbsp;
+	            <button class="btn btn-outline-dark" onclick="page(1);">next &gt;</button>
 	        </div>
 		</div>
         <div class="search-area" align="center" style="margin-top: 20px">

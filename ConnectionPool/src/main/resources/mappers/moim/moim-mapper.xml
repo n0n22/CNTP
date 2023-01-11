@@ -279,4 +279,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE TEAM_NO = #{ teamNo }
 	</update>
 	
+	<update id="updateTeamMember" parameterType="teamMember">
+		UPDATE
+		       TEAM_MEMBER
+		   SET
+		       TEAM_GRADE = #{ teamGrade }
+		 WHERE
+		       MEM_NO = (SELECT
+		                        MEM_NO
+		                   FROM
+		                        MEMBER
+		                  WHERE
+		                        NICKNAME = #{ memNo })
+	</update>
+	
 </mapper>

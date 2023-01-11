@@ -55,7 +55,7 @@ public interface MoimService {
 	int updateTeam(Team team);
 	
 	// 팀 멤버 수정(권한 수정도)
-	int updateTeamMember(String teamNo);
+	int updateTeamMember(TeamMember tm);
 	
 	// 팀장이 아닐 경우에만 탈퇴할 수 있도록 걸어둬야 한다. 팀장이면 권한 수정하라고 alert 예정
 	int deleteTeamMember(int memNo);

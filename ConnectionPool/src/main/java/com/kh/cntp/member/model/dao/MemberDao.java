@@ -27,5 +27,9 @@ public class MemberDao {
 	public Member findId(SqlSessionTemplate sqlSession, Member member) {
 		return sqlSession.selectOne("memberMapper.findId", member);
 	}
+	
+	public int findPwdMailRequest(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.selectOne("memberMapper.findPwdMailRequest", member);
+	}
 
 }
