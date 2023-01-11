@@ -97,8 +97,77 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				DESC
 		</if>
 	</select>
-
-
+	
+	<!-- 검색한 회원 목록 개수 조회 -->
+	<select id="selectSearchMemberListCount" parameterType="hashmap" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       MEMBER
+		 WHERE
+		       MEM_STATUS = 'Y'
+		<if test="condition != ''">
+			  
+		</if>
+		<if test="condition == 'name'">
+			   AND MEM_NAME LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="condition == 'id'">
+			   AND MEM_ID LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="condition == 'nickname'">
+			   AND NICKNAME LIKE '%' || #{keyword} || '%'
+		</if>  
+	</select>
+	
+	<!-- 검색한 회원 목록 조회 -->
+	<select id="selectSearchMemberList" parameterType="hashmap" resultMap="memberResultSet">
+		SELECT 
+		       MEM_NO,
+		       MEM_ID,
+		       INGIDO,
+		       EMAIL,
+		       NICKNAME,
+		       MEM_NAME,
+		       MEM_AREA,
+		       PHONE,
+		       BIRTHDAY,
+		       DETAIL_AREA,
+		       ENROLL_DATE
+		  FROM 
+		       MEMBER
+		 WHERE 
+		       MEM_STATUS = 'Y'
+		<if test="condition != ''">
+			  
+		</if>
+		<if test="condition == 'name'">
+			   AND MEM_NAME LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="condition == 'id'">
+			   AND MEM_ID LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="condition == 'nickname'">
+			   AND NICKNAME LIKE '%' || #{keyword} || '%'
+		</if>
+		 ORDER
+		    BY
+		<choose>
+			<when test="order == 'memNo'">
+				MEM_NO 
+			</when>
+			<when test="order == 'ingido'">
+				INGIDO 
+			</when>
+			<otherwise>
+				ENROLL_DATE 
+			</otherwise>
+		</choose>
+		<if test="orderCondition == 'desc'">
+				DESC
+		</if>
+		<!-- asc 기본값이므로 생략 -->
+	</select>
 
 
 <!-- 
