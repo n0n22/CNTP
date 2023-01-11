@@ -102,13 +102,14 @@ public class MoimServiceImpl implements MoimService {
 	}
 
 	@Override
-	public ArrayList<Team> selectTeamList(Team team) {
-		return null;
+	public int selectTeamCountList(Team team) {
+		return 0;
 	}
 
 	@Override
-	public int selectTeamCountList(Team team) {
-		return 0;
+	public ArrayList<Team> selectTeamList(int cpage, String teamArea, String keyword) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

@@ -62,7 +62,7 @@ public interface MoimService {
 	
 	// --------------- 팀 가입 리스트 조회 ---------------
 	// 조건에 따라 team을 조회해와야 하기 때문에 team을 인자값으로 넣어준다.
-	ArrayList<Team> selectTeamList(Team team);
+	ArrayList<Team> selectTeamList(int cpage, String teamArea, String keyword);
 	
 	// 페이징을 위해 조건에 맞는 TeamListcount를 구해야 한다.
 	int selectTeamCountList(Team team);

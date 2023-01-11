@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,7 +36,14 @@ public class MoimController {
 	
 	// moimController 매핑값은 .mo로 통일!
 	@RequestMapping("teamList.mo")
-	public String selectTeamList() {
+	public String selectTeamList(@RequestParam(value="cpage", defaultValue="1") int currentPage,
+								 @RequestParam(value="teamArea", defaultValue="all") String teamArea,
+								 @RequestParam(value="keyword", defaultValue="all") String keyword) {
+		
+		
+		
+		
+		
 		return "moim/teamListView";
 	}
 	
