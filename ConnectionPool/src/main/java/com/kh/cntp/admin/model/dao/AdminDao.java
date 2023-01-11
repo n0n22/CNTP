@@ -35,10 +35,23 @@ public class AdminDao {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());		
 		
-		// String order = (String)map.get("order");
-		// System.out.println("정렬 : " + order);
-		
 		return (ArrayList)sqlSession.selectList("adminMapper.selectMemberList", map, rowBounds);
+	}
+	
+	
+	// 검색한 회원 목록 개수 조회
+	public int selectSearchMemberListCount(SqlSessionTemplate sqlSession, HashMap map) {
+		return sqlSession.selectOne("adminMapper.selectSearchMemberListCount", map);
+	}
+	
+	// 검색한 회원 목록 조회
+	public ArrayList<Member> selectSearchMemberList(SqlSessionTemplate sqlSession, HashMap map) {
+		PageInfo pi = (PageInfo)map.get("pi");
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());		
+		
+		return (ArrayList)sqlSession.selectList("adminMapper.selectSearchMemberList", map, rowBounds);
 	}
 	
 	
