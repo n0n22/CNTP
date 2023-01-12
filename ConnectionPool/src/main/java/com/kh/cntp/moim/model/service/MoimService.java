@@ -76,7 +76,7 @@ public interface MoimService {
 	
 	int ajaxInsertChatting(Chatting chat);
 	
-	int deleteChatting(Chatting chat);
+	int ajaxDeleteChatting(String chatNo);
 	
 	
 	

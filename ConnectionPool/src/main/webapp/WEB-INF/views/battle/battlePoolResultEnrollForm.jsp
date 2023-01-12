@@ -81,68 +81,71 @@
 		    $(function(){
 		    	$defeat.val('${awayTeam.teamNo}');
 		    	
-		    	$('.home').change(function(){
+		    	$('.vic').change(function(){
 		    		var vicRecord = [
 		    			{
-		    				player : $('#homePlayer1').val(),
-		    				style : $('#homeStyle1').val(),
-		    				record : $('#homeRecord1').val()
+		    				player : $('#vicPlayer1').val(),
+		    				style : $('#vicStyle1').val(),
+		    				record : $('#vicRecord1').val()
 		    			},
 		    			{
-		    				player : $('#homePlayer2').val(),
-		    				style : $('#homeStyle2').val(),
-		    				record : $('#homeRecord2').val()
+		    				player : $('#vicPlayer2').val(),
+		    				style : $('#vicStyle2').val(),
+		    				record : $('#vicRecord2').val()
 		    			},
 		    			{
-		    				player : $('#homePlayer3').val(),
-		    				style : $('#homeStyle3').val(),
-		    				record : $('#homeRecord3').val()
+		    				player : $('#vicPlayer3').val(),
+		    				style : $('#vicStyle3').val(),
+		    				record : $('#vicRecord3').val()
 		    			},
 		    			{
-		    				player : $('#homePlayer4').val(),
-		    				style : $('#homeStyle4').val(),
-		    				record : $('#homeRecord4').val()
+		    				player : $('#vicPlayer4').val(),
+		    				style : $('#vicStyle4').val(),
+		    				record : $('#vicRecord4').val()
 		    			}
 		    		];
 		    		$('#vicRecord').val(JSON.stringify(vicRecord));
 		    	})
 		    	
-		    	$('.away').change(function(){
-		    		var vicRecord = [
+		    	$('.def').change(function(){
+		    		var defRecord = [
 		    			{
-		    				player : $('#awayPlayer1').val(),
-		    				style : $('#awayStyle1').val(),
-		    				record : $('#awayRecord1').val()
+		    				player : $('#defPlayer1').val(),
+		    				style : $('#defStyle1').val(),
+		    				record : $('#defRecord1').val()
 		    			},
 		    			{
-		    				player : $('#awayPlayer2').val(),
-		    				style : $('#awayStyle2').val(),
-		    				record : $('#awayRecord2').val()
+		    				player : $('#defPlayer2').val(),
+		    				style : $('#defStyle2').val(),
+		    				record : $('#defRecord2').val()
 		    			},
 		    			{
-		    				player : $('#awayPlayer3').val(),
-		    				style : $('#awayStyle3').val(),
-		    				record : $('#awayRecord3').val()
+		    				player : $('#defPlayer3').val(),
+		    				style : $('#defStyle3').val(),
+		    				record : $('#defRecord3').val()
 		    			},
 		    			{
-		    				player : $('#awayPlayer4').val(),
-		    				style : $('#awayStyle4').val(),
-		    				record : $('#awayRecord4').val()
+		    				player : $('#defPlayer4').val(),
+		    				style : $('#defStyle4').val(),
+		    				record : $('#defRecord4').val()
 		    			}
 		    		];
-		    		$('#defRecord').val(JSON.stringify(vicRecord));
+		    		$('#defRecord').val(JSON.stringify(defRecord));
 		    	})
 		    })
 		    
 		    function select(num){
 		    	switch(num){
+		    	// 홈팀
 		    	case 1 : 
 	    			$hb.attr("class", "btn btn-lg btn-primary"); 
 	    			$ab.attr("class", "btn btn-lg btn-light"); 
 	    			$hr.attr("checked", true); 
 		    		$ar.attr("checked", false);
 	    			$defeat.val('${awayTeam.teamNo}');
+	    			$('#vicRecord').val();
 	    			break;
+	    		// 어웨이팀
 		    	case 2 : 
 		    		$hb.attr("class", "btn btn-lg btn-light"); 
 		    		$ab.attr("class", "btn btn-lg btn-primary");
@@ -153,6 +156,11 @@
 		    	}
 		    }
 		    function submit(){
+		    	// 배틀 기록을 등록하지 않으면 submit을 실행할수 없음
+		    	if($('#vicRecord').val() == '' || $('#defRecord').val() == ''){
+		    		alert('배틀 기록을 등록해주세요!');
+		    		return;
+		    	}
 		    	$("#submit").submit();
 		    }
 		    
@@ -164,9 +172,11 @@
 	            	<br>
 	                <h2>배틀기록</h2>
 	                <div class="battleRecord">
-	                    <div class="left">
-	                        <h3>${ homeTeam.teamName }</h3>
-	                        <table>
+	                    
+	                    <div class="content">
+	                    	<button class="btn btn-lg btn-primary disabled">승리팀</button>
+	                    	<br><br>
+	                        <table id="victoryTeam" style="text-aligin:center">
 	                            <thead>
 	                                <tr style="text-align: center;">
 	                                    <th>선수</th>
@@ -176,65 +186,65 @@
 	                            </thead>
 	                            <tbody>
 	                                <tr>
-	                                    <td><input id="homePlayer1" class="home" type="text" style="width: 100%"></td>
-	                                    <td><input id="homeStyle1" class="home" type="text" style="width: 100%"></td>
-	                                    <td><input id="homeRecord1" class="home" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicPlayer1" class="vic" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicStyle1" class="vic" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicRecord1" class="vic" type="text" style="width: 100%"></td>
 	                                </tr>
 	                                <tr>
-	                                    <td><input id="homePlayer2" class="home" type="text" style="width: 100%"></td>
-	                                    <td><input id="homeStyle2" class="home" type="text" style="width: 100%"></td>
-	                                    <td><input id="homeRecord2" class="home" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicPlayer2" class="vic" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicStyle2" class="vic" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicRecord2" class="vic" type="text" style="width: 100%"></td>
 	                                </tr>
 	                                <tr>
-	                                    <td><input id="homePlayer3" class="home" type="text" style="width: 100%"></td>
-	                                    <td><input id="homeStyle3" class="home" type="text" style="width: 100%"></td>
-	                                    <td><input id="homeRecord3" class="home" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicPlayer3" class="vic" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicStyle3" class="vic" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicRecord3" class="vic" type="text" style="width: 100%"></td>
 	                                </tr>
                                     <tr>
-	                                    <td><input id="homePlayer4" class="home" type="text" style="width: 100%"></td>
-	                                    <td><input id="homeStyle4" class="home" type="text" style="width: 100%"></td>
-	                                    <td><input id="homeRecord4" class="home" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicPlayer4" class="vic" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicStyle4" class="vic" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicRecord4" class="vic" type="text" style="width: 100%"></td>
 	                                </tr>
 	                            </tbody>
 	                        </table>
-	                        <br>
+	                        <br><br>
+	                        
+	                        <button class="btn btn-lg btn-danger disabled">패배팀</button>
+	                        
+	                        <table id="defeatTeam" style="text-align: center">
+	                            <thead>
+	                                <tr style="text-align: center;">
+	                                    <th>선수</th>
+	                                    <th>종목</th>
+	                                    <th style="width: 150px;">기록</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+                 	                <tr>
+	                                    <td><input id="defPlayer1" class="def" type="text" style="width: 100%"></td>
+	                                    <td><input id="defStyle1" class="def" type="text" style="width: 100%"></td>
+	                                    <td><input id="defRecord1" class="def" type="text" style="width: 100%"></td>
+	                                </tr>
+	                                <tr>
+	                                    <td><input id="defPlayer2" class="def" type="text" style="width: 100%"></td>
+	                                    <td><input id="defStyle2" class="def" type="text" style="width: 100%"></td>
+	                                    <td><input id="defRecord2" class="def" type="text" style="width: 100%"></td>
+	                                </tr>
+	                                <tr>
+	                                    <td><input id="defPlayer3" class="def" type="text" style="width: 100%"></td>
+	                                    <td><input id="defStyle3" class="def" type="text" style="width: 100%"></td>
+	                                    <td><input id="defRecord3" class="def" type="text" style="width: 100%"></td>
+	                                </tr>
+                                    <tr>
+	                                    <td><input id="defPlayer4" class="def" type="text" style="width: 100%"></td>
+	                                    <td><input id="defStyle4" class="def" type="text" style="width: 100%"></td>
+	                                    <td><input id="defRecord4" class="def" type="text" style="width: 100%"></td>
+	                                </tr>
+	                            </tbody>
+	                        </table>
+	                        
 	                    </div>
 	            
-	                    <div class="right">
-	                        <h3>${ awayTeam.teamName }</h3>
-	                        <table>
-	                            <thead>
-	                                <tr style="text-align: center;">
-	                                    <th>선수</th>
-	                                    <th>종목</th>
-	                                    <th style="width: 150px;">기록</th>
-	                                </tr>
-	                            </thead>
-	                            <tbody>
-	                             	                                <tr>
-	                                    <td><input id="awayPlayer1" class="away" type="text" style="width: 100%"></td>
-	                                    <td><input id="awayStyle1" class="away" type="text" style="width: 100%"></td>
-	                                    <td><input id="awayRecord1" class="away" type="text" style="width: 100%"></td>
-	                                </tr>
-	                                <tr>
-	                                    <td><input id="awayPlayer2" class="away" type="text" style="width: 100%"></td>
-	                                    <td><input id="awayStyle2" class="away" type="text" style="width: 100%"></td>
-	                                    <td><input id="awayRecord2" class="away" type="text" style="width: 100%"></td>
-	                                </tr>
-	                                <tr>
-	                                    <td><input id="awayPlayer3" class="away" type="text" style="width: 100%"></td>
-	                                    <td><input id="awayStyle3" class="away" type="text" style="width: 100%"></td>
-	                                    <td><input id="awayRecord3" class="away" type="text" style="width: 100%"></td>
-	                                </tr>
-                                    <tr>
-	                                    <td><input id="awayPlayer4" class="away" type="text" style="width: 100%"></td>
-	                                    <td><input id="awayStyle4" class="away" type="text" style="width: 100%"></td>
-	                                    <td><input id="awayRecord4" class="away" type="text" style="width: 100%"></td>
-	                                </tr>
-	                            </tbody>
-	                        </table>
-	                        <br>
-	                    </div>
 	                </div>
 	            </div>
 	            <br clear="both">

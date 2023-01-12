@@ -202,13 +202,13 @@
                     <div>  
                         <!-- 아이디 -->
                         <!-- ajax로 중복확인할것-->
-                        <div><input type="text" id="userId" name="" maxlength="12" required placeholder="아이디를 입력해주세요"></div>
+                        <div><input type="text" id="userId" name="memId" maxlength="12" required placeholder="아이디를 입력해주세요"></div>
                         <label class="checkResult" id="idCheck">&nbsp;</label>
                     </div>
 
                     <div>
                         <!-- 비밀번호 -->
-                        <div><input type="password" name="" id="userPwd" maxlength="15" required placeholder="비밀번호를 입력해주세요
+                        <div><input type="password" name="memPwd" id="userPwd" maxlength="15" required placeholder="비밀번호를 입력해주세요
                             8~15자 (영문/숫자/특수문자)"></div>
                         <label class="checkResult" id="pwdCheck">&nbsp;</label>
                     </div>
@@ -222,18 +222,18 @@
                     <div>  
                         <!-- 닉네임 -->
                         <!-- ajax로 중복확인할것-->
-                        <div><input type="text" id="userNickName" name="" maxlength="12" required placeholder="닉네임 입력해주세요"></div>
+                        <div><input type="text" id="userNickName" name="nickName" maxlength="12" required placeholder="닉네임 입력해주세요"></div>
                         <label class="checkResult" id="nickNameCheck">&nbsp;</label>
                     </div>
                   
                     <div>
                         <!-- 이름 -->
                         <div>
-                            <input type="text" name="" id="userName" maxlength="5" required placeholder="이름을 입력해주세요" style="width: 293px;">
-                            <select class="genderForm">
-                                <option value="성별" hidden="" disabled="disabled" selected="selected" >성별</option>
-                                <option value="">남자</option>
-                                <option value="">여자</option>
+                            <input type="text" name="memName" id="userName" maxlength="5" required placeholder="이름을 입력해주세요" style="width: 293px;">
+                            <select class="genderForm" name="gender">
+                                <option value="성별" disabled="disabled" hidden="" selected="selected" >성별</option>
+                                <option value="M">남자</option>
+                                <option value="S">여자</option>
                             </select>
                         </div>
                         <label class="checkResult" id="nameCheck">&nbsp;</label>
@@ -243,9 +243,9 @@
                         <!-- 생년월일 -->
                         <div class="birthdate">생년월일을 입력해주세요</div>
                         <div id="birth-select-area" style="margin-top: 8px;">
-                            <select name="yy" id="year" style="width: 150px;"></select>
-                            <select name="mm" id="month" style="width: 125px;"></select>
-                            <select name="dd" id="day" style="width: 125px;"></select>
+                            <select name="birthDay" id="year" style="width: 150px;"></select>
+                            <select name="birthDay" id="month" style="width: 125px;"></select>
+                            <select name="birthDay" id="day" style="width: 125px;"></select>
                         </div>
                         <div><label class="checkResult" id="birthCheck">&nbsp;</label></div>
                     </div>
@@ -262,7 +262,7 @@
                             <input type="text" name="email" required style="width: 140px;" placeholder="이메일을 입력해주세요"> @ 
                             <input type="text" name="emailSite" id="emailSite" required style="width: 130px;" disabled>
                             <select id="emailForm" name="emailForm" onchange="emailCheck()">
-                                <option value="선택하세요" hidden="" disabled="disabled" selected="selected" >선택하세요</option>
+                                <option value="선택하세요" hidden="" disabled="disabled" selected="selected">선택하세요</option>
                                 <option value="직접입력" >직접입력</option>
                                 <option value="naver.com" >naver.com</option>
                                 <option value="hanmail.net" >hanmail.net</option>
@@ -285,8 +285,8 @@
                     <div>
                         <!-- 지역 선택 -->
                         <div>
-                            <select name="address" id="addressForm">
-                                <option value="시/도 선택" hidden="" disabled="disabled" selected="selected" >시/도 선택</option>
+                            <select id="addressForm" name="memArea">
+                                <option value="시/도 선택" hidden="" selected="selected">시/도 선택</option>
                                 <option value="Seoul">서울특별시</option>
                                 <option value="Gyeonggi">경기도</option>
                                 <option value="Gangwon">강원도</option>
@@ -297,7 +297,7 @@
                                 <option value="Gyeongbuk">경상북도</option>
                                 <option value="Gyeongnam">경상남도</option>
                             </select>
-                            <input type="text" name="detailAddress" placeholder="활동 지역을 입력하세요(읍,면,동)" required style="width: 200px;">
+                            <input type="text" name="detailArea" placeholder="활동 지역을 입력하세요(읍,면,동)" required style="width: 200px;">
                         </div>
                     </div>
 
@@ -305,7 +305,7 @@
                         <!-- 등급 -->
                         <div>
                             <div class="swimLevel">수영 실력을 선택해주세요. 팀가입과 소모임에 나타나요
-                                <select class="levelForm">
+                                <select class="levelForm" name="grade">
                                     <option value="등급" hidden="" disabled="disabled" selected="selected" >등급선택</option>
                                     <option value="B">초급</option>
                                     <option value="M">중급</option>
@@ -355,7 +355,6 @@
                             } else {
                                 $('#emailSite').attr('disabled', true);
                                 $('#emailSite').val($('#emailForm').val());
-                                console.log($('#emailSite').val());
                             }
                         }; 
 

@@ -200,6 +200,7 @@ public class AdminController {
 	
 	
 	// 신고 무효
+
 	@RequestMapping("reportInvalid.ad")
 	public ModelAndView invalidReport(@ModelAttribute Report report, HttpSession session , ModelAndView mv) {
 		
@@ -212,8 +213,7 @@ public class AdminController {
 		
 		return mv;
 	}
-	
-	
+
 	
 	
 	

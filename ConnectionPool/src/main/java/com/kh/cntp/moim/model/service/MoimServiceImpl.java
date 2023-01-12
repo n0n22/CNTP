@@ -126,9 +126,8 @@ public class MoimServiceImpl implements MoimService {
 	}
 
 	@Override
-	public int deleteChatting(Chatting chat) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int ajaxDeleteChatting(String chatNo) {
+		return moimDao.ajaxDeleteChatting(sqlSession, chatNo);
 	}
 
 	

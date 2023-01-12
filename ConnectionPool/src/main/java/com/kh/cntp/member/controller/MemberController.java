@@ -176,8 +176,17 @@ public class MemberController {
 	
 	// 회원가입 
 	@RequestMapping("memberInsert.me")
-	public String insertMember() {
-		return "member/memberEnrollResult";
+	public ModelAndView insertMember(Member member, String emailSite, String emailForm, ModelAndView mv) {
+		
+		if(emailSite == null) {	emailSite = emailForm; }
+		member.setEmail(member.getEmail() + '@' + emailSite); // 사용자가 입력한 id + option값
+		member.setBirthDay((member.getBirthDay().replace(",", "-"))); //jsp에서 name값 같게해서 넘김 ex) 99,09,19 >> replace해서 ,를 -로 변경
+		
+		memberService.insertMember(member);
+		
+		mv.setViewName("member/memberEnrollResult");
+		
+		return mv;
 	}
 	
 	// ID찾기 페이지
