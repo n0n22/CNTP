@@ -14,6 +14,7 @@ public class Board {
 	private String changeName;
 	private int count;
 	private String status;
+	private String nickName;
 	
 
 }

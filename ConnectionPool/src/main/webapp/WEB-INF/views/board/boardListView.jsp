@@ -73,7 +73,7 @@
             <tr>
                 <td class="bno">${b.boardNo }</td>
                 <td>${b.category }</td>
-                <td>${b.boardTitle }</td>
+                <td>${b.title }</td>
                 <td>${b.memberNo }</td>
                 <td>${b.createDate }</td>
                 <td>${b.count }</td>
@@ -104,7 +104,7 @@
             <div id="pagingArea">
                 <ul class="pagination">
                 
-                	<c:choose></c:choose>
+                	<c:choose>
                 		<c:when test="${pi.currentPage eq 1 }">
                     	<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
                     	</c:when>
@@ -112,7 +112,7 @@
                     	<c:otherwise>
 	                    <li class="page-item"><a class="page-link" href="list.bo?cpage=${pi.currentPage -1}">Previous</a></li>
                     	</c:otherwise>
-                    
+                    </c:choose>
                     
                     <c:forEach begin="${pi.startPage }" end="${pi.endPage }" var="p">
                     	<li class="page-item"><a class="page-link" href="list.bo?cpage=${p }">${ p }</a></li>
@@ -136,7 +136,7 @@
             <form id="searchForm" action="" method="get" align="center">
                 <div class="select">
                     <select class="custom-select" name="condition">
-                        <option value="writer">작성자</option>
+                        <option value="memNo">작성자</option>
                         <option value="title">제목</option>
                         <option value="content">내용</option>
                     </select>
