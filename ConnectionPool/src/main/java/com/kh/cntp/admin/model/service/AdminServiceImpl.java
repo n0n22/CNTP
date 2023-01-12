@@ -82,11 +82,15 @@ public class AdminServiceImpl implements AdminService {
 	// 신고 목록 조회
 	@Override
 	public ArrayList<Report> selectReportList(PageInfo pi, String result) {
-		return null;
+		return adminDao.selectReportList(sqlSession, pi, result);
 	}
 	
 	
-	
+	// 신고 상세 조회
+	@Override
+	public Report selectReport(int rno) {
+		return adminDao.selectReport(sqlSession, rno);
+	}
 	
 	
 	

@@ -346,7 +346,7 @@
 				let ws = XLSX.utils.table_to_sheet(document.getElementById('memberTable'), '회원목록');
 				
 				// 컬럼 숨기기
-				console.log(ws.G1.hidden);
+				// console.log(ws.G1.hidden);
 				
 				// 시트 설정을 전달하면서 엑셀 파일 생성
 				let wb = XLSX.utils.table_to_book(document.getElementById('memberTable'), ws);
@@ -414,7 +414,7 @@
 
 	<form id="reportvalue">
 		<input type="hidden" value="" name="memNo" id="memNo">
-		<input type="hidden" value="" name="memNickname" id="memNickname">
+		<input type="hidden" value="" name="memNickName" id="memNickName">
 		<input type="hidden" value="" name="content" id="content">
 		<input type="hidden" value="" name="reportBoard" id="reportBoard">
 		<input type="hidden" value="" name="boardNo" id="boardNo">
@@ -440,8 +440,8 @@
 				// var customWindow = window.open('', '_blank', 'width=300,height=500');							
 				window.open('', '신고', 'width=450,height=300,location=yes,menubar=yes,scrollbar=no');
 				
-				$('#memNo').val(4);
-				$('#memNickname').val('닉네임3');
+				$('#memNo').val(6);
+				$('#memNickName').val('닉네임7');
 				$('#content').val('바보야');
 				$('#reportBoard').val('board');
 				$('#boardNo').val(3);

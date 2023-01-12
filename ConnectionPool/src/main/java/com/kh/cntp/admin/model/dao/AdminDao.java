@@ -74,6 +74,19 @@ public class AdminDao {
 	}
 	
 	
+	// 신고 목록 조회
+	public ArrayList<Report> selectReportList(SqlSessionTemplate sqlSession, PageInfo pi, String result) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("adminMapper.selectReportList", result, rowBounds);
+	}
+	
+	
+	// 신고 상세 조회
+	public Report selectReport(SqlSessionTemplate sqlSession, int rno) {
+		return sqlSession.selectOne("adminMapper.selectReport", rno);
+	}
 	
 	
 	
