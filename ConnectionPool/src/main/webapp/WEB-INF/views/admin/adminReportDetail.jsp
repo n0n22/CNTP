@@ -53,39 +53,49 @@
                 <tbody>
                     <tr>
                         <th width="20%">번호</th>
-                        <td width="30%">5</td>
+                        <td width="30%">${ report.reportNo }</td>
                         <th width="20%">신고사유</th>
-                        <td width="30%">욕설/비방</td>
+                        <td width="30%">${ report.reportReason }</td>
                     </tr>
                     <tr>
                         <th>신고대상자</th>
-                        <td>user01</td>
+                        <td>${ report.memId }</td>
                         <th>신고자</th>
-                        <td>user05</td>
+                        <td>${ report.reporterId }</td>
                     </tr>
                     <tr>
                         <th>대상글번호</th>
-                        <td>105</td>
+                        <td>${ report.boardNo }</td>
                         <th>신고일</th>
-                        <td>2022-01-03</td>
+                        <td>${ report.reportDate }</td>
                     </tr>
                     <tr>
                         <th>대상 유형</th>
-                        <td colspan="5" align="left">자유게시판 댓글</td>
+                        <td colspan="5" align="left">${ report.reportBoard }
+                        	<c:choose>
+                        		<c:when test="${ report.reportBoard eq 'board' }">
+                        			자유게시판
+                        		</c:when>
+                        		<c:when test="${ report.reportBoard eq 'boardReply' }">
+                        			자유게시판 댓글
+                        		</c:when>
+                        	</c:choose>
+                        
+                        </td>
                     </tr>
                     <tr>
                         <th>대상 내용</th>
                         <td colspan="5">
                             <p align="left">
-                                ㅎㅎㅎㅎ흏ㅎㅎㅎㅎ
+								${ report.content }
                             </p>
                         </td>
                     </tr>
                     <tr>
                         <th>처리결과</th>
-                        <td>신고확정</td>
+                        <td>${ report.reportResult }</td>
                         <th>처리일자</th>
-                        <td colspan="3">2022-03-05</td>
+                        <td colspan="3">${ report.completionDate }</td>
                     </tr>
                 </tbody>
             </table>
