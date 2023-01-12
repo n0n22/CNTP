@@ -64,7 +64,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 회원가입 -->
 	<insert id="" parameterType="member">
-	
+		INSERT 
+		  INTO
+		       MEMBER
+		       (
+		       MEM_NO,
+		       MEM_ID,
+		       MEM_PWD,
+		       GENDER,
+		       INGIDO,
+		       MEM_POINT,
+		       EMAIL,
+		       NICKNAME,
+		       MEM_NAME,
+		       MEM_AREA,
+		       PHONE,
+		       BIRTHDAY,
+		       DETAIL_AREA,
+		       MEM_STATUS,
+		       ENROLL_DATE,
+		       GRADE,
+		       FAILCNT
+		       )
+		       VALUES
+		       (
+		       SEQ_MNO.NEXTVAL,
+		       #{memId},
+		       #{memPwd},
+		       #{gender},
+		       #{ingido},
+		       #{memPoint},
+		       #{email},
+		       #{nickName},
+		       #{memName},
+		       #{memArea},
+		       #{phone},
+		       #{birthDay},
+		       #{detailArea},
+		       'Y',
+		       SYSDATE,
+		       #{grade},
+		       0
+		       );
 	</insert>
 	
 	<!-- 로그인 횟수 증가 -->
