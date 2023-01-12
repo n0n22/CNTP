@@ -137,7 +137,7 @@
         text-align: center;
         box-sizing: border-box;
     }
-    #del-textarea {
+    .del-textarea {
         box-sizing: border-box;
         margin-top: 30px;
         padding: 30px;
@@ -246,7 +246,10 @@
                                 <option value="">할게없음</option>
                                 <option value="">기타</option>
                             </select><br>
-                            <textarea name="" id="del-textarea" rows="5" maxlength="200" placeholder="더욱 나은 서비스를 위하여 소중한 의견 부탁드립니다. (200자)"></textarea>
+                            <input name="" class="del-textarea" maxlength="100" value="회원 탈퇴 유의사항을 숙지하였으며 회원 탈퇴를 진행하겠습니까?">
+                            <input name="" class="del-textarea" maxlength="100" value="" placeholder="동의합니다 입력">
+                            
+                         
                             <div id="del-check">
                                 <span>회원 탈퇴 유의사항을 숙지하였으며 회원 탈퇴를 진행하겠습니다.</span>
                                 <span><input type="checkbox" id="del-checkbox" onchange="abledBtn();"></span>

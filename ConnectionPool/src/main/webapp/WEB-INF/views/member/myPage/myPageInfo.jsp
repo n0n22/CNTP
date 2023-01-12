@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -245,12 +247,12 @@
     <div class="outer">
         <div class="top-bar">
             <div class="inline-block">
-                <div id="name-area" style="cursor: default;"><span id="userName">커풀</span> 님
+                <div id="name-area" style="cursor: default;"><span id="userName">${sessionScope.loginMember.nickName}</span> 님
                     <br>🤔<span>무소속</span>
                 </div>
                 <div>
-                    <div id="point-text">포인트&nbsp;<span id="point">180</span></div>
-                    <div id="ingido-text">인기도&nbsp;<span id="ingido">13</span></div>
+                    <div id="point-text">포인트&nbsp;<span id="point">${sessionScope.loginMember.memPoint}</span></div>
+                    <div id="ingido-text">인기도&nbsp;<span id="ingido">${sessionScope.loginMember.ingido}</span></div>
                 </div>
             </div>
             <div>
@@ -271,18 +273,18 @@
             <div class="info-area">
                 <form action="myPageUpdate.me" method="post" id="info-form">
 
-                    <input type="hidden" name="userNo" value="\">
+                    <input type="hidden" name="userNo" value="${sessionScope.loginMember.memNo}">
                     
                     <div>
                         <div class="subText">아이디</div>
-                        <div><input type="text" id="userId" name="userId" value="" maxlength="12" required readonly></div>
+                        <div><input type="text" id="userId" name="userId" value="${sessionScope.loginMember.memId}" maxlength="12" required readonly></div>
                         <!-- <td><button type="button" id="idCheck-btn">중복확인</button></td> -->
                         <label class="checkResult" id="idCheck">&nbsp;</label>
                     </div>
                                      
                     <div>
                         <div class="subText">이름</div>
-                        <div><input type="text" name="userName" id="userName2" value="" maxlength="5" required readonly></div>
+                        <div><input type="text" name="userName" id="userName2" value="${sessionScope.loginMember.memName}" maxlength="5" required readonly></div>
                         <label class="checkResult" id="nameCheck">&nbsp;</label>
                     </div>
 
@@ -291,14 +293,14 @@
                         <!-- 닉네임 -->
                         <!-- ajax로 중복확인할것-->
                         <div class="subText">닉네임</div>
-                        <div><input type="text" id="userNickName" name="" maxlength="12" value="커풀" required placeholder=""></div>
+                        <div><input type="text" id="userNickName" name="" maxlength="12" value="${sessionScope.loginMember.nickName}" required placeholder=""></div>
                         <label class="checkResult" id="nickNameCheck">&nbsp;</label>
                     </div>
                   
 
                     <div>
                         <div class="subText">휴대전화</div>
-                        <div style="display: inline-block;"><input type="text" name="phone" value="" maxlength="13" required value="" oninput="this.value=this.value.replace(/[^-0-9]/g,'');" placeholder="-를 포함해서 입력해주세요"></div>
+                        <div style="display: inline-block;"><input type="text" name="phone" value="${sessionScope.loginMember.phone}" maxlength="13" required value="" oninput="this.value=this.value.replace(/[^-0-9]/g,'');" placeholder="-를 포함해서 입력해주세요"></div>
                         <!-- <div style="display: inline-block;"><input type="text" name="phone" maxlength="13" oninput="this.value=this.value.replace(/^01[016789]-\d{3,4}-\d{4}$/g,'');" placeholder="-를 포함해서 입력해주세요" style="width: 223px;"></div> -->
                         <div><label>&nbsp;</label></div>
                     </div>
@@ -307,8 +309,10 @@
                     <div>
                         <div class="subText">이메일</div>
                         <div>
-                            <input type="text" name="email" value="" required style="width: 140px;"> @ 
-                            <input type="text" name="emailSite" id="emailSite" value="" required style="width: 130px;" disabled>
+                        	<!-- jstl function split 문자열 중 특정 문자를 기준으로 나눠서 배열로 -->
+                        	<c:set var="email" value="${sessionScope.loginMember.email }"/>
+                            <input type="text" name="email" value="${fn:split(email, '@')[0]}" required style="width: 140px;"> @ 
+                            <input type="text" name="emailSite" id="emailSite" value="${fn:split(email, '@')[1]}" required style="width: 130px;" disabled>
                             <select id="emailForm" name="emailForm" onchange="emailCheck()">
                                 <option value="선택하세요" >선택하세요</option>
                                 <option value="직접입력" >직접입력</option>
@@ -324,7 +328,9 @@
                     
                     <div>  
                         <div class="subText">생년월일</div>
-                        <div><input type="text" id="birthdate" name="" maxlength="12" value="2009-09-09" required readonly></div>
+                        <!-- jstl function substring n~n번째 인덱스까지  -->
+                        <c:set var="birth" value="${ sessionScope.loginMember.birthDay }"/>
+                        <div><input type="text" id="birthdate" name="" maxlength="12" value="${fn:substring(birth, 0, 11)}" required readonly></div>
                         <div><label>&nbsp;</label></div>
                     </div>
 
@@ -332,7 +338,7 @@
                         <div class="subText">활동지역</div>
                         <div>
                             <select name="address" id="addressForm">
-                                <option value="시/도 선택" hidden="" disabled="disabled" selected="selected" >시/도 선택</option>
+                                <option value="시/도 선택" hidden="" disabled="disabled" selected="selected" value="">${ sessionScope.loginMember.memArea}</option>
                                 <option value="Seoul">서울</option>
                                 <option value="Gyeonggi">경기도</option>
                                 <option value="Gangwon">강원도</option>
@@ -343,7 +349,7 @@
                                 <option value="Gyeongbuk">경상북도</option>
                                 <option value="Gyeongnam">경상남도</option>
                             </select>
-                            <input type="text" name="detailAddress" placeholder="상세 지역 (읍,면,동)" required style="width: 200px;">
+                            <input type="text" name="detailAddress" value="${sessionScope.loginMember.detailArea}" placeholder="상세 지역 (읍,면,동)" required style="width: 200px;">
                         </div>
                         <div><label>&nbsp;</label></div>
                     </div>
@@ -352,7 +358,7 @@
                     <div>
                         <div class="subText">수영 등급</div>
                         <div>
-                            <input type="text" name="swimLevel" value="초급" required style="width: 200px;">
+                            <input type="text" name="swimLevel" value="${sessionScope.loginMember.grade}" required style="width: 200px;">
 
                             <select name="levelForm" id="levelForm">
                                 <option value="등급" hidden="" disabled="disabled" selected="selected" >등급변경</option>
