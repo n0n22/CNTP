@@ -35,7 +35,6 @@
 			<div class=" px-3 mt-3 d-flex flex-row justify-content-between">
 	
 				<span>${battle.title}</span>
-				
 			</div>
 	
 			<hr>

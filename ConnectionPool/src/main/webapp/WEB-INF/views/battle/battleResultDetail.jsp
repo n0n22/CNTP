@@ -119,7 +119,6 @@
 						    	$('#defeatTeam tbody').html(defResult);
 					    	})
 					    </script>
-                
 	                <div class="battleRecord">
 	                
 	                    <div class="content">
