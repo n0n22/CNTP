@@ -19,6 +19,11 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.insertMember", member);
 	}
 	
+	// 회원가입 시 메일 인증
+	public int insertMailRequest(SqlSessionTemplate sqlSession, String email) {
+		return sqlSession.insert("memberMapper.insertMailRequest", email);
+	}
+	
 	// 로그인 실패 횟수
 	public int loginCount(SqlSessionTemplate sqlSession, Member member) {
 		return sqlSession.update("memberMapper.loginCount", member);

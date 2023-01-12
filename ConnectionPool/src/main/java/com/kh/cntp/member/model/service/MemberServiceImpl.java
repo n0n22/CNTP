@@ -30,9 +30,13 @@ public class MemberServiceImpl implements MemberService {
 	public int insertMember(Member member) {
 		return memberDao.insertMember(sqlSession, member);
 	}
+	
+	// 회원가입 시 메일 인증
+	@Override
+	public int insertMailRequest(String email) {
+		return memberDao.insertMailRequest(sqlSession, email);
+	}
 
-	
-	
 	// 로그인 실패 횟수
 	@Override
 	public int loginCount(Member member) {
@@ -80,8 +84,8 @@ public class MemberServiceImpl implements MemberService {
 	public int pwdChange(Member member) {
 		return memberDao.pwdChange(sqlSession, member);
 	}
-
 	
+
 	
 	
 	

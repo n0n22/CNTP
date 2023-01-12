@@ -63,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 회원가입 -->
-	<insert id="" parameterType="member">
+	<insert id="insertMember" parameterType="member">
 		INSERT 
 		  INTO
 		       MEMBER
@@ -105,7 +105,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       SYSDATE,
 		       #{grade},
 		       0
-		       );
+		       )
 	</insert>
 	
 	<!-- 로그인 횟수 증가 -->
