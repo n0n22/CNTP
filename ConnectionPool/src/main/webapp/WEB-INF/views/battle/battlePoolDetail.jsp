@@ -289,8 +289,6 @@
 						<!-- AJAX로 하고 싶은데 그냥 SELECT문 통해서 할 예정 : TEAM 테이블, RESULT_HISTORY -->
 						<div class="d-flex flex-row">
 	
-					
-	
 							<div class="mr-4">
 								
 								<span>전적</span>
@@ -298,12 +296,7 @@
 									<span class="text-black-50">${homeTeamRecord.record}전  ${homeTeamRecord.victory}승  ${homeTeamRecord.defeat}패 승률(${homeTeamRecord.winRate}%)</span>
 									
 								</div>
-	
-	
 							</div>
-	
-							
-	
 						</div>
 						
 					</div>
@@ -353,13 +346,10 @@
 							</div>
 	
 							<div class="mr-4">
-								
 								<span>레인</span>
 								<div class="mt-2">
 									<span class="text-black-50">${ poolInfo.lanes }개</span>
 								</div>
-	
-	
 							</div>
 	
 	
@@ -374,8 +364,6 @@
 								</div>
 	
 							</div>
-							
-	
 						</div>
 						
 					</div>
@@ -407,14 +395,33 @@
 	
 						<div class="d-flex flex-row">
 	
-							<div class="mr-4">
-								
-								<span>신청</span>
-								<div class="mt-2">
-									<span class="alpha alpha-red show">신청</span>
-								</div>
-	
-							</div>
+								<c:if test="${ (loginMember.teamGrade) eq 'L' and (loginMember.teamNo ne battle.awayTeam)}">
+									<div class="mr-4">
+										<span>신청</span>
+											<div class="mt-2">
+												<span class="alpha alpha-red show">신청</span>
+											</div>
+									</div>
+								</c:if>
+								<c:if test="${ (loginMember.teamGrade) eq 'L' and (loginMember.teamNo eq battle.awayTeam)}">
+									<div class="mr-4">
+										<span>취소</span>
+											<div class="mt-2">
+												<span class="alpha alpha-red" onclick="cancel()">취소</span>
+											</div>
+									</div>
+									<form action="cancelBattle.bt" method="post" id="cancelBattleSubmit">
+										<input type="hidden" name="battleNo" value="${battle.battleNo}">
+										<input type="hidden" name="memNo" value="${loginMember.memNo}">
+									</form>
+									<script>
+										function cancel(){
+											if(confirm('신청을 취소하시겠습니까?')){
+												$('#cancelBattleSubmit').submit();
+											}
+										}
+									</script>
+								</c:if>
 	
 	
 							<div class="mr-4">
@@ -423,8 +430,7 @@
 								<div class="mt-2">
 									<span class="alpha alpha-green" onclick="location.href='battleResult.bt?battleNo=${battle.battleNo}&homeTeam=${battle.homeTeam}&awayTeam=${battle.awayTeam}'">결과보기</span>
 								</div>
-	
-	
+								
 							</div>
 	
 	
@@ -464,8 +470,8 @@
 						<input type="hidden" name="teamNo" value="${ loginMember.teamNo }">
 						<input type="hidden" name="memNo" value="${ loginMember.memNo }">
 						<input type="hidden" name="battleNo" value="${ battle.battleNo }">
-						<textarea id="msgContent" rows="5" name="chatContent"
-							style="width: 400px; resize: none;" placeholder="도발 멘트를 입력해 주세요."></textarea>
+						<textarea id="msgContent" rows="5" name="chatContent" maxlength="150"
+							style="width: 400px; resize: none;" placeholder="도발 멘트를 입력해 주세요." required="required"></textarea>
 						<br> <br>
 						<button type="submit">신청</button>
 						<button type="button" id="close">취소</button>
