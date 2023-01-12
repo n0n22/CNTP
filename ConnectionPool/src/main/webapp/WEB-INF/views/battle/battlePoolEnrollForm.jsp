@@ -51,7 +51,8 @@
 	
     <div class="outer">
         <div class="outer-top">
-            <h2>배틀풀 작성</h2>
+        	<br><br>
+            <h2 align="center">배틀풀 작성</h2>
             <br>
         </div>
         
@@ -60,7 +61,7 @@
                 <table>
                     <tr>
                         <td>제목 :&nbsp;</td>
-                        <td><input type="text" name="title" required></td>
+                        <td><input type="text" name="title" required maxlength="16" placeholder="제목을 입력해주세요(최대 16자)"></td>
                     </tr>
                 </table>
             </div>
@@ -156,11 +157,11 @@
                   </tr>
                   <tr>
                     <td>폭 :&nbsp;</td>
-                    <td><input type="number" name="width" min="0" step="0.1" required="required" placeholder="소숫점 둘째 자리까지 표시 가능"></td>
+                    <td><input type="number" name="width" min="0" step="0.01" required="required" placeholder="소숫점 둘째 자리까지 표시 가능"></td>
                   </tr>
                   <tr>
                     <td>깊이 :&nbsp;</td>
-                    <td><input type="number" name="depth" min="0" step="0.1" required="required" placeholder="소숫점 둘째 자리까지 표시 가능"></td>
+                    <td><input type="number" name="depth" min="0" step="0.01" required="required" placeholder="소숫점 둘째 자리까지 표시 가능"></td>
                   </tr>
                   <tr>
                     <td>레인 :&nbsp;</td>

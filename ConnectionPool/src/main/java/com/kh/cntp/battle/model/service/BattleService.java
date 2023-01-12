@@ -42,6 +42,8 @@ public interface BattleService {
 	ArrayList<Battle> searchBattle(HashMap<String, String> condition);
 // 배틀 신청 취소
 	int cancelBattle(HashMap<String, String> cancel);
+// 배틀 삭제
+	int deleteBattlePool(int battleNo);
 	
 
 }

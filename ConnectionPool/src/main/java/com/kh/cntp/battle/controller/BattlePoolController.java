@@ -65,6 +65,7 @@ public class BattlePoolController {
 	public String enrollForm() {
 		return "battle/battlePoolEnrollForm";
 	}
+	// 배틀풀 작성
 	@RequestMapping("insert.bt")
 	public String insertBattle(Battle battle,
 							   PoolInfo poolInfo,
@@ -230,5 +231,18 @@ public class BattlePoolController {
 			session.setAttribute("alertMsg", "배틀 신청 취소를 실패하였습니다.");
 		}
 		return "redirect: battleDetail.bt";
+	}
+	// 배틀풀 삭제
+	@RequestMapping("deleteBattlePool.bt")
+	public String deleteBattlePool(int battleNo,
+								   HttpSession session) {
+		int result = battleService.deleteBattlePool(battleNo);
+		
+		if(result > 0 ) {
+			session.setAttribute("alertMsg", "배틀풀 삭제를 성공했습니다.");
+		} else {
+			session.setAttribute("alertMsg", "배틀풀 삭제를 실패했습니다.");
+		}
+		return "redirect: battleList.bt";
 	}
 }

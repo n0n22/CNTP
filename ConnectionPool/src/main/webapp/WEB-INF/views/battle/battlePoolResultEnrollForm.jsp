@@ -176,7 +176,7 @@
 	                    <div class="content">
 	                    	<button class="btn btn-lg btn-primary disabled">승리팀</button>
 	                    	<br><br>
-	                        <table id="victoryTeam" style="text-aligin:center">
+	                        <table id="victoryTeam" style="text-align:center">
 	                            <thead>
 	                                <tr style="text-align: center;">
 	                                    <th>선수</th>

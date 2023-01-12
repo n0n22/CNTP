@@ -25,7 +25,6 @@
 				<span class="font-weight-bold project">배틀풀 상세보기</span>
 				
 			</div>
-	
 			
 		</div>
 	
@@ -381,8 +380,20 @@
 									
 									<span>글 삭제</span>
 									<div class="mt-2">
-										<span class="alpha alpha-red">글 삭제</span>
+										<span class="alpha alpha-red" onclick="deleteBattle();">글 삭제</span>
 									</div>
+									<!-- 글 삭제 -->
+									<form action="deleteBattlePool.bt" method="post" id="deleteBattlePoolSubmit">
+										<input type="hidden" name="battleNo" value="${battle.battleNo}">
+									</form>
+									<script>
+										function deleteBattle(){
+											if(!confirm('게시글을 삭제하시겠습니까?')){
+												return;
+											}
+											$('#deleteBattlePoolSubmit').submit();
+										}
+									</script>
 									
 								</div>
 							</c:if>

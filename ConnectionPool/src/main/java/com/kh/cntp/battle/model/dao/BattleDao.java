@@ -63,4 +63,10 @@ public class BattleDao {
 	public int cancelBattle(SqlSessionTemplate sqlSession, String battleNo) {
 		return sqlSession.update("battleMapper.cancelBattle", battleNo);
 	}
+	public int deletePoolInfo(SqlSessionTemplate sqlSession, int battleNo) {
+		return sqlSession.delete("battleMapper.deletePoolInfo", battleNo);
+	}
+	public int deleteBattlePool(SqlSessionTemplate sqlSession, int battleNo) {
+		return sqlSession.delete("battleMapper.deleteBattlePool", battleNo);
+	}
 }
