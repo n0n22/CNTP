@@ -12,9 +12,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-   body{
-		
-   }
     .align-left{
         display: flex;
     }
@@ -120,22 +117,17 @@
 										<div class="align-right">
 											<div style="max-width : 270px">
 												<div class="speechBubble-mine">
-													<form action="deleteChat.mo">
-														<P>${ chat.chatContent }</P>
-													</form>
+													<P>${ chat.chatContent }</P>
 												</div>
 											</div>
 										</div>
 										<div class="align-right">
 											<div style="display: flex; align-content: flex-end; margin-right: 5px;">
 												<p style="margin-top: auto; margin-bottom: 0;">
-													<form>
-														<!-- 삭제 버튼 -->
-														<button class="deleteBtn" style="border : 0px; background-color : white" onclick="return confirmBtn('삭제')"><mark>삭제</mark></button>
-														<input type="hidden" name="chatNo" value="${ chat.chatNo }">
-														<!-- 여긴 날짜 -->
-														${ chat.createDate }
-													</form>
+													<!-- 삭제 버튼 -->
+													<button class="deleteBtn" style="border : 0px; background-color : white" onclick="return deleteChat('${ chat.chatNo }')"><mark>삭제</mark></button>
+													<!-- 여긴 날짜 -->
+													${ chat.createDate }
 												</p>
 											</div>
 										</div>
@@ -149,7 +141,7 @@
 			
 	        <!-- 입력 div -->
 	        <div class="align-left">
-		            <input type="text" class="form-control form-control-lg" id="chatContent-input" onkeyup="enterFn()" required>
+		            <input type="text" class="form-control form-control-lg" id="chatContent-input" onkeyup="enterFn()" required maxlength="150">
 		            <button class="btn btn-success" style="width:70px" onclick="insertChatContent();">입력</button>
 	        </div>
 	    </div>
@@ -165,7 +157,7 @@
 	$(function(){
 			// 계속 새로고침해서 채팅 보이게 해주는 메소드
 			//setInterval(selectChat, 700);
-			selectChattingList();
+			//selectChattingList();
 			$("#chatContent-area").scrollTop($("#chatContent-area")[0].scrollHeight);
 			
 		})
@@ -185,6 +177,7 @@
 			return false;
 		}
 	}
+	
 	
 	// ajax로 select 해오는 함수
 	function selectChattingList(){
@@ -226,20 +219,16 @@
 									   +     '<div class="align-right">'
 							           +         '<div style="max-width : 270px">'
 							           +             '<div class="speechBubble-mine">'
-							           +			     '<form action="deleteChat.mo">'
-							           +                     '<P>' + list[i].chatContent  + '</P>'
-							           +				 '</form>'
+						           +                     '<P>' + list[i].chatContent  + '</P>'
 							           +             '</div>'
 							           +         '</div>'
 							           +     '</div>'
 							           +     '<div class="align-right">'
 							           +         '<div style="display: flex; align-content: flex-end; margin-right: 5px;">'
 							           +             '<p style="margin-top: auto; margin-bottom: 0;">'
-							           +			     '<form action="deleteChat.mo" method="post">'
-							           +					 '<button class="deleteBtn" style="border : 0px; background-color : white" onclick="return confirmBtn("삭제")"><mark>삭제</mark></button>'
-							           +					 '<input type="hidden" name="chatNo" value="' + list[i].chatNo +'">'
-							           +                      list[i].createDate
-							           +				 '</form>'
+							           +				 '<p style="display:none" class="thisChatNo">${ chat.chatNo }</p>'
+						               +			     '<button class="deleteBtn" style="border : 0px; background-color : white" onclick="return deleteChat('+'${ chat.chatNo }'+')"><mark>삭제</mark></button>'
+						               +                  list[i].createDate
 							           +             '</p>'
 							           +         '</div>'
 							           +     '</div>'
@@ -261,6 +250,7 @@
 		})
 	}
 	
+	// 댓글 작성하는 메소드
 	function insertChatContent(){
 		$.ajax({
 			url : 'insertChat.mo',
@@ -272,7 +262,7 @@
 			},
 			success : function(result){
 				
-				console.log(result);
+				//console.log(result);
 				if(result == 'NNNNY'){
 					$('#chatContent-input').val('');
 					selectChattingList();
@@ -286,6 +276,32 @@
 		})
 	}
 		
+	
+	// 자신의 댓글을 삭제하는 메소드
+	function deleteChat(thisChatNo){
+		if(confirm('정말 삭제하시겠습니까?')){
+			$.ajax({
+				url : 'deleteChat.mo',
+				type : 'post',
+				data : {
+					chatNo : thisChatNo
+				},
+				success : function(result){
+					if(result == 'NNNNY'){
+						selectChattingList();
+					} else {
+						window.alert('잠시 후에 다시 시도해주세요');
+					}
+				},
+				error : function(){
+					console.log('실패요');
+				}
+			})			
+			return true;
+		} else{
+			return false;
+		}
+	}
 	 
 		
 	</script>

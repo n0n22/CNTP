@@ -188,6 +188,8 @@ public class MoimController {
 	public ModelAndView cahttingRoom(ModelAndView mv, Chatting chat) {
 		// teamNo 이용해서 채팅방 보내주기~
 		
+		//System.out.println(moimService.selectChattingList(chat));
+		
 		mv.addObject("chatList", moimService.selectChattingList(chat)).setViewName("moim/chatView");
 		
 		
@@ -224,7 +226,20 @@ public class MoimController {
 		}
 		
 		return message;
+	}
 	
+	@ResponseBody
+	@RequestMapping(value="deleteChat.mo", produces="text/html; charset=UTF-8")
+	public String ajaxDeleteChatting(String chatNo) {
+
+		System.out.println(chatNo);
+		
+		if(moimService.ajaxDeleteChatting(chatNo) > 0) {
+			return "NNNNY";
+		} else {
+			return "NNNNN";
+		}
+		
 	}
 	
 	@RequestMapping("badgeShop.mo")

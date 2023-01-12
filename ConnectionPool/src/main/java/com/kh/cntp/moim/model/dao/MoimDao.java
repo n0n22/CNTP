@@ -110,5 +110,9 @@ public class MoimDao {
 	public int ajaxInsertChatting(SqlSessionTemplate sqlSession, Chatting chat) {
 		return sqlSession.insert("moimMapper.ajaxInsertChatting", chat);
 	}
+	
+	public int ajaxDeleteChatting(SqlSessionTemplate sqlSession, String chatNo) {
+		return sqlSession.delete("moimMapper.ajaxDeleteChatting", chatNo);
+	}
 
 }
