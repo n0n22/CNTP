@@ -342,8 +342,14 @@
 				// 파일명 설정
 				let fileName = setFileName();
 				
+				// 시트(worksheet) 생성 : table_to_sheet(테이블, 시트명);
+				let ws = XLSX.utils.table_to_sheet(document.getElementById('memberTable'), '회원목록');
+				
+				// 컬럼 숨기기
+				console.log(ws.G1.hidden);
+				
 				// 시트 설정을 전달하면서 엑셀 파일 생성
-				let wb = XLSX.utils.table_to_book(document.getElementById('memberTable'), {sheet: '회원 목록', raw: true});
+				let wb = XLSX.utils.table_to_book(document.getElementById('memberTable'), ws);
 				
 			    // 엑셀 다운로드
 				XLSX.writeFile(wb, fileName);

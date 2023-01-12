@@ -33,8 +33,8 @@ public class BattleDao {
 	public int applyBattle(SqlSessionTemplate sqlSession, HashMap<String, String> apply) {
 		return sqlSession.update("battleMapper.applyBattle", apply);
 	}
-	public int provokeMsg(SqlSessionTemplate sqlSession, HashMap<String, String> apply) {
-		return sqlSession.insert("battleMapper.provokeMsg", apply);
+	public int msg(SqlSessionTemplate sqlSession, HashMap<String, String> msg) {
+		return sqlSession.insert("battleMapper.msg", msg);
 	}
 	public Team selectTeam(SqlSessionTemplate sqlSession, String team) {
 		return sqlSession.selectOne("battleMapper.selectTeam", team);
@@ -59,5 +59,8 @@ public class BattleDao {
 	}
 	public ArrayList<Battle> searchBattle(SqlSessionTemplate sqlSession, HashMap<String, String> condition){
 		return (ArrayList)sqlSession.selectList("battleMapper.searchBattle", condition);
+	}
+	public int cancelBattle(SqlSessionTemplate sqlSession, String battleNo) {
+		return sqlSession.update("battleMapper.cancelBattle", battleNo);
 	}
 }
