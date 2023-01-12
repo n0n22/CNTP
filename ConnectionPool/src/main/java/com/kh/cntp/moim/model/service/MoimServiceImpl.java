@@ -11,6 +11,7 @@ import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.moim.model.dao.MoimDao;
 import com.kh.cntp.moim.model.vo.Apply;
+import com.kh.cntp.moim.model.vo.Chatting;
 import com.kh.cntp.moim.model.vo.Team;
 import com.kh.cntp.moim.model.vo.TeamMember;
 
@@ -65,6 +66,7 @@ public class MoimServiceImpl implements MoimService {
 		return moimDao.insertApply(sqlSession, ap);
 	}
 
+	@Transactional
 	@Override
 	public int UpdateApply(Apply ap) {
 		return moimDao.updateApply(sqlSession, ap.getApplyNo()) * moimDao.insertTeamMember(sqlSession, ap);
@@ -110,6 +112,23 @@ public class MoimServiceImpl implements MoimService {
 	@Override
 	public ArrayList<Team> selectTeamList(PageInfo pi, Team team) {
 		return moimDao.selectTeamList(sqlSession, pi, team);
+	}
+
+	@Override
+	public ArrayList<Chatting> selectChattingList(Chatting chat) {
+		return moimDao.selectChattingList(sqlSession, chat);
+	}
+
+	@Override
+	public int ajaxInsertChatting(Chatting chat) {
+		// TODO Auto-generated method stub
+		return moimDao.ajaxInsertChatting(sqlSession, chat);
+	}
+
+	@Override
+	public int deleteChatting(Chatting chat) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	

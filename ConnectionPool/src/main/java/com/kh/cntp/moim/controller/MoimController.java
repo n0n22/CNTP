@@ -25,6 +25,7 @@ import com.kh.cntp.member.model.service.MemberService;
 import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.moim.model.service.MoimService;
 import com.kh.cntp.moim.model.vo.Apply;
+import com.kh.cntp.moim.model.vo.Chatting;
 import com.kh.cntp.moim.model.vo.Team;
 import com.kh.cntp.moim.model.vo.TeamMember;
 
@@ -181,13 +182,49 @@ public class MoimController {
 		return mv;
 	}
 	
+	// 채팅 관련 기능 시작
+	
 	@RequestMapping("chattingRoom.mo")
-	public ModelAndView cahttingRoom(ModelAndView mv/*, int teamNo*/) {
+	public ModelAndView cahttingRoom(ModelAndView mv, Chatting chat) {
 		// teamNo 이용해서 채팅방 보내주기~
 		
-		mv.setViewName("moim/chatView");
+		mv.addObject("chatList", moimService.selectChattingList(chat)).setViewName("moim/chatView");
+		
 		
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="ajaxSelectChatList.mo", produces="application/json; charset=UTF-8")
+	public String ajaxSelectChattingList(String moimNo, String memNo) {
+		
+		Chatting chat = new Chatting();
+		
+		chat.setMemNo(memNo);
+		chat.setMoimNo(moimNo);
+		
+		return new Gson().toJson(moimService.selectChattingList(chat));
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="insertChat.mo", produces="text/html; charset=UTF-8")
+	public String ajaxInsertChatting(String moimNo, String memNo, String chatContent) {
+		Chatting chat = new Chatting();
+		
+		chat.setMoimNo(moimNo);
+		chat.setMemNo(memNo);
+		chat.setChatContent(chatContent);
+		
+		String message = "";
+		
+		if(moimService.ajaxInsertChatting(chat) > 0) {
+			message = "NNNNY";
+		} else {
+			message = "NNNNN";
+		}
+		
+		return message;
+	
 	}
 	
 	@RequestMapping("badgeShop.mo")

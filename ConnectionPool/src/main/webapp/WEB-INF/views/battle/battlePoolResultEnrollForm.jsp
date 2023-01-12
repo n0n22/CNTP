@@ -8,64 +8,9 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- 스타일 시트 -->
+<link rel="stylesheet" href="resources/css/battle/battlePoolResultEnrollForm.css">
  
- 
-<style>
-
-		div{
-            margin: 0px;
-            box-sizing: border-box;
-        }
-
-        div.battleTeam{
-            background-color: rgb(28,154,206);
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-
-        div.left{
-            float: left;
-            width: 50%;
-            padding: 50px;
-        }
-        div.right{
-            float: right;
-            width: 50%;
-            padding: 50px;
-        }
-        table {
-            border-collapse: collapse;
-            width: 550px;
-        }
-        tr {
-            height: 25px;
-        }
-        th {
-            width: 100px;
-            text-align: center;
-            border-bottom: 1px solid rgb(28,154,206);
-            height: 50px;
-        }
-        td {
-            border-bottom: 1px solid #ccc;
-            border-right: 1px solid #ccc;
-            border-left: 1px solid #ccc;
-            height: 50px;
-        }
-        td:first-child{
-            border-left: 0;
-        }
-        td:last-child{
-            border-right: 0;
-        }
-  
-        div.submit-area{
-            display: inline-block;
-            margin-bottom: 50px;
-        }
-
-
-</style>
 
 </head>
 <body>

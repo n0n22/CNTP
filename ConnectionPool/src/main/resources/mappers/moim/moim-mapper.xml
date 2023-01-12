@@ -65,6 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="CHAT_NO" 		property="chatNo"/>
 		<result column="MOIM_NO" 		property="moimNo"/>
 		<result column="MEM_NO" 		property="memNo"/>
+		<result column="NICKNAME" 		property="nickname"/>
 		<result column="CHAT_CONTENT" 	property="chatContent"/>
 		<result column="CREATE_DATE" 	property="createDate"/>
 	</resultMap>
@@ -462,5 +463,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		                             TM.TEAM_NO = T.TEAM_NO)]]>
 		</if>		       
 	</select>
+	
+	<select id="selectChattingList" resultMap="chattingResultMap" parameterType="chatting">
+		SELECT
+		        CHAT_NO
+		       ,C.MOIM_NO
+		       ,C.MEM_NO
+		       ,C.CHAT_CONTENT
+		       ,TO_CHAR(C.CREATE_DATE, 'YY/MM/DD HH24:MI') "CREATE_DATE"
+		       ,M.NICKNAME
+		  FROM
+		       CHATTING "C"
+		  JOIN
+		  	   MEMBER "M" ON(C.MEM_NO = M.MEM_NO)
+		 WHERE
+		       MOIM_NO = #{ moimNo }
+		   AND
+		       TO_CHAR(C.CREATE_DATE, 'YYYYMMDDHH24MI') <![CDATA[>= (SELECT
+		                                                      TO_CHAR(TM.TEAM_ENROLL_DATE, 'YYYYMMDDHH24MI')
+		                                                 FROM
+		                                                      TEAM_MEMBER "TM"
+		                                                WHERE
+		                                                      TM.MEM_NO = #{ memNo }
+		                                               )]]>
+		 ORDER
+		    BY
+		       CHAT_NO ASC
+	</select>
+	
+	<insert id="ajaxInsertChatting" parameterType="chatting">
+		INSERT
+		  INTO
+		       CHATTING
+		VALUES
+		       (
+		        SEQ_CNO.NEXTVAL
+		       ,#{ moimNo }
+		       ,#{ memNo }
+		       ,#{ chatContent }
+		       ,SYSDATE
+		       )
+	</insert>
 	
 </mapper>

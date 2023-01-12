@@ -134,11 +134,10 @@ public class AdminController {
 									    ,@RequestParam(value="result", defaultValue="yet") String result
 										,ModelAndView mv) {
 		
+		// System.out.println(adminService.selectReportListCount(result));
+		PageInfo pi = Pagination.getPageInfo(adminService.selectReportListCount(result), cpage, 5, 10);
 		
-		System.out.println(adminService.selectReportListCount(result));
-		//PageInfo pi = Pagination.getPageInfo(adminService.selectReportListCount(result), cpage, 5, 10);
-		
-		// mv.addObject("list", adminService.selectReportList(pi, result));
+		mv.addObject("list", adminService.selectReportList(pi, result)).addObject("pi", pi).addObject("result", result);
 		mv.setViewName("admin/adminReportList");
 		return mv;
 	}
@@ -146,9 +145,12 @@ public class AdminController {
 	
 	// 신고글 상세 조회 -> 신고글 상세 페이지로 이동
 	@RequestMapping("reportDetail.ad")
-	public String selectReport() {
+	public ModelAndView selectReport(int rno, ModelAndView mv) {
 		
-		return "admin/adminReportDetail";
+		mv.addObject("report", adminService.selectReport(rno));
+		mv.setViewName("admin/adminReportDetail");
+		
+		return mv;
 	}
 	
 	
@@ -186,8 +188,7 @@ public class AdminController {
 		// System.out.println(report);
 		
 		if(adminService.insertReport(report) > 0) {
-			mv.addObject("alert", "신고가 정상적으로 처리되었습니다.");
-			mv.addObject("check", "check");
+			mv.addObject("alert", "신고가 정상적으로 처리되었습니다.").addObject("check", "check");
 			mv.setViewName("admin/reportEnrollForm");
 		} else {
 			mv.addObject("errorMsg", "신고가 실패하였습니다.").setViewName("common/errorPage");
@@ -196,6 +197,14 @@ public class AdminController {
 		return mv;
 	}
 
+	
+	
+	// 신고 무효
+	@RequestMapping("")
+	
+	
+	
+	
 	
 	
 	

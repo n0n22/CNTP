@@ -12,63 +12,9 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<style>
-    .main-top{
-        width: 100%;
-        height: 120px;
-    }
 
-    .date{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .p-card {
-    border: 1px solid #eee;
-    }
-
-    .p-details {
-    padding: 10px;
-    border-radius: 0px;
-    background: #e187da;
-    color: #fff;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    }
-
-    .spec span {
-    font-size: 13px;
-    }
-
-    .spec h6 {
-    font-size: 16px;
-    font-weight: 500;
-    }
-
-    .carousel-indicators li {
-    box-sizing: content-box;
-    -ms-flex: 0 1 auto;
-    flex: 0 1 auto;
-    width: 12px;
-    height: 12px;
-    margin-right: 3px;
-    margin-left: 3px;
-    text-indent: -999px;
-    cursor: pointer;
-    background-color: #fff;
-    background-clip: padding-box;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    opacity: .5;
-    transition: opacity .6s ease;
-    }
-
-    .line{
-
-    background-color: #fff;margin-top: 4px;margin-bottom: 4px;height: 0.2px;
-    }
-  
-</style>
+<!-- 스타일 시트 -->
+<link rel="stylesheet" href="resources/css/battle/battlePoolList.css">
 
 </head>
 <body>
@@ -84,13 +30,13 @@
             // 현재 페이지 요일
             let day = ''
             switch(now.getDay()){
-	            case 0 : day = '<k style="color:red;">일요일</k>'; break;
+	            case 0 : day = '<span style="color:red;">일요일</span>'; break;
 	            case 1 : day = '월요일'; break;
 	            case 2 : day = '화요일'; break;
 	            case 3 : day = '수요일'; break;
 	            case 4 : day = '목요일'; break;
 	            case 5 : day = '금요일'; break;
-	            case 6 : day = '<k style="color:blue;">토요일</k>'; break;
+	            case 6 : day = '<span style="color:blue;">토요일</span>'; break;
             }
             
             var arr = formatDate(now).split('-');  // yyyy-mm-dd을 -로 분리하여 배열에 담음

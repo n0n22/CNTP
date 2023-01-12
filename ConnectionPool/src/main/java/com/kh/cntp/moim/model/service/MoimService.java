@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.moim.model.vo.Apply;
+import com.kh.cntp.moim.model.vo.Chatting;
 import com.kh.cntp.moim.model.vo.Team;
 import com.kh.cntp.moim.model.vo.TeamMember;
 
@@ -69,5 +70,14 @@ public interface MoimService {
 	int selectTeamCountList(Team team);
 	
 	// ajax로 페이징 하는 기능도 만들어야 하는데 처음이라 어떻게 해야될지 잘 모르겠다 ㅎㅅㅎ
+	
+	// --------------- 채팅 관련 기능 ---------------
+	ArrayList<Chatting> selectChattingList(Chatting chat);
+	
+	int ajaxInsertChatting(Chatting chat);
+	
+	int deleteChatting(Chatting chat);
+	
+	
 	
 }

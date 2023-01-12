@@ -8,58 +8,8 @@
 <title>Insert title here</title>
 <script src=""></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
- 
-<style>
-
-		div{
-            margin: 0px;
-            box-sizing: border-box;
-        }
-
-        div.battleTeam{
-            background-color: rgb(28,154,206);
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-
-        div.content{
-            width: 50%;
-            padding: 50px;
-        }
-    
-        table {
-            border-collapse: collapse;
-            width: 550px;
-        }
-        tr {
-            height: 25px;
-        }
-        th {
-            width: 100px;
-            text-align: center;
-            border-bottom: 1px solid rgb(28,154,206);
-            height: 50px;
-        }
-        td {
-            border-bottom: 1px solid #ccc;
-            border-right: 1px solid #ccc;
-            border-left: 1px solid #ccc;
-            height: 50px;
-        }
-        td:first-child{
-            border-left: 0;
-        }
-        td:last-child{
-            border-right: 0;
-        }
-  
-        div.submit-area{
-            display: inline-block;
-            margin-bottom: 50px;
-        }
-
-
-</style>
+<!-- 스타일 시트 -->
+<link rel="stylesheet" href="resources/css/battle/battleResultDetail.css">
 
 </head>
 <body>

@@ -36,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="TEAM_NO" 			property="teamNo"/>
 		<result column="TEAM_NAME" 			property="teamName"/>
 		<result column="MEM_NO" 			property="memNo"/>
+		<result column="NICKNAME" 			property="nick_name"/>
 		<result column="TEAM_MEMBER" 		property="teamMember"/>
 		<result column="TEAM_INTRO" 		property="teamIntro"/>
 		<result column="ORIGIN_NAME" 		property="originName"/>
@@ -230,6 +231,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        TEAM_NO
 		        ,TEAM_NAME
 		        ,MEM_NO
+		        ,NICKNAME
 		        ,TEAM_MEMBER
 		        ,TEAM_INTRO
 		        ,ORIGIN_NAME
@@ -245,11 +247,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        ,POWER_DURATION
 		  FROM
 		        TEAM
+		  JOIN
+		  		MEMBER USING(MEM_NO)
 		 WHERE
 		        STATUS = 'Y'
 		   AND
 		        TEAM_NO = #{team}
-	
 	
 	</select>
 	
