@@ -188,6 +188,7 @@ public class MoimController {
 		
 		mv.addObject("chatList", moimService.selectChattingList(chat)).setViewName("moim/chatView");
 		
+		
 		return mv;
 	}
 	
