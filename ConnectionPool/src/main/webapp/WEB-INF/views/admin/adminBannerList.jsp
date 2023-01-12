@@ -135,7 +135,7 @@
 					bnno = $(e).next().val();
         			msg = bnno + '번 배너를 내립니다.';
         		} 
-				else if (status == 'H') { // 보이기
+				else if (status == 'Y') { // 보이기
 					bnno = $(e).next().val();
 					msg = bnno + '번 배너를 띄웁니다.';
 				}
