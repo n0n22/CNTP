@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.moim.model.vo.Apply;
+import com.kh.cntp.moim.model.vo.Chatting;
 import com.kh.cntp.moim.model.vo.Team;
 import com.kh.cntp.moim.model.vo.TeamMember;
 
@@ -99,6 +100,11 @@ public class MoimDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("moimMapper.selectTeamList", team, rowBounds);
+	}
+	
+	public ArrayList<Chatting> selectChattingList(SqlSessionTemplate sqlSession, Chatting chat){
+		
+		return (ArrayList)sqlSession.selectList("moimMapper.selectChattingList", chat);
 	}
 
 }
