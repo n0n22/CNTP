@@ -40,6 +40,8 @@ public interface BattleService {
 	
 // 배틀풀 검색
 	ArrayList<Battle> searchBattle(HashMap<String, String> condition);
+// 배틀 신청 취소
+	int cancelBattle(HashMap<String, String> cancel);
 	
 
 }
