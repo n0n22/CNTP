@@ -188,8 +188,7 @@ public class AdminController {
 		// System.out.println(report);
 		
 		if(adminService.insertReport(report) > 0) {
-			mv.addObject("alert", "신고가 정상적으로 처리되었습니다.");
-			mv.addObject("check", "check");
+			mv.addObject("alert", "신고가 정상적으로 처리되었습니다.").addObject("check", "check");
 			mv.setViewName("admin/reportEnrollForm");
 		} else {
 			mv.addObject("errorMsg", "신고가 실패하였습니다.").setViewName("common/errorPage");
@@ -198,6 +197,14 @@ public class AdminController {
 		return mv;
 	}
 
+	
+	
+	// 신고 무효
+	@RequestMapping("")
+	
+	
+	
+	
 	
 	
 	

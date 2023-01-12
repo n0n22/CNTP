@@ -279,6 +279,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             BY
                REPORT_NO ASC
 	</select>
+	
+	<!-- 신고 상세 조회 -->
 	<select id="selectReport" parameterType="_int" resultMap="reportResultSet">
 		SELECT 
 		       R.REPORT_NO
@@ -315,7 +317,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       REPORT
 		  	   (
 		  	   REPORT_NO
-			   ,MEM_NO
 			   ,BOARD_NO
 			   ,REPORT_BOARD
 			   ,REPORT_REASON
@@ -325,7 +326,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES
 		       (
 		       SEQ_RNO.NEXTVAL
-		       ,#{memNo}
 		       ,#{boardNo}
 		       ,#{reportBoard}
 		       ,#{reportReason}
@@ -333,8 +333,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ,SYSDATE	       
 		       )
 	</insert>
-
-
+	<!-- 신고게시글 업데이트 -->
+	<update id="updateBoardStatus" parameterType="_int">
+		UPDATE
+		       BOARD
+		   SET
+		       STATUS = 'R'
+		 WHERE
+		       BOARD_NO = #{boardNo}
+	</update>
 
 
 

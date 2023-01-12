@@ -96,6 +96,12 @@ public class AdminDao {
 		return sqlSession.insert("adminMapper.insertReport", report);
 	}
 	
+	
+	// 신고 등록 - 게시글 상태 업데이트
+	public int updateBoardStatus(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("adminMapper.updateBoardStatus", boardNo);
+	}
+	
 
 	
 	
