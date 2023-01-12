@@ -168,7 +168,7 @@
 		
 		// 처음 스크롤 위치 잡아줌
 		function scrollDown(){
-			$("#chatContent-area").scrollTop($("#chatContent-area")[0].scrollHeight);
+			$("#chatContent-area").scrollTop($(document)[0].height);
 		}
 		
 		// enter 치면 insert 되게 만들어줌

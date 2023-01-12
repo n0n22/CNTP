@@ -66,6 +66,7 @@ public class MoimServiceImpl implements MoimService {
 		return moimDao.insertApply(sqlSession, ap);
 	}
 
+	@Transactional
 	@Override
 	public int UpdateApply(Apply ap) {
 		return moimDao.updateApply(sqlSession, ap.getApplyNo()) * moimDao.insertTeamMember(sqlSession, ap);
