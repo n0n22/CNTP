@@ -192,6 +192,18 @@ public class MoimController {
 		return mv;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="ajaxSelectChatList.mo", produces="application/json; charset=UTF-8")
+	public String ajaxSelectChattingList(String moimNo, String memNo) {
+		
+		Chatting chat = new Chatting();
+		
+		chat.setMemNo(memNo);
+		chat.setMoimNo(moimNo);
+		
+		return new Gson().toJson(moimService.selectChattingList(chat));
+	}
+	
 	@RequestMapping("badgeShop.mo")
 	public ModelAndView badgeShop(ModelAndView mv) {
 		

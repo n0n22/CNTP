@@ -99,7 +99,6 @@
 							                      		${ chat.nickname }
 							                    </div>
 							                    <div class="speechBubble-other">
-							                    	<input type="hidden" value="${ chat.memNo }" name="memNo">
 							                    	<P>${ chat.chatContent }</P>
 												</div>	
 											</div>
@@ -108,7 +107,9 @@
 										<div style="display: flex; align-content: flex-end; margin-left: 60px;">
 											<p style="margin-top: auto; margin-bottom: 0;">
 												<!-- 여긴 날짜 -->
-												${ chat.createDate }<button class="deleteBtn" style="border : 0px; background-color : white" onclick="return confirmBtn('숨김처리')"><mark>숨기기</mark></button>
+												${ chat.createDate }
+												<!-- 여긴 숨기기 버튼 -->
+												<button class="hiddenBtn" style="border : 0px; background-color : white" onclick="return confirmBtn('숨김처리')"><mark>숨기기</mark></button>
 											</p>
 										</div>
 							        </div>
@@ -120,8 +121,6 @@
 											<div style="max-width : 270px">
 												<div class="speechBubble-mine">
 													<form action="deleteChat.mo">
-														<input type="hidden" value="${ chat.chatNo }">
-														
 														<P>${ chat.chatContent }</P>
 													</form>
 												</div>
@@ -130,8 +129,13 @@
 										<div class="align-right">
 											<div style="display: flex; align-content: flex-end; margin-right: 5px;">
 												<p style="margin-top: auto; margin-bottom: 0;">
-													<!-- 여긴 날짜 -->
-													<button class="deleteBtn" style="border : 0px; background-color : white" onclick="return confirmBtn('삭제')"><mark>삭제</mark></button>${ chat.createDate }
+													<form>
+														<!-- 삭제 버튼 -->
+														<button class="deleteBtn" style="border : 0px; background-color : white" onclick="return confirmBtn('삭제')"><mark>삭제</mark></button>
+														<input type="hidden" name="chatNo" value="${ chat.chatNo }">
+														<!-- 여긴 날짜 -->
+														${ chat.createDate }
+													</form>
 												</p>
 											</div>
 										</div>
@@ -166,24 +170,127 @@
 			
 		})
 		
-		// enter 치면 insert 되게 만들어줌
-		function enterFn(){
-	        if(window.event.keyCode == 13){
-	        	insertChatContent();
-	        };
-	    }
-	    
-		function  confirmBtn(keyword){
-			if(confirm(keyword + ' 하시겠습니까?')){
-				return true;
-			}else{
-				return false;
-			}
+	// enter 치면 insert 되게 만들어줌
+	function enterFn(){
+        if(window.event.keyCode == 13){
+        	insertChatContent();
+        };
+    }
+    
+	// 삭제 및 숨기기 확인하는 메소드
+	function  confirmBtn(keyword){
+		if(confirm(keyword + ' 하시겠습니까?')){
+			return true;
+		}else{
+			return false;
 		}
+	}
 	
+	// ajax로 select 해오는 함수
+	function selectChattingList(){
+		$.ajax({
+			url : 'ajaxSelectChatList.mo',
+			data : {
+				moimNo : '${ chatList[0].moimNo }',
+				memNo : '${ loginMember.memNo }'
+			},
+			success : function(list){
+				var result = '';
+				if(list != null){
+					// 채팅이 없지 않을 때 => 채팅이 있을 때
+					for(var i in list){
+						if(list[i].memNo != '${loginMember.memNo}'){
+							result +='<div id="chatAlign-other">'
+								   +    '<div style="width : 500px," class="align-left">'
+						           +        '<div style="max-width: 270px; margin-left: 5px;">'
+						           +             '<div style="height : 20px">'
+						           +                list[i].nickname
+						           +             '</div>'
+						           +		     '<div class="speechBubble-other">'
+						           +            	'<P>' + list[i].chatContent + '</P>'
+						           +		     '</div>'
+						           +         '</div>'
+						           +     '</div>'
+						           +     '<div style="display: flex; align-content: flex-end; margin-left: 60px;">'
+						           +         '<p style="margin-top: auto; margin-bottom: 0;">'
+						           +             list[i].createDate
+						           +			 '<button class="hiddenBtn" style="border : 0px; background-color : white" onclick="return confirmBtn("숨김처리")"><mark>숨기기</mark></button>'	
+						           +         '</p>'
+						           +     '</div>'
+						           + '</div>';
+						}
+					}
+				}
+				else{
+					result +='<div id="chatAlign-mine" >'
+						   +     '<div class="align-right">'
+				           +         '<div style="max-width : 270px">'
+				           +             '<div class="speechBubble-mine">'
+				           +			     '<form action="deleteChat.mo">'
+				           +                     '<P>' + list[i].chatContent  + '</P>'
+				           +				 '</form>'
+				           +             '</div>'
+				           +         '</div>'
+				           +     '</div>'
+				           +     '<div class="align-right">'
+				           +         '<div style="display: flex; align-content: flex-end; margin-right: 5px;">'
+				           +             '<p style="margin-top: auto; margin-bottom: 0;">'
+				           +			     '<form action="deleteChat.mo" method="post">'
+				           +					 '<input type="hidden" name="chatNo" value="' list[i].chatNo +'">'
+				           +                      list[i].createDate
+				           +				 '</form>'
+				           +             '</p>'
+				           +         '</div>'
+				           +     '</div>'
+				           +'</div>';
+				}
+			},
+			error : function(){
+				console.log('실패요');
+			}
+		})
+	}
+	
+		
 	 
 		
 	</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 </body>
