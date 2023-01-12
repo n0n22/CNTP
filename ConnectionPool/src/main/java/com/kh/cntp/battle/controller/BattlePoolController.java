@@ -22,7 +22,6 @@ import com.kh.cntp.battle.model.vo.BattleResult;
 import com.kh.cntp.battle.model.vo.PoolInfo;
 import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.template.Template;
-import com.kh.cntp.moim.model.vo.Team;
 
 @Controller
 public class BattlePoolController {
@@ -71,7 +70,7 @@ public class BattlePoolController {
 							   MultipartFile upfile,
 							   HttpSession session,
 							   Model model) {
-		System.out.println(battle);
+		
 		if(!upfile.getOriginalFilename().equals("")) {
 			battle.setOriginName(upfile.getOriginalFilename());
 			battle.setChangeName("resources/upfiles/" + Template.saveFile(upfile, session));
@@ -93,15 +92,15 @@ public class BattlePoolController {
 	public String selectBattleResult(int battleNo,
 									 String homeTeam,
 									 String awayTeam,
-									 Model model,
-									 HttpSession session) {
+									 Model model
+									 ) {
 		
-		session.setAttribute("battleNo", battleNo);
-		session.setAttribute("homeTeam", battleService.selectTeam(homeTeam));
-		session.setAttribute("homeTeamHistory", battleService.selectResultHistory(homeTeam));
-		session.setAttribute("awayTeam", battleService.selectTeam(awayTeam));
-		session.setAttribute("awayTeamHistory", battleService.selectResultHistory(awayTeam));
-		session.setAttribute("battleResult", battleService.selectBattleResult(battleNo));
+		model.addAttribute("battleNo", battleNo);
+		model.addAttribute("homeTeam", battleService.selectTeam(homeTeam));
+		model.addAttribute("homeTeamHistory", battleService.selectResultHistory(homeTeam));
+		model.addAttribute("awayTeam", battleService.selectTeam(awayTeam));
+		model.addAttribute("awayTeamHistory", battleService.selectResultHistory(awayTeam));
+		model.addAttribute("battleResult", battleService.selectBattleResult(battleNo));
 		
 		return "battle/battleResultDetail";
 	}
@@ -113,9 +112,9 @@ public class BattlePoolController {
 								   Model model,
 								   HttpSession session) {
 		
-		session.setAttribute("battleNo", battleNo);
-		session.setAttribute("homeTeam", battleService.selectTeam(homeTeam));
-		session.setAttribute("awayTeam", battleService.selectTeam(awayTeam));
+		model.addAttribute("battleNo", battleNo);
+		model.addAttribute("homeTeam", battleService.selectTeam(homeTeam));
+		model.addAttribute("awayTeam", battleService.selectTeam(awayTeam));
 		
 		return "battle/battlePoolResultEnrollForm";
 	}
@@ -151,12 +150,10 @@ public class BattlePoolController {
 	public String insertBattleResult(BattleResult br, 
 									 Model model,
 									 RedirectAttributes redirectAttributes) {
-		System.out.println(br);
 		int result = battleService.insertBattleResult(br);
 		
 		if(result > 0) {
-			redirectAttributes
-			.addAttribute("battleNo", br.getBattleNo());
+			redirectAttributes.addAttribute("battleNo", br.getBattleNo());
 			return "redirect: battleDetail.bt";
 		} else {
 			model.addAttribute("errorMsg", "배틀 결과 작성 실패");
@@ -212,6 +209,30 @@ public class BattlePoolController {
 		
 		return "battle/battlePoolList";
 		
+	}
+	
+	// 배틀 신청 취소
+	@RequestMapping("cancelBattle.bt")
+	public String cancelBattle(String battleNo,
+							   String memNo,
+						 	   HttpSession session,
+						 	   RedirectAttributes redirectAttributes
+						 	   ) {
+		
+		HashMap<String, String> cancel = new HashMap<String, String>();
+		cancel.put("battleNo", battleNo);
+		cancel.put("memNo", memNo);
+		cancel.put("chatContent", "배틀 신청을 취소하였습니다.");
+		
+		int result = battleService.cancelBattle(cancel);
+		if(result > 0) {
+			session.setAttribute("alertMsg", "배틀 신청이 취소되었습니다.");
+			redirectAttributes.addAttribute("battleNo", battleNo);
+			return "redirect: battleDetail.bt";
+		} else {
+			session.setAttribute("alertMsg", "배틀 신청 취소를 실패하였습니다.");
+			return "/";
+		}
 	}
 	
 }
