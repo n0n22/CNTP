@@ -505,4 +505,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       )
 	</insert>
 	
+	<delete id="ajaxDeleteChatting" parameterType="string">
+		DELETE
+			   CHATTING
+	     WHERE
+	           CHAT_NO = #{ chatNo }
+	</delete>
+	
 </mapper>
