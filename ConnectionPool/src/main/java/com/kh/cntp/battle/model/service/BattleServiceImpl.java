@@ -79,6 +79,12 @@ public class BattleServiceImpl implements BattleService{
 	public int cancelBattle(HashMap<String, String> cancel) {
 		return battleDao.cancelBattle(sqlSession, cancel.get("battleNo")) * battleDao.msg(sqlSession, cancel);
 	}
+	// FK 제약 조건 때문에 POOL_INFO 테이블 ResultSet을 먼저 삭제하고 BATTLE 테이블의 ResultSet을 삭제해야 함
+	@Override
+	@Transactional
+	public int deleteBattlePool(int battleNo) {
+		return battleDao.deletePoolInfo(sqlSession, battleNo) * battleDao.deleteBattlePool(sqlSession, battleNo);
+	}
 
 	
 	

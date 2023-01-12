@@ -380,15 +380,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 <!-- 배틀 신청 취소 -->
 	<insert id="cancelBattle" parameterType="string">
-	
 		UPDATE
 		        BATTLE
 		   SET
 		        AWAY_TEAM = ''
 		 WHERE
 		        BATTLE_NO = #{battleNo}
-	</insert>	
-	
-	
+	</insert>
+<!-- 배틀풀 삭제 -->
+	<!-- 1. FK 제약 조건으로 인한 자식 테이블 POOL_INFO ResultSet 삭제 -->
+	<delete id="deletePoolInfo" parameterType="_int">
+		DELETE
+		        POOL_INFO
+		 WHERE
+		        BATTLE_NO = #{battleNo}
+	</delete>
+	<!-- 2. 부모 테이블인 BATTLE의 ResultSet 삭제 -->
+	<delete id="deleteBattlePool" parameterType="_int">
+		DELETE
+		        BATTLE
+		 WHERE
+		        BATTLE_NO = #{battleNo}
+	</delete>
 	
 </mapper>

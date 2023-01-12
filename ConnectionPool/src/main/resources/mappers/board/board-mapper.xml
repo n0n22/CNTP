@@ -4,6 +4,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="boardMapper">
+
+	<resultMap id="boardResultSet" type="board">
+		
+		<result column="board_no"		property="boardNo" />
+		<result column="mem_no"			property="memberNo" />	
+		<result column="category"		property="category" />	
+		<result column="title"			property="title" />
+		<result column="content"		property="content" />
+		<result column="create_date"	property="createDate" />
+		<result column="origin_name"	property="originName" />
+		<result column="change_name"	property="changeName" />
+		<result column="count"			property="count" />
+		
+	</resultMap>
+
+
+
+
+
 	
 	<select id="selectListCount" resultType="_int">
 		
@@ -18,15 +37,85 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-<!-- 	<select id="selectList" resultMap="boardResultSet"> -->
-<!-- 	</select> -->
+	<select id="selectList" resultMap="boardResultSet"> 
+
+		select
+				board_no
+				,title
+				,mem_no
+				,count
+				,to_char(create_date, 'YYYY-MM-DD') as "CREATE_DATE"
+				,origin_name
+		from
+				board
+		where
+				status = 'Y'
+		order
+			by						
+				board_no desc
+	
+  	</select> 
+	
+	<insert id="insertBoard" parameterType="board">
+		insert 
+		  into
+				board
+				(
+				board_no
+				,title
+				,mem_no
+				,content
+				,category
+				,origin_name
+				,change_name
+				)
+		 values	
+				(
+				seq_bno.nextval
+				,#{title}
+				,#{memberNo}
+				,#{content}
+				,#{category}
+				,#{originName}
+				,#{changeName}
+				)
 	
 	
+	</insert>
+	
+	<update id="increaseCount" > 
+	
+		update
+				board
+		   set
+				count = count + 1
+		where
+				board_no =#{boardNo}
+		   and
+		      	status = 'Y'				
 	
 	
+	</update>
 	
 	
+	<select id="selectBoard" resultMap ="boardResultSet">
+			select
+					board_no
+					,title
+					,mem_no
+					,content
+					,origin_name
+					,change_name
+					,to_char(create_date, 'YYYY-MM-DD') as "create_date"
+			from
+					board
+			where
+					status = 'Y'
+			 and
+			 		board_no = #{boardNo}						
 	
+	
+	</select>
 	
 	
 	
