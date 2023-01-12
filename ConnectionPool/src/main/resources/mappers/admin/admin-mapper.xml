@@ -248,25 +248,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 신고 목록 조회 -->
 	<select id="selectReportList" parameterType="string" resultMap="reportResultSet">
 		SELECT
-		       REPORT_NO
-		       ,R.MEM_NO
-		       ,M1.MEM_ID
+		       R.REPORT_NO
+		       ,B.MEM_NO
+		       ,B.MEM_ID
 		       ,R.BOARD_NO
-		       ,REPORT_BOARD
-		       ,REPORT_REASON
-		       ,REPORTER
-		       ,M2.MEM_ID "REPORTER_ID"
-		       ,TO_CHAR(REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
-		       ,REPORT_RESULT
-               ,TO_CHAR(COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE"
+		       ,R.REPORT_BOARD
+		       ,R.REPORT_REASON
+		       ,R.REPORTER
+		       ,M.MEM_ID "REPORTER_ID"
+		       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
+		       ,R.REPORT_RESULT
+		       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE"
 		  FROM
-		       REPORT R
+		       REPORT "R"
 		  JOIN
-		       MEMBER M1 ON(R.MEM_NO = M1.MEM_NO)
+		       (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
+		          FROM BOARD
+		          JOIN MEMBER USING(MEM_NO)) "B" ON (B.BOARD_NO = R.BOARD_NO)
 		  JOIN
-		       MEMBER M2 ON(R.REPORTER = M2.MEM_NO)
+		       MEMBER "M" ON(M.MEM_NO = R.REPORTER)
 		 WHERE
-		       REPORT_RESULT 
+		       REPORT_RESULT
 		<if test="result == 'yet'">
 			   is null			 
 		</if>
@@ -278,9 +280,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                REPORT_NO ASC
 	</select>
 	<select id="selectReport" parameterType="_int" resultMap="reportResultSet">
-		
-	
-	
+		SELECT 
+		       R.REPORT_NO
+		       ,R.REPORT_BOARD
+		       ,R.BOARD_NO      
+		       ,R.REPORTER
+		       ,R.REPORT_REASON
+		       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
+		       ,R.REPORT_RESULT
+		       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE" 
+		       ,B.MEM_NO
+		       ,B.MEM_ID
+		       ,B.CONTENT
+		       ,M.MEM_ID "REPORTER_ID" 
+		  FROM
+		       REPORT "R"
+		  JOIN
+		       (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
+		          FROM BOARD
+		          JOIN MEMBER USING(MEM_NO)) "B" ON (B.BOARD_NO = R.BOARD_NO)
+		  JOIN
+		       MEMBER "M" ON(M.MEM_NO = R.REPORTER)
+		 WHERE
+		       REPORT_NO = #{rno}
 	</select>
 
 

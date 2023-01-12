@@ -134,7 +134,6 @@ public class AdminController {
 									    ,@RequestParam(value="result", defaultValue="yet") String result
 										,ModelAndView mv) {
 		
-		
 		// System.out.println(adminService.selectReportListCount(result));
 		PageInfo pi = Pagination.getPageInfo(adminService.selectReportListCount(result), cpage, 5, 10);
 		
@@ -146,11 +145,12 @@ public class AdminController {
 	
 	// 신고글 상세 조회 -> 신고글 상세 페이지로 이동
 	@RequestMapping("reportDetail.ad")
-	public String selectReport(int rno) {
+	public ModelAndView selectReport(int rno, ModelAndView mv) {
 		
-		adminService.selectReport(rno);
+		mv.addObject("report", adminService.selectReport(rno));
+		mv.setViewName("admin/adminReportDetail");
 		
-		return "admin/adminReportDetail";
+		return mv;
 	}
 	
 	
