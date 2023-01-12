@@ -391,7 +391,7 @@
 				<br><br>
                 <div><hr></div>
                 <div id="delete-btn"><a href="myPageDeleteForm.me">탈퇴하기</a></div>
-                <div id="delete-btn"><a href="findPwdCert.me">비밀번호 변경 </a></div>
+                <div id="delete-btn"><a href="pwdChangeForm.me">비밀번호 변경 </a></div>
             </div>
         </div>
 
