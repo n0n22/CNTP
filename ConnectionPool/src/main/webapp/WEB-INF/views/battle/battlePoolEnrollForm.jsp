@@ -7,23 +7,8 @@
 <meta charset="UTF-8">
 <title>배틀풀 작성폼</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <style>
-        tr > td:first-child{
-            text-align: right;
-        }
-        tr > td:nth-child(2){
-            width: 300px;
-        }
-        div.outer-top{
-            text-align: center;
-            margin-top: 50px;
-        }
-        div.submit-area{
-            margin-bottom: 20px;
-        }
-        
-
-    </style>
+<!-- 스타일 시트 -->
+<link rel="stylesheet" href="resources/css/battle/battlePoolEnrollForm.css">
 
 </head>
 <body>
