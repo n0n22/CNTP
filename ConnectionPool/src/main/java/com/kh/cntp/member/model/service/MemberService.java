@@ -13,9 +13,6 @@ public interface MemberService {
 	// 회원가입
 	int insertMember(Member member);
 	
-	// 회원가입 시 메일 인증
-	int insertMailRequest(String email);
-	
 	// 로그인 실패 횟수 증가
 	int loginCount(Member member);
 	
