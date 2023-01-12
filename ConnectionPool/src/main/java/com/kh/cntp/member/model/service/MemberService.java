@@ -31,4 +31,7 @@ public interface MemberService {
 	// 인증번호 확인 
 	boolean certNumCheck(Cert cert);
 	
+	// 비밀번호 변경
+	int pwdChange(Member member);
+	
 }

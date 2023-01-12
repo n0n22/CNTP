@@ -2,10 +2,12 @@ package com.kh.cntp.moim.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.cntp.battle.model.vo.ResultHistory;
+import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.moim.model.vo.Apply;
 import com.kh.cntp.moim.model.vo.Team;
 import com.kh.cntp.moim.model.vo.TeamMember;
@@ -84,6 +86,19 @@ public class MoimDao {
 	
 	public int insertTeamMember(SqlSessionTemplate sqlSession, Apply ap) {
 		return sqlSession.insert("moimMapper.insertTeamMember", ap);
+	}
+	
+	public int selectTeamCountList(SqlSessionTemplate sqlSession, Team team) {
+		return sqlSession.selectOne("moimMapper.selectTeamCountList", team);
+	}
+	
+	public ArrayList<Team> selectTeamList(SqlSessionTemplate sqlSession, PageInfo pi, Team team) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("moimMapper.selectTeamList", team, rowBounds);
 	}
 
 }

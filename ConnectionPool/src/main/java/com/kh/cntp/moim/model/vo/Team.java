@@ -8,7 +8,8 @@ public class Team {
 	private String teamNo;
 	private String teamName;
 	private int memNo; // 번호
-	private int teamMember; // 팀 모집 인원
+	private String nickname; // 번호
+	private String teamMember; // 팀 모집 인원
 	private String teamIntro;
 	private String originName;
 	private String changeName;
