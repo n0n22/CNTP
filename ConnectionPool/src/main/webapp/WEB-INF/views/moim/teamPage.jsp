@@ -235,7 +235,11 @@
 									<c:choose>
 										<c:when test="${ loginMember.teamGrade eq 'L' }">
 											<!-- 팀장일 때 -->
-											<a href="chattingRoom.mo" class="btn btn-primary" style="width:300px;">채팅하기</a>
+											<form action="chattingRoom.mo" method="post">
+												<input type="hidden" name="moimNo" value="${ team.teamNo }">
+												<input type="hidden" name="memNo" value="${ loginMember.memNo }">
+												<button class="btn btn-primary" style="width:300px;">채팅하기</button>
+											</form>
 										</c:when>
 										<c:otherwise>
 											<!-- 팀원일 때 -->
@@ -249,7 +253,11 @@
 												</form>
 											</div>
 											<div style="display:inline-block;">
-												<a href="chattingRoom.mo" class="btn btn-primary" style="width:150px;">채팅하기</a>
+												<form action="chattingRoom.mo" method="post">
+													<input type="hidden" name="moimNo" value="${ team.teamNo }">
+													<input type="hidden" name="memNo" value="${ loginMember.memNo }">
+													<button class="btn btn-primary" style="width:300px;">채팅하기</button>
+												</form>
 											</div>
 										</c:otherwise>
 									</c:choose>

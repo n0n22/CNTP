@@ -74,17 +74,50 @@ public class AdminDao {
 	}
 	
 	
+	// 신고 목록 조회
+	public ArrayList<Report> selectReportList(SqlSessionTemplate sqlSession, PageInfo pi, String result) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("adminMapper.selectReportList", result, rowBounds);
+	}
+	
+	
+	// 신고 상세 조회
+	public Report selectReport(SqlSessionTemplate sqlSession, int rno) {
+		return sqlSession.selectOne("adminMapper.selectReport", rno);
+	}
 	
 	
 	
 	
-	// 신고 등록
+	// 신고 등록 - REPORT insert : 신고글 등록
 	public int insertReport(SqlSessionTemplate sqlSession, Report report) {
 		return sqlSession.insert("adminMapper.insertReport", report);
 	}
 	
-
 	
+	// 신고 등록 - BOARD update : 게시글 상태 업데이트
+	public int updateBoardStatus(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("adminMapper.updateBoardStatus", boardNo);
+	}
+	
+	
+	// 신고 무효 - REPORT update
+	public int invalidReport(SqlSessionTemplate sqlSession, int reportNo) {
+		return sqlSession.update("adminMapper.invalidReport", reportNo);
+	}
+	
+	// 신고 무효 - BOARD update : 게시글 상태 되돌리기
+	public int reUpdateBoardStatus(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("adminMapper.reUpdateBoardStatus", boardNo);
+	}
+	
+	
+	// 신고 확정 - REPORT update
+	public int confirmReport(SqlSessionTemplate sqlSession, int reportNo) {
+		return sqlSession.update("adminMapper.confirmReport", reportNo);
+	}
 	
 	
 	

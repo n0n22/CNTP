@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="TEAM_NO" 			property="teamNo"/>
 		<result column="TEAM_NAME" 			property="teamName"/>
 		<result column="MEM_NO" 			property="memNo"/>
+		<result column="NICKNAME" 			property="nickname"/>
 		<result column="TEAM_MEMBER" 		property="teamMember"/>
 		<result column="TEAM_INTRO" 		property="teamIntro"/>
 		<result column="ORIGIN_NAME" 		property="originName"/>
@@ -64,6 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="CHAT_NO" 		property="chatNo"/>
 		<result column="MOIM_NO" 		property="moimNo"/>
 		<result column="MEM_NO" 		property="memNo"/>
+		<result column="NICKNAME" 		property="nickname"/>
 		<result column="CHAT_CONTENT" 	property="chatContent"/>
 		<result column="CREATE_DATE" 	property="createDate"/>
 	</resultMap>
@@ -353,6 +355,161 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       )
 	</insert>
 	
+	<select id="selectTeamCountList" parameterType="team" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       TEAM "T"
+		 WHERE
+		       STATUS = 'Y'
+		<if test='teamArea != "all"'>
+		   AND
+		       TEAM_AREA = #{ teamArea }
+		</if>
+		<if test='keyword != "all"'>
+		   AND 
+		       KEYWORD = #{ keyword }
+		</if>
+		<if test='teamMember == "recruit"'>
+		   AND 
+		       <![CDATA[TEAM_MEMBER > (SELECT
+		                             COUNT(*)
+		                        FROM
+		                             TEAM_MEMBER "TM"
+		                       WHERE
+		                             TM.TEAM_NO = T.TEAM_NO)]]>
+		</if>
+		<if test='teamMember == "end"'>
+		   AND 
+		       <![CDATA[TEAM_MEMBER <= (SELECT
+		                             COUNT(*)
+		                        FROM
+		                             TEAM_MEMBER "TM"
+		                       WHERE
+		                             TM.TEAM_NO = T.TEAM_NO)]]>
+		</if>
+	</select>
 	
+	<select id="selectTeamList" parameterType="team" resultMap="teamResultMap">
+		SELECT
+		       TEAM_NO
+		      ,TEAM_NAME
+		      ,(SELECT
+		               NICKNAME
+		          FROM
+		               MEMBER "M"
+		         WHERE
+		               M.MEM_NO = T.MEM_NO) "NICKNAME"
+		      ,CASE WHEN <![CDATA[TEAM_MEMBER <= (SELECT
+				                                COUNT(*)
+				                           FROM
+				                                TEAM_MEMBER "TM"
+				                          WHERE
+				                                TM.TEAM_NO = T.TEAM_NO)]]>
+		                  THEN '모집마감'
+		             ELSE '('||(SELECT
+				                                COUNT(*)
+				                           FROM
+				                                TEAM_MEMBER "TM"
+				                          WHERE
+				                                TM.TEAM_NO = T.TEAM_NO)||'/'||T.TEAM_MEMBER||')' END "TEAM_MEMBER"
+		      ,TEAM_INTRO
+		      ,ORIGIN_NAME
+		      ,CHANGE_NAME
+		      ,KOR_AREA
+		      ,CASE WHEN TEAM_TIME = 'all' THEN '무관'
+		            WHEN TEAM_TIME = 'weekday' THEN '평일'
+		            ELSE '주말' END "TEAM_TIME"
+		      ,CASE WHEN KEYWORD = 'battle' THEN '배틀'
+		            WHEN KEYWORD = 'social' THEN '친목'
+		            ELSE '온라인모임만' END "KEYWORD"
+		      ,CREATE_DATE
+		      ,BADGE_ORIGIN_NAME
+		      ,BADGE_CHANGE_NAME
+		      ,BADGE_STATUS
+		      ,STATUS
+		      ,CASE WHEN TO_CHAR(POWER_DURATION, 'YYYYMMDD') >= TO_CHAR(SYSDATE, 'YYYYMMDD') THEN '파워'
+		            ELSE '일반' END "POWER_DURATION"
+		  FROM
+		       TEAM "T"
+		  JOIN
+		       AREA "A" ON(T.TEAM_AREA = A.ENG_AREA)
+		 WHERE
+		       STATUS = 'Y'
+		<if test='teamArea != "all"'>
+		   AND
+		       TEAM_AREA = #{ teamArea }
+		</if>
+		<if test='keyword != "all"'>
+		   AND 
+		       KEYWORD = #{ keyword }
+		</if>
+		<if test='teamMember == "recruit"'>
+		   AND 
+		       <![CDATA[TEAM_MEMBER > (SELECT
+		                             COUNT(*)
+		                        FROM
+		                             TEAM_MEMBER "TM"
+		                       WHERE
+		                             TM.TEAM_NO = T.TEAM_NO)]]>
+		</if>
+		<if test='teamMember == "end"'>
+		   AND 
+		       <![CDATA[TEAM_MEMBER <= (SELECT
+		                             COUNT(*)
+		                        FROM
+		                             TEAM_MEMBER "TM"
+		                       WHERE
+		                             TM.TEAM_NO = T.TEAM_NO)]]>
+		</if>		       
+	</select>
+	
+	<select id="selectChattingList" resultMap="chattingResultMap" parameterType="chatting">
+		SELECT
+		        CHAT_NO
+		       ,C.MOIM_NO
+		       ,C.MEM_NO
+		       ,C.CHAT_CONTENT
+		       ,TO_CHAR(C.CREATE_DATE, 'YY/MM/DD HH24:MI') "CREATE_DATE"
+		       ,M.NICKNAME
+		  FROM
+		       CHATTING "C"
+		  JOIN
+		  	   MEMBER "M" ON(C.MEM_NO = M.MEM_NO)
+		 WHERE
+		       MOIM_NO = #{ moimNo }
+		   AND
+		       TO_CHAR(C.CREATE_DATE, 'YYYYMMDDHH24MI') <![CDATA[>= (SELECT
+		                                                      TO_CHAR(TM.TEAM_ENROLL_DATE, 'YYYYMMDDHH24MI')
+		                                                 FROM
+		                                                      TEAM_MEMBER "TM"
+		                                                WHERE
+		                                                      TM.MEM_NO = #{ memNo }
+		                                               )]]>
+		 ORDER
+		    BY
+		       CHAT_NO ASC
+	</select>
+	
+	<insert id="ajaxInsertChatting" parameterType="chatting">
+		INSERT
+		  INTO
+		       CHATTING
+		VALUES
+		       (
+		        SEQ_CNO.NEXTVAL
+		       ,#{ moimNo }
+		       ,#{ memNo }
+		       ,#{ chatContent }
+		       ,SYSDATE
+		       )
+	</insert>
+	
+	<delete id="ajaxDeleteChatting" parameterType="string">
+		DELETE
+			   CHATTING
+	     WHERE
+	           CHAT_NO = #{ chatNo }
+	</delete>
 	
 </mapper>

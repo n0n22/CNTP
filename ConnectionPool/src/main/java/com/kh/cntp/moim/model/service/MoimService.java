@@ -3,7 +3,9 @@ package com.kh.cntp.moim.model.service;
 import java.util.ArrayList;
 
 import com.kh.cntp.battle.model.vo.ResultHistory;
+import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.moim.model.vo.Apply;
+import com.kh.cntp.moim.model.vo.Chatting;
 import com.kh.cntp.moim.model.vo.Team;
 import com.kh.cntp.moim.model.vo.TeamMember;
 
@@ -62,11 +64,20 @@ public interface MoimService {
 	
 	// --------------- 팀 가입 리스트 조회 ---------------
 	// 조건에 따라 team을 조회해와야 하기 때문에 team을 인자값으로 넣어준다.
-	ArrayList<Team> selectTeamList(int cpage, String teamArea, String keyword);
+	ArrayList<Team> selectTeamList(PageInfo pi, Team team);
 	
 	// 페이징을 위해 조건에 맞는 TeamListcount를 구해야 한다.
 	int selectTeamCountList(Team team);
 	
 	// ajax로 페이징 하는 기능도 만들어야 하는데 처음이라 어떻게 해야될지 잘 모르겠다 ㅎㅅㅎ
+	
+	// --------------- 채팅 관련 기능 ---------------
+	ArrayList<Chatting> selectChattingList(Chatting chat);
+	
+	int ajaxInsertChatting(Chatting chat);
+	
+	int ajaxDeleteChatting(String chatNo);
+	
+	
 	
 }

@@ -134,11 +134,10 @@ public class AdminController {
 									    ,@RequestParam(value="result", defaultValue="yet") String result
 										,ModelAndView mv) {
 		
+		// System.out.println(adminService.selectReportListCount(result));
+		PageInfo pi = Pagination.getPageInfo(adminService.selectReportListCount(result), cpage, 5, 10);
 		
-		System.out.println(adminService.selectReportListCount(result));
-		//PageInfo pi = Pagination.getPageInfo(adminService.selectReportListCount(result), cpage, 5, 10);
-		
-		// mv.addObject("list", adminService.selectReportList(pi, result));
+		mv.addObject("list", adminService.selectReportList(pi, result)).addObject("pi", pi).addObject("result", result);
 		mv.setViewName("admin/adminReportList");
 		return mv;
 	}
@@ -146,9 +145,12 @@ public class AdminController {
 	
 	// 신고글 상세 조회 -> 신고글 상세 페이지로 이동
 	@RequestMapping("reportDetail.ad")
-	public String selectReport() {
+	public ModelAndView selectReport(int rno, ModelAndView mv) {
 		
-		return "admin/adminReportDetail";
+		mv.addObject("report", adminService.selectReport(rno));
+		mv.setViewName("admin/adminReportDetail");
+		
+		return mv;
 	}
 	
 	
@@ -181,13 +183,12 @@ public class AdminController {
 	
 	
 	// 신고 등록
-	@RequestMapping("insertReport.ad")
+	@RequestMapping("reportInsert.ad")
 	public ModelAndView insertReport(@ModelAttribute Report report, ModelAndView mv) {
 		// System.out.println(report);
 		
 		if(adminService.insertReport(report) > 0) {
-			mv.addObject("alert", "신고가 정상적으로 처리되었습니다.");
-			mv.addObject("check", "check");
+			mv.addObject("alert", "신고가 정상적으로 처리되었습니다.").addObject("check", "check");
 			mv.setViewName("admin/reportEnrollForm");
 		} else {
 			mv.addObject("errorMsg", "신고가 실패하였습니다.").setViewName("common/errorPage");
@@ -196,6 +197,37 @@ public class AdminController {
 		return mv;
 	}
 
+	
+	
+	// 신고 무효
+	@RequestMapping("reportInvalid.ad")
+	public ModelAndView invalidReport(@ModelAttribute Report report, HttpSession session , ModelAndView mv) {
+		
+		if(adminService.invalidReport(report) > 0) {
+			session.setAttribute("alertMsg", "신고를 무효처리했습니다.");
+			mv.setViewName("redirect:reportList.ad");
+		} else {
+			mv.addObject("errorMsg", "신고무효처리 실패").setViewName("common/errorPage");
+		}
+		
+		return mv;
+	}
+
+	
+	// 신고 확정
+	@RequestMapping("reportConfirm.ad")
+	public ModelAndView confirmReport(@RequestParam int reportNo, HttpSession session, ModelAndView mv) {
+		
+		if(adminService.confirmReport(reportNo) > 0) {
+			session.setAttribute("alertMsg", "신고를 확정처리했습니다.");
+			mv.setViewName("redirect:reportList.ad");
+		} else {
+			mv.addObject("errorMsg", "신고확정처리 실패").setViewName("common/errorPage");
+		}
+		
+		return mv;
+	}
+	
 	
 	
 	

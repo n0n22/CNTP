@@ -27,7 +27,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="TEAM_NO" property="teamNo"/>
 		<result column="TEAM_GRADE" property="teamGrade"/>
 	</resultMap>	
-
+	
+	<!-- 신고 ResultMap -->
+	<resultMap id="reportResultSet" type="report">
+		<result column="REPORT_NO" property="reportNo" />
+		<result column="MEM_NO" property="memNo" />
+		<result column="BOARD_NO" property="boardNo" />
+		<result column="REPORT_BOARD" property="reportBoard" />
+		<result column="REPORT_REASON" property="reportReason" />
+		<result column="REPORTER" property="reporter" />
+		<result column="REPORT_DATE" property="reportDate" />
+		<result column="REPORT_RESULT" property="reportResult" />
+		<result column="COMPLETION_DATE" property="completionDate" />
+		<result column="MEM_ID" property="memId" />
+		<result column="REPORTER_ID" property="reporterId" />
+	</resultMap>
+	
 	<!-- 배너 ResultMap -->
 	<resultMap id="BannerResultSet" type="banner">
 		<result property="bannerNo" column="BANNER_NO" />
@@ -228,9 +243,69 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			   is not null
 		</if>
 	</select>
-
-
-
+	
+	
+	<!-- 신고 목록 조회 -->
+	<select id="selectReportList" parameterType="string" resultMap="reportResultSet">
+		SELECT
+		       R.REPORT_NO
+		       ,B.MEM_NO
+		       ,B.MEM_ID
+		       ,R.BOARD_NO
+		       ,R.REPORT_BOARD
+		       ,R.REPORT_REASON
+		       ,R.REPORTER
+		       ,M.MEM_ID "REPORTER_ID"
+		       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
+		       ,R.REPORT_RESULT
+		       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE"
+		  FROM
+		       REPORT "R"
+		  JOIN
+		       (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
+		          FROM BOARD
+		          JOIN MEMBER USING(MEM_NO)) "B" ON (B.BOARD_NO = R.BOARD_NO)
+		  JOIN
+		       MEMBER "M" ON(M.MEM_NO = R.REPORTER)
+		 WHERE
+		       REPORT_RESULT
+		<if test="result == 'yet'">
+			   is null			 
+		</if>
+		<if test="result == 'end'">
+			   is not null
+		</if>
+		 ORDER
+            BY
+               REPORT_NO ASC
+	</select>
+	
+	<!-- 신고 상세 조회 -->
+	<select id="selectReport" parameterType="_int" resultMap="reportResultSet">
+		SELECT 
+		       R.REPORT_NO
+		       ,R.REPORT_BOARD
+		       ,R.BOARD_NO      
+		       ,R.REPORTER
+		       ,R.REPORT_REASON
+		       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
+		       ,R.REPORT_RESULT
+		       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE" 
+		       ,B.MEM_NO
+		       ,B.MEM_ID
+		       ,B.CONTENT
+		       ,M.MEM_ID "REPORTER_ID" 
+		  FROM
+		       REPORT "R"
+		  JOIN
+		       (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
+		          FROM BOARD
+		          JOIN MEMBER USING(MEM_NO)) "B" ON (B.BOARD_NO = R.BOARD_NO)
+		  JOIN
+		       MEMBER "M" ON(M.MEM_NO = R.REPORTER)
+		 WHERE
+		       REPORT_NO = #{rno}
+	</select>
 
 
 
@@ -242,7 +317,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       REPORT
 		  	   (
 		  	   REPORT_NO
-			   ,MEM_NO
 			   ,BOARD_NO
 			   ,REPORT_BOARD
 			   ,REPORT_REASON
@@ -252,7 +326,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES
 		       (
 		       SEQ_RNO.NEXTVAL
-		       ,#{memNo}
 		       ,#{boardNo}
 		       ,#{reportBoard}
 		       ,#{reportReason}
@@ -260,10 +333,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ,SYSDATE	       
 		       )
 	</insert>
-
-
-
-
+	
+	
+	<!-- 신고당한 게시글 상태 업데이트 -->
+	<update id="updateBoardStatus" parameterType="_int">
+		UPDATE
+		       BOARD
+		   SET
+		       STATUS = 'R'
+		 WHERE
+		       BOARD_NO = #{boardNo}
+	</update>
+	
+	
+	<!-- 신고글 무효 처리 -->
+	<update id="invalidReport" parameterType="_int">
+		UPDATE
+		       REPORT
+		   SET
+		       REPORT_RESULT = 'X',
+		       COMPLETION_DATE = SYSDATE
+		 WHERE
+		       REPORT_NO = #{reportNo}	
+	</update>
+	
+	<!-- 신고 무효 - 신고당한 게시글 상태 되돌리기 -->
+	<update id="reUpdateBoardStatus">
+		UPDATE
+		       BOARD
+		   SET
+		       STATUS = 'Y'
+		 WHERE
+		       BOARD_NO = #{boardNo}
+	</update>
+	
+	<!-- 신고글 확정 처리  -->
+	<update id="confirmReport" parameterType="_int">
+		UPDATE
+		       REPORT
+		   SET
+		       REPORT_RESULT = 'O',
+		       COMPLETION_DATE = SYSDATE
+		 WHERE
+		       REPORT_NO = #{reportNo}
+	</update>
 
 	
 <!-- 

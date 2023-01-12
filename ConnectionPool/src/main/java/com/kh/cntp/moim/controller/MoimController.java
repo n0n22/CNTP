@@ -19,10 +19,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.kh.cntp.common.model.vo.PageInfo;
+import com.kh.cntp.common.template.Pagination;
 import com.kh.cntp.member.model.service.MemberService;
 import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.moim.model.service.MoimService;
 import com.kh.cntp.moim.model.vo.Apply;
+import com.kh.cntp.moim.model.vo.Chatting;
 import com.kh.cntp.moim.model.vo.Team;
 import com.kh.cntp.moim.model.vo.TeamMember;
 
@@ -36,15 +39,28 @@ public class MoimController {
 	
 	// moimController 매핑값은 .mo로 통일!
 	@RequestMapping("teamList.mo")
-	public String selectTeamList(@RequestParam(value="cpage", defaultValue="1") int currentPage,
+	public ModelAndView selectTeamList(ModelAndView mv,
+								 @RequestParam(value="cpage", defaultValue="1") int currentPage,
 								 @RequestParam(value="teamArea", defaultValue="all") String teamArea,
-								 @RequestParam(value="keyword", defaultValue="all") String keyword) {
+								 @RequestParam(value="keyword", defaultValue="all") String keyword,
+								 @RequestParam(value="teamMember", defaultValue="all") String teamMember) {
+		
+		//System.out.println(teamMember);
+		
+		Team team = new Team();
+		team.setTeamArea(teamArea);
+		team.setKeyword(keyword);
+		team.setTeamMember(teamMember);
+		
+		//System.out.println(team);
+		//System.out.println(moimService.selectTeamCountList(team));
+		
+		PageInfo pi = Pagination.getPageInfo(moimService.selectTeamCountList(team), currentPage, 10, 10);
+		
+		mv.addObject("pi", pi).addObject("teamList", moimService.selectTeamList(pi, team)).addObject("team", team).setViewName("moim/teamListView");
 		
 		
-		
-		
-		
-		return "moim/teamListView";
+		return mv;
 	}
 	
 	@RequestMapping("teamPage.mo")
@@ -166,13 +182,64 @@ public class MoimController {
 		return mv;
 	}
 	
+	// 채팅 관련 기능 시작
+	
 	@RequestMapping("chattingRoom.mo")
-	public ModelAndView cahttingRoom(ModelAndView mv/*, int teamNo*/) {
+	public ModelAndView cahttingRoom(ModelAndView mv, Chatting chat) {
 		// teamNo 이용해서 채팅방 보내주기~
 		
-		mv.setViewName("moim/chatView");
+		//System.out.println(moimService.selectChattingList(chat));
+		
+		mv.addObject("chatList", moimService.selectChattingList(chat)).setViewName("moim/chatView");
+		
 		
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="ajaxSelectChatList.mo", produces="application/json; charset=UTF-8")
+	public String ajaxSelectChattingList(String moimNo, String memNo) {
+		
+		Chatting chat = new Chatting();
+		
+		chat.setMemNo(memNo);
+		chat.setMoimNo(moimNo);
+		
+		return new Gson().toJson(moimService.selectChattingList(chat));
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="insertChat.mo", produces="text/html; charset=UTF-8")
+	public String ajaxInsertChatting(String moimNo, String memNo, String chatContent) {
+		Chatting chat = new Chatting();
+		
+		chat.setMoimNo(moimNo);
+		chat.setMemNo(memNo);
+		chat.setChatContent(chatContent);
+		
+		String message = "";
+		
+		if(moimService.ajaxInsertChatting(chat) > 0) {
+			message = "NNNNY";
+		} else {
+			message = "NNNNN";
+		}
+		
+		return message;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="deleteChat.mo", produces="text/html; charset=UTF-8")
+	public String ajaxDeleteChatting(String chatNo) {
+
+		System.out.println(chatNo);
+		
+		if(moimService.ajaxDeleteChatting(chatNo) > 0) {
+			return "NNNNY";
+		} else {
+			return "NNNNN";
+		}
+		
 	}
 	
 	@RequestMapping("badgeShop.mo")

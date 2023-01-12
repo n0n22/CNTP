@@ -144,7 +144,7 @@ public class MemberController {
 			if(memberService.loginCount(member) > 0 ) {
 				Member failMember = memberService.loginMember(member);
 				if(failMember.getFailCnt() >= 5) { // 로그인시도횟수가 5보다 크거나 같다면 난수만들어서 비밀번호 초기화시키기
-					String randPwd =generatorEncPassword(generatorRandom()); // 난수를 암호문으로 
+					String randPwd = generatorEncPassword(generatorRandom()); // 난수를 암호문으로 
 					failMember.setMemPwd(randPwd);
 					memberService.loginStopped(failMember);
 					session.setAttribute("loginMsg", "5회이상 로그인에 실패하여 보안을 위해 잠김처리 되었습니다.\\n비밀번호 찾기를 통해 비밀번호를 재설정 해주세요.");
@@ -176,8 +176,36 @@ public class MemberController {
 	
 	// 회원가입 
 	@RequestMapping("memberInsert.me")
-	public String insertMember() {
-		return "member/memberEnrollResult";
+	public ModelAndView insertMember(Member member, String emailSite, String emailForm, ModelAndView mv) {
+		
+		if(emailSite == null) {	emailSite = emailForm; }
+		member.setEmail(member.getEmail() + '@' + emailSite); // 사용자가 입력한 id + option값
+		member.setBirthDay((member.getBirthDay().replace(",", "-"))); //jsp에서 name값 같게해서 넘김 ex) 99,09,19 >> replace해서 ,를 -로 변경
+		member.setMemPwd((generatorEncPassword(member.getMemPwd()))); //사용자가 입력한 비밀번호 암호문으로 변경 후 VO에 담아줌
+		
+		if(memberService.insertMember(member) > 0) {
+			mv.setViewName("member/memberEnrollResult");
+		} else {
+			mv.addObject("errorMsg","회원가입 실패");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	// 회원가입 시 메일 인증
+	@ResponseBody
+	@RequestMapping("insertMailRequest.me")
+	public String insertMailRequest(String checkId, String checkEmail, HttpServletRequest request) throws MessagingException {
+		
+		String email = checkId + '@' + checkEmail;
+		String result = "";
+		if (!email.equals("")) {
+			result = "successEmail";
+			sendMail(email, request);
+		} else {
+			result = "failEmail";
+		}
+		return result;
 	}
 	
 	// ID찾기 페이지
@@ -224,24 +252,39 @@ public class MemberController {
 	// 메일 인증번호 확인
 	@ResponseBody
 	@RequestMapping("certNum.me")
-	public String certNumCheck(String certNum, HttpServletRequest request ) {
+	public boolean certNumCheck(String certNum, HttpServletRequest request) {
 		
 		// cert builder
 		Cert cert = Cert.builder()
 		.certIp(request.getRemoteAddr())
 		.secretNo(certNum).build();
-		// DB에 맞는 정보가 있으면 certY 없으면 certN 
-		String certYN = (memberService.certNumCheck(cert)) ? "certY" : "certN";
 		
-		return "certCheck";
+		// DB에 맞는 정보가 있으면 true 없으면 false 반환 
+		return memberService.certNumCheck(cert);
 	}
 	
 	
-	// 비밀번호 재설정 
-	@RequestMapping("findPwd")
-	public String findPwd() {
+	// 비밀번호 재설정 페이지
+	@RequestMapping("pwdChangeForm.me")
+	public ModelAndView pwdChangeForm(Member member, ModelAndView mv) {
+		// 식별값 넘겨주기용
+		mv.addObject(member);
+		mv.setViewName("member/findPwdChange");
+		
+		return mv;
+	}
+	
+	// 비밀번호 재설정
+	@RequestMapping("pwdChange.me")
+	public String pwdChange(Member member) {
+		// 사용자가 입력한 비밀번호 암호화 시키고 MemberVo에 다시 담기
+		member.setMemPwd((generatorEncPassword(member.getMemPwd())));
+		
+		memberService.pwdChange(member);
+		
 		return "member/findPwdResult";
 	}
+	
 	
 	
 

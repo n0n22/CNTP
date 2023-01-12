@@ -6,36 +6,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="battleMapper">
 	
 	<resultMap id="battleResultSet" type="battle" >
-		<result column="BATTLE_NO"  	property="battleNo"/>
-		<result column="AREA"			property="area"/>
-		<result column="GENDER"			property="gender"/>
-		<result column="HOME_TEAM"		property="homeTeam"/>
-		<result column="AWAY_TEAM"		property="awayTeam"/>
-		<result column="LEVEL"			property="level"/>
-		<result column="BATTLE_DATE"	property="battleDate"/>
-		<result column="ORIGIN_NAME"	property="originName"/>
-		<result column="CHANGE_NAME" 	property="changeName"/>
-		<result column="STYLE"			property="style"/>
-		<result column="TITLE"			property="title"/>
-		<result column="BATTLE_TIME"	property="battleTime"/>
-		<result column="BATTLE_RULE" 	property="battleRule"/>
+		<result column="BATTLE_NO"  		property="battleNo"/>
+		<result column="AREA"				property="area"/>
+		<result column="GENDER"				property="gender"/>
+		<result column="HOME_TEAM"			property="homeTeam"/>
+		<result column="AWAY_TEAM"			property="awayTeam"/>
+		<result column="LEVEL"				property="level"/>
+		<result column="BATTLE_DATE"		property="battleDate"/>
+		<result column="ORIGIN_NAME"		property="originName"/>
+		<result column="CHANGE_NAME" 		property="changeName"/>
+		<result column="STYLE"				property="style"/>
+		<result column="TITLE"				property="title"/>
+		<result column="BATTLE_TIME"		property="battleTime"/>
+		<result column="BATTLE_RULE" 		property="battleRule"/>
 	</resultMap>
 	
 	<resultMap id="poolInfoResultSet" type="poolInfo" >
-		<result column="BATTLE_NO"		property="battleNo"/>
-		<result column="POOL_NAME" 		property="poolName"/>
-		<result column="LENGTH" 		property="length"/>
-		<result column="WIDTH"			property="width"/>
-		<result column="LANES" 			property="lanes"/>
-		<result column="DEPTH"			property="depth"/>
-		<result column="PLACE"			property="place"/>
-		<result column="YES_NO"			property="yesNo"/>
+		<result column="BATTLE_NO"			property="battleNo"/>
+		<result column="POOL_NAME" 			property="poolName"/>
+		<result column="LENGTH" 			property="length"/>
+		<result column="WIDTH"				property="width"/>
+		<result column="LANES" 				property="lanes"/>
+		<result column="DEPTH"				property="depth"/>
+		<result column="PLACE"				property="place"/>
+		<result column="YES_NO"				property="yesNo"/>
 	</resultMap>
 	
 	<resultMap type="team" id="teamResultMap">
 		<result column="TEAM_NO" 			property="teamNo"/>
 		<result column="TEAM_NAME" 			property="teamName"/>
 		<result column="MEM_NO" 			property="memNo"/>
+		<result column="NICKNAME" 			property="nickname"/>
 		<result column="TEAM_MEMBER" 		property="teamMember"/>
 		<result column="TEAM_INTRO" 		property="teamIntro"/>
 		<result column="ORIGIN_NAME" 		property="originName"/>
@@ -205,7 +206,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        BATTLE_NO = #{battleNo}
 	</update>
 	
-	<insert id="provokeMsg" parameterType="hashmap">
+	<insert id="msg" parameterType="hashmap">
 		INSERT
 		  INTO
 		        CHATTING
@@ -230,6 +231,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        TEAM_NO
 		        ,TEAM_NAME
 		        ,MEM_NO
+		        ,NICKNAME
 		        ,TEAM_MEMBER
 		        ,TEAM_INTRO
 		        ,ORIGIN_NAME
@@ -245,11 +247,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        ,POWER_DURATION
 		  FROM
 		        TEAM
+		  JOIN
+		  		MEMBER USING(MEM_NO)
 		 WHERE
 		        STATUS = 'Y'
 		   AND
 		        TEAM_NO = #{team}
-	
 	
 	</select>
 	
@@ -268,7 +271,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectResultHistory" parameterType="string" resultMap="resultHistoryResultSet">
-	
 	
 		SELECT
 		        TEAM_NO
@@ -305,7 +307,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        ,#{vicRecord}
 		        ,#{defRecord}
 		        )
-
 	</insert>
 <!-- 배틀 결과 승인 -->
 	<!-- 1. 배틀 결과 승인  -->
@@ -376,9 +377,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 ORDER 
 		    BY
 		        BATTLE_TIME DESC
-	
-	
 	</select>
+<!-- 배틀 신청 취소 -->
+	<insert id="cancelBattle" parameterType="string">
+	
+		UPDATE
+		        BATTLE
+		   SET
+		        AWAY_TEAM = ''
+		 WHERE
+		        BATTLE_NO = #{battleNo}
+	</insert>	
+	
 	
 	
 </mapper>

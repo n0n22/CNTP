@@ -47,7 +47,7 @@ public class BattleServiceImpl implements BattleService{
 	@Override
 	@Transactional
 	public int applyBattle(HashMap<String, String> apply) {
-		return battleDao.applyBattle(sqlSession, apply) * battleDao.provokeMsg(sqlSession, apply);
+		return battleDao.applyBattle(sqlSession, apply) * battleDao.msg(sqlSession, apply);
 	}
 	@Override
 	public Team selectTeam(String team) {
@@ -73,6 +73,11 @@ public class BattleServiceImpl implements BattleService{
 	@Override
 	public ArrayList<Battle> searchBattle(HashMap<String, String> condition) {
 		return battleDao.searchBattle(sqlSession, condition);
+	}
+	@Override
+	@Transactional
+	public int cancelBattle(HashMap<String, String> cancel) {
+		return battleDao.cancelBattle(sqlSession, cancel.get("battleNo")) * battleDao.msg(sqlSession, cancel);
 	}
 
 	

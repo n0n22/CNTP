@@ -116,7 +116,7 @@
         
         <div class="find-pwd-area">
 
-            <form action="" method="post" class="find-pwd-form">
+            <form action="pwdChangeForm.me" method="post" class="find-pwd-form">
                 <h1 id="main-text">비밀번호 찾기</h1>
                 <div>
                     <div><input id="checkId" type="text" name="memId" placeholder="아이디를 입력해주세요"></div>
@@ -165,7 +165,7 @@
                 					$('#emailForm').append(
 									'<input id="checkCertNum" type="text" name="checkCertNum" placeholder="인증번호를 입력해주세요" style="width: 183px; margin-top:8px;">'+
 									'<button type="button" id="CertNum-btn" onclick="CertNum();" style="margin-left:13px;">확인</button>'+
-									'<div id="certMessage" style="font-size : 11px; color: red; margin: 5px;"><div>'
+									'<div id="certMessage" style="font-size : 12px; color: red; margin: 5px;"><div>'
 									);
                 					
                 				}
@@ -199,15 +199,15 @@
             				data : { certNum : $certNum },
             				success : function(certYN){
             					
-            					if (certYN == 'certY'){
+            					if (certYN == true){ // 성공
+            						$('#certMessage').show();
             						$('#certMessage').html('메일인증 완료');
-            						// 성공이면 본인인증 버튼 enabled
-                					console.log('성공~')
+            						$('#submit').attr('disabled', false);
             					}
             					else{
-            						console.log('ajax성공 db실패')
+            						$('#certMessage').show()
+            						$('#certMessage').html('인증번호가 맞지않습니다');
             					}
-            					
             					
             				},
             				error : function(){

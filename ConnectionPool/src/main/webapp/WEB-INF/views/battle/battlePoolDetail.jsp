@@ -7,112 +7,8 @@
 <meta charset="UTF-8">
 <title>배틀풀 상세보기</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<style>
-	body{
-
-	background-color: #eee;
-	}
-	
-	.project{
-		font-size: 18px;
-	}
-	
-	.totals{
-	
-		font-size: 10px;
-	}
-	
-	.fs-10{
-	
-		font-size: 10px;
-	}
-	
-	.content{
-	
-		font-size: 13px;
-	}
-	
-	.alpha{
-	
-		padding:6px;
-	    font-size: 10px;
-		
-		border-radius: 50%;
-		height: 10px;
-		width: 10px;
-	}
-	
-	.alpha-red{
-	    
-	    color:#D50000;
-	    background-color: #EF9A9A;
-	    border: 1px solid #EF9A9A;
-	
-	}
-	
-	.alpha-green{
-	    
-	    color:#4A148C;
-	    background-color: #E1BEE7;
-	    border: 1px solid #E1BEE7;
-	
-	}
-
-    /* 배틀 모달 스타일 */
-    .message-background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.3);
-        z-index: 1000;
-
-        /* 숨기기 */
-        z-index: -1;
-        opacity: 0;
-    }
-
-    .message-show {
-        opacity: 1;
-        z-index: 1000;
-        transition: all 0.5s;
-    }
-
-    .message-window {
-        position: relative;
-        width: 100%;
-        height: 100%;
-    }
-
-    .message-popup {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
-        font-family: 'Pretendard-Regular';
-        border-radius: 3%;
-
-        /* 임시 지정 */
-        width: 480px;
-        height: 280px;
-
-        /* 초기에 약간 아래에 배치 */
-        transform: translate(-50%, -50%);
-        padding: 7px;
-        
-        /* padding-block-start: 30px; */
-    }
-
-    .message-show .message-popup {
-        transform: translate(-50%, -50%);
-        transition: all 0.5s;
-    }
-    /* 모달 스타일 끝 */
-    
-</style>
+<!-- 스타일 시트 -->
+<link rel="stylesheet" href="resources/css/battle/battlePoolDetail.css">
 </head>
 <body>
 
@@ -139,7 +35,6 @@
 			<div class=" px-3 mt-3 d-flex flex-row justify-content-between">
 	
 				<span>${battle.title}</span>
-				
 			</div>
 	
 			<hr>
@@ -244,7 +139,7 @@
 								
 								<span>시간</span>
 								<div class="mt-2">
-									<span class="text-black-50">${battle.battleDate} ${battle.battleTime}</span>
+									<span id="time" class="text-black-50">${battle.battleDate} ${battle.battleTime}</span>
 								</div>
 							</div>
 	
@@ -289,8 +184,6 @@
 						<!-- AJAX로 하고 싶은데 그냥 SELECT문 통해서 할 예정 : TEAM 테이블, RESULT_HISTORY -->
 						<div class="d-flex flex-row">
 	
-					
-	
 							<div class="mr-4">
 								
 								<span>전적</span>
@@ -298,12 +191,7 @@
 									<span class="text-black-50">${homeTeamRecord.record}전  ${homeTeamRecord.victory}승  ${homeTeamRecord.defeat}패 승률(${homeTeamRecord.winRate}%)</span>
 									
 								</div>
-	
-	
 							</div>
-	
-							
-	
 						</div>
 						
 					</div>
@@ -353,13 +241,10 @@
 							</div>
 	
 							<div class="mr-4">
-								
 								<span>레인</span>
 								<div class="mt-2">
 									<span class="text-black-50">${ poolInfo.lanes }개</span>
 								</div>
-	
-	
 							</div>
 	
 	
@@ -374,8 +259,6 @@
 								</div>
 	
 							</div>
-							
-	
 						</div>
 						
 					</div>
@@ -404,90 +287,134 @@
 						<p class="text-black-50 content mb-5">
 							신청은 팀장만 할 수 있습니다.
 						</p>
-	
 						<div class="d-flex flex-row">
-	
-							<div class="mr-4">
-								
-								<span>신청</span>
-								<div class="mt-2">
-									<span class="alpha alpha-red show">신청</span>
+								<!-- 1. 신청은 팀장만 보임  / 2. 신청하면 신청이 아니라 취소 버튼이 보임  / 3. 작성팀의 팀장은 보이지 않음  / 4. 배틀결과가 확정되면 보이지 않음-->
+								<c:if test="${ (loginMember.teamGrade eq 'L') and (loginMember.teamNo ne battle.awayTeam) and (loginMember.teamNo ne battle.homeTeam) and (empty battle.awayTeam)}">
+									<div class="mr-4">
+										<span>신청</span>
+											<div class="mt-2">
+												<span class="alpha alpha-red show" id="apply">신청</span>
+											</div>
+									</div>
+									<!-- 메시지 모달 -->
+								    <div class="message-background">
+										<div class="message-window">
+											<div class="message-popup">
+												<div class="message-area" align="center">
+													<h3>배틀 신청</h3>
+													<br>
+													<form action="battleApply.bt" method="post">
+														<input type="hidden" name="teamNo" value="${ loginMember.teamNo }">
+														<input type="hidden" name="memNo" value="${ loginMember.memNo }">
+														<input type="hidden" name="battleNo" value="${ battle.battleNo }">
+														<textarea id="msgContent" rows="5" name="chatContent" maxlength="150"
+															style="width: 400px; resize: none;" placeholder="도발 멘트를 입력해 주세요." required="required"></textarea>
+														<br> <br>
+														<button type="submit">신청</button>
+														<button type="button" id="close">취소</button>
+													</form>
+												</div>
+											</div>
+										</div>
+								    </div>
+																		
+									<script>
+							            // 배틀 시간 6시간 전(60 * 60 * 6) 신청을 마감하는 함수 
+										$(function(){
+											let today = new Date();
+											let battleDate = new Date($('#time').text());
+											
+											if((battleDate - today) < (60 * 60 * 6)){ // 배틀 시간 6시간 보다 안남음
+												$('#apply').text('마감');
+												$('#apply').attr('class', 'alpha alpha-green');
+											}
+											// 메시지 모달 실행 조건 => 신청이면 모달 정상 작동 / 마감이면 모달 작동 안함
+								        	if($('#apply').attr('class') != 'alpha alpha-green'){
+									            document.querySelector(".show").addEventListener("click", messageShow);
+									            document.querySelector("#close").addEventListener("click", messageClose);
+								        	}
+										})
+										// 메시지 모달 실행 및 종료 함수
+								        function messageShow() {
+							            document.getElementById("msgContent").value = '';
+							            document.querySelector(".message-background").className = "message-background message-show";
+							            }
+							        
+							            function messageClose() {
+							                document.querySelector(".message-background").className = "message-background";
+							            }
+									
+									</script>
+								</c:if>
+								<!-- 팀 직급이 팀장 && 배틀을 신청한 팀장 && (배틀 결과가 없거나  배틀 결과 승인 전이거나) -->
+								<c:if test="${ (loginMember.teamGrade) eq 'L' and (loginMember.teamNo eq battle.awayTeam) and (empty battleResult or battleResult eq 'N')}">
+									<div class="mr-4">
+										<span>취소</span>
+											<div class="mt-2">
+												<span class="alpha alpha-red" onclick="cancel()">취소</span>
+											</div>
+									</div>
+									<form action="cancelBattle.bt" method="post" id="cancelBattleSubmit">
+										<input type="hidden" name="battleNo" value="${battle.battleNo}">
+										<input type="hidden" name="memNo" value="${loginMember.memNo}">
+									</form>
+									<div class="mr-4">
+										<span>채팅방 입장</span>
+										<div class="mt-2">
+											<span class="alpha alpha-red" onclick="chat()">채팅방</span>
+										</div>
+			
+									</div>
+									<script>
+										function cancel(){
+											if(confirm('신청을 취소하시겠습니까?')){
+												$('#cancelBattleSubmit').submit();
+											}
+										}
+										function chat(){
+											location.href = 'chattingRoom.mo';
+										}
+									</script>
+								</c:if>
+							<c:if test="${(loginMember.teamNo eq battle.homeTeam) and (empty battleResult) }">
+								<div class="mr-4">
+									
+									<span>글 삭제</span>
+									<div class="mt-2">
+										<span class="alpha alpha-red">글 삭제</span>
+									</div>
+									
 								</div>
-	
-							</div>
-	
-	
+							</c:if>
+							
 							<div class="mr-4">
 								
 								<span>결과보기</span>
 								<div class="mt-2">
-									<span class="alpha alpha-green" onclick="location.href='battleResult.bt?battleNo=${battle.battleNo}&homeTeam=${battle.homeTeam}&awayTeam=${battle.awayTeam}'">결과보기</span>
+									<span class="alpha alpha-green" onclick="showResult()">결과보기</span>
 								</div>
-	
-	
 							</div>
-	
-	
-							<div class="mr-4">
-								
-								<span>채팅방 입장</span>
-								<div class="mt-2">
-									<span class="alpha alpha-red">채팅방</span>
-								</div>
-	
-							</div>
-							
-	
 						</div>
-						
 					</div>
-	
 			    	</div>
-	
 			</div>
-		
 	</div>
-
-
-
 </div>
+		<!-- 배틀 결과 상세 보기 페이지 post방식으로 전송 : get 방식으로 전송했더니 url 가지고 조작이 가능 -->
+		<form action="battleResult.bt" method="post" id="battleResultSubmit">
+			<input type="hidden" name="battleNo" value="${battle.battleNo}">
+			<input type="hidden" name="homeTeam" value="${battle.homeTeam}">
+			<input type="hidden" name="awayTeam" value="${battle.awayTeam}">
+		</form>
+	<script>
+		function showResult(){
+			$('#battleResultSubmit').submit();
+		}
+	
+	</script>
      
      <jsp:include page="../common/footer.jsp"/>
 
-     <div class="message-background">
-		<div class="message-window">
-			<div class="message-popup">
-				<div class="message-area" align="center">
-					<h3>배틀 신청</h3>
-					<br>
-					<form action="battleApply.bt" method="post">
-						<input type="hidden" name="teamNo" value="${ loginMember.teamNo }">
-						<input type="hidden" name="memNo" value="${ loginMember.memNo }">
-						<input type="hidden" name="battleNo" value="${ battle.battleNo }">
-						<textarea id="msgContent" rows="5" name="chatContent"
-							style="width: 400px; resize: none;" placeholder="도발 멘트를 입력해 주세요."></textarea>
-						<br> <br>
-						<button type="submit">신청</button>
-						<button type="button" id="close">취소</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	 </div>
-
-     <script>
-        function messageShow() {
-        document.getElementById("msgContent").value = '';
-        document.querySelector(".message-background").className = "message-background message-show";
-        }
-    
-        function messageClose() {
-            document.querySelector(".message-background").className = "message-background";
-        }
-    
-        document.querySelector(".show").addEventListener("click", messageShow);
-        document.querySelector("#close").addEventListener("click", messageClose);
-     </script>
 
 
 </body>
