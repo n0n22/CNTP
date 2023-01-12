@@ -25,6 +25,7 @@ import com.kh.cntp.member.model.service.MemberService;
 import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.moim.model.service.MoimService;
 import com.kh.cntp.moim.model.vo.Apply;
+import com.kh.cntp.moim.model.vo.Chatting;
 import com.kh.cntp.moim.model.vo.Team;
 import com.kh.cntp.moim.model.vo.TeamMember;
 
@@ -182,10 +183,10 @@ public class MoimController {
 	}
 	
 	@RequestMapping("chattingRoom.mo")
-	public ModelAndView cahttingRoom(ModelAndView mv/*, int teamNo*/) {
+	public ModelAndView cahttingRoom(ModelAndView mv, Chatting chat) {
 		// teamNo 이용해서 채팅방 보내주기~
 		
-		mv.setViewName("moim/chatView");
+		mv.addObject("chatList", moimService.selectChattingList(chat)).setViewName("moim/chatView");
 		
 		return mv;
 	}

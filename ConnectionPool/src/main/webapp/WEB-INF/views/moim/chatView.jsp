@@ -78,53 +78,70 @@
 	        </div>
 	        
 	        <div id="chatContent-area">
-	        <!-- 채팅 리스트가 있을 때 -->
-		        <!-- 채팅 작성자와 로그인 유저의 회원번호가 다를 때 == 내 채팅이 아닐 때 -->
-			        <!-- 대화내용 div-->
-			        <!-- 좌 우 정렬 정할 div-->
-			        	<!-- 채팅 상태가 숨겨져있지 않을 때 -->
-					        <div id="chatAlign-other"> 
-					            <div style="width : 500px," class="align-left">
-					                <div style="max-width: 270px; margin-left: 5px;">
-					                    <div style="height : 20px">
-					                      		닉네임입니다
-					                    </div>
-					                    <div class="speechBubble-other">
-					                    	<input type="hidden" value="회원번호">
-					                    	<P>채팅내용 남이쓴 내용</P>
-										</div>	
+	        	<c:choose>
+	        		<c:when test="${ empty chatList }">
+	        		<!-- 아예 채팅이 없을 때 -->
+			        	대화가 없습니다.
+	        		</c:when>
+	        		<c:otherwise>
+					<!-- 채팅 리스트가 있을 때 -->
+						<c:forEach items="${ chatList }" var="chat">
+							<c:choose>
+								<c:when test="${ chat.memNo ne loginMember.memNo }">
+								<!-- 채팅 작성자와 로그인 유저의 회원번호가 다를 때 == 내 채팅이 아닐 때 -->
+								<!-- 대화내용 div-->
+								<!-- 좌 우 정렬 정할 div-->
+								<!-- 채팅 상태가 숨겨져있지 않을 때 -->
+							        <div id="chatAlign-other"> 
+							            <div style="width : 500px," class="align-left">
+							                <div style="max-width: 270px; margin-left: 5px;">
+							                    <div style="height : 20px">
+							                      		${ chat.nickname }
+							                    </div>
+							                    <div class="speechBubble-other">
+							                    	<input type="hidden" value="회원번호">
+							                    	<P>${ chat.chatContent }</P>
+												</div>	
+											</div>
+							                
+							            </div>
+										<div style="display: flex; align-content: flex-end; margin-left: 60px;">
+											<p style="margin-top: auto; margin-bottom: 0;">
+												<!-- 여긴 날짜 -->
+												${ chat.createDate }
+											</p>
+										</div>
+							        </div>
+								</c:when>
+								<c:otherwise>
+						        <!-- 채팅 작성자와 로그인 유저의 회원번호가 같을 때 == 내 채팅일 때 -->
+									<div id="chatAlign-mine" >
+										<div class="align-right">
+											<div style="max-width : 270px">
+												<div class="speechBubble-mine">
+													<form action="deleteChat.mo">
+														<input type="hidden" value="${ chat.chatNo }">
+														<button>삭제</button>
+														<P>${ chat.nickname }</P>
+													</form>
+												</div>
+											</div>
+										</div>
+										<div class="align-right">
+											<div style="display: flex; align-content: flex-end; margin-right: 5px;">
+												<p style="margin-top: auto; margin-bottom: 0;">
+													<!-- 여긴 날짜 -->
+													${ chat.createDate }
+												</p>
+											</div>
+										</div>
 									</div>
-					                
-					            </div>
-								<div style="display: flex; align-content: flex-end; margin-left: 60px;">
-									<p style="margin-top: auto; margin-bottom: 0;">
-										<!-- 여긴 날짜 -->
-										2020-01-01
-									</p>
-								</div>
-					        </div>
-			        <!-- 채팅 작성자와 로그인 유저의 회원번호가 같을 때 == 내 채팅일 때 -->
-					<div id="chatAlign-mine" >
-						<div class="align-right">
-							<div style="max-width : 270px">
-								<div class="speechBubble-mine">
-									<input type="hidden" value="채팅번호">
-									<P>채팅내용 내가쓴 내용</P>
-								</div>
-							</div>
-						</div>
-						<div class="align-right">
-							<div style="display: flex; align-content: flex-end; margin-right: 5px;">
-								<p style="margin-top: auto; margin-bottom: 0;">
-									<!-- 여긴 날짜 -->
-									2020-01-01
-								</p>
-							</div>
-						</div>
-					</div>
-					
-					<!-- 아예 채팅이 없을 때 -->
-			        대화가 없습니다.
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+				        
+	        		</c:otherwise>
+	        	</c:choose>
 			</div>
 	        <!-- 입력 div -->
 	        <div class="align-left">
@@ -139,25 +156,29 @@
 	<jsp:include page="../common/footer.jsp"/>
 	
 	
-	<!-- 
 	<script>
 	
 	$(function(){
-			//setInterval(selectChat, 700);
+			setInterval(selectChat, 700);
+			// 계속 새로고침해서 채팅 보이게 해주는 메소드
 			scrollDown();
+			// 스크롤을 맨 아래로 내려주는 메소드
 			rightClick();
 		})
 		
+		// 처음 스크롤 위치 잡아줌
 		function scrollDown(){
 			$("#chatContent-area").scrollTop($("#chatContent-area")[0].scrollHeight);
 		}
 		
+		// enter 치면 insert 되게 만들어줌
 		function enterFn(){
 	        if(window.event.keyCode == 13){
 	        	insertChatContent();
 	        };
 	    }
 	    
+	    // 내 꺼는 삭제
 	    function rightClick(){
 	    	$(document).on('contextmenu', '.speechBubble-mine', function() {
 	    		  return false;
@@ -181,6 +202,9 @@
 	    		}
 	    		
 	    	})
+	    	
+	    	// 이거는 남의 것을 숨기는 것인데, 
+	    	// ajax 말고 그냥 속성값을 줘서 없애버리면 어떨까 싶다.
 	    	$(document).on('contextmenu', '.speechBubble-other', function() {
 	    		  return false;
 	    		});
@@ -204,7 +228,11 @@
 	    		
 	    	})
 	    }
-	 -->
+	    
+	    
+	    
+	    
+	    
 	 <!-- 
 		function selectChat(){
 			$.ajax({
