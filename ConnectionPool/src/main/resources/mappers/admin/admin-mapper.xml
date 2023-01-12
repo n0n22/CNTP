@@ -333,7 +333,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ,SYSDATE	       
 		       )
 	</insert>
-	<!-- 신고게시글 업데이트 -->
+	
+	
+	<!-- 신고당한 게시글 상태 업데이트 -->
 	<update id="updateBoardStatus" parameterType="_int">
 		UPDATE
 		       BOARD
@@ -342,8 +344,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE
 		       BOARD_NO = #{boardNo}
 	</update>
-
-
+	
+	
+	<!-- 신고글 무효 처리 -->
+	<update id="invalidReport" parameterType="_int">
+		UPDATE
+		       REPORT
+		   SET
+		       REPORT_RESULT = 'X',
+		       COMPLETION_DATE = SYSDATE
+		 WHERE
+		       REPORT_NO = #{reportNo}	
+	</update>
+	
+	<!-- 신고 무효 - 신고당한 게시글 상태 되돌리기 -->
+	<update id="reUpdateBoardStatus">
+		UPDATE
+		       BOARD
+		   SET
+		       STATUS = 'Y'
+		 WHERE
+		       BOARD_NO = #{boardNo}
+	</update>
+	
+	<!-- 신고글 확정 처리  -->
+	<update id="confirmReport" parameterType="_int">
+		UPDATE
+		       REPORT
+		   SET
+		       REPORT_RESULT = 'O',
+		       COMPLETION_DATE = SYSDATE
+		 WHERE
+		       REPORT_NO = #{reportNo}
+	</update>
 
 	
 <!-- 

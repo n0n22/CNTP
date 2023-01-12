@@ -98,14 +98,27 @@ public class AdminServiceImpl implements AdminService {
 	
 	
 	
-	// 신고 등록
+	// 신고 등록 : REPORT insert + BOARD update
 	@Transactional
 	@Override
 	public int insertReport(Report report) {
 		return adminDao.insertReport(sqlSession, report) * adminDao.updateBoardStatus(sqlSession, report.getBoardNo());
 	}
 	
-
+	
+	// 신고 무효 : REPORT update + BOARD update
+	@Transactional
+	@Override
+	public int invalidReport(Report report) {
+		return adminDao.invalidReport(sqlSession, report.getReportNo()) * adminDao.reUpdateBoardStatus(sqlSession, report.getBoardNo());
+	}
+	
+	
+	// 신고 확정 : REPORT update
+	@Override
+	public int confirmReport(int reportNo) {
+		return adminDao.confirmReport(sqlSession, reportNo);
+	}
 	
 	
 	
@@ -176,6 +189,7 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteNotice(int nno) {
 		return adminDao.deleteNotice(sqlSession, nno);
 	}
+
 
 
 
