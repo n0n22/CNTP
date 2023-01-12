@@ -105,19 +105,28 @@
 		<c:if test="${ empty report.reportResult }">
 	        <div class="result-btn-area">
 	            <button type="button" class="btn btn-warning" onclick="invalidFormSubmit();">신고무효</button>
-	            <a href="" class="btn btn-danger">신고확정</a>
+	            <button type="button" class="btn btn-danger" onclick="confirmFormSubmit();">신고확정</a>
 	        </div>
 		</c:if>
 
-		<form method="post" action="reportInvalid.ad" id="invalidForm">
+		<form method="post" action="" id="submitForm">
 			<input type="hidden" value="${ report.reportNo }" name="reportNo" >
 			<input type="hidden" value="${ report.boardNo }" name="boardNo" >			
 		</form>
 			
 		<script>
 		
+		
+			// 신고 무효
 			function invalidFormSubmit() {
-				$('#invalidForm').submit();
+				$('#submitForm').attr('action', 'reportInvalid.ad');
+				$('#submitForm').submit();
+			}
+			
+			// 신고 확정
+			function confirmFormSubmit() {
+				$('#submitForm').attr('action', 'reportConfirm.ad');
+				$('#submitForm').submit();
 			}
 		
 		

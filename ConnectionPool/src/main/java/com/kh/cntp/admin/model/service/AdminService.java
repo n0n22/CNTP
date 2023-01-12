@@ -64,6 +64,9 @@ public interface AdminService {
 	// 신고 무효
 	int invalidReport(Report report);
 	
+	// 신고 확정
+	int confirmReport(int reportNo);
+	
 
 	
 	

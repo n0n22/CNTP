@@ -366,7 +366,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE
 		       BOARD_NO = #{boardNo}
 	</update>
-
+	
+	<!-- 신고글 확정 처리  -->
+	<update id="confirmReport" parameterType="_int">
+		UPDATE
+		       REPORT
+		   SET
+		       REPORT_RESULT = 'O',
+		       COMPLETION_DATE = SYSDATE
+		 WHERE
+		       REPORT_NO = #{reportNo}
+	</update>
 
 	
 <!-- 
