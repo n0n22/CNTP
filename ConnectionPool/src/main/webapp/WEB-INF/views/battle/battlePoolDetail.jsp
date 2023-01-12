@@ -244,7 +244,7 @@
 								
 								<span>시간</span>
 								<div class="mt-2">
-									<span class="text-black-50">${battle.battleDate} ${battle.battleTime}</span>
+									<span id="time" class="text-black-50">${battle.battleDate} ${battle.battleTime}</span>
 								</div>
 							</div>
 	
@@ -399,9 +399,59 @@
 									<div class="mr-4">
 										<span>신청</span>
 											<div class="mt-2">
-												<span class="alpha alpha-red show">신청</span>
+												<span class="alpha alpha-red show" id="apply">신청</span>
 											</div>
 									</div>
+									<!-- 메시지 모달 -->
+								    <div class="message-background">
+										<div class="message-window">
+											<div class="message-popup">
+												<div class="message-area" align="center">
+													<h3>배틀 신청</h3>
+													<br>
+													<form action="battleApply.bt" method="post">
+														<input type="hidden" name="teamNo" value="${ loginMember.teamNo }">
+														<input type="hidden" name="memNo" value="${ loginMember.memNo }">
+														<input type="hidden" name="battleNo" value="${ battle.battleNo }">
+														<textarea id="msgContent" rows="5" name="chatContent" maxlength="150"
+															style="width: 400px; resize: none;" placeholder="도발 멘트를 입력해 주세요." required="required"></textarea>
+														<br> <br>
+														<button type="submit">신청</button>
+														<button type="button" id="close">취소</button>
+													</form>
+												</div>
+											</div>
+										</div>
+								    </div>
+																		
+									<script>
+							            // 배틀 시간 6시간 전(60 * 60 * 6) 신청을 마감하는 함수 
+										$(function(){
+											let today = new Date();
+											let battleDate = new Date($('#time').text());
+											
+											if((battleDate - today) < (60 * 60 * 6)){ // 배틀 시간 6시간 보다 안남음
+												$('#apply').text('마감');
+												$('#apply').attr('class', 'alpha alpha-green');
+											}
+											// 메시지 모달 실행 조건 => 신청이면 모달 정상 작동 / 마감이면 모달 작동 안함
+								        	if($('#apply').attr('class') != 'alpha alpha-green'){
+									            document.querySelector(".show").addEventListener("click", messageShow);
+									            document.querySelector("#close").addEventListener("click", messageClose);
+								        	}
+										})
+										// 메시지 모달 실행 및 종료 함수
+								        function messageShow() {
+							            document.getElementById("msgContent").value = '';
+							            document.querySelector(".message-background").className = "message-background message-show";
+							            }
+							        
+							            function messageClose() {
+							                document.querySelector(".message-background").className = "message-background";
+							            }
+										
+									
+									</script>
 								</c:if>
 								<c:if test="${ (loginMember.teamGrade) eq 'L' and (loginMember.teamNo eq battle.awayTeam)}">
 									<div class="mr-4">
@@ -414,11 +464,21 @@
 										<input type="hidden" name="battleNo" value="${battle.battleNo}">
 										<input type="hidden" name="memNo" value="${loginMember.memNo}">
 									</form>
+									<div class="mr-4">
+										<span>채팅방 입장</span>
+										<div class="mt-2">
+											<span class="alpha alpha-red" onclick="chat()">채팅방</span>
+										</div>
+			
+									</div>
 									<script>
 										function cancel(){
 											if(confirm('신청을 취소하시겠습니까?')){
 												$('#cancelBattleSubmit').submit();
 											}
+										}
+										function chat(){
+											location.href = 'chattingRoom.mo';
 										}
 									</script>
 								</c:if>
@@ -434,14 +494,6 @@
 							</div>
 	
 	
-							<div class="mr-4">
-								
-								<span>채팅방 입장</span>
-								<div class="mt-2">
-									<span class="alpha alpha-red">채팅방</span>
-								</div>
-	
-							</div>
 							
 	
 						</div>
@@ -460,40 +512,6 @@
      
      <jsp:include page="../common/footer.jsp"/>
 
-     <div class="message-background">
-		<div class="message-window">
-			<div class="message-popup">
-				<div class="message-area" align="center">
-					<h3>배틀 신청</h3>
-					<br>
-					<form action="battleApply.bt" method="post">
-						<input type="hidden" name="teamNo" value="${ loginMember.teamNo }">
-						<input type="hidden" name="memNo" value="${ loginMember.memNo }">
-						<input type="hidden" name="battleNo" value="${ battle.battleNo }">
-						<textarea id="msgContent" rows="5" name="chatContent" maxlength="150"
-							style="width: 400px; resize: none;" placeholder="도발 멘트를 입력해 주세요." required="required"></textarea>
-						<br> <br>
-						<button type="submit">신청</button>
-						<button type="button" id="close">취소</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	 </div>
-
-     <script>
-        function messageShow() {
-        document.getElementById("msgContent").value = '';
-        document.querySelector(".message-background").className = "message-background message-show";
-        }
-    
-        function messageClose() {
-            document.querySelector(".message-background").className = "message-background";
-        }
-    
-        document.querySelector(".show").addEventListener("click", messageShow);
-        document.querySelector("#close").addEventListener("click", messageClose);
-     </script>
 
 
 </body>
