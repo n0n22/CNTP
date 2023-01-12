@@ -31,7 +31,7 @@
 		</div>
 		<div class="target-area">
 			<p>
-				작성자 : ${ report.memNickname }
+				작성자 : ${ report.memNickName }
 				<br>
 				글내용 : ${ report.content }
 			</p>

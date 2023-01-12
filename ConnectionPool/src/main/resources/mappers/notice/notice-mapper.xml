@@ -39,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ,CATEGORY
 		       ,TITLE
 		       ,NICKNAME
-		       ,to_char(create_date, 'YYYY-MM-DD') as "CREATE_DATE"
+		       ,TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') "CREATE_DATE"
 		       ,COUNT
 		       ,STATUS
 		  FROM
@@ -77,7 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ,CONTENT
 		       ,MEM_NO
 		       ,NICKNAME
-		       ,to_char(create_date, 'YYYY-MM-DD') as "CREATE_DATE"
+		       ,TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') "CREATE_DATE"
 		       ,COUNT
 		       ,ORIGIN_NAME
 		       ,CHANGE_NAME

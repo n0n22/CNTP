@@ -135,10 +135,10 @@ public class AdminController {
 										,ModelAndView mv) {
 		
 		
-		System.out.println(adminService.selectReportListCount(result));
-		//PageInfo pi = Pagination.getPageInfo(adminService.selectReportListCount(result), cpage, 5, 10);
+		// System.out.println(adminService.selectReportListCount(result));
+		PageInfo pi = Pagination.getPageInfo(adminService.selectReportListCount(result), cpage, 5, 10);
 		
-		// mv.addObject("list", adminService.selectReportList(pi, result));
+		mv.addObject("list", adminService.selectReportList(pi, result)).addObject("pi", pi).addObject("result", result);
 		mv.setViewName("admin/adminReportList");
 		return mv;
 	}
@@ -146,7 +146,9 @@ public class AdminController {
 	
 	// 신고글 상세 조회 -> 신고글 상세 페이지로 이동
 	@RequestMapping("reportDetail.ad")
-	public String selectReport() {
+	public String selectReport(int rno) {
+		
+		adminService.selectReport(rno);
 		
 		return "admin/adminReportDetail";
 	}
