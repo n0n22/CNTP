@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.cntp.battle.model.vo.ResultHistory;
+import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.moim.model.dao.MoimDao;
 import com.kh.cntp.moim.model.vo.Apply;
 import com.kh.cntp.moim.model.vo.Team;
@@ -103,13 +104,12 @@ public class MoimServiceImpl implements MoimService {
 
 	@Override
 	public int selectTeamCountList(Team team) {
-		return 0;
+		return moimDao.selectTeamCountList(sqlSession, team);
 	}
 
 	@Override
-	public ArrayList<Team> selectTeamList(int cpage, String teamArea, String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Team> selectTeamList(PageInfo pi, Team team) {
+		return moimDao.selectTeamList(sqlSession, pi, team);
 	}
 
 	
