@@ -55,6 +55,7 @@ public class BattlePoolController {
 		model.addAttribute("homeTeamRecord", homeTeamRecord);
 		model.addAttribute("battle", battle);
 		model.addAttribute("poolInfo", poolInfo);
+		model.addAttribute("battleResult", battleService.selectBattleResult(battleNo));
 		
 		return "battle/battlePoolDetail";
 	}
@@ -94,14 +95,12 @@ public class BattlePoolController {
 									 String awayTeam,
 									 Model model
 									 ) {
-		
 		model.addAttribute("battleNo", battleNo);
 		model.addAttribute("homeTeam", battleService.selectTeam(homeTeam));
 		model.addAttribute("homeTeamHistory", battleService.selectResultHistory(homeTeam));
 		model.addAttribute("awayTeam", battleService.selectTeam(awayTeam));
 		model.addAttribute("awayTeamHistory", battleService.selectResultHistory(awayTeam));
 		model.addAttribute("battleResult", battleService.selectBattleResult(battleNo));
-		
 		return "battle/battleResultDetail";
 	}
 	// 배틀결과 작성
@@ -227,11 +226,9 @@ public class BattlePoolController {
 		if(result > 0) {
 			session.setAttribute("alertMsg", "배틀 신청이 취소되었습니다.");
 			redirectAttributes.addAttribute("battleNo", battleNo);
-			return "redirect: battleDetail.bt";
 		} else {
 			session.setAttribute("alertMsg", "배틀 신청 취소를 실패하였습니다.");
-			return "/";
 		}
+		return "redirect: battleDetail.bt";
 	}
-	
 }

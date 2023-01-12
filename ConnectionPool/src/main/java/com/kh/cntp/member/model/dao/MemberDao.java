@@ -14,6 +14,11 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.loginMember", member);
 	}
 	
+	// 회원가입
+	public int insertMember(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.insert("memberMapper.insertMember", member);
+	}
+	
 	// 로그인 실패 횟수
 	public int loginCount(SqlSessionTemplate sqlSession, Member member) {
 		return sqlSession.update("memberMapper.loginCount", member);

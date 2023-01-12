@@ -91,6 +91,7 @@
                             </p>
                         </td>
                     </tr>
+                    
                     <tr>
                         <th>처리결과</th>
                         <td>${ report.reportResult }</td>

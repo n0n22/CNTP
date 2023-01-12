@@ -121,6 +121,7 @@
 					    </script>
                 
 	                <div class="battleRecord">
+	                
 	                    <div class="content">
 	                        <button class="btn btn-lg btn-primary" disabled>승리팀</button>
 	                        <br><br>
@@ -166,20 +167,36 @@
         <div class="outer-bottom">
             <div class="submit-area">
                 <br>
-                <button class="btn btn-primary" onclick="location.href='resultEnrollForm.bt?battleNo=${battleNo}&homeTeam=${homeTeam.teamNo}&awayTeam=${awayTeam.teamNo}'">결과작성</button>
-                <button class="btn btn-info" onclick="ok();">승인</button>
-                <button class="btn btn-warning">이의제기</button>
+                <!-- 로그인 유저 직급이 'L' && 로그인 유저 팀이 homeTeam && 결과 작성이 안되어 있을 경우 => 작성 버튼 -->
+                <c:if test="${ (loginMember.teamGrade eq 'L') and (loginMember.teamNo eq homeTeam.teamNo) and (empty battleResult) and (not empty awayTeam) }">
+	                <button class="btn btn-primary" onclick="location.href='resultEnrollForm.bt?battleNo=${battleNo}&homeTeam=${homeTeam.teamNo}&awayTeam=${awayTeam.teamNo}'">결과작성</button>
+                </c:if>
+                <!-- 로그인 유저 직급이 'L' && 로그인 유저 팀이 homeTeam && 결과 작성이 되어 있을 경우 => 수정 버튼 -->
+                <c:if test="${ (loginMember.teamGrade eq 'L') and (loginMember.teamNo eq homeTeam.teamNo) and (battleResult.ok eq 'N') and (not empty awayTeam) }">
+	                <button class="btn btn-primary" onclick="location.href='resultEnrollForm.bt?battleNo=${battleNo}&homeTeam=${homeTeam.teamNo}&awayTeam=${awayTeam.teamNo}'">결과수정</button>
+                </c:if>
+                
+                <!--로그인 유저 직급이 'L' && 로그인 유저 팀이 awayTeam && 결과가 작성이 되어 있을 경우(N) -->
+                <c:if test="${ (loginMember.teamGrade eq 'L') and (loginMember.teamNo eq awayTeam.teamNo) and (battleResult.ok eq 'N') }">
+	                <button class="btn btn-info" onclick="ok();">승인</button>
+	                <button class="btn btn-warning">이의제기</button>
+                </c:if>
+                <button class="btn btn-danger" onclick="back();">뒤로가기</button>
             </div>
         </div>
     </div>
     
     <form action="battleResultOk.bt" method="post">
     	<input type="hidden" name="battleNo" value="${ battleNo }">
-    	<input type="hidden" name="victoryTeamNo" value="${ battleResult.victory }">
-    	<input type="hidden" name="defeatTeamNo" value="${ battleResult.defeat }">
+    	<input type="hidden" name="victoryTeamNo" value="${battleResult.victory}">
+    	<input type="hidden" name="defeatTeamNo" value="${battleResult.defeat}">
     </form>
     
     <script>
+    	function back(){
+    		location.href= 'battleDetail.bt?battleNo=${battleNo}';
+    	}
+    	
     	function ok(){
     		if(confirm('경기 결과에 승인하시겠습니까?')){
 	    		$('form[action="battleResultOk.bt"]').submit();

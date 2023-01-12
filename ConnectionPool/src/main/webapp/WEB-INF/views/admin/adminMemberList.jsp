@@ -413,7 +413,6 @@
 
 
 	<form id="reportvalue">
-		<input type="hidden" value="" name="memNo" id="memNo">
 		<input type="hidden" value="" name="memNickName" id="memNickName">
 		<input type="hidden" value="" name="content" id="content">
 		<input type="hidden" value="" name="reportBoard" id="reportBoard">
@@ -440,11 +439,10 @@
 				// var customWindow = window.open('', '_blank', 'width=300,height=500');							
 				window.open('', '신고', 'width=450,height=300,location=yes,menubar=yes,scrollbar=no');
 				
-				$('#memNo').val(6);
 				$('#memNickName').val('닉네임7');
 				$('#content').val('바보야');
 				$('#reportBoard').val('board');
-				$('#boardNo').val(3);
+				$('#boardNo').val(15);
 				
 				
 				

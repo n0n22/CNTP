@@ -37,9 +37,8 @@
 			</p>
 		</div>
 		
-		<form action="insertReport.ad" method="post">
+		<form action="reportInsert.ad" method="post">
 
-			<input type="hidden" value="${ report.memNo }" name="memNo" id="memNo">
 			<input type="hidden" value="${ report.reportBoard }" name="reportBoard" id="reportBoard">
 			<input type="hidden" value="${ report.boardNo }" name="boardNo" id="boardNo">
 			
