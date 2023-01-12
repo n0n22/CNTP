@@ -62,8 +62,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       MEM_STATUS = 'Y'
 	</select>
 	
+	<!-- 회원가입 -->
+	<insert id="" parameterType="member">
+	
+	</insert>
+	
 	<!-- 로그인 횟수 증가 -->
-	<update id="loginCount">
+	<update id="loginCount" parameterType="member">
 		UPDATE 
 		       MEMBER
 		   SET  
@@ -73,7 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- 로그인 성공시 횟수 초기화 -->
-	<update id="loginCountReset">
+	<update id="loginCountReset" parameterType="member">
 		UPDATE
 		       MEMBER
 		   SET 
@@ -83,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- 로그인실패로 인한 비밀번호 초기화 -->
-	<update id="loginStopped">
+	<update id="loginStopped" parameterType="member">
 		UPDATE
 			   MEMBER
 		   SET
