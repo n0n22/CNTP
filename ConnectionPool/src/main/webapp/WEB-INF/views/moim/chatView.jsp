@@ -99,7 +99,7 @@
 							                      		${ chat.nickname }
 							                    </div>
 							                    <div class="speechBubble-other">
-							                    	<input type="hidden" value="회원번호">
+							                    	<input type="hidden" value="${ chat.memNo }" name="memNo">
 							                    	<P>${ chat.chatContent }</P>
 												</div>	
 											</div>
@@ -108,7 +108,7 @@
 										<div style="display: flex; align-content: flex-end; margin-left: 60px;">
 											<p style="margin-top: auto; margin-bottom: 0;">
 												<!-- 여긴 날짜 -->
-												${ chat.createDate }
+												${ chat.createDate }<button class="deleteBtn" style="border : 0px; background-color : white" onclick="return confirmBtn('숨김처리')"><mark>숨기기</mark></button>
 											</p>
 										</div>
 							        </div>
@@ -121,8 +121,8 @@
 												<div class="speechBubble-mine">
 													<form action="deleteChat.mo">
 														<input type="hidden" value="${ chat.chatNo }">
-														<button>삭제</button>
-														<P>${ chat.nickname }</P>
+														
+														<P>${ chat.chatContent }</P>
 													</form>
 												</div>
 											</div>
@@ -131,7 +131,7 @@
 											<div style="display: flex; align-content: flex-end; margin-right: 5px;">
 												<p style="margin-top: auto; margin-bottom: 0;">
 													<!-- 여긴 날짜 -->
-													${ chat.createDate }
+													<button class="deleteBtn" style="border : 0px; background-color : white" onclick="return confirmBtn('삭제')"><mark>삭제</mark></button>${ chat.createDate }
 												</p>
 											</div>
 										</div>
@@ -139,10 +139,10 @@
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
-				        
 	        		</c:otherwise>
 	        	</c:choose>
 			</div>
+			
 	        <!-- 입력 div -->
 	        <div class="align-left">
 	            <input type="text" class="form-control form-control-lg" id="chatContent-input" onkeyup="enterFn()" required>
@@ -159,17 +159,12 @@
 	<script>
 	
 	$(function(){
-			setInterval(selectChat, 700);
 			// 계속 새로고침해서 채팅 보이게 해주는 메소드
-			scrollDown();
-			// 스크롤을 맨 아래로 내려주는 메소드
-			rightClick();
+			//setInterval(selectChat, 700);
+			
+			$("#chatContent-area").scrollTop($("#chatContent-area")[0].scrollHeight);
+			
 		})
-		
-		// 처음 스크롤 위치 잡아줌
-		function scrollDown(){
-			$("#chatContent-area").scrollTop($(document)[0].height);
-		}
 		
 		// enter 치면 insert 되게 만들어줌
 		function enterFn(){
@@ -178,163 +173,17 @@
 	        };
 	    }
 	    
-	    // 내 꺼는 삭제
-	    function rightClick(){
-	    	$(document).on('contextmenu', '.speechBubble-mine', function() {
-	    		  return false;
-	    		});
-	    	$(document).on('mousedown', '.speechBubble-mine', function(e){
-	    		if(e.button === 2){
-					if(window.confirm('해당 내용을 삭제하시겠습니까?')){
-						$.ajax({
-							url : 'chatDelete.ch',
-							data : {
-								cno : $(this).children('input').val()
-							},
-							success : function(){
-								selectChat();
-							},
-							error : function(){
-								
-							}
-						})	
-					}
-	    		}
-	    		
-	    	})
-	    	
-	    	// 이거는 남의 것을 숨기는 것인데, 
-	    	// ajax 말고 그냥 속성값을 줘서 없애버리면 어떨까 싶다.
-	    	$(document).on('contextmenu', '.speechBubble-other', function() {
-	    		  return false;
-	    		});
-	    	$(document).on('mousedown', '.speechBubble-other', function(e){
-	    		if(e.button === 2){
-					if(window.confirm('해당 내용을 숨기시겠습니까?')){
-						$.ajax({
-							url : 'chatHide.ch',
-							data : {
-								cno : $(this).children('input').val()
-							},
-							success : function(){
-								selectChat();
-							},
-							error : function(){
-								
-							}
-						})	
-					}
-	    		}
-	    		
-	    	})
-	    }
-	    
-	    
-	    
-	    
-	    
-	 <!-- 
-		function selectChat(){
-			$.ajax({
-				url : 'chatSelect.ch',
-				data : {
-					memId : '로그인유저 닉네임',
-					cno : 모임번호,
-				},
-				success : function(list){
-					var result = '';
-					if(list != null){
-						for(var i in list){
-							if (list[i].memId != list[i].loginUser) {
-								if(list[i].chatStatus == 'N'){
-									result +='<div id="chatAlign-other">'
-										   +  '<div style="width : 500px," class="align-left">'
-								           +     '<div style="width : 50px; margin-left: 5px;">'
-								           +         '<img width="50px" height="50px" src="" alt=""> <!-- 등급 이미지-->'
-								           
-        <!-- 
-								           +     '</div>'
-								           +     '<div style="max-width: 270px; margin-left: 5px;">'
-								           +         '<div style="height : 20px">'
-								           +            list[i].memId
-								           +         '</div>'
-								           +		 '<div class="speechBubble-other">'
-								           +         	'<P>' + list[i].chatContent + '</P>'
-								           + 			'<input type="hidden" value="' + list[i].chatNo + '">'
-								           +		 '</div>'
-								           +     '</div>'
-								           + '</div>'
-								           +     '<div style="display: flex; align-content: flex-end; margin-left: 60px;">'
-								           +         '<p style="margin-top: auto; margin-bottom: 0;">'
-								           +             list[i].chatCreateDate
-								           +         '</p>'
-								           +     '</div>'
-								           + '</div>';
-								}
-								
-							} else {
-								result +='<div id="chatAlign-mine" >'
-									   + '<div class="align-right">'
-							           +     '<div style="max-width : 270px" class>'
-							           +         '<div class="speechBubble-mine">'
-							           + '<input type="hidden" value="' + list[i].chatNo + '">'
-							           +            '<P>' + list[i].chatContent  + '</P>'
-							           +         '</div>'
-							           +     '</div>'
-							           +  '</div>'
-							           +  '<div class="align-right">'
-							           +     '<div style="display: flex; align-content: flex-end; margin-right: 5px;">'
-							           +         '<p style="margin-top: auto; margin-bottom: 0;">'
-							           +         list[i].chatCreateDate
-							           +         '</p>'
-							           +     '</div>'
-							           + '</div>'
-							           +'</div>';
-					        }
-						}
-					}else{
-						result = '아무고토 없습니당 ㅠㅜ';
-					}
-					
-					$('#chatContent-area').html(result);
-					scrollDown();
-					
-				},
-				error : function(){
-					console.log('채팅내역조회실패쓰 ㅎㅎㅋ')
-				}
-			});
-		};
-		
-		function insertChatContent(){
-			if($('#chatContent-input').val() != ''){
-				$.ajax({
-					url : 'chatInsert.ch',
-					type : 'post',
-					data : {
-					 -->
-					 <!-- 
-						cno : 모임번호,
-						memNo : 로그인유저 회원번호,
-						content : $('#chatContent-input').val(),
-						chatName : '모임제목 또는 팀 제목'
-					},
-					success : function(result){
-						
-						$('#chatContent-input').val('');
-						selectChat();
-						scrollDown();
-					},
-					error : function(){
-						console.log('채팅등록에러지롱~~~~');
-					}
-				});	
+		function  confirmBtn(keyword){
+			if(confirm(keyword + ' 하시겠습니까?')){
+				return true;
+			}else{
+				return false;
 			}
-			
-		};
+		}
+	
+	 
 		
 	</script>
-	 -->
 	
 
 </body>
