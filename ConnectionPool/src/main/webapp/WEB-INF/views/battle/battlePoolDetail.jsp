@@ -288,10 +288,9 @@
 						<p class="text-black-50 content mb-5">
 							신청은 팀장만 할 수 있습니다.
 						</p>
-	
 						<div class="d-flex flex-row">
-								<!-- 1. 신청은 팀장만 보임  / 2. 신청하면 신청이 아니라 취소 버튼이 보임  / 3. 작성팀의 팀장은 보이지 않음  -->
-								<c:if test="${ (loginMember.teamGrade) eq 'L' and (loginMember.teamNo ne battle.awayTeam) and (loginMember.teamNo ne battle.homeTeam)}">
+								<!-- 1. 신청은 팀장만 보임  / 2. 신청하면 신청이 아니라 취소 버튼이 보임  / 3. 작성팀의 팀장은 보이지 않음  / 4. 배틀결과가 확정되면 보이지 않음-->
+								<c:if test="${ (loginMember.teamGrade eq 'L') and (loginMember.teamNo ne battle.awayTeam) and (loginMember.teamNo ne battle.homeTeam) and (empty battle.awayTeam)}">
 									<div class="mr-4">
 										<span>신청</span>
 											<div class="mt-2">
@@ -345,12 +344,11 @@
 							            function messageClose() {
 							                document.querySelector(".message-background").className = "message-background";
 							            }
-										
 									
 									</script>
 								</c:if>
-								<!-- 팀 직급이 팀장이고 배틀을 신청한 팀장은 취소 버튼과 채팅방 입장이 보임 -->
-								<c:if test="${ (loginMember.teamGrade) eq 'L' and (loginMember.teamNo eq battle.awayTeam)}">
+								<!-- 팀 직급이 팀장 && 배틀을 신청한 팀장 && (배틀 결과가 없거나  배틀 결과 승인 전이거나) -->
+								<c:if test="${ (loginMember.teamGrade) eq 'L' and (loginMember.teamNo eq battle.awayTeam) and (empty battleResult or battleResult eq 'N')}">
 									<div class="mr-4">
 										<span>취소</span>
 											<div class="mt-2">
@@ -379,7 +377,7 @@
 										}
 									</script>
 								</c:if>
-							<c:if test="${loginMember.teamNo eq battle.homeTeam }">
+							<c:if test="${(loginMember.teamNo eq battle.homeTeam) and (empty battleResult) }">
 								<div class="mr-4">
 									
 									<span>글 삭제</span>
@@ -394,19 +392,27 @@
 								
 								<span>결과보기</span>
 								<div class="mt-2">
-									<span class="alpha alpha-green" onclick="location.href='battleResult.bt?battleNo=${battle.battleNo}&homeTeam=${battle.homeTeam}&awayTeam=${battle.awayTeam}'">결과보기</span>
+									<span class="alpha alpha-green" onclick="showResult()">결과보기</span>
 								</div>
-								
 							</div>
-	
 						</div>
 					</div>
-	
 			    	</div>
 			</div>
 	</div>
-
 </div>
+		<!-- 배틀 결과 상세 보기 페이지 post방식으로 전송 : get 방식으로 전송했더니 url 가지고 조작이 가능 -->
+		<form action="battleResult.bt" method="post" id="battleResultSubmit">
+			<input type="hidden" name="battleNo" value="${battle.battleNo}">
+			<input type="hidden" name="homeTeam" value="${battle.homeTeam}">
+			<input type="hidden" name="awayTeam" value="${battle.awayTeam}">
+		</form>
+	<script>
+		function showResult(){
+			$('#battleResultSubmit').submit();
+		}
+	
+	</script>
      
      <jsp:include page="../common/footer.jsp"/>
 
