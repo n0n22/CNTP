@@ -7,112 +7,8 @@
 <meta charset="UTF-8">
 <title>배틀풀 상세보기</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<style>
-	body{
-
-	background-color: #eee;
-	}
-	
-	.project{
-		font-size: 18px;
-	}
-	
-	.totals{
-	
-		font-size: 10px;
-	}
-	
-	.fs-10{
-	
-		font-size: 10px;
-	}
-	
-	.content{
-	
-		font-size: 13px;
-	}
-	
-	.alpha{
-	
-		padding:6px;
-	    font-size: 10px;
-		
-		border-radius: 50%;
-		height: 10px;
-		width: 10px;
-	}
-	
-	.alpha-red{
-	    
-	    color:#D50000;
-	    background-color: #EF9A9A;
-	    border: 1px solid #EF9A9A;
-	
-	}
-	
-	.alpha-green{
-	    
-	    color:#4A148C;
-	    background-color: #E1BEE7;
-	    border: 1px solid #E1BEE7;
-	
-	}
-
-    /* 배틀 모달 스타일 */
-    .message-background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.3);
-        z-index: 1000;
-
-        /* 숨기기 */
-        z-index: -1;
-        opacity: 0;
-    }
-
-    .message-show {
-        opacity: 1;
-        z-index: 1000;
-        transition: all 0.5s;
-    }
-
-    .message-window {
-        position: relative;
-        width: 100%;
-        height: 100%;
-    }
-
-    .message-popup {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
-        font-family: 'Pretendard-Regular';
-        border-radius: 3%;
-
-        /* 임시 지정 */
-        width: 480px;
-        height: 280px;
-
-        /* 초기에 약간 아래에 배치 */
-        transform: translate(-50%, -50%);
-        padding: 7px;
-        
-        /* padding-block-start: 30px; */
-    }
-
-    .message-show .message-popup {
-        transform: translate(-50%, -50%);
-        transition: all 0.5s;
-    }
-    /* 모달 스타일 끝 */
-    
-</style>
+<!-- 스타일 시트 -->
+<link rel="stylesheet" href="resources/css/battle/battlePoolDetail.css">
 </head>
 <body>
 
@@ -394,8 +290,8 @@
 						</p>
 	
 						<div class="d-flex flex-row">
-	
-								<c:if test="${ (loginMember.teamGrade) eq 'L' and (loginMember.teamNo ne battle.awayTeam)}">
+								<!-- 1. 신청은 팀장만 보임  / 2. 신청하면 신청이 아니라 취소 버튼이 보임  / 3. 작성팀의 팀장은 보이지 않음  -->
+								<c:if test="${ (loginMember.teamGrade) eq 'L' and (loginMember.teamNo ne battle.awayTeam) and (loginMember.teamNo ne battle.homeTeam)}">
 									<div class="mr-4">
 										<span>신청</span>
 											<div class="mt-2">
@@ -453,6 +349,7 @@
 									
 									</script>
 								</c:if>
+								<!-- 팀 직급이 팀장이고 배틀을 신청한 팀장은 취소 버튼과 채팅방 입장이 보임 -->
 								<c:if test="${ (loginMember.teamGrade) eq 'L' and (loginMember.teamNo eq battle.awayTeam)}">
 									<div class="mr-4">
 										<span>취소</span>
@@ -482,8 +379,17 @@
 										}
 									</script>
 								</c:if>
-	
-	
+							<c:if test="${loginMember.teamNo eq battle.homeTeam }">
+								<div class="mr-4">
+									
+									<span>글 삭제</span>
+									<div class="mt-2">
+										<span class="alpha alpha-red">글 삭제</span>
+									</div>
+									
+								</div>
+							</c:if>
+							
 							<div class="mr-4">
 								
 								<span>결과보기</span>
@@ -493,20 +399,12 @@
 								
 							</div>
 	
-	
-							
-	
 						</div>
-						
 					</div>
 	
 			    	</div>
-	
 			</div>
-		
 	</div>
-
-
 
 </div>
      

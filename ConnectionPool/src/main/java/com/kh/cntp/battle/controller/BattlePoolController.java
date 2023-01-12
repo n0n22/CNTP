@@ -208,7 +208,6 @@ public class BattlePoolController {
 		model.addAttribute("condition", condition);
 		
 		return "battle/battlePoolList";
-		
 	}
 	
 	// 배틀 신청 취소

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -101,13 +102,25 @@
         
         <div class="find-pwd-area">
 
-            <form action="findPwd" method="post" class="find-pwd-form">
+            <form action="pwdChange.me" method="post" class="find-pwd-form">
                 
-                <input type="hidden" name="userNo" value="">
+                
+                <c:choose>
+                		<!-- 로그인이 되어있지않은 상태   -->
+                	<c:when test="${ empty loginMember }">
+		                <input type="hidden" name="memId" value="${ member.memId }"> <!-- **unique제약조건 걸려있음 식별값 -->
+                	</c:when>
+                	<c:otherwise>
+                		<!-- 로그인이 되어있을때 -->
+		                <input type="hidden" name="memId" value="${ loginMember.memId }"> <!-- **unique제약조건 걸려있음 식별값 -->
+                	</c:otherwise>
+                </c:choose>
+                
+                
                 
                 <h1 id="main-text">비밀번호 재설정</h1>
                 <div>
-                    <div><input type="password" name="newPwd" id="newPwd" placeholder="8~15자 (영문/숫자/특수문자)"></div>
+                    <div><input type="password" name="memPwd" id="newPwd" placeholder="8~15자 (영문/숫자/특수문자)"></div>
                     <label class="checkResult" id="pwdCheck">&nbsp;</label>
                 </div>
                 <div>

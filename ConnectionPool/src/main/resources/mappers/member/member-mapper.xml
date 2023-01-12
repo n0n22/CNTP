@@ -146,8 +146,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       CERT_IP = #{certIp}
 		   AND 
 		       SECRET_NO = #{secretNo}
-		   AND
-		   	   WHEN BETWEEN SYSDATE - 5/24/60 AND SYSDATE 	    
 	</select>
 	
 	<!-- Cert table 한 행 지우기 -->
@@ -155,10 +153,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE
 			   CERT
 		 WHERE
-		 	   CERT_TP = #{certIp}	
+		 	   CERT_IP = #{certIp}	
 		   AND 
 		       SECRET_NO = #{secretNo}	      	
 	</delete>
 	
-
+	<!-- 비밀번호 변경 -->
+	<update id="pwdChange" parameterType="member">
+		UPDATE
+		       MEMBER
+		   SET
+		       MEM_PWD = #{memPwd},
+		       FAILCNT = 0
+		 WHERE 
+		       MEM_ID = #{memId} 
+	</update>
 </mapper>

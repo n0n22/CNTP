@@ -31,7 +31,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.loginCount(sqlSession, member);
 	}
 	
-	// 로그인 실패횟수 초기화
+	// 로그인 실패횟수 초기화 (로그인 성공시)
 	@Override
 	public int loginCountReset(Member member) {
 		return memberDao.loginCountReset(sqlSession, member);
@@ -65,6 +65,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public boolean certNumCheck(Cert cert) {
 		return memberDao.certNumCheck(sqlSession, cert);
+	}
+	
+	// 비밀번호 변경
+	@Override
+	public int pwdChange(Member member) {
+		return memberDao.pwdChange(sqlSession, member);
 	}
 
 	
