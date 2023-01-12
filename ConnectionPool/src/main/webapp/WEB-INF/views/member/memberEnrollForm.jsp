@@ -275,17 +275,18 @@
 
                     <div>
                         <!-- 이메일 인증 -->
-                        <div>
-                            <input type="text" name="" placeholder="인증번호를 입력해주세요" style="width: 293px;">
+                        <div id="CertForm">
+                            <input type="text" id="checkCertNum" name="checkCertNum" placeholder="인증번호를 입력해주세요" style="width: 293px;">
                             <button type="button" id="emailCert-btn" onclick="emailCert();">인증번호 발송</button>
+                            
                         </div>
-                        <div><label>&nbsp;</label></div>
+                         <div id="checkResult" align="left" style="font-size:13px; color:red; padding: 4px 0px 0px 11px;"></div>
                     </div>
 
                     <div>
                         <!-- 지역 선택 -->
                         <div>
-                            <select id="addressForm" name="memArea">
+                            <select id="addressForm" name="memArea" required>
                                 <option value="시/도 선택" hidden="" selected="selected">시/도 선택</option>
                                 <option value="Seoul">서울특별시</option>
                                 <option value="Gyeonggi">경기도</option>
@@ -400,6 +401,82 @@
                         function checkForm() {
 
                         }
+                        
+                    	function emailCert(){
+                    		
+                    		const $emailId = $('input[name=email]').val();
+                    		const $emailSite = $('input[name=emailSite]').val();
+                    	
+                    		
+                    		if($emailId != '' && emailSite != ''){ // 이메일 입력했다면 
+                    			
+                    			$('#checkResult').hide();
+                    			$('#emailCert-btn').html('확인');	
+                    			
+                    			
+                    			$.ajax({
+                    				method : 'post',
+                        			url : 'insertMailRequest.me', 
+                        			data : { checkId : $emailId,
+                        					 checkEmail : $emailSite },
+                        			success : function(result){
+                        				if(result == 'successEmail'){
+                        					$('#checkResult').show();
+                        					$('#checkResult').html('인증메일이 전송되었습니다');
+                        					$('#emailCert-btn').attr('onclick', 'CertNum()');       					
+                        				}
+                        				else {
+                        					$('#checkResult').show();
+                        					$('#checkResult').html('일치하는 회원이 없습니다');
+                        				}
+                        			},
+                        			error : function(){
+                        				console.log("실패");
+                        			}
+                        			
+                        		});
+                    		}
+                    		else { // 이메일을 입력안했다면
+                    			$('#checkResult').html('이메일을 입력해주세요');
+            					$('.find-pwd-form :submit').attr('disabled', true);
+                    		}
+                    		
+                    	}
+                    	
+                    	function CertNum(){
+                    		
+                    		const $certNum = $('#checkCertNum').val();
+                    		
+                    		if($certNum != ''){ // 인증번호 입력시	
+                    			$('#checkResult').hide();
+                    			$.ajax({
+                    				method : 'post',
+                    				url : 'certNum.me',
+                    				data : { certNum : $certNum },
+                    				success : function(certYN){
+                    					
+                    					if (certYN == true){ // 성공
+                    						$('#checkResult').show();
+                    						$('#checkResult').html('메일인증 완료');
+                    						$('#emailCert-btn').attr('disabled', false);
+                    					}
+                    					else{
+                    						$('#checkResult').show()
+                    						$('#checkResult').html('인증번호가 맞지않습니다');
+                    					}
+                    					
+                    				},
+                    				error : function(){
+                    					console.log('실패');
+                    				}
+                    				
+                    			})
+                    		}
+                    		else { // 인증번호 미입력시 
+                    			$('#checkResult').html('인증번호를 입력하세요');
+                    		}
+                    		
+                    	}
                     </script>
             </form>
         </div>

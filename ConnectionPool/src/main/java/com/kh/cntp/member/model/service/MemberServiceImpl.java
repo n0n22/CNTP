@@ -31,8 +31,6 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.insertMember(sqlSession, member);
 	}
 
-	
-	
 	// 로그인 실패 횟수
 	@Override
 	public int loginCount(Member member) {
@@ -80,8 +78,8 @@ public class MemberServiceImpl implements MemberService {
 	public int pwdChange(Member member) {
 		return memberDao.pwdChange(sqlSession, member);
 	}
-
 	
+
 	
 	
 	

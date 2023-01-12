@@ -114,6 +114,11 @@ public class AdminDao {
 	}
 	
 	
+	// 신고 확정 - REPORT update
+	public int confirmReport(SqlSessionTemplate sqlSession, int reportNo) {
+		return sqlSession.update("adminMapper.confirmReport", reportNo);
+	}
+	
 	
 	
 //-------------------------------------------

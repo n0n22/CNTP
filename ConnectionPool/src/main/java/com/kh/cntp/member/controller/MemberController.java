@@ -181,12 +181,31 @@ public class MemberController {
 		if(emailSite == null) {	emailSite = emailForm; }
 		member.setEmail(member.getEmail() + '@' + emailSite); // 사용자가 입력한 id + option값
 		member.setBirthDay((member.getBirthDay().replace(",", "-"))); //jsp에서 name값 같게해서 넘김 ex) 99,09,19 >> replace해서 ,를 -로 변경
+		member.setMemPwd((generatorEncPassword(member.getMemPwd()))); //사용자가 입력한 비밀번호 암호문으로 변경 후 VO에 담아줌
 		
-		memberService.insertMember(member);
-		
-		mv.setViewName("member/memberEnrollResult");
-		
+		if(memberService.insertMember(member) > 0) {
+			mv.setViewName("member/memberEnrollResult");
+		} else {
+			mv.addObject("errorMsg","회원가입 실패");
+			mv.setViewName("common/errorPage");
+		}
 		return mv;
+	}
+	
+	// 회원가입 시 메일 인증
+	@ResponseBody
+	@RequestMapping("insertMailRequest.me")
+	public String insertMailRequest(String checkId, String checkEmail, HttpServletRequest request) throws MessagingException {
+		
+		String email = checkId + '@' + checkEmail;
+		String result = "";
+		if (!email.equals("")) {
+			result = "successEmail";
+			sendMail(email, request);
+		} else {
+			result = "failEmail";
+		}
+		return result;
 	}
 	
 	// ID찾기 페이지

@@ -200,7 +200,6 @@ public class AdminController {
 	
 	
 	// 신고 무효
-
 	@RequestMapping("reportInvalid.ad")
 	public ModelAndView invalidReport(@ModelAttribute Report report, HttpSession session , ModelAndView mv) {
 		
@@ -214,6 +213,20 @@ public class AdminController {
 		return mv;
 	}
 
+	
+	// 신고 확정
+	@RequestMapping("reportConfirm.ad")
+	public ModelAndView confirmReport(@RequestParam int reportNo, HttpSession session, ModelAndView mv) {
+		
+		if(adminService.confirmReport(reportNo) > 0) {
+			session.setAttribute("alertMsg", "신고를 확정처리했습니다.");
+			mv.setViewName("redirect:reportList.ad");
+		} else {
+			mv.addObject("errorMsg", "신고확정처리 실패").setViewName("common/errorPage");
+		}
+		
+		return mv;
+	}
 	
 	
 	

@@ -112,7 +112,13 @@ public class AdminServiceImpl implements AdminService {
 	public int invalidReport(Report report) {
 		return adminDao.invalidReport(sqlSession, report.getReportNo()) * adminDao.reUpdateBoardStatus(sqlSession, report.getBoardNo());
 	}
-
+	
+	
+	// 신고 확정 : REPORT update
+	@Override
+	public int confirmReport(int reportNo) {
+		return adminDao.confirmReport(sqlSession, reportNo);
+	}
 	
 	
 	
@@ -183,6 +189,7 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteNotice(int nno) {
 		return adminDao.deleteNotice(sqlSession, nno);
 	}
+
 
 
 

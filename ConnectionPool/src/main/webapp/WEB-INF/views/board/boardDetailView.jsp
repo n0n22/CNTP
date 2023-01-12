@@ -44,7 +44,7 @@
             <table id="contentArea" align="center" class="table">
                 <tr>
                     <th width="100">제목</th>
-                    <td colspan="3">${b.boardTitle }</td>
+                    <td colspan="3">${b.title }</td>
                 </tr>
                 <tr>
                     <th>작성자</th>
@@ -57,24 +57,58 @@
                     <td colspan="3"></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><p style="height:150px;">${b.boardContent }</p></td>
+                    <td colspan="4"><p style="height:150px;">${b.content }</p></td>
                 </tr>
-                <tr>
-                    <th>첨부파일</th>
-                    <td colspan="3">
-                        <a href="" download="">파일명.jpg</a>
-                    </td>
-                </tr>
-            </table>
+				<tr>
+					<th>첨부파일</th>
+					<td colspan="3">
+					<c:choose>
+							<c:when test="${empty b.originName }">
+                    			첨부파일이 없어요~~!
+                    		</c:when>
+							<c:otherwise>
+								<!-- download 속성 :다운로드시 파일명 -->
+								<a href="${b.changeName }" download="${b.originName }">${b.originName }</a>
+							</c:otherwise>
+						</c:choose>
+					</td>
+				</tr>
+			</table>
             <br>
-
+			
+			<c:if test="${loginMember.memNo  eq b.memberNo}">
             <div align="center">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-                <a class="btn btn-primary" href="">수정하기</a>
-                <a class="btn btn-danger" href="">취소하기</a>
+                <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
+                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
             </div>
-            <br><br>
-
+            </c:if>
+           
+			
+			
+			<form action="" method="post" id="postForm">
+				<input type="hidden" name="bno" value="${b.boardNo }"/>
+				<input type="hidden" name="filePath" value="${b.changeName }" />	
+			
+			</form>
+			
+			<script>
+				function postFormSubmit(num){
+					if(num == 1) { //수정하기 클릭 시
+						$('#postForm').attr('action','updateForm.bo').submit();
+					}else { //삭제하기 클릭 시
+						$('#postForm').attr('action', 'delete.bo').submit();
+					}
+				}
+			
+			
+			</script>
+			
+			 <br><br>
+			 
+			
+			
+			
             <!-- 댓글 기능은 나중에 ajax 배우고 나서 구현할 예정! 우선은 화면구현만 해놓음 -->
             <table id="replyArea" class="table" align="center">
                 <thead>
