@@ -75,6 +75,7 @@ public class BattleServiceImpl implements BattleService{
 		return battleDao.searchBattle(sqlSession, condition);
 	}
 	@Override
+	@Transactional
 	public int cancelBattle(HashMap<String, String> cancel) {
 		return battleDao.cancelBattle(sqlSession, cancel.get("battleNo")) * battleDao.msg(sqlSession, cancel);
 	}

@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="TEAM_NO" 			property="teamNo"/>
 		<result column="TEAM_NAME" 			property="teamName"/>
 		<result column="MEM_NO" 			property="memNo"/>
-		<result column="NICKNAME" 			property="nick_name"/>
+		<result column="NICKNAME" 			property="nickname"/>
 		<result column="TEAM_MEMBER" 		property="teamMember"/>
 		<result column="TEAM_INTRO" 		property="teamIntro"/>
 		<result column="ORIGIN_NAME" 		property="originName"/>
@@ -388,8 +388,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE
 		        BATTLE_NO = #{battleNo}
 	</insert>	
-	
-	
 	
 	
 	

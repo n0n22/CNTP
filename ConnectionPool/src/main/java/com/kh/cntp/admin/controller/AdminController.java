@@ -200,7 +200,7 @@ public class AdminController {
 	
 	
 	// 신고 무효
-	@RequestMapping("")
+	//@RequestMapping("")
 	
 	
 	
