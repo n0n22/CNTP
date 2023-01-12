@@ -491,4 +491,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       CHAT_NO ASC
 	</select>
 	
+	<insert id="ajaxInsertChatting" parameterType="chatting">
+		INSERT
+		  INTO
+		       CHATTING
+		VALUES
+		       (
+		        SEQ_CNO.NEXTVAL
+		       ,#{ moimNo }
+		       ,#{ memNo }
+		       ,#{ chatContent }
+		       ,SYSDATE
+		       )
+	</insert>
+	
 </mapper>

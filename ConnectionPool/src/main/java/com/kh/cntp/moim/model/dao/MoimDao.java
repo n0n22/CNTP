@@ -106,5 +106,9 @@ public class MoimDao {
 		
 		return (ArrayList)sqlSession.selectList("moimMapper.selectChattingList", chat);
 	}
+	
+	public int ajaxInsertChatting(SqlSessionTemplate sqlSession, Chatting chat) {
+		return sqlSession.insert("moimMapper.ajaxInsertChatting", chat);
+	}
 
 }

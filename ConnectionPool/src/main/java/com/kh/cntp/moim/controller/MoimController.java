@@ -182,6 +182,8 @@ public class MoimController {
 		return mv;
 	}
 	
+	// 채팅 관련 기능 시작
+	
 	@RequestMapping("chattingRoom.mo")
 	public ModelAndView cahttingRoom(ModelAndView mv, Chatting chat) {
 		// teamNo 이용해서 채팅방 보내주기~
@@ -202,6 +204,27 @@ public class MoimController {
 		chat.setMoimNo(moimNo);
 		
 		return new Gson().toJson(moimService.selectChattingList(chat));
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="insertChat.mo", produces="text/html; charset=UTF-8")
+	public String ajaxInsertChatting(String moimNo, String memNo, String chatContent) {
+		Chatting chat = new Chatting();
+		
+		chat.setMoimNo(moimNo);
+		chat.setMemNo(memNo);
+		chat.setChatContent(chatContent);
+		
+		String message = "";
+		
+		if(moimService.ajaxInsertChatting(chat) > 0) {
+			message = "NNNNY";
+		} else {
+			message = "NNNNN";
+		}
+		
+		return message;
+	
 	}
 	
 	@RequestMapping("badgeShop.mo")

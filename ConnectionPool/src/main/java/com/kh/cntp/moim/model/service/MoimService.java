@@ -74,7 +74,7 @@ public interface MoimService {
 	// --------------- 채팅 관련 기능 ---------------
 	ArrayList<Chatting> selectChattingList(Chatting chat);
 	
-	int insertChatting(Chatting chat);
+	int ajaxInsertChatting(Chatting chat);
 	
 	int deleteChatting(Chatting chat);
 	

@@ -149,8 +149,8 @@
 			
 	        <!-- 입력 div -->
 	        <div class="align-left">
-	            <input type="text" class="form-control form-control-lg" id="chatContent-input" onkeyup="enterFn()" required>
-	            <button class="btn btn-success" style="width:70px" onclick="insertChatContent();">입력</button>
+		            <input type="text" class="form-control form-control-lg" id="chatContent-input" onkeyup="enterFn()" required>
+		            <button class="btn btn-success" style="width:70px" onclick="insertChatContent();">입력</button>
 	        </div>
 	    </div>
 	</div>
@@ -165,7 +165,7 @@
 	$(function(){
 			// 계속 새로고침해서 채팅 보이게 해주는 메소드
 			//setInterval(selectChat, 700);
-			
+			selectChattingList();
 			$("#chatContent-area").scrollTop($("#chatContent-area")[0].scrollHeight);
 			
 		})
@@ -190,60 +190,70 @@
 	function selectChattingList(){
 		$.ajax({
 			url : 'ajaxSelectChatList.mo',
+			type : 'post',
 			data : {
 				moimNo : '${ chatList[0].moimNo }',
 				memNo : '${ loginMember.memNo }'
 			},
 			success : function(list){
+				//console.log('성공?');
+				console.log(list);
 				var result = '';
 				if(list != null){
 					// 채팅이 없지 않을 때 => 채팅이 있을 때
 					for(var i in list){
-						if(list[i].memNo != '${loginMember.memNo}'){
-							result +='<div id="chatAlign-other">'
-								   +    '<div style="width : 500px," class="align-left">'
-						           +        '<div style="max-width: 270px; margin-left: 5px;">'
-						           +             '<div style="height : 20px">'
-						           +                list[i].nickname
-						           +             '</div>'
-						           +		     '<div class="speechBubble-other">'
-						           +            	'<P>' + list[i].chatContent + '</P>'
-						           +		     '</div>'
-						           +         '</div>'
-						           +     '</div>'
-						           +     '<div style="display: flex; align-content: flex-end; margin-left: 60px;">'
-						           +         '<p style="margin-top: auto; margin-bottom: 0;">'
-						           +             list[i].createDate
-						           +			 '<button class="hiddenBtn" style="border : 0px; background-color : white" onclick="return confirmBtn("숨김처리")"><mark>숨기기</mark></button>'	
-						           +         '</p>'
-						           +     '</div>'
-						           + '</div>';
+							if(list[i].memNo != '${loginMember.memNo}'){
+								result +='<div id="chatAlign-other">'
+									   +    '<div style="width : 500px," class="align-left">'
+							           +        '<div style="max-width: 270px; margin-left: 5px;">'
+							           +             '<div style="height : 20px">'
+							           +                list[i].nickname
+							           +             '</div>'
+							           +		     '<div class="speechBubble-other">'
+							           +            	'<P>' + list[i].chatContent + '</P>'
+							           +		     '</div>'
+							           +         '</div>'
+							           +     '</div>'
+							           +     '<div style="display: flex; align-content: flex-end; margin-left: 60px;">'
+							           +         '<p style="margin-top: auto; margin-bottom: 0;">'
+							           +             list[i].createDate
+							           +			 '<button class="hiddenBtn" style="border : 0px; background-color : white" onclick="return confirmBtn("숨김처리")"><mark>숨기기</mark></button>'	
+							           +         '</p>'
+							           +     '</div>'
+							           + '</div>';
+							} else{
+								result +='<div id="chatAlign-mine" >'
+									   +     '<div class="align-right">'
+							           +         '<div style="max-width : 270px">'
+							           +             '<div class="speechBubble-mine">'
+							           +			     '<form action="deleteChat.mo">'
+							           +                     '<P>' + list[i].chatContent  + '</P>'
+							           +				 '</form>'
+							           +             '</div>'
+							           +         '</div>'
+							           +     '</div>'
+							           +     '<div class="align-right">'
+							           +         '<div style="display: flex; align-content: flex-end; margin-right: 5px;">'
+							           +             '<p style="margin-top: auto; margin-bottom: 0;">'
+							           +			     '<form action="deleteChat.mo" method="post">'
+							           +					 '<button class="deleteBtn" style="border : 0px; background-color : white" onclick="return confirmBtn("삭제")"><mark>삭제</mark></button>'
+							           +					 '<input type="hidden" name="chatNo" value="' + list[i].chatNo +'">'
+							           +                      list[i].createDate
+							           +				 '</form>'
+							           +             '</p>'
+							           +         '</div>'
+							           +     '</div>'
+							           +'</div>';
+							}
 						}
-					}
+					// 채팅이 없을 때
+				}else{
+					result = '채팅내역이 없습니다.';
 				}
-				else{
-					result +='<div id="chatAlign-mine" >'
-						   +     '<div class="align-right">'
-				           +         '<div style="max-width : 270px">'
-				           +             '<div class="speechBubble-mine">'
-				           +			     '<form action="deleteChat.mo">'
-				           +                     '<P>' + list[i].chatContent  + '</P>'
-				           +				 '</form>'
-				           +             '</div>'
-				           +         '</div>'
-				           +     '</div>'
-				           +     '<div class="align-right">'
-				           +         '<div style="display: flex; align-content: flex-end; margin-right: 5px;">'
-				           +             '<p style="margin-top: auto; margin-bottom: 0;">'
-				           +			     '<form action="deleteChat.mo" method="post">'
-				           +					 '<input type="hidden" name="chatNo" value="' list[i].chatNo +'">'
-				           +                      list[i].createDate
-				           +				 '</form>'
-				           +             '</p>'
-				           +         '</div>'
-				           +     '</div>'
-				           +'</div>';
-				}
+				
+				$('#chatContent-area').html(result);
+				$("#chatContent-area").scrollTop($("#chatContent-area")[0].scrollHeight);
+				
 			},
 			error : function(){
 				console.log('실패요');
@@ -251,6 +261,30 @@
 		})
 	}
 	
+	function insertChatContent(){
+		$.ajax({
+			url : 'insertChat.mo',
+			type : 'post',
+			data : {
+				moimNo : '${ chatList[0].moimNo }',
+				memNo : '${ loginMember.memNo }',
+				chatContent : $('#chatContent-input').val()
+			},
+			success : function(result){
+				
+				console.log(result);
+				if(result == 'NNNNY'){
+					$('#chatContent-input').val('');
+					selectChattingList();
+				} else{
+					window.alert('잠시 후에 다시 시도해주세요');
+				}
+			},
+			error : function(){
+				console.log('실패요');
+			}
+		})
+	}
 		
 	 
 		
