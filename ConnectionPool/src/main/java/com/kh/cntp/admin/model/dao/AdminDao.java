@@ -91,18 +91,27 @@ public class AdminDao {
 	
 	
 	
-	// 신고 등록
+	// 신고 등록 - REPORT insert : 신고글 등록
 	public int insertReport(SqlSessionTemplate sqlSession, Report report) {
 		return sqlSession.insert("adminMapper.insertReport", report);
 	}
 	
 	
-	// 신고 등록 - 게시글 상태 업데이트
+	// 신고 등록 - BOARD update : 게시글 상태 업데이트
 	public int updateBoardStatus(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.update("adminMapper.updateBoardStatus", boardNo);
 	}
 	
-
+	
+	// 신고 무효 - REPORT update
+	public int invalidReport(SqlSessionTemplate sqlSession, int reportNo) {
+		return sqlSession.update("adminMapper.invalidReport", reportNo);
+	}
+	
+	// 신고 무효 - BOARD update : 게시글 상태 되돌리기
+	public int reUpdateBoardStatus(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("adminMapper.reUpdateBoardStatus", boardNo);
+	}
 	
 	
 	

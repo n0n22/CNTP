@@ -102,10 +102,27 @@
             </table>
         </div>
 
-        <div class="result-btn-area">
-            <a href="" class="btn btn-warning">신고철회</a>
-            <a href="" class="btn btn-danger">신고확정</a>
-        </div>
+		<c:if test="${ empty report.reportResult }">
+	        <div class="result-btn-area">
+	            <button type="button" class="btn btn-warning" onclick="invalidFormSubmit();">신고무효</button>
+	            <a href="" class="btn btn-danger">신고확정</a>
+	        </div>
+		</c:if>
+
+		<form method="post" action="reportInvalid.ad" id="invalidForm">
+			<input type="hidden" value="${ report.reportNo }" name="reportNo" >
+			<input type="hidden" value="${ report.boardNo }" name="boardNo" >			
+		</form>
+			
+		<script>
+		
+			function invalidFormSubmit() {
+				$('#invalidForm').submit();
+			}
+		
+		
+		
+		</script>
 
 
 

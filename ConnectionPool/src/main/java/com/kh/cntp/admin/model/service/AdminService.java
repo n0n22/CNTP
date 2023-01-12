@@ -49,8 +49,7 @@ public interface AdminService {
 
 	// 신고 목록 조회
 	ArrayList<Report> selectReportList(PageInfo pi, String result);
-	
-	
+
 	// 신고 상세 조회
 	Report selectReport(int rno);
 	
@@ -62,7 +61,8 @@ public interface AdminService {
 	int insertReport(Report report);
 	
 	
-	
+	// 신고 무효
+	int invalidReport(Report report);
 	
 
 	

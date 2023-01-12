@@ -183,7 +183,7 @@ public class AdminController {
 	
 	
 	// 신고 등록
-	@RequestMapping("insertReport.ad")
+	@RequestMapping("reportInsert.ad")
 	public ModelAndView insertReport(@ModelAttribute Report report, ModelAndView mv) {
 		// System.out.println(report);
 		
@@ -200,8 +200,18 @@ public class AdminController {
 	
 	
 	// 신고 무효
-	@RequestMapping("")
-	
+	@RequestMapping("reportInvalid.ad")
+	public ModelAndView invalidReport(@ModelAttribute Report report, HttpSession session , ModelAndView mv) {
+		
+		if(adminService.invalidReport(report) > 0) {
+			session.setAttribute("alertMsg", "신고를 무효처리했습니다.");
+			mv.setViewName("redirect:reportList.ad");
+		} else {
+			mv.addObject("errorMsg", "신고무효처리 실패").setViewName("common/errorPage");
+		}
+		
+		return mv;
+	}
 	
 	
 	
