@@ -227,7 +227,7 @@
 							           +         '<div style="display: flex; align-content: flex-end; margin-right: 5px;">'
 							           +             '<p style="margin-top: auto; margin-bottom: 0;">'
 							           +				 '<p style="display:none" class="thisChatNo">${ chat.chatNo }</p>'
-						               +			     '<button class="deleteBtn" style="border : 0px; background-color : white" onclick="return deleteChat('+'${ chat.chatNo }'+')"><mark>삭제</mark></button>'
+						               +			     '<button class="deleteBtn" style="border : 0px; background-color : white"' +  `onclick="return deleteChat('\${ chat.chatNo }')"><mark>삭제</mark></button>` 
 						               +                  list[i].createDate
 							           +             '</p>'
 							           +         '</div>'
