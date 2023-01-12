@@ -46,11 +46,15 @@ public interface AdminService {
 	
 	// 신고 목록 개수 조회
 	int selectReportListCount(String result);
-	
-	
-	
+
 	// 신고 목록 조회
 	ArrayList<Report> selectReportList(PageInfo pi, String result);
+	
+	
+	// 신고 상세 조회
+	Report selectReport(int rno);
+	
+	
 	
 	
 	

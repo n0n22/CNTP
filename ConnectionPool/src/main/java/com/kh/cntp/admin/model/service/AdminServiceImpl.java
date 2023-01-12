@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.cntp.admin.model.dao.AdminDao;
 import com.kh.cntp.admin.model.vo.Banner;
@@ -82,7 +83,14 @@ public class AdminServiceImpl implements AdminService {
 	// 신고 목록 조회
 	@Override
 	public ArrayList<Report> selectReportList(PageInfo pi, String result) {
-		return null;
+		return adminDao.selectReportList(sqlSession, pi, result);
+	}
+	
+	
+	// 신고 상세 조회
+	@Override
+	public Report selectReport(int rno) {
+		return adminDao.selectReport(sqlSession, rno);
 	}
 	
 	
@@ -90,13 +98,11 @@ public class AdminServiceImpl implements AdminService {
 	
 	
 	
-	
-	
-	
 	// 신고 등록
+	@Transactional
 	@Override
 	public int insertReport(Report report) {
-		return adminDao.insertReport(sqlSession, report);
+		return adminDao.insertReport(sqlSession, report) * adminDao.updateBoardStatus(sqlSession, report.getBoardNo());
 	}
 	
 

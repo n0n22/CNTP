@@ -66,6 +66,7 @@ public class MoimServiceImpl implements MoimService {
 		return moimDao.insertApply(sqlSession, ap);
 	}
 
+	@Transactional
 	@Override
 	public int UpdateApply(Apply ap) {
 		return moimDao.updateApply(sqlSession, ap.getApplyNo()) * moimDao.insertTeamMember(sqlSession, ap);
@@ -119,9 +120,9 @@ public class MoimServiceImpl implements MoimService {
 	}
 
 	@Override
-	public int insertChatting(Chatting chat) {
+	public int ajaxInsertChatting(Chatting chat) {
 		// TODO Auto-generated method stub
-		return 0;
+		return moimDao.ajaxInsertChatting(sqlSession, chat);
 	}
 
 	@Override

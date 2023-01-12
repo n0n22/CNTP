@@ -10,6 +10,9 @@ public interface MemberService {
 	// 로그인
 	Member loginMember(Member member);
 	
+	// 회원가입
+	int insertMember(Member member);
+	
 	// 로그인 실패 횟수 증가
 	int loginCount(Member member);
 	
@@ -33,5 +36,7 @@ public interface MemberService {
 	
 	// 비밀번호 변경
 	int pwdChange(Member member);
+	
+	
 	
 }
