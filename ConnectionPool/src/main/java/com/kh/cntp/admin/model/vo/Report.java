@@ -1,5 +1,7 @@
 package com.kh.cntp.admin.model.vo;
 
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
@@ -21,10 +23,10 @@ public class Report {
 	
 	private String content;			// 신고 글 내용
 	
-	
+
 	//패널티용
 	private String penalty;			// 부과할 패널티 내역
 	private int count;				// 신고 누적수
 	
-
+	
 }
