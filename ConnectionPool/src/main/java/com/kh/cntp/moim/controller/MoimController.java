@@ -323,6 +323,7 @@ public class MoimController {
 		// ------------- 이제 업데이트 해주면 된다. -------------
 		if(moimService.updateTeam(team)> 0) {
 			// 성공
+			session.setAttribute("loginMember", memberService.loginMember((Member)session.getAttribute("loginMember")));
 			session.setAttribute("alterMsg", "팀 정보 수정 완료");
 			mv.setViewName("redirect:teamPage.mo?teamNo=" + team.getTeamNo());
 		} else {
