@@ -201,16 +201,18 @@
 				if($(this).is(':checked')) {
 					count++;
 					
-					console.log($(this).parent().next().text());
+					// console.log($(this).parent().nextAll().eq(3).text());
+					
+					var str = '<input type="text" value="' + $(this).parent().next().text() + '" name="memNo">';
+					str += '<input type="text" value="' + $(this).parent().nextAll().eq(3).text() + '" name="penalty">';
 					
 					
-					// $('#penaltyForm').append('<input type="hidden" value="' +  + '" name="memNo">')
 					
+					$('#penaltyForm').append(str);
+					// $('#penaltyForm').append('<input type="text" value="' + $(this).parent().nextAll().eq(3).text() + '" name="penalty"')
 					
             		// <input type="hidden" value="${ report.memNo }" name="memNo">
             		// <input type="hidden" value="${ report.penalty }" name="penalty">					
-					
-					
 					
 				}
 				if(count > 0) { // 체크 한 상태라서 요청이 가야 함
@@ -222,7 +224,7 @@
 				} 
 				else { // 체크 안한 상태라서 요청이 가면 안됨
 		    		alertify.confirm('체크 안함', function() {
-
+		    			$('#penaltyForm').append('');
 		   			});
 				}
 				

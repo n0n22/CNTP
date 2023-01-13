@@ -250,16 +250,12 @@ public class AdminController {
 		}
 		
 		
-		
 		if(!stopList.isEmpty()) {
 			adminService.stopMember(stopList);
 		}
 		if(!kickList.isEmpty()) {
 			
 		}
-		
-		
-		
 		
 		
 		mv.setViewName("redirect:penaltyList.ad");
