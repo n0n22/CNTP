@@ -79,7 +79,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.pwdChange(sqlSession, member);
 	}
 	
-
+	//////////////////////////////////
+	// 마이페이지 						//
+	//////////////////////////////////
 	
 	
 	
