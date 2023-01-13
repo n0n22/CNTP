@@ -105,13 +105,13 @@
             <form action="pwdChange.me" method="post" class="find-pwd-form">
                 
                 
-                <c:choose>
                 		<!-- 로그인이 되어있지않은 상태   -->
+                		<!-- 로그인이 되어있을때 -->
+                <c:choose>
                 	<c:when test="${ empty loginMember }">
 		                <input type="hidden" name="memId" value="${ member.memId }"> <!-- **unique제약조건 걸려있음 식별값 -->
                 	</c:when>
                 	<c:otherwise>
-                		<!-- 로그인이 되어있을때 -->
 		                <input type="hidden" name="memId" value="${ loginMember.memId }"> <!-- **unique제약조건 걸려있음 식별값 -->
                 	</c:otherwise>
                 </c:choose>
