@@ -530,6 +530,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ,G.ORIGIN_NAME
 		       ,G.CHANGE_NAME
 		       ,G.GROUP_TITLE
+		       ,G.GROUP_STATUS
 		       ,CASE WHEN G.GENDER = 'A' THEN '무관'
 		             WHEN G.GENDER = 'F' THEN '여자만'
 		             ELSE '남자만' END "GROUP_GENDER"
@@ -556,7 +557,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		                     FROM
 		                          APPLY "A"
 		                    WHERE
-		                          MOIM_NO = 'G2'
+		                          MOIM_NO = ${ groupNo }
 		                      AND
 		                          ACCEPT_YN = 'Y')||'/'||G.GROUP_MEMBER||')' END "GROUP_MEMBER"
 		  FROM
