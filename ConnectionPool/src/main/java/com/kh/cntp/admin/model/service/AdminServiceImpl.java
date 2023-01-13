@@ -122,6 +122,25 @@ public class AdminServiceImpl implements AdminService {
 	
 	
 	
+	// 패널티 목록 개수 조회
+	@Override
+	public int selectPenaltyListCount() {
+		return adminDao.selectPenaltyListCount(sqlSession);
+	}
+	
+	
+	// 패널티 목록 조회
+	@Override
+	public ArrayList<Report> selectPenaltyList(PageInfo pi) {
+		return adminDao.selectPenaltyList(sqlSession, pi);
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 //-------------------------------------------
 // 배너 관련 기능 
@@ -189,6 +208,7 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteNotice(int nno) {
 		return adminDao.deleteNotice(sqlSession, nno);
 	}
+
 
 
 
