@@ -221,4 +221,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE 
 		       MEM_ID = #{memId} 
 	</update>
+	
+	<!-- 회원정보 변경 -->
+	<update id="myPageInfoUpdate" parameterType="member">
+		UPDATE
+			   MEMBER
+	     <set>
+	     	<if test="nickName != null">NICKNAME = #{nickName},</if>
+	     	<if test="phone != null">PHONE = #{phone},</if>
+	     	<if test="email != null">EMAIL = #{email},</if>
+	     	<if test="memArea != null">MEM_AREA = #{memArea},</if>
+	     	<if test="detailArea != null">DETAIL_AREA = #{detailArea},</if>
+	     	<if test="grade != null">GRADE = #{grade}</if>
+        </set>
+         WHERE
+        	   MEM_ID = #{memId}
+           AND 
+           	   MEM_NO = #{memNo}	   
+	</update>
 </mapper>
