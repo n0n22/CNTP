@@ -116,7 +116,7 @@ public class MoimController {
 			// 이것이 성공했을 때
 		}
 		
-		System.out.println(upfile.getOriginalFilename());
+		//System.out.println(upfile.getOriginalFilename());
 		
 		if(!upfile.getOriginalFilename().equals("")) {
 			// 파일 등록을 했을 때
@@ -232,7 +232,7 @@ public class MoimController {
 	@RequestMapping(value="deleteChat.mo", produces="text/html; charset=UTF-8")
 	public String ajaxDeleteChatting(String chatNo) {
 
-		System.out.println(chatNo);
+		//System.out.println(chatNo);
 		
 		if(moimService.ajaxDeleteChatting(chatNo) > 0) {
 			return "NNNNY";

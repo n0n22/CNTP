@@ -106,7 +106,7 @@
 												<!-- 여긴 날짜 -->
 												${ chat.createDate }
 												<!-- 여긴 숨기기 버튼 -->
-												<button class="hiddenBtn" style="border : 0px; background-color : white" onclick="return confirmBtn('숨김처리')"><mark>숨기기</mark></button>
+												<button class="hiddenBtn" style="border : 0px; background-color : white" onclick="return hideBtn()"><mark></mark></button>
 											</p>
 										</div>
 							        </div>
@@ -156,8 +156,8 @@
 	
 	$(function(){
 			// 계속 새로고침해서 채팅 보이게 해주는 메소드
-			//setInterval(selectChat, 700);
-			//selectChattingList();
+			setInterval(selectChattingList, 700);
+			// 스크롤은 맨 아래로
 			$("#chatContent-area").scrollTop($("#chatContent-area")[0].scrollHeight);
 			
 		})
@@ -170,8 +170,8 @@
     }
     
 	// 삭제 및 숨기기 확인하는 메소드
-	function  confirmBtn(keyword){
-		if(confirm(keyword + ' 하시겠습니까?')){
+	function  hideBtn(){
+		if(confirm('댓글을 숨기시겠습니까? 해당 댓글은 ${loginMember.memName}님의 화면에서만 숨겨집니다.')){
 			return true;
 		}else{
 			return false;
@@ -190,7 +190,7 @@
 			},
 			success : function(list){
 				//console.log('성공?');
-				console.log(list);
+				//console.log(list);
 				var result = '';
 				if(list != null){
 					// 채팅이 없지 않을 때 => 채팅이 있을 때
@@ -210,7 +210,7 @@
 							           +     '<div style="display: flex; align-content: flex-end; margin-left: 60px;">'
 							           +         '<p style="margin-top: auto; margin-bottom: 0;">'
 							           +             list[i].createDate
-							           +			 '<button class="hiddenBtn" style="border : 0px; background-color : white" onclick="return confirmBtn("숨김처리")"><mark>숨기기</mark></button>'	
+							           +			 '<button class="hiddenBtn" style="border : 0px; background-color : white" onclick="return hideBtn()"><mark></mark></button>'
 							           +         '</p>'
 							           +     '</div>'
 							           + '</div>';
@@ -227,7 +227,7 @@
 							           +         '<div style="display: flex; align-content: flex-end; margin-right: 5px;">'
 							           +             '<p style="margin-top: auto; margin-bottom: 0;">'
 							           +				 '<p style="display:none" class="thisChatNo">${ chat.chatNo }</p>'
-						               +			     '<button class="deleteBtn" style="border : 0px; background-color : white"' +  `onclick="return deleteChat('\${ chat.chatNo }')"><mark>삭제</mark></button>` 
+						               +			     '<button class="deleteBtn" style="border : 0px; background-color : white" onclick="return deleteChat(' + list[i].chatNo + ')"><mark>삭제</mark></button>' 
 						               +                  list[i].createDate
 							           +             '</p>'
 							           +         '</div>'
@@ -242,7 +242,7 @@
 				
 				$('#chatContent-area').html(result);
 				$("#chatContent-area").scrollTop($("#chatContent-area")[0].scrollHeight);
-				
+				setInterval(selectChattingList, 700);
 			},
 			error : function(){
 				console.log('실패요');
@@ -305,41 +305,6 @@
 	 
 		
 	</script>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 
