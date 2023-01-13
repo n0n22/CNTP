@@ -232,7 +232,16 @@ public class AdminController {
 		return mv;
 	}
 	
-
+	
+	// 패널티 처리
+	@RequestMapping("penaltyInsert.ad")
+	public ModelAndView insertPenalty(@ModelAttribute ArrayList<Report> list, ModelAndView mv) {
+		
+		System.out.println(list);
+		
+		return mv;
+	}
+	
 	
 	
 	

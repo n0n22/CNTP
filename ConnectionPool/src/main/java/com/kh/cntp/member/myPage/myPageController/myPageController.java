@@ -44,17 +44,20 @@ public class myPageController {
 		
 		// 사용자가 입력한 비밀번호가 session에 있는 loginMember.memPwd랑 같아야함 !! 
 		if (bcryptPasswordEncoder.matches(member.getMemPwd(),sessionPwd)) {
-			memberService.myPageInfoUpdate(member);
-			mv.addObject("alertMsg","정보 수정 완료");
+			if(memberService.myPageInfoUpdate(member) > 0) {
+				// DB로부터 수정된 회원정보를 다시 조회해서
+				// session에 loginMember라는 키값으로 덮어씌워줘야함
+				session.setAttribute("loginMember", memberService.loginMember(member));
+				session.setAttribute("alertMsg","정보 수정 완료");
+			} else {
+				session.setAttribute("alertMsg","정보 수정 완료");
+			}
 		} else {
-			mv.addObject("alertMsg", "비밀번호가 맞지 않습니다");
+			session.setAttribute("alertMsg", "비밀번호가 맞지 않습니다");
 		}
 		
+		mv.setViewName("redirect:myPageInfo.me");
 		
-		mv.setViewName("member/myPage/myPageInfo");
-		
-		
-		System.out.println(member.toString());
 		return mv;
 	}
 	
@@ -66,8 +69,22 @@ public class myPageController {
 	
 	// 마이페이지 회원탈퇴 결과페이지
 	@RequestMapping("myPageDelete.me")
-	public String myPageDelete() {
-		return "member/myPage/myPageInfoDeleteResult";
+	public ModelAndView myPageDelete(String agree, ModelAndView mv, HttpSession session) {
+
+		if (agree.equals("동의합니다")) {
+			if(memberService.myPageDelete(((Member)session.getAttribute("loginMember"))) > 0) {
+				session.removeAttribute("loginMember");
+				session.setAttribute("alertMsg", "회원 탈퇴 성공");
+				mv.setViewName("member/myPage/myPageInfoDeleteResult");
+			} else {
+				mv.setViewName("common/errorPage");
+				mv.addObject("errorMsg", "회원가입 실패");
+			}
+		} else {
+			session.setAttribute("alertMsg", "동의합니다를 입력해주세요.");
+			mv.setViewName("redirect:myPageDeleteForm.me");
+		}
+		return mv;
 	}
 	
 	// 마이페이지 포인트 내역 조회

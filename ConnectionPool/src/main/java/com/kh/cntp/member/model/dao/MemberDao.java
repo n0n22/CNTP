@@ -71,6 +71,11 @@ public class MemberDao {
 	public int myPageInfoUpdate(SqlSessionTemplate sqlSession, Member member) {
 		return sqlSession.update("memberMapper.myPageInfoUpdate", member);
 	}
+
 	// 회원 탈퇴
+	public int myPageDelete(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.update("memberMapper.myPageDelete", member);
+	}
+
 
 }

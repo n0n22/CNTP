@@ -222,6 +222,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       MEM_ID = #{memId} 
 	</update>
 	
+	<!-- 마이페이지 ******************************************************** -->
+	
 	<!-- 회원정보 변경 -->
 	<update id="myPageInfoUpdate" parameterType="member">
 		UPDATE
@@ -239,4 +241,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
            AND 
            	   MEM_NO = #{memNo}	   
 	</update>
+	
+	<!-- 회원 탈퇴 -->
+	<update id="myPageDelete" parameterType="member">
+		UPDATE
+			   MEMBER
+		   SET
+		   	   MEM_STATUS = 'N'
+		 WHERE 
+		 	   MEM_ID = #{memId}
+		   AND
+		   	   MEM_NO = #{memNo}			     	   		   
+	</update>
+	
 </mapper>
