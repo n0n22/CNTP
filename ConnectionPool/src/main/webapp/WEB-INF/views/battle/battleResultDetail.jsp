@@ -108,11 +108,11 @@
 						    					  </tr>`
 						    	};
 						    	for(let i in defRecord){
-						    		let v = defRecord[i];
+						    		let d = defRecord[i];
 						    		defResult += `<tr>
-						    							<td>\${v.player}</td>
-						    							<td>\${v.style}</td>
-						    							<td>\${v.record}</td>
+						    							<td>\${d.player}</td>
+						    							<td>\${d.style}</td>
+						    							<td>\${d.record}</td>
 						    					  </tr>`
 						    	};
 						    	$('#victoryTeam tbody').html(vicResult);

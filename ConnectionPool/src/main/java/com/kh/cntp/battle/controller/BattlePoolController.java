@@ -151,7 +151,7 @@ public class BattlePoolController {
 									 Model model,
 									 RedirectAttributes redirectAttributes) {
 		int result = battleService.insertBattleResult(br);
-		
+		System.out.println(br);
 		if(result > 0) {
 			redirectAttributes.addAttribute("battleNo", br.getBattleNo());
 			return "redirect: battleDetail.bt";

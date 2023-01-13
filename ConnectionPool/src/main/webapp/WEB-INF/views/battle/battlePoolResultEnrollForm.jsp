@@ -40,7 +40,7 @@
 			                            <img class="m-b-10" src="${ homeTeam.badgeChangeName }" height="100" width="100">
 		                            </c:if>
 		                            <c:if test="${ homeTeam.badgeStatus eq 'N'}">
-			                            <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
+			                            <img class="m-b-10" src="resources/images/noBadge.png" height="100" width="100">
 		                            </c:if>
 		                            <p class="text-center"></p>
 		                            <p class="text-center"></p>
@@ -58,7 +58,7 @@
 			                            <img class="m-b-10" src="${ awayTeam.badgeChangeName }" height="100" width="100">
 		                            </c:if>
 		                            <c:if test="${ awayTeam.badgeStatus eq 'N'}">
-			                            <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
+			                            <img class="m-b-10" src="resources/images/noBadge.png" height="100" width="100">
 		                            </c:if>
 		                            
 		                            <p class="text-center"></p>
@@ -71,100 +71,7 @@
 		        
 		    </div>
     </form>
-		    <script>
-		    let $hb = $('#homeTeamButton');
-		    let $ab = $('#awayTeamButton');
-		    let $hr = $('#homeTeamRadio');
-		    let $ar = $('#awayTeamRadio');
-		    let $defeat = $('#defeat');
-		    
-		    $(function(){
-		    	$defeat.val('${awayTeam.teamNo}');
-		    	
-		    	$('.vic').change(function(){
-		    		var vicRecord = [
-		    			{
-		    				player : $('#vicPlayer1').val(),
-		    				style : $('#vicStyle1').val(),
-		    				record : $('#vicRecord1').val()
-		    			},
-		    			{
-		    				player : $('#vicPlayer2').val(),
-		    				style : $('#vicStyle2').val(),
-		    				record : $('#vicRecord2').val()
-		    			},
-		    			{
-		    				player : $('#vicPlayer3').val(),
-		    				style : $('#vicStyle3').val(),
-		    				record : $('#vicRecord3').val()
-		    			},
-		    			{
-		    				player : $('#vicPlayer4').val(),
-		    				style : $('#vicStyle4').val(),
-		    				record : $('#vicRecord4').val()
-		    			}
-		    		];
-		    		$('#vicRecord').val(JSON.stringify(vicRecord));
-		    	})
-		    	
-		    	$('.def').change(function(){
-		    		var defRecord = [
-		    			{
-		    				player : $('#defPlayer1').val(),
-		    				style : $('#defStyle1').val(),
-		    				record : $('#defRecord1').val()
-		    			},
-		    			{
-		    				player : $('#defPlayer2').val(),
-		    				style : $('#defStyle2').val(),
-		    				record : $('#defRecord2').val()
-		    			},
-		    			{
-		    				player : $('#defPlayer3').val(),
-		    				style : $('#defStyle3').val(),
-		    				record : $('#defRecord3').val()
-		    			},
-		    			{
-		    				player : $('#defPlayer4').val(),
-		    				style : $('#defStyle4').val(),
-		    				record : $('#defRecord4').val()
-		    			}
-		    		];
-		    		$('#defRecord').val(JSON.stringify(defRecord));
-		    	})
-		    })
-		    
-		    function select(num){
-		    	switch(num){
-		    	// 홈팀
-		    	case 1 : 
-	    			$hb.attr("class", "btn btn-lg btn-primary"); 
-	    			$ab.attr("class", "btn btn-lg btn-light"); 
-	    			$hr.attr("checked", true); 
-		    		$ar.attr("checked", false);
-	    			$defeat.val('${awayTeam.teamNo}');
-	    			$('#vicRecord').val();
-	    			break;
-	    		// 어웨이팀
-		    	case 2 : 
-		    		$hb.attr("class", "btn btn-lg btn-light"); 
-		    		$ab.attr("class", "btn btn-lg btn-primary");
-		    		$ar.attr("checked", true);
-	    			$hr.attr("checked", false); 
-	    			$defeat.val('${homeTeam.teamNo}');
-		    		break;
-		    	}
-		    }
-		    function submit(){
-		    	// 배틀 기록을 등록하지 않으면 submit을 실행할수 없음
-		    	if($('#vicRecord').val() == '' || $('#defRecord').val() == ''){
-		    		alert('배틀 기록을 등록해주세요!');
-		    		return;
-		    	}
-		    	$("#submit").submit();
-		    }
-		    
-		    </script>
+	
 	
 	        <hr>
 	        <div class="outer-main">
@@ -231,6 +138,122 @@
 	        </div>
 	    </div>
 	<jsp:include page="../common/footer.jsp"/>
+	
+	
+		    <script>
+		    let $hb = $('#homeTeamButton');
+		    let $ab = $('#awayTeamButton');
+		    let $hr = $('#homeTeamRadio');
+		    let $ar = $('#awayTeamRadio');
+		    let $defeat = $('#defeat');
+		    
+		    $(function(){
+		    	$defeat.val('${awayTeam.teamNo}');
+		        $(document).on('change', '.vics>td>.vic', function(){
+		            inputVic();
+		        })
+		        $(document).on('change', '.defs>td>.def', function(){
+		            inputDef();
+		        })
+		    });
+		    function inputVic(){
+	            var turn = $vicParents.children().length;
+	            let vicRecords = [];
+	            for(i = 0; i < turn; i++){
+	                var vicRecord = {
+	                        player : $('#vicPlayer' + (i + 1)).val(),
+	                        style : $('#vicStyle' + (i + 1)).val(),
+	                        record : $('#vicRecord' + (i + 1)).val()
+		            }
+		                vicRecords.push(vicRecord);
+		            }
+		            $('#vicRecord').val(JSON.stringify(vicRecords));
+		    }
+		    function inputDef(){
+		            var turn = $defParents.children().length;
+		            let defRecords = [];
+		            for(i = 0; i < turn; i++){
+		                var defRecord = {
+		                        player : $('#defPlayer' + (i + 1)).val(),
+		                        style : $('#defStyle' + (i + 1)).val(),
+		                        record : $('#defRecord' + (i + 1)).val()
+		                }
+		                defRecords.push(defRecord);
+		            }
+		            $('#defRecord').val(JSON.stringify(defRecords));
+		    }
+		    var $vicParents = $('#victoryTeam tbody');
+		    var $defParents = $('#defeatTeam tbody');
+		    var turn = ''
+		    function add(){
+		        turn = $vicParents.children().length + 1;
+		        if(turn > 8){
+		            alert("최대 8개까지 입력가능합니다.");
+		            return;
+		        }
+		        var vicChildren = 
+		                `<tr class="vics">
+		                    <td><input id="vicPlayer\${turn}" class="vic" type="text" style="width: 100%"></td>
+		                    <td><input id="vicStyle\${turn}" class="vic" type="text" style="width: 100%"></td>
+		                    <td><input id="vicRecord\${turn}" class="vic" type="text" style="width: 100%"></td>
+		                </tr>`;
+		        var defChildren = 
+		                `<tr class="defs">
+		                    <td><input id="defPlayer\${turn}" class="def" type="text" style="width: 100%"></td>
+		                    <td><input id="defStyle\${turn}" class="def" type="text" style="width: 100%"></td>
+		                    <td><input id="defRecord\${turn}" class="def" type="text" style="width: 100%"></td>
+		                </tr>`;
+		        $vicParents.append(vicChildren);
+		        $defParents.append(defChildren);
+		    }
+	
+		    function remove(){
+		        turn = $vicParents.children().length;
+		        if(turn <= 1){
+		            alert("최소 1개는 입력해야 합니다.")
+		            return;
+		        }
+		        
+		        $vicParents.children().last().remove();
+		        $defParents.children().last().remove();
+	
+		        inputVic();
+		        inputDef();
+	
+		    }
+		    
+		    
+		    function select(num){
+		    	switch(num){
+		    	// 홈팀
+		    	case 1 : 
+	    			$hb.attr("class", "btn btn-lg btn-primary"); 
+	    			$ab.attr("class", "btn btn-lg btn-light"); 
+	    			$hr.attr("checked", true); 
+		    		$ar.attr("checked", false);
+	    			$defeat.val('${awayTeam.teamNo}');
+	    			$('#vicRecord').val();
+	    			break;
+	    		// 어웨이팀
+		    	case 2 : 
+		    		$hb.attr("class", "btn btn-lg btn-light"); 
+		    		$ab.attr("class", "btn btn-lg btn-primary");
+		    		$ar.attr("checked", true);
+	    			$hr.attr("checked", false); 
+	    			$defeat.val('${homeTeam.teamNo}');
+		    		break;
+		    	}
+		    }
+		    function submit(){
+		    	// 배틀 기록을 등록하지 않으면 submit을 실행할수 없음
+		    	if($('#vicRecord').val() == '' || $('#defRecord').val() == ''){
+		    		alert('배틀 기록을 등록해주세요!');
+		    		return;
+		    	}
+		    	$("#submit").submit();
+		    }
+		    
+		    </script>
 
 
 </body>
