@@ -130,9 +130,11 @@
 				</ul>
 			</div>
 			
-			<div align="right">
-				<a href="teamEnrollFrom.mo">팀 만들기</a>
-			</div>
+			<c:if test="${ not empty loginMember }">
+				<div align="right">
+					<a href="teamEnrollFrom.mo">팀 만들기</a>
+				</div>
+			</c:if>
 			
 		</div>
 			

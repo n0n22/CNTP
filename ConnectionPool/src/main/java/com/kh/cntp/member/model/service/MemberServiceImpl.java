@@ -93,7 +93,7 @@ public class MemberServiceImpl implements MemberService {
 	// 회원 탈퇴
 	@Override
 	public int myPageDelete(Member member) {
-		return 0;
+		return memberDao.myPageDelete(sqlSession, member);
 	}
 	
 	

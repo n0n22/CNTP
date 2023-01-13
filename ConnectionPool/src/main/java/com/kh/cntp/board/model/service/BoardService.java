@@ -31,14 +31,8 @@ public interface BoardService {
 		//게시글 수정 서비스(update)
 		int updateBoard(Board b);
 		
-		/*
-		//댓글 리스트 조회 서비스(Ajax)(select)
-		ArrayList<Reply> selectReplyList (int boardNO);
 		
-		//댓글 작성 서비스 (Ajax) (insert)
-		int insertReply(Reply r);
 		
-		*/
 	
 	
 	
