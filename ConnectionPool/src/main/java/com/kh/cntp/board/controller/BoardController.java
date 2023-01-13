@@ -50,7 +50,7 @@ public class BoardController {
 		if(!upfile.getOriginalFilename().equals("")) {
 			
 			b.setOriginName(upfile.getOriginalFilename()); //원본명
-			b.setChangeName("resources/uploadFiles/" + Template.saveFile(upfile, session));
+			b.setChangeName("/resources/upfiles/" + Template.saveFile(upfile, session));
 		
 		
 		}
