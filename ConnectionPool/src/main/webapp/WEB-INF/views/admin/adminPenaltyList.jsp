@@ -62,19 +62,19 @@
         <div class="report-table-area">
 
             <div class="container">
-                <table class="table table-bordered table-hover" id="penaltyTable">
-                    <thead>
-                        <tr>
-                            <th width="10%"><input type="checkbox" id="checkAll"></th>
-                            <th width="15%">회원번호</th>
-                            <th width="20%">아이디</th>
-                            <th width="10%">누적신고</th>
-                            <th width="15%">패널티 유형</th>
-                            <th width="25%">최종신고처리일</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    	<form method="post" action="penaltyInsert.ad" id="penaltyForm">
+                <form method="post" action="penaltyInsert.ad" id="penaltyForm">
+		            <table class="table table-bordered table-hover" id="penaltyTable">
+		                <thead>
+		                    <tr>
+	                            <th width="10%"><input type="checkbox" id="checkAll"></th>
+	                            <th width="15%">회원번호</th>
+	                            <th width="20%">아이디</th>
+	                            <th width="10%">누적신고</th>
+	                            <th width="15%">패널티 유형</th>
+	                            <th width="25%">최종신고처리일</th>
+		                    </tr>
+		                </thead>
+	                    <tbody>
 	                    	<c:forEach var="report" items="${ list }">
 		                    	<tr>
 		                    		<input type="hidden" value="${ report.memNo }" name="memNo">
@@ -87,9 +87,9 @@
 		                            <td>${ report.completionDate }</td>
 		                        </tr>
 	                    	</c:forEach>
-                    	</form>
-                    </tbody>
-                </table>
+	                    </tbody>
+		            </table>
+                </form>
                 <button class="btn btn-danger" onclick="openConfirm()" id="confirmBtn">처리</btton>
             </div>
 			<div class="page-area">
