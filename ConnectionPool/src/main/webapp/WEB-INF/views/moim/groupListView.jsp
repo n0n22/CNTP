@@ -43,10 +43,11 @@
 
             <div class="groupCondition-area">
                 <table border="1">
-                    <tr>
+                    <tr height="50">
                         <th width="200">지역</th>
                         <td width="500">
                             <select name="groupArea">
+                                <option value="all">전체</option>
                                 <option value="Seoul">서울특별시</option>
                                 <option value="Gyeonggi">경기도</option>
                                 <option value="Gangwon">강원도</option>
@@ -59,27 +60,27 @@
                             </select>
                         </td>
                     </tr>
-                    <tr>
+                    <tr height="50">
                         <th>성별</th>
                         <td>
-                            <input type="radio" name="gender" value="A"> 무관
-                            <input type="radio" name="gender" value="M"> 남
-                            <input type="radio" name="gender" value="F"> 여
+                            <input type="radio" name="gender" value="A" id="genderA"> <label for="genderA">무관</label>
+                            <input type="radio" name="gender" value="M" id="genderM">  <label for="genderM">남</label>
+                            <input type="radio" name="gender" value="F" id="genderF"> <label for="genderF">여</label>
                         </td>
                     </tr>
-                    <tr>
+                    <tr height="50">
                         <th>레벨</th>
                         <td>
-                            <input type="radio" name="level" value="A"> 무관
-                            <input type="radio" name="level" value="B"> 초급
-                            <input type="radio" name="level" value="M"> 중급
-                            <input type="radio" name="level" value="S"> 고급
+                            <input type="radio" name="level" value="A" id="levelA"> <label for="levelA">무관</label>
+                            <input type="radio" name="level" value="B" id="levelB"> <label for="levelB">초급</label>
+                            <input type="radio" name="level" value="M" id="levelM"> <label for="levelM">중급</label>
+                            <input type="radio" name="level" value="S" id="levelS"> <label for="levelS">고급</label>
                         </td>
                     </tr>
-                    <tr>
+                    <tr height="50">
                         <th>상태</th>
                         <td>
-                            <input type="checkbox"> 모집중만 보기
+                            <input type="checkbox" id="groupMember" name="groupMember" value="true"> <label for="groupMember">모집중만 보기</label>
                         </td>
                     </tr>
                 </table>

@@ -10,6 +10,7 @@ import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.moim.model.vo.Apply;
 import com.kh.cntp.moim.model.vo.Chatting;
+import com.kh.cntp.moim.model.vo.Group;
 import com.kh.cntp.moim.model.vo.Team;
 import com.kh.cntp.moim.model.vo.TeamMember;
 
@@ -113,6 +114,19 @@ public class MoimDao {
 	
 	public int ajaxDeleteChatting(SqlSessionTemplate sqlSession, String chatNo) {
 		return sqlSession.delete("moimMapper.ajaxDeleteChatting", chatNo);
+	}
+	
+	public int selectGroupCountList(SqlSessionTemplate sqlSession, Group group) {
+		return sqlSession.selectOne("moimMapper.selectGroupCountList", group);
+	}
+	
+	public ArrayList<Group> selectGroupList(SqlSessionTemplate sqlSession, Group group, PageInfo pi){
+
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("moimMapper.selectGroupList", group, rowBounds);
 	}
 
 }
