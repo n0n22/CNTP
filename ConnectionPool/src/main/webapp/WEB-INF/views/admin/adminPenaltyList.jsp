@@ -201,7 +201,7 @@
 				if($(this).is(':checked')) {
 					count++;
 					
-					console.log($(this).parent().next());
+					console.log($(this).parent().next().text());
 					
 					
 					// $('#penaltyForm').append('<input type="hidden" value="' +  + '" name="memNo">')
