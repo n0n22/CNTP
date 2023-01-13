@@ -107,14 +107,7 @@ public class MoimController {
 	@RequestMapping("insertTeam.mo")
 	public ModelAndView insertTeam(ModelAndView mv, Team team, MultipartFile upfile, HttpSession session) {
 		
-		if(team.getPowerDuration() != null) {
-			// 파워 글이 아닐 경우
-			// point(-50);
-			// 이것이 성공했을 때
-		} else {
-			//point(-60);
-			// 이것이 성공했을 때
-		}
+		
 		
 		//System.out.println(upfile.getOriginalFilename());
 		
@@ -140,6 +133,7 @@ public class MoimController {
 			mv.setViewName("moim/teamPage");
 			mv.addObject("alertMsg", "팀 생성이 완료되었습니다.");
 		} else {
+			session.setAttribute("loginMember", memberService.loginMember((Member)session.getAttribute("loginMember")));
 			mv.setViewName("main");
 		}
 		

@@ -67,7 +67,15 @@ public interface AdminService {
 	// 신고 확정
 	int confirmReport(int reportNo);
 	
+	
+	
+	// 패널티 목록 개수 조회
+	int selectPenaltyListCount();
 
+	
+	// 패널티 목록 조회
+	ArrayList<Report> selectPenaltyList(PageInfo pi);
+	
 	
 	
 	

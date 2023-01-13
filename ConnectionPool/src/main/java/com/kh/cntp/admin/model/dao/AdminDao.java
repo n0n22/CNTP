@@ -121,6 +121,24 @@ public class AdminDao {
 	
 	
 	
+	// 패널티 목록 개수 조회
+	public int selectPenaltyListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adminMapper.selectPenaltyListCount");
+	}
+	
+	
+	// 패널티 목록 조회
+	public ArrayList<Report> selectPenaltyList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("adminMapper.selectPenaltyList", null, rowBounds);
+	}
+	
+	
+	
+	
+	
 //-------------------------------------------
 // 배너 관련 기능 
 //-------------------------------------------	

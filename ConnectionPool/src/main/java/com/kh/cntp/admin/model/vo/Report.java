@@ -20,5 +20,11 @@ public class Report {
 	private String reporterId;	// 신고자 아이디
 	
 	private String content;			// 신고 글 내용
+	
+	
+	//패널티용
+	private String penalty;			// 부과할 패널티 내역
+	private int count;				// 신고 누적수
+	
 
 }
