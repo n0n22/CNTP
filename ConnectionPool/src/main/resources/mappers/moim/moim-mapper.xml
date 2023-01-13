@@ -36,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="group" id="groupResultMap">
 		<result column="GROUP_NO" 			property="groupNo"/>
 		<result column="MEM_NO" 			property="memNo"/>
+		<result column="NICKNAME" 			property="nickname"/>
 		<result column="GROUP_TITLE" 		property="groupTitle"/>
 		<result column="GROUP_CONTENT" 		property="groupContent"/>
 		<result column="KOR_AREA" 		property="groupArea"/>
@@ -514,5 +515,58 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	     WHERE
 	           CHAT_NO = #{ chatNo }
 	</delete>
+	
+	<select id="selectGroup" parameterType="string">
+		SELECT 
+		        G.GROUP_NO
+		       ,M.NICKNAME
+		       ,M.INGIDO
+		       ,CASE WHEN M.GENDER = 'F' THEN '여성'
+		             ELSE '남자' END "GENDER"
+		       ,G.MEM_NO
+		       ,G.GROUP_CONTENT
+		       ,A.KOR_AREA
+		       ,G.PLACE
+		       ,G.ORIGIN_NAME
+		       ,G.CHANGE_NAME
+		       ,G.GROUP_TITLE
+		       ,CASE WHEN G.GENDER = 'A' THEN '무관'
+		             WHEN G.GENDER = 'F' THEN '여자만'
+		             ELSE '남자만' END "GROUP_GENDER"
+		       ,CASE WHEN "LEVEL" = 'E' THEN '무관'
+		             WHEN "LEVEL" = 'B' THEN '초급'
+		             WHEN "LEVEL" = 'M' THEN '중급'
+		             ELSE '고급' END "LEVEL"
+		       ,CASE WHEN TO_CHAR(G.POWER_DURATION, 'YYYYMMDD') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDD')]]> THEN '파워'
+		             ELSE '일반' END "POWER_DURATION"
+		       ,TO_CHAR(G.CREATE_DATE, 'YYYY/MM/DD') "CREATE_DATE"
+		       ,TO_CHAR(G.START_TIME, 'YYYY/MM/DD hh24:mi:ss') "START_TIME"
+		       ,TO_CHAR(G.END_TIME, 'YYYY/MM/DD hh24:mi:ss') "END_TIME"
+		       ,CASE WHEN GROUP_MEMBER <![CDATA[<= (SELECT
+		                                          COUNT(*)
+		                                     FROM
+		                                          APPLY
+		                                    WHERE
+		                                          MOIM_NO = ${ groupNo }
+		                                      AND
+		                                          ACCEPT_YN = 'Y'
+		                                    )]]> THEN '모집마감'
+		        ELSE '('||(SELECT
+		                          COUNT(*)
+		                     FROM
+		                          APPLY "A"
+		                    WHERE
+		                          MOIM_NO = 'G2'
+		                      AND
+		                          ACCEPT_YN = 'Y')||'/'||G.GROUP_MEMBER||')' END "GROUP_MEMBER"
+		  FROM
+		       "GROUP" G
+		  JOIN 
+		       MEMBER "M" ON(G.MEM_NO = M.MEM_NO)
+		  JOIN
+		       AREA "A" ON(G.GROUP_AREA = A.ENG_AREA)
+		 WHERE
+		       GROUP_NO = ${ groupNo }
+	</select>
 	
 </mapper>
