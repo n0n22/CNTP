@@ -73,7 +73,14 @@
 			<div>
 				<div class="badge-area" style="width:20%; float:left">
 					<!-- 팀 뱃지 -->
-					<img class="badge-img" width="200px" height="200px"  src="${ team.badgeChangeName }">
+					<c:choose>
+						<c:when test="${ empty team.badgeChangeName }">
+							<img class="badge-img" width="200px" height="200px" src="${ pageContext.request.contextPath }/resources/images/noBadge.png">
+						</c:when>
+						<c:otherwise>
+							<img class="badge-img" width="200px" height="200px"  src="${ team.badgeChangeName }">
+						</c:otherwise>
+					</c:choose>
 
 				</div>
 

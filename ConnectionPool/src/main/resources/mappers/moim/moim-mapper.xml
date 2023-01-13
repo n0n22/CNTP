@@ -35,17 +35,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<resultMap type="group" id="groupResultMap">
 		<result column="GROUP_NO" 			property="groupNo"/>
+		<result column="NICKNAME" 			property="nickname"/>
+		<result column="INGIDO"				property="ingido"/>
+		<result column="MEM_GENDER" 		property="memGender"/>
 		<result column="MEM_NO" 			property="memNo"/>
-		<result column="GROUP_TITLE" 		property="groupTitle"/>
 		<result column="GROUP_CONTENT" 		property="groupContent"/>
-		<result column="KOR_AREA" 		property="groupArea"/>
+		<result column="GROUP_TITLE" 		property="groupTitle"/>
+		<result column="KOR_AREA" 		    property="groupArea"/>
 		<result column="PLACE" 				property="place"/>
 		<result column="GROUP_MEMBER" 		property="groupMember"/>
+		<result column="GROUP_STATUS" 		property="groupStatus"/>
 		<result column="START_TIME" 		property="startTime"/>
 		<result column="END_TIME" 			property="endTime"/>
 		<result column="ORIGIN_NAME" 		property="originName"/>
 		<result column="CHANGE_NAME" 		property="changeName"/>
-		<result column="LEVEL" 				property="levle"/>
+		<result column="LEVEL" 				property="level"/>
 		<result column="GENDER" 			property="gender"/>
 		<result column="CREATE_DATE" 		property="createDate"/>
 		<result column="POWER_DURRATION" 	property="powerDuration"/>
@@ -200,7 +204,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    BY
 		       (CASE WHEN TEAM_GRADE = '팀장' THEN 1
 		            WHEN TEAM_GRADE = '부팀장' THEN 2
-		            ELSE 3 END), "TEAM_GRADE"
+		            ELSE 3 END)
 			   
 	</select>
 	
@@ -462,6 +466,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		                       WHERE
 		                             TM.TEAM_NO = T.TEAM_NO)]]>
 		</if>		       
+		 ORDER
+		    BY
+		       POWER_DURATION DESC, CREATE_DATE DESC
 	</select>
 	
 	<select id="selectChattingList" resultMap="chattingResultMap" parameterType="chatting">
@@ -511,5 +518,97 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	     WHERE
 	           CHAT_NO = #{ chatNo }
 	</delete>
+	
+	<select id="selectGroup" parameterType="string" resultMap="groupResultMap">
+		SELECT 
+		        G.GROUP_NO
+		       ,M.NICKNAME
+		       ,M.INGIDO
+		       ,CASE WHEN M.GENDER = 'F' THEN '여성'
+		             ELSE '남자' END "GENDER"
+		       ,G.MEM_NO
+		       ,G.GROUP_CONTENT
+		       ,A.KOR_AREA
+		       ,G.PLACE
+		       ,G.ORIGIN_NAME
+		       ,G.CHANGE_NAME
+		       ,G.GROUP_TITLE
+		       ,G.GROUP_STATUS
+		       ,CASE WHEN G.GENDER = 'A' THEN '무관'
+		             WHEN G.GENDER = 'F' THEN '여자만'
+		             ELSE '남자만' END "GROUP_GENDER"
+		       ,CASE WHEN "LEVEL" = 'E' THEN '무관'
+		             WHEN "LEVEL" = 'B' THEN '초급'
+		             WHEN "LEVEL" = 'M' THEN '중급'
+		             ELSE '고급' END "LEVEL"
+		       ,CASE WHEN TO_CHAR(G.POWER_DURATION, 'YYYYMMDD') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDD')]]> THEN '파워'
+		             ELSE '일반' END "POWER_DURATION"
+		       ,TO_CHAR(G.CREATE_DATE, 'YYYY/MM/DD') "CREATE_DATE"
+		       ,TO_CHAR(G.START_TIME, 'YYYY/MM/DD hh24:mi:ss') "START_TIME"
+		       ,TO_CHAR(G.END_TIME, 'YYYY/MM/DD hh24:mi:ss') "END_TIME"
+		       ,CASE WHEN GROUP_MEMBER <![CDATA[<= (SELECT
+		                                          COUNT(*)
+		                                     FROM
+		                                          APPLY
+		                                    WHERE
+		                                          MOIM_NO = ${ groupNo }
+		                                      AND
+		                                          ACCEPT_YN = 'Y'
+		                                    )]]> THEN '모집마감'
+		        ELSE '('||(SELECT
+		                          COUNT(*)
+		                     FROM
+		                          APPLY "A"
+		                    WHERE
+		                          MOIM_NO = ${ groupNo }
+		                      AND
+		                          ACCEPT_YN = 'Y')||'/'||G.GROUP_MEMBER||')' END "GROUP_MEMBER"
+		  FROM
+		       "GROUP" G
+		  JOIN 
+		       MEMBER "M" ON(G.MEM_NO = M.MEM_NO)
+		  JOIN
+		       AREA "A" ON(G.GROUP_AREA = A.ENG_AREA)
+		 WHERE
+		       GROUP_NO = ${ groupNo }
+	</select>
+	
+	<select id="selectGroupCountList" parameterType="group" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       "GROUP"
+		 WHERE
+		       GROUP_STATUS = 'Y'
+		<if test="groupArea != 'all'">
+		  AND 
+		      GROUP_AREA = #{ groupArea }
+		</if>
+		<if test="gender != 'A'">
+		  AND 
+		      GENDER = #{ gender }
+		</if>
+		<if test="level != 'A'">
+		  AND
+		      "LEVEL" = #{ level }
+		</if>
+		<if test="groupMember != 'A'">
+		  AND
+		      (GROUP_MEMBER - 1) <![CDATA[>]]>(SELECT
+		                                          COUNT(*)
+		                                     FROM
+		                                          APPLY "A"
+		                                    WHERE
+		                                          A.MOIM_NO = GROUP_NO
+		                                      AND
+		                                          ACCEPT_YN = 'Y'
+		                                    )
+		</if>
+		       
+	</select>
+	
+	<select id="selectGroupList" parameterType="group" resultMap="groupResultMap">
+		
+	</select>
 	
 </mapper>

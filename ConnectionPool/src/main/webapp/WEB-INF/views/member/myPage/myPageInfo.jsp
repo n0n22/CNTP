@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -245,10 +245,19 @@
 	<jsp:include page="../../common/menubar_nosearch.jsp"/>
 
     <div class="outer">
+    	        
         <div class="top-bar">
             <div class="inline-block">
                 <div id="name-area" style="cursor: default;"><span id="userName">${sessionScope.loginMember.nickName}</span> 님
-                    <br>🤔<span>무소속</span>
+                    <br>
+                    <c:if test="${ sessionScope.loginMember.badgeChangeName == null }">
+                    	노뱃지
+                   	</c:if>
+                   	<img src="${ sessionScope.loginMember.badgeChangeName }" width="30px">
+                   	<c:if test="${ sessionScope.loginMember.teamName == null }">
+                   		무소속	
+                   	</c:if>
+                   		<span>${ sessionScope.loginMember.teamName }</span>
                 </div>
                 <div>
                     <div id="point-text">포인트&nbsp;<span id="point">${sessionScope.loginMember.memPoint}</span></div>
@@ -273,18 +282,18 @@
             <div class="info-area">
                 <form action="myPageUpdate.me" method="post" id="info-form">
 
-                    <input type="hidden" name="userNo" value="${sessionScope.loginMember.memNo}">
+                    <input type="hidden" name="memNo" value="${sessionScope.loginMember.memNo}">
                     
                     <div>
                         <div class="subText">아이디</div>
-                        <div><input type="text" id="userId" name="userId" value="${sessionScope.loginMember.memId}" maxlength="12" required readonly></div>
+                        <div><input type="text" id="userId" name="memId" value="${sessionScope.loginMember.memId}" maxlength="12" required readonly></div>
                         <!-- <td><button type="button" id="idCheck-btn">중복확인</button></td> -->
                         <label class="checkResult" id="idCheck">&nbsp;</label>
                     </div>
                                      
                     <div>
                         <div class="subText">이름</div>
-                        <div><input type="text" name="userName" id="userName2" value="${sessionScope.loginMember.memName}" maxlength="5" required readonly></div>
+                        <div><input type="text" name="userName" id="memName" value="${sessionScope.loginMember.memName}" maxlength="5" required readonly></div>
                         <label class="checkResult" id="nameCheck">&nbsp;</label>
                     </div>
 
@@ -293,7 +302,7 @@
                         <!-- 닉네임 -->
                         <!-- ajax로 중복확인할것-->
                         <div class="subText">닉네임</div>
-                        <div><input type="text" id="userNickName" name="" maxlength="12" value="${sessionScope.loginMember.nickName}" required placeholder=""></div>
+                        <div><input type="text" id="userNickName" name="nickName" maxlength="12" value="${sessionScope.loginMember.nickName}" required placeholder=""></div>
                         <label class="checkResult" id="nickNameCheck">&nbsp;</label>
                     </div>
                   
@@ -314,7 +323,7 @@
                             <input type="text" name="email" value="${fn:split(email, '@')[0]}" required style="width: 140px;"> @ 
                             <input type="text" name="emailSite" id="emailSite" value="${fn:split(email, '@')[1]}" required style="width: 130px;" disabled>
                             <select id="emailForm" name="emailForm" onchange="emailCheck()">
-                                <option value="선택하세요" >선택하세요</option>
+                                <option value="${fn:split(email, '@')[1]}" >선택하세요</option>
                                 <option value="직접입력" >직접입력</option>
                                 <option value="naver.com" >naver.com</option>
                                 <option value="hanmail.net" >hanmail.net</option>
@@ -337,7 +346,7 @@
                     <div>
                         <div class="subText">활동지역</div>
                         <div>
-                            <select name="address" id="addressForm">
+                            <select name="memArea" id="addressForm">
                                 <option value="시/도 선택" hidden="" disabled="disabled" selected="selected" value="">${ sessionScope.loginMember.memArea}</option>
                                 <option value="Seoul">서울</option>
                                 <option value="Gyeonggi">경기도</option>
@@ -349,7 +358,7 @@
                                 <option value="Gyeongbuk">경상북도</option>
                                 <option value="Gyeongnam">경상남도</option>
                             </select>
-                            <input type="text" name="detailAddress" value="${sessionScope.loginMember.detailArea}" placeholder="상세 지역 (읍,면,동)" required style="width: 200px;">
+                            <input type="text" name="detailArea" value="${sessionScope.loginMember.detailArea}" placeholder="상세 지역 (읍,면,동)" required style="width: 200px;">
                         </div>
                         <div><label>&nbsp;</label></div>
                     </div>
@@ -358,9 +367,9 @@
                     <div>
                         <div class="subText">수영 등급</div>
                         <div>
-                            <input type="text" name="swimLevel" value="${sessionScope.loginMember.grade}" required style="width: 200px;">
+                            <input type="text" name="swimLevel" value="${sessionScope.loginMember.grade}" readonly required style="width: 200px;">
 
-                            <select name="levelForm" id="levelForm">
+                            <select name="grade" id="levelForm">
                                 <option value="등급" hidden="" disabled="disabled" selected="selected" >등급변경</option>
                                 <option value="B">초급</option>
                                 <option value="M">중급</option>
@@ -371,16 +380,15 @@
                         <div><label>&nbsp;</label></div>
                     </div>
                
-
-					<br><br>
+					<br>
 					<div>
 						<div class="subText">개인정보 수정을 위해서는 본인 확인이 필요합니다.</div>
 						<div class="subText">비밀번호를 다시 한번 입력해주세요.</div>
 					</div>
-					<br><br>
+					<br>
                     <div>
                         <div class="subText">비밀번호</div>
-                        <div><input type="password" name="userPwd" id="userPwd" maxlength="15" placeholder=""></div>
+                        <div><input type="password" name="memPwd" id="userPwd" maxlength="15" placeholder=""></div>
                         <label class="checkResult" id="pwdCheck">&nbsp;</label>
                     </div>
 
@@ -389,9 +397,9 @@
                         <div><input type="password" id="userPwd2" maxlength="15"  placeholder=""></div>
                         <label class="checkResult" id="pwdCheck2">&nbsp;</label>
                     </div>
-
+					
                     <div align="center">
-                        <div><button type="submit" id="info-btn" style="margin-top: 0px;">수정하기</button></div>
+                        <div><button type="submit" id="info-btn" style="margin-top: 8px;">수정하기</button></div>
                     </div>
                 </form>
 				<br><br>

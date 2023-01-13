@@ -74,58 +74,57 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>3</td>
-                            <td>user02</td>
-                            <td>10</td>
-                            <td>탈퇴</td>
-                            <td>2022-10-05</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>3</td>
-                            <td>user02</td>
-                            <td>10</td>
-                            <td>탈퇴</td>
-                            <td>2022-10-05</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>3</td>
-                            <td>user02</td>
-                            <td>10</td>
-                            <td>탈퇴</td>
-                            <td>2022-10-05</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>3</td>
-                            <td>user02</td>
-                            <td>10</td>
-                            <td>탈퇴</td>
-                            <td>2022-10-05</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>3</td>
-                            <td>user02</td>
-                            <td>10</td>
-                            <td>탈퇴</td>
-                            <td>2022-10-05</td>
-                        </tr>
+                    	<form method="post" action="penaltyInsert.ad" id="penaltyForm">
+	                    	<c:forEach var="report" items="${ list }">
+		                    	<tr>
+		                    		<input type="hidden" value="${ report.memNo }" name="memNo">
+		                    		<input type="hidden" value="${ report.penalty }" name="penalty">
+		                            <td class="notcheck"><input type="checkbox"></td>
+		                            <td>${ report.memNo }</td>
+		                            <td>${ report.memId }</td>
+		                            <td>${ report.count }</td>
+		                            <td>${ report.penalty }</td>
+		                            <td>${ report.completionDate }</td>
+		                        </tr>
+	                    	</c:forEach>
+                    	</form>
                     </tbody>
                 </table>
-                <a href="#" class="btn btn-danger">처리</a>
+                <button class="btn btn-danger" onclick="openConfirm()" id="confirmBtn">처리</btton>
             </div>
 			<div class="page-area">
-				<ul class="pagination justify-content-center">
-	                <li class="page-item"><a class="page-link" href="javascript:void(0);">&lt;</a></li>
-	                <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-	                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-	                <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-	                <li class="page-item"><a class="page-link" href="javascript:void(0);">&gt;</a></li>
-            	</ul>
+				<ul class="pagination" align="center">
+	               	<c:choose>
+	                	<c:when test="${ pi.currentPage eq 1 }">
+	                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<li class="page-item"><a class="page-link" href="penaltyList.ad?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
+	                    </c:otherwise>
+	                </c:choose>
+	                
+	               
+	                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+		                <c:choose>
+		                	<c:when test="${ pi.currentPage eq p }">
+		                   		<li class="page-item disabled"><a class="page-link" href="penaltyList.ad?cpage=${ p }">${ p }</a></li>
+		                	</c:when>
+		                	<c:otherwise>
+		                		<li class="page-item"><a class="page-link" href="penaltyList.ad?cpage=${ p }">${ p }</a></li>
+		                	</c:otherwise>
+		                </c:choose>
+	                </c:forEach>
+	               
+	                
+					<c:choose>
+	                	<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+		                    <li class="page-item"><a class="page-link" href="penaltyList.ad?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+	                    </c:otherwise>
+	                </c:choose>
+				</ul>
 			</div>
 
         </div>
@@ -150,6 +149,7 @@
 					$('#penaltyTable tbody input[type=checkbox]').each(function() {
 						$(this).prop('checked', true);
 					});
+					
 				}
 				else {
 					$('#penaltyTable tbody input[type=checkbox]').each(function() {
@@ -179,11 +179,53 @@
 			});
 			
 			
+					
+			
 			
 			
 			
 			
 		});
+		
+		
+		function openConfirm() {
+			var count = 0;
+			var checked = [];
+			$('#penaltyTable tbody input[type=checkbox]').each(function() {
+				if($(this).is(':checked')) {
+					
+					count++;
+				}
+				if(count > 0) { // 체크 한 상태라서 요청이 가야 함
+		    		alertify.confirm('체크 했어?', function() {
+					
+		    			$('#penaltyForm').submit();
+		    		
+		   			});
+				} 
+				else { // 체크 안한 상태라서 요청이 가면 안됨
+		    		alertify.confirm('체크 안함', function() {
+
+		   			});
+				}
+				
+			})
+			
+			
+			
+			// var nums = 
+			
+			// var msg = 
+			
+    		// alertify.confirm('ㅎㅎ', function() {
+        		// $('#postForm #hiddenStatus').val(status);
+        		// $('#postForm #hiddenBnno').val(bnno);
+   				// $('#postForm').submit();		
+   			// }); 
+			
+			
+			
+		}
 	
 	
 	

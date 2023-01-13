@@ -215,7 +215,7 @@
 
                     <div>
                         <!-- 비밀번호 확인 -->
-                        <div style><input type="password" id="userPwd2" maxlength="15" required placeholder="비밀번호를 한번 더 입력해주세요"></div>
+                        <div><input type="password" id="userPwd2" maxlength="15" required placeholder="비밀번호를 한번 더 입력해주세요"></div>
                         <label class="checkResult" id="pwdCheck2">&nbsp;</label>
                     </div>
 

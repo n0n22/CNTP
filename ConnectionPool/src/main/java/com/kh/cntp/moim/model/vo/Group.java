@@ -6,12 +6,16 @@ import lombok.Data;
 public class Group {
 	
 	private String groupNo;
+	private String nickname;
+	private int ingido;
+	private String memGender;
 	private int memNo;
 	private String groupTitle;
 	private String groupContent;
 	private String groupArea;
 	private String place;
-	private int groupMember; //모임 모집 인원
+	private String groupMember; //모임 모집 인원
+	private String groupStatus; //모임 모집 인원
 	private String startTime;
 	private String endTime;
 	private String originName;

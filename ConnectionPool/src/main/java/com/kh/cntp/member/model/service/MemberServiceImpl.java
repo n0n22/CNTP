@@ -78,8 +78,23 @@ public class MemberServiceImpl implements MemberService {
 	public int pwdChange(Member member) {
 		return memberDao.pwdChange(sqlSession, member);
 	}
-	
 
+		
+	//////////////////////////////////
+	// 마이페이지 						//
+	//////////////////////////////////
+	
+	// 회원정보 수정
+	@Override
+	public int myPageInfoUpdate(Member member) {
+		return memberDao.myPageInfoUpdate(sqlSession, member);
+	}
+	
+	// 회원 탈퇴
+	@Override
+	public int myPageDelete(Member member) {
+		return memberDao.myPageDelete(sqlSession, member);
+	}
 	
 	
 	

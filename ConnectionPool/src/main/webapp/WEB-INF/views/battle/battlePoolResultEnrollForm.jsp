@@ -40,7 +40,7 @@
 			                            <img class="m-b-10" src="${ homeTeam.badgeChangeName }" height="100" width="100">
 		                            </c:if>
 		                            <c:if test="${ homeTeam.badgeStatus eq 'N'}">
-			                            <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
+			                            <img class="m-b-10" src="resources/images/noBadge.png" height="100" width="100">
 		                            </c:if>
 		                            <p class="text-center"></p>
 		                            <p class="text-center"></p>
@@ -58,7 +58,7 @@
 			                            <img class="m-b-10" src="${ awayTeam.badgeChangeName }" height="100" width="100">
 		                            </c:if>
 		                            <c:if test="${ awayTeam.badgeStatus eq 'N'}">
-			                            <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
+			                            <img class="m-b-10" src="resources/images/noBadge.png" height="100" width="100">
 		                            </c:if>
 		                            
 		                            <p class="text-center"></p>
@@ -71,6 +71,75 @@
 		        
 		    </div>
     </form>
+	
+	
+	        <hr>
+	        <div class="outer-main">
+	            <div class="battleHistory">
+	            	<br>
+	                <h2>배틀기록</h2>
+	                <div class="battleRecord">
+	                    <button class="btn btn btn-primary" onclick="add()">추가</button>
+						<button class="btn btn btn-danger" onclick="remove()">삭제</button>
+						<br><br>
+	                    <div class="content">
+	                    	<button class="btn btn-lg btn-primary disabled">승리팀</button>
+	                    	<br><br>
+	                        <table id="victoryTeam" style="text-align:center" border="1">
+						        <thead>
+						            <tr style="text-align: center;">
+						                <th>선수</th>
+						                <th>종목</th>
+						                <th style="width: 150px;">기록</th>
+						            </tr>
+						        </thead>
+						        <tbody>
+						            <tr class="vics">
+						                <td><input id="vicPlayer1" class="vic" type="text" style="width: 100%"></td>
+						                <td><input id="vicStyle1" class="vic" type="text" style="width: 100%"></td>
+						                <td><input id="vicRecord1" class="vic" type="text" style="width: 100%"></td>
+						            </tr>
+						        </tbody>
+						    </table>
+	                        <br><br>
+	                        
+	                        <button class="btn btn-lg btn-danger disabled">패배팀</button>
+	                        
+						    <table id="defeatTeam" style="text-align:center" border="1">
+						        <thead>
+						            <tr style="text-align: center;">
+						                <th>선수</th>
+						                <th>종목</th>
+						                <th style="width: 150px;">기록</th>
+						            </tr>
+						        </thead>
+						        <tbody>
+						            <tr class="defs">
+						                <td><input id="defPlayer1" class="def" type="text" style="width: 100%"></td>
+						                <td><input id="defStyle1" class="def" type="text" style="width: 100%"></td>
+						                <td><input id="defRecord1" class="def" type="text" style="width: 100%"></td>
+						            </tr>
+						        </tbody>
+						    </table>
+	                        
+	                    </div>
+	            
+	                </div>
+	            </div>
+	            <br clear="both">
+	        </div>
+	        <hr>
+	        <div class="outer-bottom">
+	            <div class="submit-area">
+	                <br>
+	                <button class="btn btn-primary" onclick="submit();">작성하기</button>
+	                <button class="btn btn-danger" onclick="history.back();">취소하기</button>
+	            </div>
+	        </div>
+	    </div>
+	<jsp:include page="../common/footer.jsp"/>
+	
+	
 		    <script>
 		    let $hb = $('#homeTeamButton');
 		    let $ab = $('#awayTeamButton');
@@ -80,59 +149,79 @@
 		    
 		    $(function(){
 		    	$defeat.val('${awayTeam.teamNo}');
-		    	
-		    	$('.vic').change(function(){
-		    		var vicRecord = [
-		    			{
-		    				player : $('#vicPlayer1').val(),
-		    				style : $('#vicStyle1').val(),
-		    				record : $('#vicRecord1').val()
-		    			},
-		    			{
-		    				player : $('#vicPlayer2').val(),
-		    				style : $('#vicStyle2').val(),
-		    				record : $('#vicRecord2').val()
-		    			},
-		    			{
-		    				player : $('#vicPlayer3').val(),
-		    				style : $('#vicStyle3').val(),
-		    				record : $('#vicRecord3').val()
-		    			},
-		    			{
-		    				player : $('#vicPlayer4').val(),
-		    				style : $('#vicStyle4').val(),
-		    				record : $('#vicRecord4').val()
-		    			}
-		    		];
-		    		$('#vicRecord').val(JSON.stringify(vicRecord));
-		    	})
-		    	
-		    	$('.def').change(function(){
-		    		var defRecord = [
-		    			{
-		    				player : $('#defPlayer1').val(),
-		    				style : $('#defStyle1').val(),
-		    				record : $('#defRecord1').val()
-		    			},
-		    			{
-		    				player : $('#defPlayer2').val(),
-		    				style : $('#defStyle2').val(),
-		    				record : $('#defRecord2').val()
-		    			},
-		    			{
-		    				player : $('#defPlayer3').val(),
-		    				style : $('#defStyle3').val(),
-		    				record : $('#defRecord3').val()
-		    			},
-		    			{
-		    				player : $('#defPlayer4').val(),
-		    				style : $('#defStyle4').val(),
-		    				record : $('#defRecord4').val()
-		    			}
-		    		];
-		    		$('#defRecord').val(JSON.stringify(defRecord));
-		    	})
-		    })
+		        $(document).on('change', '.vics>td>.vic', function(){
+		            inputVic();
+		        })
+		        $(document).on('change', '.defs>td>.def', function(){
+		            inputDef();
+		        })
+		    });
+		    function inputVic(){
+	            var turn = $vicParents.children().length;
+	            let vicRecords = [];
+	            for(i = 0; i < turn; i++){
+	                var vicRecord = {
+	                        player : $('#vicPlayer' + (i + 1)).val(),
+	                        style : $('#vicStyle' + (i + 1)).val(),
+	                        record : $('#vicRecord' + (i + 1)).val()
+		            }
+		                vicRecords.push(vicRecord);
+		            }
+		            $('#vicRecord').val(JSON.stringify(vicRecords));
+		    }
+		    function inputDef(){
+		            var turn = $defParents.children().length;
+		            let defRecords = [];
+		            for(i = 0; i < turn; i++){
+		                var defRecord = {
+		                        player : $('#defPlayer' + (i + 1)).val(),
+		                        style : $('#defStyle' + (i + 1)).val(),
+		                        record : $('#defRecord' + (i + 1)).val()
+		                }
+		                defRecords.push(defRecord);
+		            }
+		            $('#defRecord').val(JSON.stringify(defRecords));
+		    }
+		    var $vicParents = $('#victoryTeam tbody');
+		    var $defParents = $('#defeatTeam tbody');
+		    var turn = ''
+		    function add(){
+		        turn = $vicParents.children().length + 1;
+		        if(turn > 8){
+		            alert("최대 8개까지 입력가능합니다.");
+		            return;
+		        }
+		        var vicChildren = 
+		                `<tr class="vics">
+		                    <td><input id="vicPlayer\${turn}" class="vic" type="text" style="width: 100%"></td>
+		                    <td><input id="vicStyle\${turn}" class="vic" type="text" style="width: 100%"></td>
+		                    <td><input id="vicRecord\${turn}" class="vic" type="text" style="width: 100%"></td>
+		                </tr>`;
+		        var defChildren = 
+		                `<tr class="defs">
+		                    <td><input id="defPlayer\${turn}" class="def" type="text" style="width: 100%"></td>
+		                    <td><input id="defStyle\${turn}" class="def" type="text" style="width: 100%"></td>
+		                    <td><input id="defRecord\${turn}" class="def" type="text" style="width: 100%"></td>
+		                </tr>`;
+		        $vicParents.append(vicChildren);
+		        $defParents.append(defChildren);
+		    }
+	
+		    function remove(){
+		        turn = $vicParents.children().length;
+		        if(turn <= 1){
+		            alert("최소 1개는 입력해야 합니다.")
+		            return;
+		        }
+		        
+		        $vicParents.children().last().remove();
+		        $defParents.children().last().remove();
+	
+		        inputVic();
+		        inputDef();
+	
+		    }
+		    
 		    
 		    function select(num){
 		    	switch(num){
@@ -165,100 +254,6 @@
 		    }
 		    
 		    </script>
-	
-	        <hr>
-	        <div class="outer-main">
-	            <div class="battleHistory">
-	            	<br>
-	                <h2>배틀기록</h2>
-	                <div class="battleRecord">
-	                    
-	                    <div class="content">
-	                    	<button class="btn btn-lg btn-primary disabled">승리팀</button>
-	                    	<br><br>
-	                        <table id="victoryTeam" style="text-align:center">
-	                            <thead>
-	                                <tr style="text-align: center;">
-	                                    <th>선수</th>
-	                                    <th>종목</th>
-	                                    <th style="width: 150px;">기록</th>
-	                                </tr>
-	                            </thead>
-	                            <tbody>
-	                                <tr>
-	                                    <td><input id="vicPlayer1" class="vic" type="text" style="width: 100%"></td>
-	                                    <td><input id="vicStyle1" class="vic" type="text" style="width: 100%"></td>
-	                                    <td><input id="vicRecord1" class="vic" type="text" style="width: 100%"></td>
-	                                </tr>
-	                                <tr>
-	                                    <td><input id="vicPlayer2" class="vic" type="text" style="width: 100%"></td>
-	                                    <td><input id="vicStyle2" class="vic" type="text" style="width: 100%"></td>
-	                                    <td><input id="vicRecord2" class="vic" type="text" style="width: 100%"></td>
-	                                </tr>
-	                                <tr>
-	                                    <td><input id="vicPlayer3" class="vic" type="text" style="width: 100%"></td>
-	                                    <td><input id="vicStyle3" class="vic" type="text" style="width: 100%"></td>
-	                                    <td><input id="vicRecord3" class="vic" type="text" style="width: 100%"></td>
-	                                </tr>
-                                    <tr>
-	                                    <td><input id="vicPlayer4" class="vic" type="text" style="width: 100%"></td>
-	                                    <td><input id="vicStyle4" class="vic" type="text" style="width: 100%"></td>
-	                                    <td><input id="vicRecord4" class="vic" type="text" style="width: 100%"></td>
-	                                </tr>
-	                            </tbody>
-	                        </table>
-	                        <br><br>
-	                        
-	                        <button class="btn btn-lg btn-danger disabled">패배팀</button>
-	                        
-	                        <table id="defeatTeam" style="text-align: center">
-	                            <thead>
-	                                <tr style="text-align: center;">
-	                                    <th>선수</th>
-	                                    <th>종목</th>
-	                                    <th style="width: 150px;">기록</th>
-	                                </tr>
-	                            </thead>
-	                            <tbody>
-                 	                <tr>
-	                                    <td><input id="defPlayer1" class="def" type="text" style="width: 100%"></td>
-	                                    <td><input id="defStyle1" class="def" type="text" style="width: 100%"></td>
-	                                    <td><input id="defRecord1" class="def" type="text" style="width: 100%"></td>
-	                                </tr>
-	                                <tr>
-	                                    <td><input id="defPlayer2" class="def" type="text" style="width: 100%"></td>
-	                                    <td><input id="defStyle2" class="def" type="text" style="width: 100%"></td>
-	                                    <td><input id="defRecord2" class="def" type="text" style="width: 100%"></td>
-	                                </tr>
-	                                <tr>
-	                                    <td><input id="defPlayer3" class="def" type="text" style="width: 100%"></td>
-	                                    <td><input id="defStyle3" class="def" type="text" style="width: 100%"></td>
-	                                    <td><input id="defRecord3" class="def" type="text" style="width: 100%"></td>
-	                                </tr>
-                                    <tr>
-	                                    <td><input id="defPlayer4" class="def" type="text" style="width: 100%"></td>
-	                                    <td><input id="defStyle4" class="def" type="text" style="width: 100%"></td>
-	                                    <td><input id="defRecord4" class="def" type="text" style="width: 100%"></td>
-	                                </tr>
-	                            </tbody>
-	                        </table>
-	                        
-	                    </div>
-	            
-	                </div>
-	            </div>
-	            <br clear="both">
-	        </div>
-	        <hr>
-	        <div class="outer-bottom">
-	            <div class="submit-area">
-	                <br>
-	                <button class="btn btn-primary" onclick="submit();">작성하기</button>
-	                <button class="btn btn-danger" onclick="history.back();">취소하기</button>
-	            </div>
-	        </div>
-	    </div>
-	<jsp:include page="../common/footer.jsp"/>
 
 
 </body>

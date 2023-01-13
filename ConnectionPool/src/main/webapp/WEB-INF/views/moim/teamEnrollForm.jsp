@@ -119,7 +119,7 @@
 		        <tr height="50">
 		            <th>팀 사진 등록</th>
 		            <td colspan="2">
-		                <input type="file" id="upfile" name="upfile">
+		                <input type="file" id="upfile" name="upfile" required>
 		            </td>
 		        </tr>
 		        <tr height="50">

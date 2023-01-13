@@ -62,5 +62,20 @@ public class MemberDao {
 	public int pwdChange(SqlSessionTemplate sqlSession, Member member) {
 		return sqlSession.update("memberMapper.pwdChange", member);
 	}
+	
+	/////////////////////////////////
+	// 마이페이지					   //
+	/////////////////////////////////
+	
+	// 회원정보 변경
+	public int myPageInfoUpdate(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.update("memberMapper.myPageInfoUpdate", member);
+	}
+
+	// 회원 탈퇴
+	public int myPageDelete(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.update("memberMapper.myPageDelete", member);
+	}
+
 
 }

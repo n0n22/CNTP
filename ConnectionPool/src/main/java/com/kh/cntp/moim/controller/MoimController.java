@@ -26,6 +26,7 @@ import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.moim.model.service.MoimService;
 import com.kh.cntp.moim.model.vo.Apply;
 import com.kh.cntp.moim.model.vo.Chatting;
+import com.kh.cntp.moim.model.vo.Group;
 import com.kh.cntp.moim.model.vo.Team;
 import com.kh.cntp.moim.model.vo.TeamMember;
 
@@ -46,7 +47,6 @@ public class MoimController {
 								 @RequestParam(value="teamMember", defaultValue="all") String teamMember) {
 		
 		//System.out.println(teamMember);
-		
 		Team team = new Team();
 		team.setTeamArea(teamArea);
 		team.setKeyword(keyword);
@@ -107,16 +107,7 @@ public class MoimController {
 	@RequestMapping("insertTeam.mo")
 	public ModelAndView insertTeam(ModelAndView mv, Team team, MultipartFile upfile, HttpSession session) {
 		
-		if(team.getPowerDuration() != null) {
-			// 파워 글이 아닐 경우
-			// point(-50);
-			// 이것이 성공했을 때
-		} else {
-			//point(-60);
-			// 이것이 성공했을 때
-		}
-		
-		System.out.println(upfile.getOriginalFilename());
+		//System.out.println(upfile.getOriginalFilename());
 		
 		if(!upfile.getOriginalFilename().equals("")) {
 			// 파일 등록을 했을 때
@@ -140,11 +131,10 @@ public class MoimController {
 			mv.setViewName("moim/teamPage");
 			mv.addObject("alertMsg", "팀 생성이 완료되었습니다.");
 		} else {
+			session.setAttribute("loginMember", memberService.loginMember((Member)session.getAttribute("loginMember")));
 			mv.setViewName("main");
 		}
-		
 		return mv;
-		
 	}
 	
 	@RequestMapping("teamUpdateForm.mo")
@@ -192,7 +182,6 @@ public class MoimController {
 		
 		mv.addObject("chatList", moimService.selectChattingList(chat)).setViewName("moim/chatView");
 		
-		
 		return mv;
 	}
 	
@@ -224,7 +213,6 @@ public class MoimController {
 		} else {
 			message = "NNNNN";
 		}
-		
 		return message;
 	}
 	
@@ -232,14 +220,13 @@ public class MoimController {
 	@RequestMapping(value="deleteChat.mo", produces="text/html; charset=UTF-8")
 	public String ajaxDeleteChatting(String chatNo) {
 
-		System.out.println(chatNo);
+		//System.out.println(chatNo);
 		
 		if(moimService.ajaxDeleteChatting(chatNo) > 0) {
 			return "NNNNY";
 		} else {
 			return "NNNNN";
 		}
-		
 	}
 	
 	@RequestMapping("badgeShop.mo")
@@ -251,9 +238,24 @@ public class MoimController {
 	}
 	
 	@RequestMapping("groupList.mo")
-	public String selectGroupList() {
-		return "moim/groupListView";
+	public ModelAndView selectGroupList(ModelAndView mv,
+										@RequestParam(value="cpage", defaultValue="1") int currentPage,
+										@RequestParam(value="groupArea", defaultValue="all") String groupArea,
+										@RequestParam(value="gender", defaultValue="A") String gender,
+										@RequestParam(value="level", defaultValue="A") String level,
+										@RequestParam(value="groupMember", defaultValue="A") String groupMember) {
+
+		Group group = new Group();
+		group.setGroupArea(groupArea);
+		group.setGender(gender);
+		group.setLevel(level);
+		group.setGroupMember(groupMember);
 		
+		PageInfo pi = Pagination.getPageInfo(moimService.selectGroupCountList(group), currentPage, 10, 9);
+		
+		mv.addObject("pi", pi).addObject("groupList", moimService.selectGroupList(pi, group)).addObject("group", group).setViewName("moim/groupListView");
+		
+		return mv;
 	}
 	
 	@RequestMapping("groupDetail.mo")
@@ -267,8 +269,8 @@ public class MoimController {
 	@RequestMapping("groupUpdateForm.mo")
 	public ModelAndView groupUpdateForm(ModelAndView mv/*, int groupNo*/) {
 		
-		
 		mv.setViewName("moim/groupUpdateForm");
+		
 		return mv;
 	}
 	
@@ -329,6 +331,7 @@ public class MoimController {
 		// ------------- 이제 업데이트 해주면 된다. -------------
 		if(moimService.updateTeam(team)> 0) {
 			// 성공
+			session.setAttribute("loginMember", memberService.loginMember((Member)session.getAttribute("loginMember")));
 			session.setAttribute("alterMsg", "팀 정보 수정 완료");
 			mv.setViewName("redirect:teamPage.mo?teamNo=" + team.getTeamNo());
 		} else {
