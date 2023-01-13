@@ -279,7 +279,7 @@
     				case 'S' : grade = 'resources/images/special.jpg'; break;
     				default : grade = 'resources/images/cntp_flamingo.png'; break;
     				}
-    				var teamName = m.teaName == '' ? '무소속' : 'm.teamName';
+    				var teamName = m.teaName == '' ? '무소속' : m.teamName;
     				
     				var modal = 
     			        `<div class="modal" id="myModal">
@@ -318,6 +318,7 @@
 		    		        </div>`;
     		        $('#modal').html(modal);
     		        $(event.target).attr('data-toggle','modal').attr('data-target','#myModal');
+    		        $('#myModal').css('display', 'block');
     			},
     			error : function(){
     			}
