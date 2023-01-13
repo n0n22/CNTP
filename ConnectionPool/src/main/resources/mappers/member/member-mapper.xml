@@ -24,7 +24,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="GRADE" property="grade"/>
 		<result column="END_DATE" property="endDate"/>
 		<result column="TEAM_NO" property="teamNo"/>
+		<result column="TEAM_NAME" property="teamName"/>
 		<result column="TEAM_GRADE" property="teamGrade"/>
+		<result column="BADGE_CHANGE_NAME" property="badgeChangeName"/>
+		<result column="FAILCNT" property="failCnt"/>
 	</resultMap>
 	
 	<!-- 로그인용 쿼리문  -->
@@ -47,15 +50,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ENROLL_DATE,
 		       GRADE,
 		       END_DATE,
-		       TEAM_NO,
+		       T.TEAM_NO,
+               TEAM_NAME,
 		       TEAM_GRADE,
-		       FAILCNT
+               BADGE_CHANGE_NAME,
+               FAILCNT
 		  FROM 
 		       MEMBER
      LEFT JOIN 
 		       PENALTY USING (MEM_NO)
      LEFT JOIN
-		       TEAM_MEMBER USING (MEM_NO)
+		       TEAM_MEMBER T USING (MEM_NO)
+     LEFT JOIN
+               TEAM USING USING (MEM_NO) 
 		 WHERE 
 		       MEM_ID = #{memId}
 		   AND

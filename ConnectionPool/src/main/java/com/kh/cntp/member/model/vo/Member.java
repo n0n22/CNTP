@@ -23,7 +23,9 @@ public class Member {
 	private String grade; //	GRADE	CHAR(1 BYTE)
 	private String endDate; //  END_DATE DATE 
 	private String teamNo; //팀번호
+	private String teamName; // 팀 이름
 	private String teamGrade; // 팀직급
+	private String badgeChangeName; // 팀 뱃지
 	private int failCnt; // 로그인 횟수
 	
 	
