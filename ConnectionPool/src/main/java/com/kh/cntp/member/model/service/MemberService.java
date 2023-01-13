@@ -37,6 +37,9 @@ public interface MemberService {
 	// 비밀번호 변경
 	int pwdChange(Member member);
 	
+	// 회원정보 수정
+	int myPageInfoUpdate(Member member);
 	
-	
+	// 회원 탈퇴
+	int myPageDelete(Member member);
 }

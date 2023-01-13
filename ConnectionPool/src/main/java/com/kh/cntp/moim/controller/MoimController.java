@@ -46,7 +46,6 @@ public class MoimController {
 								 @RequestParam(value="teamMember", defaultValue="all") String teamMember) {
 		
 		//System.out.println(teamMember);
-		
 		Team team = new Team();
 		team.setTeamArea(teamArea);
 		team.setKeyword(keyword);
@@ -107,8 +106,6 @@ public class MoimController {
 	@RequestMapping("insertTeam.mo")
 	public ModelAndView insertTeam(ModelAndView mv, Team team, MultipartFile upfile, HttpSession session) {
 		
-		
-		
 		//System.out.println(upfile.getOriginalFilename());
 		
 		if(!upfile.getOriginalFilename().equals("")) {
@@ -136,9 +133,7 @@ public class MoimController {
 			session.setAttribute("loginMember", memberService.loginMember((Member)session.getAttribute("loginMember")));
 			mv.setViewName("main");
 		}
-		
 		return mv;
-		
 	}
 	
 	@RequestMapping("teamUpdateForm.mo")
@@ -186,7 +181,6 @@ public class MoimController {
 		
 		mv.addObject("chatList", moimService.selectChattingList(chat)).setViewName("moim/chatView");
 		
-		
 		return mv;
 	}
 	
@@ -218,7 +212,6 @@ public class MoimController {
 		} else {
 			message = "NNNNN";
 		}
-		
 		return message;
 	}
 	
@@ -233,7 +226,6 @@ public class MoimController {
 		} else {
 			return "NNNNN";
 		}
-		
 	}
 	
 	@RequestMapping("badgeShop.mo")
@@ -246,8 +238,8 @@ public class MoimController {
 	
 	@RequestMapping("groupList.mo")
 	public String selectGroupList() {
-		return "moim/groupListView";
 		
+		return "moim/groupListView";
 	}
 	
 	@RequestMapping("groupDetail.mo")
@@ -261,8 +253,8 @@ public class MoimController {
 	@RequestMapping("groupUpdateForm.mo")
 	public ModelAndView groupUpdateForm(ModelAndView mv/*, int groupNo*/) {
 		
-		
 		mv.setViewName("moim/groupUpdateForm");
+		
 		return mv;
 	}
 	

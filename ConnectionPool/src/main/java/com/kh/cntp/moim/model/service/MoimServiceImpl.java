@@ -12,6 +12,7 @@ import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.moim.model.dao.MoimDao;
 import com.kh.cntp.moim.model.vo.Apply;
 import com.kh.cntp.moim.model.vo.Chatting;
+import com.kh.cntp.moim.model.vo.Group;
 import com.kh.cntp.moim.model.vo.Team;
 import com.kh.cntp.moim.model.vo.TeamMember;
 
@@ -128,6 +129,42 @@ public class MoimServiceImpl implements MoimService {
 	@Override
 	public int ajaxDeleteChatting(String chatNo) {
 		return moimDao.ajaxDeleteChatting(sqlSession, chatNo);
+	}
+
+	@Override
+	public ArrayList<Group> selectGroupList(PageInfo pi, Group group) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int selectGroupCountList(Group group) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insertGroup(Group group) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Group selectGroup(String groupNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateGroup(Group group) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteGroup(Group group) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	

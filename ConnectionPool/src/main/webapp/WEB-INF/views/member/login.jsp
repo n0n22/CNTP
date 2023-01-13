@@ -131,19 +131,19 @@
             <form action="login.me" method="post">
             	<c:choose>
             		<c:when test="${not empty cookie.saveId}">
-		                <div><input class="userInput" type="text" name="memId" value="${ cookie.saveId.value }" placeholder="아이디"></div>
+		                <div><input class="userInput" type="text" name="memId" required value="${ cookie.saveId.value }" placeholder="아이디"></div>
             		</c:when>
             		<c:otherwise>
-		                <div><input class="userInput" type="text" name="memId" placeholder="아이디"></div>
+		                <div><input class="userInput" type="text" name="memId" required placeholder="아이디"></div>
             		</c:otherwise>
             	</c:choose>
                 <div><input class="userInput" type="password" name="memPwd" placeholder="비밀번호"></div>
                 
                 <div class="checkId"><input type="checkbox" name="checkId">아이디 저장</div>
                 
-                <div><button type="submit">로그인</button></div>
-                
+                <div><button id="login-btn" type="submit">로그인</button></div>
             </form>
+            
             <!-- 네이버 로그인도 추가 할 예정-->
             <div id="link-area">
                 <span>
@@ -154,6 +154,7 @@
             </div>
         </div>
     </div>
+    
 	
 	<jsp:include page="../common/footer.jsp"/>
 
