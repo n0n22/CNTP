@@ -35,7 +35,7 @@
 		                            <img class="m-b-10" src="${ homeTeam.badgeChangeName }" height="100" width="100">
 	                            </c:if>
 	                            <c:if test="${ homeTeam.badgeStatus eq 'N'}">
-		                            <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
+		                            <img class="m-b-10" src="resources/images/noBadge.png" height="100" width="100">
 	                            </c:if>
 	                            <p class="text-center">${ homeTeamHistory.record }전 ${ homeTeamHistory.victory }승 ${ homeTeamHistory.defeat }패 
 	                            	<br>승률(${ homeTeamHistory.winRate }%)</p> 
@@ -59,7 +59,7 @@
 		                            <img class="m-b-10" src="${ awayTeam.badgeChangeName }" height="100" width="100">
 	                            </c:if>
 	                            <c:if test="${ awayTeam.badgeStatus eq 'N' or empty awayTeam}">
-		                            <img class="m-b-10" src="https://i.imgur.com/n6Lg8ES.png" height="100" width="100">
+		                            <img class="m-b-10" src="resources/images/noBadge.png" height="100" width="100">
 	                            </c:if>
 	                            <p class="text-center">
 		                            <c:out value="${awayTeamHistory.record}" default="0"/>전 

@@ -172,48 +172,76 @@
 	            	<br>
 	                <h2>배틀기록</h2>
 	                <div class="battleRecord">
-	                    <button class="btn btn btn-primary" onclick="add()">추가</button>
-						<button class="btn btn btn-danger" onclick="remove()">삭제</button>
-						<br><br>
+	                    
 	                    <div class="content">
 	                    	<button class="btn btn-lg btn-primary disabled">승리팀</button>
 	                    	<br><br>
-	                        <table id="victoryTeam" style="text-align:center" border="1">
-						        <thead>
-						            <tr style="text-align: center;">
-						                <th>선수</th>
-						                <th>종목</th>
-						                <th style="width: 150px;">기록</th>
-						            </tr>
-						        </thead>
-						        <tbody>
-						            <tr class="vics">
-						                <td><input id="vicPlayer1" class="vic" type="text" style="width: 100%"></td>
-						                <td><input id="vicStyle1" class="vic" type="text" style="width: 100%"></td>
-						                <td><input id="vicRecord1" class="vic" type="text" style="width: 100%"></td>
-						            </tr>
-						        </tbody>
-						    </table>
+	                        <table id="victoryTeam" style="text-align:center">
+	                            <thead>
+	                                <tr style="text-align: center;">
+	                                    <th>선수</th>
+	                                    <th>종목</th>
+	                                    <th style="width: 150px;">기록</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                                <tr>
+	                                    <td><input id="vicPlayer1" class="vic" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicStyle1" class="vic" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicRecord1" class="vic" type="text" style="width: 100%"></td>
+	                                </tr>
+	                                <tr>
+	                                    <td><input id="vicPlayer2" class="vic" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicStyle2" class="vic" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicRecord2" class="vic" type="text" style="width: 100%"></td>
+	                                </tr>
+	                                <tr>
+	                                    <td><input id="vicPlayer3" class="vic" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicStyle3" class="vic" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicRecord3" class="vic" type="text" style="width: 100%"></td>
+	                                </tr>
+                                    <tr>
+	                                    <td><input id="vicPlayer4" class="vic" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicStyle4" class="vic" type="text" style="width: 100%"></td>
+	                                    <td><input id="vicRecord4" class="vic" type="text" style="width: 100%"></td>
+	                                </tr>
+	                            </tbody>
+	                        </table>
 	                        <br><br>
 	                        
 	                        <button class="btn btn-lg btn-danger disabled">패배팀</button>
 	                        
-						    <table id="defeatTeam" style="text-align:center" border="1">
-						        <thead>
-						            <tr style="text-align: center;">
-						                <th>선수</th>
-						                <th>종목</th>
-						                <th style="width: 150px;">기록</th>
-						            </tr>
-						        </thead>
-						        <tbody>
-						            <tr class="defs">
-						                <td><input id="defPlayer1" class="def" type="text" style="width: 100%"></td>
-						                <td><input id="defStyle1" class="def" type="text" style="width: 100%"></td>
-						                <td><input id="defRecord1" class="def" type="text" style="width: 100%"></td>
-						            </tr>
-						        </tbody>
-						    </table>
+	                        <table id="defeatTeam" style="text-align: center">
+	                            <thead>
+	                                <tr style="text-align: center;">
+	                                    <th>선수</th>
+	                                    <th>종목</th>
+	                                    <th style="width: 150px;">기록</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+                 	                <tr>
+	                                    <td><input id="defPlayer1" class="def" type="text" style="width: 100%"></td>
+	                                    <td><input id="defStyle1" class="def" type="text" style="width: 100%"></td>
+	                                    <td><input id="defRecord1" class="def" type="text" style="width: 100%"></td>
+	                                </tr>
+	                                <tr>
+	                                    <td><input id="defPlayer2" class="def" type="text" style="width: 100%"></td>
+	                                    <td><input id="defStyle2" class="def" type="text" style="width: 100%"></td>
+	                                    <td><input id="defRecord2" class="def" type="text" style="width: 100%"></td>
+	                                </tr>
+	                                <tr>
+	                                    <td><input id="defPlayer3" class="def" type="text" style="width: 100%"></td>
+	                                    <td><input id="defStyle3" class="def" type="text" style="width: 100%"></td>
+	                                    <td><input id="defRecord3" class="def" type="text" style="width: 100%"></td>
+	                                </tr>
+                                    <tr>
+	                                    <td><input id="defPlayer4" class="def" type="text" style="width: 100%"></td>
+	                                    <td><input id="defStyle4" class="def" type="text" style="width: 100%"></td>
+	                                    <td><input id="defRecord4" class="def" type="text" style="width: 100%"></td>
+	                                </tr>
+	                            </tbody>
+	                        </table>
 	                        
 	                    </div>
 	            
