@@ -69,8 +69,22 @@ public class myPageController {
 	
 	// 마이페이지 회원탈퇴 결과페이지
 	@RequestMapping("myPageDelete.me")
-	public String myPageDelete() {
-		return "member/myPage/myPageInfoDeleteResult";
+	public ModelAndView myPageDelete(String agree, ModelAndView mv, HttpSession session) {
+
+		if (agree.equals("동의합니다")) {
+			if(memberService.myPageDelete(((Member)session.getAttribute("loginMember"))) > 0) {
+				session.removeAttribute("loginMember");
+				session.setAttribute("alertMsg", "회원 탈퇴 성공");
+				mv.setViewName("member/myPage/myPageInfoDeleteResult");
+			} else {
+				mv.setViewName("common/errorPage");
+				mv.addObject("errorMsg", "회원가입 실패");
+			}
+		} else {
+			session.setAttribute("alertMsg", "동의합니다를 입력해주세요.");
+			mv.setViewName("redirect:myPageDeleteForm.me");
+		}
+		return mv;
 	}
 	
 	// 마이페이지 포인트 내역 조회

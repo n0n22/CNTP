@@ -112,7 +112,9 @@ public class MemberController {
 									HttpServletResponse response) throws ParseException {
 		
 		Member loginMember = memberService.loginMember(member);
-				
+		
+		if (loginMember != null) { // NullPointException 방지
+		
 		// 쿠키발급
 		if(checkId != null) {
 			Cookie saveId = new Cookie("saveId", member.getMemId());
@@ -155,7 +157,11 @@ public class MemberController {
 			} else {
 				session.setAttribute("loginMsg", "알수없는 오류 발생 관리자에게 문의");
 			}
-			
+		}
+		
+		} else {
+			session.setAttribute("loginMsg", "아이디와 비밀번호를 확인해주세요");
+			mv.setViewName("member/login");
 		}
 		return mv;
 	}
@@ -276,12 +282,12 @@ public class MemberController {
 	
 	// 비밀번호 재설정
 	@RequestMapping("pwdChange.me")
-	public String pwdChange(Member member) {
+	public String pwdChange(Member member, HttpSession session) {
 		// 사용자가 입력한 비밀번호 암호화 시키고 MemberVo에 다시 담기
 		member.setMemPwd((generatorEncPassword(member.getMemPwd())));
 		
 		memberService.pwdChange(member);
-		
+		session.removeAttribute("loginMember");
 		return "member/findPwdResult";
 	}
 	
