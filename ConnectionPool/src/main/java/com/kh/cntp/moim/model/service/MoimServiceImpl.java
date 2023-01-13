@@ -133,14 +133,12 @@ public class MoimServiceImpl implements MoimService {
 
 	@Override
 	public ArrayList<Group> selectGroupList(PageInfo pi, Group group) {
-		// TODO Auto-generated method stub
-		return null;
+		return moimDao.selectGroupList(sqlSession, group, pi);
 	}
 
 	@Override
 	public int selectGroupCountList(Group group) {
-		// TODO Auto-generated method stub
-		return 0;
+		return moimDao.selectGroupCountList(sqlSession, group);
 	}
 
 	@Override

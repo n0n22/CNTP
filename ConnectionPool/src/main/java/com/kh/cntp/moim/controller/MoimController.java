@@ -26,6 +26,7 @@ import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.moim.model.service.MoimService;
 import com.kh.cntp.moim.model.vo.Apply;
 import com.kh.cntp.moim.model.vo.Chatting;
+import com.kh.cntp.moim.model.vo.Group;
 import com.kh.cntp.moim.model.vo.Team;
 import com.kh.cntp.moim.model.vo.TeamMember;
 
@@ -237,9 +238,24 @@ public class MoimController {
 	}
 	
 	@RequestMapping("groupList.mo")
-	public String selectGroupList() {
+	public ModelAndView selectGroupList(ModelAndView mv,
+										@RequestParam(value="cpage", defaultValue="1") int currentPage,
+										@RequestParam(value="groupArea", defaultValue="all") String groupArea,
+										@RequestParam(value="gender", defaultValue="A") String gender,
+										@RequestParam(value="level", defaultValue="A") String level,
+										@RequestParam(value="groupMember", defaultValue="A") String groupMember) {
+
+		Group group = new Group();
+		group.setGroupArea(groupArea);
+		group.setGender(gender);
+		group.setLevel(level);
+		group.setGroupMember(groupMember);
 		
-		return "moim/groupListView";
+		PageInfo pi = Pagination.getPageInfo(moimService.selectGroupCountList(group), currentPage, 10, 9);
+		
+		mv.addObject("pi", pi).addObject("groupList", moimService.selectGroupList(pi, group)).addObject("group", group).setViewName("moim/groupListView");
+		
+		return mv;
 	}
 	
 	@RequestMapping("groupDetail.mo")

@@ -35,18 +35,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<resultMap type="group" id="groupResultMap">
 		<result column="GROUP_NO" 			property="groupNo"/>
-		<result column="MEM_NO" 			property="memNo"/>
 		<result column="NICKNAME" 			property="nickname"/>
-		<result column="GROUP_TITLE" 		property="groupTitle"/>
+		<result column="INGIDO"				property="ingido"/>
+		<result column="MEM_GENDER" 		property="memGender"/>
+		<result column="MEM_NO" 			property="memNo"/>
 		<result column="GROUP_CONTENT" 		property="groupContent"/>
-		<result column="KOR_AREA" 		property="groupArea"/>
+		<result column="GROUP_TITLE" 		property="groupTitle"/>
+		<result column="KOR_AREA" 		    property="groupArea"/>
 		<result column="PLACE" 				property="place"/>
 		<result column="GROUP_MEMBER" 		property="groupMember"/>
+		<result column="GROUP_STATUS" 		property="groupStatus"/>
 		<result column="START_TIME" 		property="startTime"/>
 		<result column="END_TIME" 			property="endTime"/>
 		<result column="ORIGIN_NAME" 		property="originName"/>
 		<result column="CHANGE_NAME" 		property="changeName"/>
-		<result column="LEVEL" 				property="levle"/>
+		<result column="LEVEL" 				property="level"/>
 		<result column="GENDER" 			property="gender"/>
 		<result column="CREATE_DATE" 		property="createDate"/>
 		<result column="POWER_DURRATION" 	property="powerDuration"/>
@@ -201,7 +204,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    BY
 		       (CASE WHEN TEAM_GRADE = '팀장' THEN 1
 		            WHEN TEAM_GRADE = '부팀장' THEN 2
-		            ELSE 3 END), "TEAM_GRADE"
+		            ELSE 3 END)
 			   
 	</select>
 	
@@ -465,7 +468,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>		       
 		 ORDER
 		    BY
-		       T.TEAM_NO DESC
+		       POWER_DURATION DESC, CREATE_DATE DESC
 	</select>
 	
 	<select id="selectChattingList" resultMap="chattingResultMap" parameterType="chatting">
@@ -516,7 +519,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	           CHAT_NO = #{ chatNo }
 	</delete>
 	
-	<select id="selectGroup" parameterType="string">
+	<select id="selectGroup" parameterType="string" resultMap="groupResultMap">
 		SELECT 
 		        G.GROUP_NO
 		       ,M.NICKNAME
@@ -568,6 +571,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       AREA "A" ON(G.GROUP_AREA = A.ENG_AREA)
 		 WHERE
 		       GROUP_NO = ${ groupNo }
+	</select>
+	
+	<select id="selectGroupCountList" parameterType="group" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       "GROUP"
+		 WHERE
+		       GROUP_STATUS = 'Y'
+		<if test="groupArea != 'all'">
+		  AND 
+		      GROUP_AREA = #{ groupArea }
+		</if>
+		<if test="gender != 'A'">
+		  AND 
+		      GENDER = #{ gender }
+		</if>
+		<if test="level != 'A'">
+		  AND
+		      "LEVEL" = #{ level }
+		</if>
+		<if test="groupMember != 'A'">
+		  AND
+		      (GROUP_MEMBER - 1) <![CDATA[>]]>(SELECT
+		                                          COUNT(*)
+		                                     FROM
+		                                          APPLY "A"
+		                                    WHERE
+		                                          A.MOIM_NO = GROUP_NO
+		                                      AND
+		                                          ACCEPT_YN = 'Y'
+		                                    )
+		</if>
+		       
+	</select>
+	
+	<select id="selectGroupList" parameterType="group" resultMap="groupResultMap">
+		
 	</select>
 	
 </mapper>

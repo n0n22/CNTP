@@ -132,9 +132,11 @@ public class BoardController {
 				return "common/errorPage";
 			}
 			
-			
 		}
 		
 		
-	
+		
 }
+
+
+

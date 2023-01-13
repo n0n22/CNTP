@@ -48,7 +48,7 @@
                 </tr>
                 <tr>
                     <th>작성자</th>
-                    <td>${b.memberNo }</td>
+                    <td ingido="${b.memberNo}" onclick="showProfile(event)">${b.memberNo} </td>
                     <th>작성일</th>
                     <td>${b.createDate }</td>
                 </tr>
