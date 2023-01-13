@@ -29,15 +29,7 @@ public interface DiaryService {
 	
 	// 게시글 수정 서비스(update)
 	int updateDiary(Diary d);
-	
-	// 댓글 리스트 조회서비스(Ajax)(select)
-	ArrayList<Reply> selectReplyList(int boardNo);
-	
-	// 댓글 작성 서비스 (Ajax)(insert)
-	int insertReply(Reply r);
-	
-	// TOP-N분석(select)
-	ArrayList<Board> selectTopBoard();
 	*/
+	
 	
 }

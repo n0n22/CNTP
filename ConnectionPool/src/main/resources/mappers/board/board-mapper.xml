@@ -119,9 +119,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	
+	<update id="deleteBoard" parameterType="_int">
+		update
+				board
+		set		
+				status = 'N'
+		where	
+				board_no = #{boardNo}	
 	
+	</update>
 	
+	<update id="updateBoard" parameterType="board">
+		update
+				board
+		set
+				title = #{title}		
+				,content = #{content}
+				,memNo = #{memberNo}
+				,originName = #{originName}
+				,changeName = #{changeName}
+		and 
+				status = 'Y'
 	
+	</update>
 	
 	
 	
