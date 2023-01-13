@@ -242,7 +242,7 @@ public class MoimController {
 										@RequestParam(value="cpage", defaultValue="1") int currentPage,
 										@RequestParam(value="groupArea", defaultValue="all") String groupArea,
 										@RequestParam(value="gender", defaultValue="A") String gender,
-										@RequestParam(value="level", defaultValue="A") String level,
+										@RequestParam(value="level", defaultValue="E") String level,
 										@RequestParam(value="groupMember", defaultValue="A") String groupMember) {
 
 		Group group = new Group();
@@ -259,9 +259,9 @@ public class MoimController {
 	}
 	
 	@RequestMapping("groupDetail.mo")
-	public ModelAndView selectGroup(ModelAndView mv/*, int groupNo*/) {
+	public ModelAndView selectGroup(ModelAndView mv, String groupNo) {
 		
-		mv.setViewName("moim/groupDetailView");
+		mv.addObject("group", moimService.selectGroup(groupNo)).setViewName("moim/groupDetailView");
 		
 		return mv;
 	}
@@ -423,7 +423,6 @@ public class MoimController {
 		} else {
 			mv.addObject("errorMsg", "신청 실패").setViewName("common/errorPage");
 		}
-		
 		return mv;
 	}
 	
@@ -437,7 +436,6 @@ public class MoimController {
 		}else {
 			mv.addObject("errorMsg", "수락 실패").setViewName("common/errorPage");
 		}
-		
 		return mv;
 	}
 }

@@ -96,13 +96,14 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.myPageDelete(sqlSession, member);
 	}
 	
-	
-	
-	
-
-	
-	
-	
+	//////////////////////////////////
+	// 인기도							//
+	//////////////////////////////////
+	// 회원 프로필 조회
+	@Override
+	public Member showProfile(int memNo) {
+		return memberDao.showProfile(sqlSession, memNo);
+	}
 	
 	
 }

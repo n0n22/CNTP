@@ -254,4 +254,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   	   MEM_NO = #{memNo}			     	   		   
 	</update>
 	
+	
+	<!-- 인기도 ******************************************************** -->
+	
+	<!-- 회원 프로필 조회 -->
+	<select id="showProfile" parameterType="_int" resultMap="memberResultSet">
+        SELECT 
+		       MEM_NO,
+		       GENDER,
+		       INGIDO,
+		       NICKNAME,
+		       KOR_AREA AS "MEM_AREA",
+		       TO_CHAR(BIRTHDAY, 'YYYY-MM-DD') "BIRTHDAY",
+		       DETAIL_AREA,
+		       TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE",
+		       GRADE,
+		       T.TEAM_NO,
+               TEAM_NAME,
+		       TEAM_GRADE,
+               BADGE_CHANGE_NAME
+		  FROM 
+		       MEMBER
+     LEFT JOIN
+		       TEAM_MEMBER T USING (MEM_NO)
+     LEFT JOIN
+               TEAM USING USING (MEM_NO) 
+          JOIN
+		  	   AREA ON (MEM_AREA = ENG_AREA)
+		 WHERE 
+               MEM_NO = #{memNo}
+		   AND
+		       MEM_STATUS = 'Y'
+	</select>
+	
+	
 </mapper>

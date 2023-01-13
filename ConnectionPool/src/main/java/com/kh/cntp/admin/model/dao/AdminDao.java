@@ -136,6 +136,11 @@ public class AdminDao {
 	}
 	
 	
+	// 정지 처리
+	public int stopMember(SqlSessionTemplate sqlSession, ArrayList<Integer> stopList) {
+		return sqlSession.insert("adminMapper.stopMember", stopList);
+	}
+	
 	
 	
 	

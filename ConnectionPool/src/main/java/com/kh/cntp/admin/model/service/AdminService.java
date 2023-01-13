@@ -77,6 +77,9 @@ public interface AdminService {
 	ArrayList<Report> selectPenaltyList(PageInfo pi);
 	
 	
+	// 정지 처리
+	int stopMember(ArrayList<Integer> stopList);
+	
 	
 	
 	

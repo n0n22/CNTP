@@ -76,6 +76,13 @@ public class MemberDao {
 	public int myPageDelete(SqlSessionTemplate sqlSession, Member member) {
 		return sqlSession.update("memberMapper.myPageDelete", member);
 	}
+	//////////////////////////////////
+	// 인기도							//
+	//////////////////////////////////
+	// 회원 프로필 조회
+	public Member showProfile(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("memberMapper.showProfile", memNo);
+	}
 
 
 }

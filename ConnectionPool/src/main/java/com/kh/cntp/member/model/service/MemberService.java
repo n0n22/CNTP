@@ -42,4 +42,7 @@ public interface MemberService {
 	
 	// 회원 탈퇴
 	int myPageDelete(Member member);
+	
+	// 회원 프로필 조회
+	Member showProfile(int memNo);
 }

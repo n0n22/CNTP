@@ -149,8 +149,7 @@ public class MoimServiceImpl implements MoimService {
 
 	@Override
 	public Group selectGroup(String groupNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return moimDao.selectGroup(sqlSession, groupNo);
 	}
 
 	@Override

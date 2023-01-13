@@ -128,5 +128,9 @@ public class MoimDao {
 		
 		return (ArrayList)sqlSession.selectList("moimMapper.selectGroupList", group, rowBounds);
 	}
+	
+	public Group selectGroup(SqlSessionTemplate sqlSession, String groupNo) {
+		return sqlSession.selectOne("moimMapper.selectGroup", groupNo);
+	}
 
 }
