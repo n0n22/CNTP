@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.google.gson.Gson;
 import com.kh.cntp.member.model.service.MemberService;
 import com.kh.cntp.member.model.vo.Cert;
 import com.kh.cntp.member.model.vo.Member;
@@ -291,7 +292,19 @@ public class MemberController {
 		return "member/findPwdResult";
 	}
 	
-
+	
+	
+	
+	//////////////////////////////////
+	// 인기도							//
+	//////////////////////////////////
+	// 회원 프로필 조회
+	@ResponseBody
+	@RequestMapping(value="showProfile.me", produces="application/json; charset=UTF-8")
+	public String showProfile(int memNo) {
+		Member m = memberService.showProfile(memNo);
+		return new Gson().toJson(m);
+	}
 	
 
 	
