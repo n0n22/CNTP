@@ -442,7 +442,7 @@
 				$('#memNickName').val('닉네임7');
 				$('#content').val('바보야');
 				$('#reportBoard').val('board');
-				$('#boardNo').val(15);
+				$('#boardNo').val(13);
 				
 				
 				

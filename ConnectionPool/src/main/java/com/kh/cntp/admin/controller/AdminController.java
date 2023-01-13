@@ -156,17 +156,6 @@ public class AdminController {
 	
 	
 	
-	// 패널티목록 조회 -> 패널티 목록 페이지로 이동
-	@RequestMapping("penaltyList.ad")
-	public String selectPenaltyList() {
-		
-		return "admin/adminPenaltyList";
-	}
-	
-	
-	
-	
-	
 	// --------------- 신고 등록 ---------------
 	
 	
@@ -228,6 +217,22 @@ public class AdminController {
 		return mv;
 	}
 	
+	
+
+	
+	
+	// 패널티목록 조회 -> 패널티 목록 페이지로 이동
+	@RequestMapping("penaltyList.ad")
+	public ModelAndView selectPenaltyList(@RequestParam(value="cpage", defaultValue="1") int cpage, ModelAndView mv) {
+		
+		PageInfo pi = Pagination.getPageInfo(adminService.selectPenaltyListCount(), cpage, 5, 10);
+		mv.addObject("list", adminService.selectPenaltyList(pi)).addObject("pi", pi);
+		mv.setViewName("admin/adminPenaltyList");
+		
+		return mv;
+	}
+	
+
 	
 	
 	

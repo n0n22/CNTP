@@ -6,6 +6,7 @@ import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.moim.model.vo.Apply;
 import com.kh.cntp.moim.model.vo.Chatting;
+import com.kh.cntp.moim.model.vo.Group;
 import com.kh.cntp.moim.model.vo.Team;
 import com.kh.cntp.moim.model.vo.TeamMember;
 
@@ -69,7 +70,6 @@ public interface MoimService {
 	// 페이징을 위해 조건에 맞는 TeamListcount를 구해야 한다.
 	int selectTeamCountList(Team team);
 	
-	// ajax로 페이징 하는 기능도 만들어야 하는데 처음이라 어떻게 해야될지 잘 모르겠다 ㅎㅅㅎ
 	
 	// --------------- 채팅 관련 기능 ---------------
 	ArrayList<Chatting> selectChattingList(Chatting chat);
@@ -77,6 +77,49 @@ public interface MoimService {
 	int ajaxInsertChatting(Chatting chat);
 	
 	int ajaxDeleteChatting(String chatNo);
+	
+	// --------------- 소그룹 시작 ---------------
+	
+	// --------------- GroupListView ---------------
+	// 조건에 따라 소그룹 조회해오기
+	ArrayList<Group> selectGroupList(PageInfo pi, Group group);
+	
+	//페이징을 위해 조건에 맞는 groupListCount 구해오기
+	int selectGroupCountList(Group group);
+	
+	// 팀 등록하는 메소드
+	int insertGroup(Group group);
+	
+	// --------------- GroupDetailView ---------------
+	// 소그룹페이지
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
