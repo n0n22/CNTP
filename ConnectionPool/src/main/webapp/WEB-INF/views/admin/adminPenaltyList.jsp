@@ -76,7 +76,7 @@
                     <tbody>
                     	<c:forEach var="report" items="${ list }">
 	                    	<tr>
-	                            <td><input type="checkbox"></td>
+	                            <td class="notcheck"><input type="checkbox"></td>
 	                            <td>${ report.memNo }</td>
 	                            <td>${ report.memId }</td>
 	                            <td>${ report.count }</td>
@@ -86,7 +86,7 @@
                     	</c:forEach>
                     </tbody>
                 </table>
-                <a href="#" class="btn btn-danger">처리</a>
+                <button class="btn btn-danger" onclick="openConfirm()" id="confirmBtn">처리</btton>
             </div>
 			<div class="page-area">
 				<ul class="pagination" align="center">
@@ -145,6 +145,7 @@
 					$('#penaltyTable tbody input[type=checkbox]').each(function() {
 						$(this).prop('checked', true);
 					});
+					
 				}
 				else {
 					$('#penaltyTable tbody input[type=checkbox]').each(function() {
@@ -174,11 +175,54 @@
 			});
 			
 			
+					
+			
 			
 			
 			
 			
 		});
+		
+		
+		function openConfirm() {
+			var count = 0;
+			$('#penaltyTable tbody input[type=checkbox]').each(function() {
+				if($(this).is(':checked')) {
+					count++;
+				}
+				if(count > 0) { // 체크 한 상태라서 요청이 가야 함
+		    		alertify.confirm('체크 했어?', function() {
+
+		    			
+		    			
+		    			
+		    			
+		    			
+		   			});
+				} 
+				else { // 체크 안한 상태라서 요청이 가면 안됨
+		    		alertify.confirm('체크 안함', function() {
+
+		   			});
+				}
+				
+			})
+			
+			
+			
+			// var nums = 
+			
+			// var msg = 
+			
+    		// alertify.confirm('ㅎㅎ', function() {
+        		// $('#postForm #hiddenStatus').val(status);
+        		// $('#postForm #hiddenBnno').val(bnno);
+   				// $('#postForm').submit();		
+   			// }); 
+			
+			
+			
+		}
 	
 	
 	
