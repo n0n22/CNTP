@@ -386,44 +386,91 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       COUNT(*)
 		  FROM
 		       (
-		        SELECT MEM_NO
+		SELECT
+		       A.MEM_NO,
+		       A.MEM_ID,
+		       COUNT,
+		       PENALTY,
+		       COMPLETION_DATE
+		  FROM
+		       (
+		               SELECT MEM_NO
+		                       ,MEM_ID
+		                       ,COUNT(*) "COUNT",
+		                       CASE WHEN COUNT(*) >= 10 THEN '탈퇴'
+		                            WHEN COUNT(*) >= 5  THEN '정지'
+		                       END "PENALTY"
+		                       ,TO_CHAR(MAX(COMPLETION_DATE), 'YYYY-MM-DD') "COMPLETION_DATE"
+		                FROM REPORT "R"
+		                JOIN 
+		                   (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
+		                      FROM BOARD
+		                      JOIN MEMBER USING(MEM_NO)  
+		                    ) "B" ON (B.BOARD_NO = R.BOARD_NO)
+		                WHERE REPORT_RESULT = 'O'
+		                GROUP BY MEM_NO, MEM_ID
+		                HAVING COUNT(*) >= 5
+		                ) "A"
+		         JOIN
+		              PENALTY "P" ON (A.MEM_NO = P.MEM_NO)
+		         WHERE
+		               <![CDATA[END_DATE < SYSDATE]]>
+		       )
+	</select>
+	
+	<!-- 패널티 대상 목록 조회 -->
+	<select id="selectPenaltyList" resultMap="reportResultSet">
+		SELECT
+		       A.MEM_NO,
+		       A.MEM_ID,
+		       COUNT,
+		       PENALTY,
+		       COMPLETION_DATE
+		  FROM
+		       (
+		       SELECT MEM_NO
 		               ,MEM_ID
 		               ,COUNT(*) "COUNT",
 		               CASE WHEN COUNT(*) >= 10 THEN '탈퇴'
 		                    WHEN COUNT(*) >= 5  THEN '정지'
 		               END "PENALTY"
 		               ,TO_CHAR(MAX(COMPLETION_DATE), 'YYYY-MM-DD') "COMPLETION_DATE"
-		          FROM REPORT "R"
-		          JOIN 
-			           (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
-			              FROM BOARD
-			              JOIN MEMBER USING(MEM_NO)  
-			            ) "B" ON (B.BOARD_NO = R.BOARD_NO)
-		         WHERE REPORT_RESULT = 'O'
-		         GROUP BY MEM_NO, MEM_ID
+		        FROM REPORT "R"
+		        JOIN 
+		           (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
+		              FROM BOARD
+		              JOIN MEMBER USING(MEM_NO)  
+		            ) "B" ON (B.BOARD_NO = R.BOARD_NO)
+		        WHERE REPORT_RESULT = 'O'
+		        GROUP BY MEM_NO, MEM_ID
 		        HAVING COUNT(*) >= 5
-		       )
+		        ) "A"
+		 JOIN
+		      PENALTY "P" ON (A.MEM_NO = P.MEM_NO)
+		 WHERE
+		       <![CDATA[END_DATE < SYSDATE]]>
 	</select>
 	
-	<!-- 패널티 대상 목록 조회 -->
-	<select id="selectPenaltyList" resultMap="reportResultSet">
-		SELECT MEM_NO
-		       ,MEM_ID
-		       ,COUNT(*) "COUNT",
-		       CASE WHEN COUNT(*) >= 10 THEN '탈퇴'
-		            WHEN COUNT(*) >= 5  THEN '정지'
-		       END "PENALTY"
-		       ,TO_CHAR(MAX(COMPLETION_DATE), 'YYYY-MM-DD') "COMPLETION_DATE"
-		  FROM REPORT "R"
-		  JOIN 
-			   (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
-			      FROM BOARD
-			      JOIN MEMBER USING(MEM_NO)  
-			    ) "B" ON (B.BOARD_NO = R.BOARD_NO)
-		 WHERE REPORT_RESULT = 'O'
-		 GROUP BY MEM_NO, MEM_ID
-	    HAVING COUNT(*) >= 5
-	</select>
+	
+	<!-- 정지 처리 -->
+	<insert id="stopMember" parameterType="java.util.ArrayList">
+		INSERT ALL 
+		<foreach collection="list" item="item" index="index">   
+		  INTO 
+		       PENALTY
+		       (
+		       MEM_NO
+               ,END_DATE
+               ) 
+	    VALUES
+	           (
+	           #{item},
+	           SYSDATE + 7
+	           )
+		</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	
 	
 
 	

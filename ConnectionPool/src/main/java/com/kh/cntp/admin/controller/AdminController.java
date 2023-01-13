@@ -235,10 +235,34 @@ public class AdminController {
 	
 	// 패널티 처리
 	@RequestMapping("penaltyInsert.ad")
-	public ModelAndView insertPenalty(@ModelAttribute ArrayList<Report> list, ModelAndView mv) {
+	public ModelAndView insertPenalty(int[] memNo, String[] penalty, ModelAndView mv) {
+		ArrayList<Integer> stopList = new ArrayList();
+		ArrayList<Integer> kickList = new ArrayList();
 		
-		System.out.println(list);
 		
+		for (int i = 0; i < memNo.length; i++) {
+			Report re = new Report();
+			if(penalty[i].equals("정지")) {
+				stopList.add(memNo[i]);
+			} else {
+				kickList.add(memNo[i]);
+			}			
+		}
+		
+		
+		
+		if(!stopList.isEmpty()) {
+			adminService.stopMember(stopList);
+		}
+		if(!kickList.isEmpty()) {
+			
+		}
+		
+		
+		
+		
+		
+		mv.setViewName("redirect:penaltyList.ad");
 		return mv;
 	}
 	

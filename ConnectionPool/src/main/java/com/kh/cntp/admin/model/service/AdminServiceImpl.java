@@ -135,6 +135,13 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.selectPenaltyList(sqlSession, pi);
 	}
 	
+
+	// 정지 처리
+	@Override
+	public int stopMember(ArrayList<Integer> stopList) {
+		return adminDao.stopMember(sqlSession, stopList);
+	}
+	
 	
 	
 	
@@ -208,6 +215,7 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteNotice(int nno) {
 		return adminDao.deleteNotice(sqlSession, nno);
 	}
+
 
 
 

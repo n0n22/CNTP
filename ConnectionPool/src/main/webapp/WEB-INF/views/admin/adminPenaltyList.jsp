@@ -62,23 +62,22 @@
         <div class="report-table-area">
 
             <div class="container">
-                <table class="table table-bordered table-hover" id="penaltyTable">
-                    <thead>
-                        <tr>
-                            <th width="10%"><input type="checkbox" id="checkAll"></th>
-                            <th width="15%">회원번호</th>
-                            <th width="20%">아이디</th>
-                            <th width="10%">누적신고</th>
-                            <th width="15%">패널티 유형</th>
-                            <th width="25%">최종신고처리일</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    	<form method="post" action="penaltyInsert.ad" id="penaltyForm">
+
+		            <table class="table table-bordered table-hover" id="penaltyTable">
+		                <thead>
+		                    <tr>
+	                            <th width="10%"><input type="checkbox" id="checkAll"></th>
+	                            <th width="15%">회원번호</th>
+	                            <th width="20%">아이디</th>
+	                            <th width="10%">누적신고</th>
+	                            <th width="15%">패널티 유형</th>
+	                            <th width="25%">최종신고처리일</th>
+		                    </tr>
+		                </thead>
+	                    <tbody>
 	                    	<c:forEach var="report" items="${ list }">
 		                    	<tr>
-		                    		<input type="hidden" value="${ report.memNo }" name="memNo">
-		                    		<input type="hidden" value="${ report.penalty }" name="penalty">
+
 		                            <td class="notcheck"><input type="checkbox"></td>
 		                            <td>${ report.memNo }</td>
 		                            <td>${ report.memId }</td>
@@ -87,9 +86,9 @@
 		                            <td>${ report.completionDate }</td>
 		                        </tr>
 	                    	</c:forEach>
-                    	</form>
-                    </tbody>
-                </table>
+	                    </tbody>
+		            </table>
+
                 <button class="btn btn-danger" onclick="openConfirm()" id="confirmBtn">처리</btton>
             </div>
 			<div class="page-area">
@@ -131,6 +130,13 @@
 
         
     </div>
+    
+    <form method="post" action="penaltyInsert.ad" id="penaltyForm">
+    
+    
+    </form>
+    
+    
         
         
     <jsp:include page="../common/footer.jsp" />
@@ -193,13 +199,24 @@
 			var checked = [];
 			$('#penaltyTable tbody input[type=checkbox]').each(function() {
 				if($(this).is(':checked')) {
-					
 					count++;
+					
+					console.log($(this).parent().next().text());
+					
+					
+					// $('#penaltyForm').append('<input type="hidden" value="' +  + '" name="memNo">')
+					
+					
+            		// <input type="hidden" value="${ report.memNo }" name="memNo">
+            		// <input type="hidden" value="${ report.penalty }" name="penalty">					
+					
+					
+					
 				}
 				if(count > 0) { // 체크 한 상태라서 요청이 가야 함
 		    		alertify.confirm('체크 했어?', function() {
 					
-		    			$('#penaltyForm').submit();
+		    			// $('#penaltyForm').submit();
 		    		
 		   			});
 				} 
@@ -210,22 +227,10 @@
 				}
 				
 			})
+					
 			
 			
-			
-			// var nums = 
-			
-			// var msg = 
-			
-    		// alertify.confirm('ㅎㅎ', function() {
-        		// $('#postForm #hiddenStatus').val(status);
-        		// $('#postForm #hiddenBnno').val(bnno);
-   				// $('#postForm').submit();		
-   			// }); 
-			
-			
-			
-		}
+		};
 	
 	
 	
