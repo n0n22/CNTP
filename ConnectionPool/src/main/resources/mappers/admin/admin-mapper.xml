@@ -414,7 +414,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		         JOIN
 		              PENALTY "P" ON (A.MEM_NO = P.MEM_NO)
 		         WHERE
-		               END_DATE < SYSDATE
+		               <![CDATA[END_DATE < SYSDATE]]>
 		       )
 	</select>
 	
@@ -448,7 +448,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 JOIN
 		      PENALTY "P" ON (A.MEM_NO = P.MEM_NO)
 		 WHERE
-		       END_DATE < SYSDATE
+		       <![CDATA[END_DATE < SYSDATE]]>
 	</select>
 	
 	
