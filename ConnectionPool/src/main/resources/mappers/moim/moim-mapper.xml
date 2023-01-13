@@ -462,6 +462,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		                       WHERE
 		                             TM.TEAM_NO = T.TEAM_NO)]]>
 		</if>		       
+		 ORDER
+		    BY
+		       T.TEAM_NO DESC
 	</select>
 	
 	<select id="selectChattingList" resultMap="chattingResultMap" parameterType="chatting">

@@ -69,7 +69,6 @@
 			<table class="table table-hover teamListTable" border="1">
 				<thead class="thead-dark">
 					<tr>
-						<th width="50">번호</th>
 						<th width="150">유형</th>
 						<th width="150">지역</th>
 						<th width="100">팀장</th>
@@ -88,7 +87,7 @@
 						<c:otherwise>
 							<c:forEach items="${ teamList }" var="team" varStatus="i">
 								<tr>
-									<td>
+									<td  style="display:none" >
 										${ i.count }
 										<p style="display:none" class="thisTeamNo">${ team.teamNo }</p>
 									</td>

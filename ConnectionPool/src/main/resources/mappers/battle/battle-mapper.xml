@@ -376,7 +376,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if> 
 		 ORDER 
 		    BY
-		        BATTLE_TIME DESC
+		        BATTLE_TIME
 	</select>
 <!-- 배틀 신청 취소 -->
 	<insert id="cancelBattle" parameterType="string">

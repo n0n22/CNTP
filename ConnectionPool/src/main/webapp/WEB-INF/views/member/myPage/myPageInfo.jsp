@@ -248,7 +248,15 @@
         <div class="top-bar">
             <div class="inline-block">
                 <div id="name-area" style="cursor: default;"><span id="userName">${sessionScope.loginMember.nickName}</span> 님
-                    <br>🤔<span>무소속</span>
+                    <br>
+                    <c:if test="${ sessionScope.loginMember.badgeChangeName == null }">
+                    	❌❌
+                   	</c:if>
+                   	<img src="${ sessionScope.loginMember.badgeChangeName }" width="30px">
+                   	<c:if test="${ sessionScope.loginMember.teamName == null }">
+                   		무소속	
+                   	</c:if>
+                   		<span>${ sessionScope.loginMember.teamName }</span>
                 </div>
                 <div>
                     <div id="point-text">포인트&nbsp;<span id="point">${sessionScope.loginMember.memPoint}</span></div>
