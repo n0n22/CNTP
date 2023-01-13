@@ -195,7 +195,7 @@
 		</script>
 		<c:remove var="alertMsg" scope="session" />
 	</c:if>
-
+	<div id="modal"></div>
 
 
     <div class="header">
@@ -239,7 +239,7 @@
 		                    </c:if>
 		                    
 							<c:if test="${ loginMember.memId ne 'admin' }">		                    		                   	 
-			                    <li class="username" data-toggle="modal" data-target="#myModal">${ loginMember.nickName }님</li>
+			                    <li class="username" ingido="${loginMember.memNo}" onclick="showProfile(event)">${ loginMember.nickName }님</li>
 			                    <li><div><a href="myPageInfo.me">마이페이지</a></div></li>
 			                    <li class="logout"><a href="logout.me">로그아웃</a></li>
 			                    <div class="basket-icon">
@@ -256,43 +256,82 @@
                 </ul>
             </section>
         </div>
+	
     </div>
     
-    <!-- 인기도 모달 -->
-    <div class="modal" id="myModal">
-          <div class="modal-dialog">
-              <div class="modal-content">
-              
-                  <!-- Modal Header -->
-                  <div class="modal-header">
-                      <h4 class="modal-title" align="center">프로필 사진</h4>
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  </div>
-              
-                  <!-- Modal body -->
-                  <div class="modal-body">
-                      <div class="container">
-                          <div class="card" style="width:400px">
-                              <img class="card-img-top" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAHoAegMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAABAUBAgYDB//EADAQAAICAQMDAgQDCQAAAAAAAAABAgMRBAUSITFhQVEkUnGBExQiIzJCYnKRscHR/8QAGAEBAQEBAQAAAAAAAAAAAAAAAAIDAQT/xAAdEQEBAAMAAwEBAAAAAAAAAAAAAQIRMQNBUSES/9oADAMBAAIRAxEAPwD6IAD0sgAAADemqy6fCuDcv8AaGYpyeIpt+EXGm2muOHfLk/aPRIsK6YVRxXFRXhGdznpUx+uejodTNZVMvvhHhOLhJxljK74eTqZw5Qcc91jJz2t0dmll80G+kkdxz2WaRgPsC0gAAAAAAAAAA3qrlbZGuK6yePodHptNXp6lCC+r9yp2aPLVN+0WXiMfJbxeMZABCg1nCM4tSWU/RmwA5vXab8rdhJ8JdYv/AERi63uHw8JeqkUpvjdxnZoABTgAAAAAAACy2R/Ez/pLpFFs2fznbpxfUvUY59aY8ZABDoAAK7en8Kl/MijLre38PDC/i6+ClNsOIy6AAtIAAAAAAAC42GScLY+Uy1Of2q9U6njLtZ+np6Mv0YZ9XjxkAEqADDAjbnJR0Nr90c4W+9XpQVCzyl+pvwVBrhxGXQAGiQAAAAAAAGYy4yUl3TyjqKZqyqE12ksnLFvstsnCyuTbUcOPjJnnPasatgAZLDBkibjbKnS2Tg8Psn9QKbcLfxdXNrsnxX2IwB6JNMgAHQAAAAAAAALjZINV2Ta7tFQlyaiurbwjqKYcK4xx+6kjPO/mlYx6AAyWEXcYc9HaksvGSUav1A5QEnca/wAPW2LGMvkiMeiXcZAAOgAAAPSqmy6XGqLk/HoWWn2j1vnnxH/pNsnXdbVKUpSxFNt+3UnafbL7cOz9nHz3/sXNOnqoWKq1HyepF8nxX8/UXS6Gih5UeUvml1JZgyZ7UAAAAAPHUaaq+OLIJv39Sr1O0zj1olyXyvuXRg7MrHLJXK2V2VPjZBxflYNTqp1xsTjZBSXkr9RtNUutT4P27o0nk+puKlBI1Oju03WyOY/MuqPDD8F9S6eqmFUVCuKUV6I9EsBGTztQAAAAAAAAAAAAADAA1lFNYfYiPbdK23+EuvkmMwDW3//Z" alt="Card image" style="width:100%">
-                              <div class="card-body">
-                                  <h4 class="card-title">닉네임</h4>
-                                  <p class="card-text">레벨 : 중수</p>
-                                  <p class="card-text">인기도 : 0 </p>
-                                  &nbsp;<button>👍</button>&nbsp;<button>👎</button>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              
-                  <!-- Modal footer -->
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
-                  </div>
-              
-              </div>
-          </div>
-    </div>
+    <script>
+	    <!-- 인기도 보여주는 기능 -->
+    	function showProfile(event){
+    		
+    		// 회원 정보를 조회해오는 기능
+    		var $memNo = $(event.target).attr('ingido');
+    		
+    		$.ajax({
+    			url : 'showProfile.me',
+    			data : {memNo:$memNo},
+    			success : function(m){
+    				console.log(m);
+    				var gender = m.gender == 'M' ? '남자' : '여자';
+    				var grade = '';
+    				switch(m.grade){
+    				case 'B' : grade = 'resources/images/beginner.jpg'; break;
+    				case 'M' : grade = 'resources/images/middle.jpg'; break;
+    				case 'S' : grade = 'resources/images/special.jpg'; break;
+    				default : grade = 'resources/images/cntp_flamingo.png'; break;
+    				}
+    				var teamName = m.teaName == '' ? '무소속' : m.teamName;
+    				
+    				var modal = 
+    			        `<div class="modal" id="myModal">
+		    		            <div class="modal-dialog">
+		    		                <div class="modal-content">
+		    		                
+		    		                    <!-- Modal Header -->
+		    		                    <div class="modal-header">
+		    		                        <h4 class="modal-title" align="center">커넥션플 회원 프로필</h4>
+		    		                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		    		                    </div>
+		    		                
+		    		                    <!-- Modal body -->
+		    		                    <div class="modal-body">
+		    		                        <div class="container">
+		    		                            <div class="card" style="width:400px">
+		    		                                <img class="card-img-top" src="\${grade}" alt="Card image" style="width:100%">
+		    		                                <div class="card-body">
+		    		                                    <h4 class="card-title"></h4>
+		    		                                    <p class="card-text">성별 : \${gender}</p>
+		    		                                    <p class="card-text">지역 : \${m.memArea}</p>
+		    		                                    <p class="card-text">팀 : \${teamName}</p>
+		    		                                    &nbsp;<button onclick="ingido(\${m.memNo},1)">👍</button">&nbsp;<button onclick="ingido(\${m.memNo},-1)">👎</button>
+		    		                                </div>
+		    		                            </div>
+		    		                        </div>
+		    		                    </div>
+		    		                
+		    		                    <!-- Modal footer -->
+		    		                    <div class="modal-footer">
+		    		                        <button type="button" class="btn btn-danger" onclick="modalClose(event);">닫기</button>
+		    		                    </div>
+		    		                
+		    		                </div>
+		    		            </div>
+		    		        </div>`;
+    		        $('#modal').html(modal);
+    		        $(event.target).attr('data-toggle','modal').attr('data-target','#myModal');
+    		        $('#myModal').css('display', 'block');
+    			},
+    			error : function(){
+    			}
+    		})
+    	}
+    	
+        function modalClose(event){
+            $(event.target).attr('data-dismiss','modal');
+            $('#modal').html('');
+        }
     
+    
+    </script>
     
     
 </body>

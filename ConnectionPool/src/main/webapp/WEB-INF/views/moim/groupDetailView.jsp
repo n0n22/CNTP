@@ -38,7 +38,7 @@
     
     	<div class="groupDetail-wrap">
     	
-	        <h3 align="left">제목 들어가기</h3>
+	        <h3 align="left">${group.groupTitle }</h3>
 	
 	        <hr>
 	        <br>
@@ -48,7 +48,7 @@
 	                <table class="groupInfoTable_1" border="1">
 	                    <tr>
 	                        <th>
-	                            <img width="600px" height="350" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"/>
+	                            <img width="600px" height="350" src="${ group.changeName }"/>
 	                        </th>
 	                    </tr>
 	                </table>
@@ -57,15 +57,15 @@
 	            <div class="group-info">
 	                <table>
 	                    <tr>
-	                        <td width="250">#지역 제주도</td>
-	                        <td width="250">#모집인원 1/10</td>
+	                        <td width="250">#지역 ${ group.groupArea }</td>
+	                        <td width="250">#모집인원 ${ group.groupMember }</td>
 	                    </tr>
 	                    <tr>
-	                        <td>#여자만</td>
-	                        <td>#중수레벨</td>
+	                        <td>#성별 ${ group.gender }</td>
+	                        <td>#레벨 ${ group.level }</td>
 	                    </tr>
 	                    <tr>
-	                        <td colspan="2"> #2023-01-10 15:00</td>
+	                        <td colspan="2"> #${ group.startTime }<br>~${ group.endTime }</td>
 	                    </tr>
 	                </table>
 	            </div>
@@ -73,11 +73,7 @@
 				<br>
 
 				<div class="groupContent">
-					어쩌고저쩌고 내용이들어가 있습니다.<br>
-					어쩌고저쩌고 내용이들어가 있습니다.<br>
-					어쩌고저쩌고 내용이들어가 있습니다.<br>
-					어쩌고저쩌고 내용이들어가 있습니다.<br>
-					어쩌고저쩌고 내용이들어가 있습니다.<br>
+					${group.groupContent }
 				</div>
 	        </div>
 	
@@ -99,15 +95,15 @@
 	                <table>
 	                    <tr>
 	                        <td width="150">닉네임</td>
-	                        <td width="150">꾸꾸리삐</td>
+	                        <td width="150">${ group.nickname }</td>
 	                    </tr>
 	                    <tr>
 	                        <td>인기도</td>
-	                        <td>4</td>
+	                        <td>${ group.ingido }</td>
 	                    </tr>
 	                    <tr>
 	                        <td>성별</td>
-	                        <td>여성</td>
+	                        <td>${ group.memGender }</td>
 	                    </tr>
 	                </table>
 	            </div>

@@ -525,10 +525,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ,M.NICKNAME
 		       ,M.INGIDO
 		       ,CASE WHEN M.GENDER = 'F' THEN '여성'
-		             ELSE '남자' END "GENDER"
+		             ELSE '남자' END "MEM_GENDER"
 		       ,G.MEM_NO
 		       ,G.GROUP_CONTENT
-		       ,A.KOR_AREA
+		       ,AR.KOR_AREA
 		       ,G.PLACE
 		       ,G.ORIGIN_NAME
 		       ,G.CHANGE_NAME
@@ -536,7 +536,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ,G.GROUP_STATUS
 		       ,CASE WHEN G.GENDER = 'A' THEN '무관'
 		             WHEN G.GENDER = 'F' THEN '여자만'
-		             ELSE '남자만' END "GROUP_GENDER"
+		             ELSE '남자만' END "GENDER"
 		       ,CASE WHEN "LEVEL" = 'E' THEN '무관'
 		             WHEN "LEVEL" = 'B' THEN '초급'
 		             WHEN "LEVEL" = 'M' THEN '중급'
@@ -546,31 +546,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ,TO_CHAR(G.CREATE_DATE, 'YYYY/MM/DD') "CREATE_DATE"
 		       ,TO_CHAR(G.START_TIME, 'YYYY/MM/DD hh24:mi:ss') "START_TIME"
 		       ,TO_CHAR(G.END_TIME, 'YYYY/MM/DD hh24:mi:ss') "END_TIME"
-		       ,CASE WHEN GROUP_MEMBER <![CDATA[<= (SELECT
+		       ,CASE WHEN GROUP_MEMBER - 1 <![CDATA[<= (SELECT
 		                                          COUNT(*)
 		                                     FROM
 		                                          APPLY
 		                                    WHERE
-		                                          MOIM_NO = ${ groupNo }
+		                                          MOIM_NO = #{ groupNo }
 		                                      AND
 		                                          ACCEPT_YN = 'Y'
 		                                    )]]> THEN '모집마감'
-		        ELSE '('||(SELECT
+		        ELSE '('||((SELECT
 		                          COUNT(*)
 		                     FROM
 		                          APPLY "A"
 		                    WHERE
-		                          MOIM_NO = ${ groupNo }
+		                          MOIM_NO = #{ groupNo }
 		                      AND
-		                          ACCEPT_YN = 'Y')||'/'||G.GROUP_MEMBER||')' END "GROUP_MEMBER"
+		                          ACCEPT_YN = 'Y') + 1)||'/'||G.GROUP_MEMBER||')' END "GROUP_MEMBER"
 		  FROM
 		       "GROUP" G
 		  JOIN 
 		       MEMBER "M" ON(G.MEM_NO = M.MEM_NO)
 		  JOIN
-		       AREA "A" ON(G.GROUP_AREA = A.ENG_AREA)
+		       AREA "AR" ON(G.GROUP_AREA = AR.ENG_AREA)
 		 WHERE
-		       GROUP_NO = ${ groupNo }
+		       GROUP_NO = #{ groupNo }
 	</select>
 	
 	<select id="selectGroupCountList" parameterType="group" resultType="_int">
@@ -580,19 +580,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       "GROUP"
 		 WHERE
 		       GROUP_STATUS = 'Y'
-		<if test="groupArea != 'all'">
+		<if test='groupArea != "all"'>
 		  AND 
 		      GROUP_AREA = #{ groupArea }
 		</if>
-		<if test="gender != 'A'">
+		<if test='gender != "A"'>
 		  AND 
 		      GENDER = #{ gender }
 		</if>
-		<if test="level != 'A'">
+		<if test='level != "A"'>
 		  AND
 		      "LEVEL" = #{ level }
 		</if>
-		<if test="groupMember != 'A'">
+		<if test='groupMember != "A"'>
 		  AND
 		      (GROUP_MEMBER - 1) <![CDATA[>]]>(SELECT
 		                                          COUNT(*)
@@ -608,7 +608,77 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectGroupList" parameterType="group" resultMap="groupResultMap">
-		
+		SELECT 
+		        G.GROUP_NO
+		       ,M.NICKNAME
+		       ,G.MEM_NO
+		       ,A.KOR_AREA
+		       ,G.CHANGE_NAME
+		       ,G.GROUP_TITLE
+		       ,CASE WHEN G.GENDER = 'A' THEN '무관'
+		             WHEN G.GENDER = 'F' THEN '여자만'
+		             ELSE '남자만' END "GENDER"
+		       ,CASE WHEN "LEVEL" = 'E' THEN '무관'
+		             WHEN "LEVEL" = 'B' THEN '초급'
+		             WHEN "LEVEL" = 'M' THEN '중급'
+		             ELSE '고급' END "LEVEL"
+		       ,CASE WHEN TO_CHAR(G.POWER_DURATION, 'YYYYMMDD') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDD')]]> THEN '파워'
+		             ELSE '일반' END "POWER_DURATION"
+		       ,TO_CHAR(G.CREATE_DATE, 'YYYY/MM/DD') "CREATE_DATE"
+		       ,TO_CHAR(G.START_TIME, 'YYYY/MM/DD hh24:mi:ss') "START_TIME"
+		       ,TO_CHAR(G.END_TIME, 'YYYY/MM/DD hh24:mi:ss') "END_TIME"
+		       ,CASE WHEN GROUP_MEMBER - 1 <![CDATA[<= (SELECT
+		                                          COUNT(*)
+		                                     FROM
+		                                          APPLY "A"
+		                                    WHERE
+		                                          A.MOIM_NO = G.GROUP_NO
+		                                      AND
+		                                          ACCEPT_YN = 'Y'
+		                                    )]]> THEN '모집마감'
+		        ELSE '('||((SELECT
+		                          COUNT(*)
+		                     FROM
+		                          APPLY "A"
+		                    WHERE
+		                          A.MOIM_NO = G.GROUP_NO
+		                      AND
+		                          ACCEPT_YN = 'Y') + 1)||'/'||G.GROUP_MEMBER||')' END "GROUP_MEMBER"
+		  FROM
+		       "GROUP" G
+		  JOIN 
+		       MEMBER "M" ON(G.MEM_NO = M.MEM_NO)
+		  JOIN
+		       AREA "A" ON(G.GROUP_AREA = A.ENG_AREA)
+		 WHERE
+		       GROUP_STATUS = 'Y'
+		<if test='groupArea != "all"'>
+		  AND 
+		      GROUP_AREA = #{ groupArea }
+		</if>
+		<if test='gender != "A"'>
+		  AND 
+		      G.GENDER = #{ gender }
+		</if>
+		<if test='level != "E"'>
+		  AND
+		      "LEVEL" = #{ level }
+		</if>
+		<if test='groupMember != "A"'>
+		  AND
+		      (GROUP_MEMBER - 1) <![CDATA[>]]>(SELECT
+		                                          COUNT(*)
+		                                     FROM
+		                                          APPLY "A"
+		                                    WHERE
+		                                          A.MOIM_NO = GROUP_NO
+		                                      AND
+		                                          ACCEPT_YN = 'Y'
+		                                    )
+		</if>
+		 ORDER
+		    BY G.POWER_DURATION DESC, CREATE_DATE DESC
+		       
 	</select>
 	
 </mapper>
