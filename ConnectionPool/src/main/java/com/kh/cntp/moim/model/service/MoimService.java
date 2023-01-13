@@ -92,7 +92,14 @@ public interface MoimService {
 	
 	// --------------- GroupDetailView ---------------
 	// 소그룹페이지
+	// 소그룹 페이지 들어가면 select
+	Group selectGroup(String groupNo);
 	
+	// 소그룹 글 수정
+	int updateGroup(Group group);
+	
+	// 소그룸 글 삭제
+	int deleteGroup(Group group);
 	
 	
 	

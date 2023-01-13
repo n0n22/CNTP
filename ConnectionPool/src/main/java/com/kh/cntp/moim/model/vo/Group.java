@@ -7,6 +7,7 @@ public class Group {
 	
 	private String groupNo;
 	private int memNo;
+	private String nickname;
 	private String groupTitle;
 	private String groupContent;
 	private String groupArea;
