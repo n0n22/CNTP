@@ -338,8 +338,7 @@
                     <div>  
                         <div class="subText">생년월일</div>
                         <!-- jstl function substring n~n번째 인덱스까지  -->
-                        <c:set var="birth" value="${ sessionScope.loginMember.birthDay }"/>
-                        <div><input type="text" id="birthdate" name="" maxlength="12" value="${fn:substring(birth, 0, 11)}" required readonly></div>
+                        <div><input type="text" id="birthdate" name="" maxlength="12" value="${sessionScope.loginMember.birthDay}" required readonly></div>
                         <div><label>&nbsp;</label></div>
                     </div>
 
