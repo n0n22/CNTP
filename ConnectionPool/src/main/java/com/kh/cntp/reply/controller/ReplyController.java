@@ -14,17 +14,18 @@ public class ReplyController {
 
 	@Autowired
 	private ReplyService replyService;
-	/*
+	
+	//Board댓글
 	@ResponseBody
 	@RequestMapping(value = "rlist.bo", produces="application/json; charset=UTF-8")
-	public String ajaxSelectReplyList(int bno) {
-		return new Gson().toJson(replyService.selectReplyList(bno));
+	public String ajaxBoardSelectReplyList(int bno) {
+		return new Gson().toJson(replyService.BoardselectReplyList(bno));
 	}
 	
 	@ResponseBody
 	@RequestMapping("rinsert.bo")
-	public String ajaxInsertReply(Reply r) {
-		return replyService.insertReply(r) > 0 ? "success" : "fail";
+	public String ajaxBoardInsertReply(Reply r) {
+		return replyService.BoardinsertReply(r) > 0 ? "success" : "fail";
 	}
 	
 	@ResponseBody
@@ -33,8 +34,26 @@ public class ReplyController {
 		return new Gson().toJson(replyService.selectTopBoard());
 	}
 
-	*/
 	
+	//수영일기 댓글
+	@ResponseBody
+	@RequestMapping(value = "rlist.di", produces="application/json; charset=UTF-8")
+	public String ajaxDiarySelectDiaryReplyList(int dno) {
+		return new Gson().toJson(replyService.DiaryselectReplyList(bno));
+	}
+	
+	@ResponseBody
+	@RequestMapping("rinsert.di")
+	public String ajaxDiaryInsertReply(Reply r) {
+		return replyService.DiaryinsertReply(r) > 0 ? "success" : "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "topList.di", produces="application/json; charset=UTF-8")
+	public String ajaxTopDiaryList() {
+		return new Gson().toJson(replyService.selectTopBoard());
+	}
+
 	
 	
 }

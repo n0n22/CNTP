@@ -11,12 +11,12 @@ import com.kh.cntp.reply.model.vo.Reply;
 public class ReplyDao {
 	
 	
-	/*
-	public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession, int boardNo){
+	//Board 댓글 조회
+	public ArrayList<Reply> BoardselectReplyList(SqlSessionTemplate sqlSession, int boardNo){
 		return (ArrayList)sqlSession.selectList("boardMapper.selectReplyList", boardNo);
 	}
 	
-	public int insertReply(SqlSessionTemplate sqlSession, Reply r) {
+	public int BoardinsertReply(SqlSessionTemplate sqlSession, Reply r) {
 		return sqlSession.insert("boardMapper.insertReply", r);
 	}
 	
@@ -25,7 +25,19 @@ public class ReplyDao {
 	}
 	
 
-	*/
+	//수영일기 댓글 조회
+	public ArrayList<Reply> DiaryselectReplyList(SqlSessionTemplate sqlSession, int diaryNo){
+		return (ArrayList)sqlSession.selectList("boardMapper.selectReplyList", boardNo);
+	}
+	
+	public int DiaryinsertReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.insert("boardMapper.insertReply", r);
+	}
+	
+	public ArrayList<Board> selectTopBoardList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectTopBoardList");
+	}
+	
 	
 	
 }

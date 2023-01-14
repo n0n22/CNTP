@@ -14,51 +14,41 @@ import com.kh.cntp.diary.model.vo.Diary;
 public class DiaryServiceImpl implements DiaryService {
 	
 	@Autowired
-	private DiaryDao DiaryDao;
-	/*
+	private DiaryDao diaryDao;
+
+	
 	@Override
-	public ArrayList<Diary> selectList(SqlSessionTemplate sqlSession, ) {
-		
-		return (ArrayList)sqlSesssion.selectList("diaryMapper.selectList", d);
+	public ArrayList<Diary> selectList() {
+		return diaryDao.selectList(sqlSession);
 	}
 
 	@Override
 	public int insertDiary(Diary d) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return diaryDao.insertDiary(sqlSession, d);
 	}
 
 	@Override
 	public Diary selectDiary(int diaryNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return diaryDao.selectDiary(sqlSession, diaryNo);
 	}
 
 	@Override
 	public int deleteDiary(int diaryNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return diaryDao.deleteDiary(sqlSession,diaryNo );
 	}
 
 	@Override
 	public int updateDiary(Diary d) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return diaryDao.updateDiary(sqlSession, d);
 	}
 
-	@Override
-	public ArrayList<Diary> selectList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Board selectDiary(int diaryNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
-	*/
+	
+	
 	
 	
 	
