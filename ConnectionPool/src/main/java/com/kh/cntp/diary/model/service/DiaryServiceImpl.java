@@ -16,7 +16,7 @@ public class DiaryServiceImpl implements DiaryService {
 	@Autowired
 	private DiaryDao diaryDao;
 
-	
+	/*
 	@Override
 	public ArrayList<Diary> selectList() {
 		return diaryDao.selectList(sqlSession);
@@ -46,6 +46,7 @@ public class DiaryServiceImpl implements DiaryService {
 		return diaryDao.updateDiary(sqlSession, d);
 	}
 
+	*/
 	
 	
 	

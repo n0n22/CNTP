@@ -15,6 +15,7 @@ public class ReplyController {
 	@Autowired
 	private ReplyService replyService;
 	
+	/*
 	//Board댓글
 	@ResponseBody
 	@RequestMapping(value = "rlist.bo", produces="application/json; charset=UTF-8")
@@ -54,6 +55,6 @@ public class ReplyController {
 		return new Gson().toJson(replyService.selectTopBoard());
 	}
 
-	
+	*/
 	
 }

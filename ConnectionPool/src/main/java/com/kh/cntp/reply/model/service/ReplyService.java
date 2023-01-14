@@ -8,7 +8,7 @@ import com.kh.cntp.board.model.vo.Board;
 import com.kh.cntp.reply.model.vo.Reply;
 
 public interface ReplyService {
-	
+	/*
 	//Board 댓글
 	// 댓글 리스트 조회서비스(Ajax)(select)
 	ArrayList<Reply> BoardselectReplyList(int boardNo);
@@ -30,5 +30,5 @@ public interface ReplyService {
 	// TOP-N분석(select)
 	ArrayList<Diary> selectTopDiary();
 	
-	
+	*/
 }

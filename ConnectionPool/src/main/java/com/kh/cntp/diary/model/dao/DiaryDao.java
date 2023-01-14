@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class DiaryDao {
 
-	
+/*	
 public ArrayList<Diary> selectList(SqlSessionTemplate sqlSession) {
 	return (ArrayList)sqlSession.selectList("diaryMapper.selectList");
 }
@@ -33,7 +33,7 @@ public int updateDiary (SqlSessionTemplate sqlSession, Diary d) {
 	
 	
 	
-	
+*/	
 	
 	
 	

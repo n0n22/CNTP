@@ -18,7 +18,7 @@ public class DiaryController {
 	
 	@Autowired
 	private DiaryService diaryService;
-	
+	/*
 	//수영일기 리스트 조회
 	@RequestMapping("list.di")
 	public ModelAndView selectList(ModelAndView mv) {
@@ -118,7 +118,7 @@ public class DiaryController {
 	}
 	
 	
-	
+	*/
 	
 	
 	

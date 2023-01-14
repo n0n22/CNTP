@@ -10,7 +10,7 @@ import com.kh.cntp.reply.model.vo.Reply;
 @Repository
 public class ReplyDao {
 	
-	
+	/*
 	//Board 댓글 조회
 	public ArrayList<Reply> BoardselectReplyList(SqlSessionTemplate sqlSession, int boardNo){
 		return (ArrayList)sqlSession.selectList("boardMapper.selectReplyList", boardNo);
@@ -38,6 +38,6 @@ public class ReplyDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectTopBoardList");
 	}
 	
-	
+	*/
 	
 }

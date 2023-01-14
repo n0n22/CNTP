@@ -18,7 +18,7 @@ public class ReplyServiceImpl implements ReplyService{
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	
+	/*
 	//board게시판
 	
 	@Override
@@ -51,5 +51,5 @@ public class ReplyServiceImpl implements ReplyService{
 	public ArrayList<Diary> selectTopDiary() {
 		return replyDao.selectTopDiaryList(sqlSession);
 	}
-	
+	*/
 }
