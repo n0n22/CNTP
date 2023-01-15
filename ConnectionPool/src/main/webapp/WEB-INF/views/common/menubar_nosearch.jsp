@@ -183,6 +183,10 @@
         font-family:'Pretendard-Regular';
         font-style: normal;
     }
+    [ingido]:hover{
+    	cursor: pointer;
+    	color : red;
+    }
 
 
  
@@ -239,7 +243,7 @@
 		                    </c:if>
 		                    
 							<c:if test="${ loginMember.memId ne 'admin' }">		                    		                   	 
-			                    <li class="username" ingido="${loginMember.memNo}" onclick="showProfile(event)">${ loginMember.nickName }님</li>
+			                    <li class="username" ingido="${loginMember.memNo}" title="프로필 보기" onclick="showProfile(event)">${ loginMember.nickName }님</li>
 			                    <li><div><a href="myPageInfo.me">마이페이지</a></div></li>
 			                    <li class="logout"><a href="logout.me">로그아웃</a></li>
 			                    <div class="basket-icon">
@@ -369,6 +373,10 @@
     			}
     		})
     	}
+    	$(function(){
+    	})
+    	
+    	
     </script>
     
     
