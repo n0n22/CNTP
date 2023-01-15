@@ -341,7 +341,8 @@
     		console.log("targetNo : " + targetNo);
     		console.log("flag : " + flag);
     		console.log("ingido : " + ingido);
-    		if(${loginMember.memNo} === targetNo){
+    		
+    		if(<c:out value="${loginMember.memNo}" default="none"/> == targetNo){
     			alert('자신의 인기도는 올릴거나 내릴 수 없습니다.');
     			return;
     		}
@@ -349,7 +350,7 @@
     			url : "ingido.me",
     			type : "post",
     			data : {
-    					memNo : ${loginMember.memNo},
+    					memNo : <c:out value="${loginMember.memNo}" default="none"/>,
     					targetNo : targetNo,
     					flag : flag
     				   },
