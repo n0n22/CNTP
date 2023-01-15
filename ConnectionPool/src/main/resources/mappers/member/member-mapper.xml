@@ -41,6 +41,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="CATEGORY" property="category"/>
 	</resultMap>
 	
+	<!-- 게시글 -->
+	<resultMap id="boardResultSet" type="board">
+		<result column="BOARD_NO" property="boardNo"/>
+		<result column="MEM_NO" property="memberNo"/>
+		<result column="TITLE" property="title"/>
+		<result column="COUNT" property="count"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="CATEGORY" property="category"/>
+	</resultMap>
+	
 	<!-- 로그인용 쿼리문  -->
 	<select id="loginMember" parameterType="member" resultMap="memberResultSet">
 		SELECT 
@@ -299,6 +309,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 ORDER
 		    BY
 		       POINT_NO DESC       
+	</select>
+	
+	<!-- 작성한 게시글 수 -->
+	<select id="selectMyBoardCount" parameterType="board" resultType="_int">
+		SELECT
+			   COUNT(*)
+		  FROM 
+		       BOARD
+		 WHERE 
+	           MEM_NO = #{memberNo}
+   		<if test='category != "all"'>
+    	   AND
+		       CATEGORY = #{category}
+		</if>           
+	</select>
+	
+	<!-- 작성한 게시글 조회 -->
+	<select id="selectMyBoardList" parameterType="board" resultMap="boardResultSet">
+		SELECT 
+		       BOARD_NO,
+		       MEM_NO,
+		       TITLE,
+		       COUNT,
+		       TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') as "CREATE_DATE",
+		       CATEGORY
+		  FROM 
+		       BOARD
+		 WHERE         
+		       MEM_NO = #{memberNo}
+        <if test='category != "all"'>
+		   AND
+		       CATEGORY = #{category}
+		</if>
+		 ORDER
+		    BY
+		       BOARD_NO DESC       
 	</select>
 	
 	<!-- 인기도 ******************************************************** -->

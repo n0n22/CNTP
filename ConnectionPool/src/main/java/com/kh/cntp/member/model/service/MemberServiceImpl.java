@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.cntp.board.model.vo.Board;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.dao.MemberDao;
 import com.kh.cntp.member.model.vo.Cert;
@@ -112,6 +113,18 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectPointList(sqlSession, pi, point);
 	}
 	
+	// 내가 작성한 게시글 개수
+	@Override
+	public int selectMyBoardCount(Board board) {
+		return memberDao.selectMyBoardCount(sqlSession, board);
+	}
+	
+	// 내가 작성한 게시글 조회
+	@Override
+	public ArrayList<Board> selectMyBoardList(PageInfo pi, Board board) {
+		return memberDao.selectMyBoardList(sqlSession, pi, board);
+	}
+	
 	
 	//////////////////////////////////
 	// 인기도							//
@@ -121,6 +134,9 @@ public class MemberServiceImpl implements MemberService {
 	public Member showProfile(int memNo) {
 		return memberDao.showProfile(sqlSession, memNo);
 	}
+
+
+
 
 
 

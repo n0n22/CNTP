@@ -2,6 +2,7 @@ package com.kh.cntp.member.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.cntp.board.model.vo.Board;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.vo.Cert;
 import com.kh.cntp.member.model.vo.Member;
@@ -56,4 +57,9 @@ public interface MemberService {
 	// 포인트 내역 조회
 	ArrayList<Point> selectPointList(PageInfo pi, Point point);
 	
+	// 내가 작성한 게시글 개수
+	int selectMyBoardCount(Board board);
+	
+	// 내가 작성한 게시글 조회
+	ArrayList<Board> selectMyBoardList(PageInfo pi, Board board);
 }

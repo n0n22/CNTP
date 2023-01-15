@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.cntp.board.model.vo.Board;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.vo.Cert;
 import com.kh.cntp.member.model.vo.Member;
@@ -94,6 +95,20 @@ public class MemberDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit()); 
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.selectPointList", point, rowBounds);
+	}
+	
+	// 내가 작성한 게시글 개수
+	public int selectMyBoardCount(SqlSessionTemplate sqlSession, Board board) {
+		return sqlSession.selectOne("memberMapper.selectMyBoardCount", board);
+	}
+	
+	// 내가 작성한 게시글 조회
+	public ArrayList<Board> selectMyBoardList(SqlSessionTemplate sqlSession, PageInfo pi, Board board) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit()); 
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectMyBoardList", board, rowBounds);
 	}
 	
 	//////////////////////////////////

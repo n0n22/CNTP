@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.cntp.board.model.vo.Board;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.common.template.Pagination;
 import com.kh.cntp.member.model.service.MemberService;
@@ -94,10 +95,11 @@ public class myPageController {
 	@RequestMapping("myPagePoint.me")
 	public ModelAndView myPagePoint(HttpSession session,
 									ModelAndView mv,
+									Point point,
 									@RequestParam(value="cpage", defaultValue="1")int cPage,
 									@RequestParam(value="category", defaultValue="all")String category) {
+		
 		// Point에 현재 로그인한 회원번호,카테고리 set 
-		Point point = new Point();
 		point.setMemNo(((Member)session.getAttribute("loginMember")).getMemNo());
 		point.setCategory(category); 
 		
@@ -113,8 +115,24 @@ public class myPageController {
 	
 	// 마이페이지 작성글 조회
 	@RequestMapping("myPageBoard.me")
-	public String myPageBoard() {
-		return "member/myPage/myPageBoard";
+	public ModelAndView myPageBoard(HttpSession session,
+									ModelAndView mv,
+									Board board,
+									@RequestParam(value="cpage", defaultValue="1")int cpage,
+									@RequestParam(value="category", defaultValue="all")String category) {
+		
+		// Board에 현재 로그인한 회원번호(식별값), 카테고리 set
+		board.setMemberNo(((Member)session.getAttribute("loginMember")).getMemNo());
+		board.setCategory(category);
+		
+		PageInfo pi = Pagination.getPageInfo(memberService.selectMyBoardCount(board), cpage, 5, 5);
+		
+		mv.addObject("pi", pi);
+		mv.addObject("blist", memberService.selectMyBoardList(pi, board));
+		mv.addObject("category", category);
+		mv.setViewName("member/myPage/myPageBoard");
+		
+		return mv;
 	}
 	
 	// 마이페이지 소모임 조회
