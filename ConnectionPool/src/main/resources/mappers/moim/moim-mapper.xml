@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="LEVEL" 				property="level"/>
 		<result column="GENDER" 			property="gender"/>
 		<result column="CREATE_DATE" 		property="createDate"/>
-		<result column="POWER_DURRATION" 	property="powerDuration"/>
+		<result column="POWER_DURATION" 	property="powerDuration"/>
 	</resultMap>
 	
 	<resultMap type="apply" id="applyResultMap">
@@ -541,7 +541,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		             WHEN "LEVEL" = 'B' THEN '초급'
 		             WHEN "LEVEL" = 'M' THEN '중급'
 		             ELSE '고급' END "LEVEL"
-		       ,CASE WHEN TO_CHAR(G.POWER_DURATION, 'YYYYMMDD') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDD')]]> THEN '파워'
+		       ,CASE WHEN TO_CHAR(G.POWER_DURATION, 'YYYYMMDD') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDD')]]> THEN TO_CHAR(G.POWER_DURATION, 'YYYY-MM-DD')
 		             ELSE '일반' END "POWER_DURATION"
 		       ,TO_CHAR(G.CREATE_DATE, 'YYYY/MM/DD') "CREATE_DATE"
 		       ,TO_CHAR(G.START_TIME, 'YYYY/MM/DD hh24:mi:ss') "START_TIME"
@@ -588,7 +588,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  AND 
 		      GENDER = #{ gender }
 		</if>
-		<if test='level != "A"'>
+		<if test='level != "E"'>
 		  AND
 		      "LEVEL" = #{ level }
 		</if>
@@ -603,8 +603,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		                                      AND
 		                                          ACCEPT_YN = 'Y'
 		                                    )
+		  AND
+		      TO_CHAR(START_TIME, 'YYYYMMDDHH24MISS') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')]]>
 		</if>
-		       
 	</select>
 	
 	<select id="selectGroupList" parameterType="group" resultMap="groupResultMap">
@@ -624,7 +625,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		             ELSE '고급' END "LEVEL"
 		       ,CASE WHEN TO_CHAR(G.POWER_DURATION, 'YYYYMMDD') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDD')]]> THEN '파워'
 		             ELSE '일반' END "POWER_DURATION"
-		       ,TO_CHAR(G.CREATE_DATE, 'YYYY/MM/DD') "CREATE_DATE"
 		       ,TO_CHAR(G.START_TIME, 'YYYY/MM/DD hh24:mi:ss') "START_TIME"
 		       ,TO_CHAR(G.END_TIME, 'YYYY/MM/DD hh24:mi:ss') "END_TIME"
 		       ,CASE WHEN GROUP_MEMBER - 1 <![CDATA[<= (SELECT
@@ -675,10 +675,67 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		                                      AND
 		                                          ACCEPT_YN = 'Y'
 		                                    )
+		  AND
+		      TO_CHAR(START_TIME, 'YYYYMMDDHH24MISS') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')]]>
 		</if>
 		 ORDER
-		    BY G.POWER_DURATION DESC, CREATE_DATE DESC
+		    BY G.POWER_DURATION, G.CREATE_DATE DESC
 		       
 	</select>
+	
+	
+	
+	<insert id="insertOneGroup" parameterType="group">
+		INSERT
+		  INTO
+		       "GROUP"
+		VALUES (
+		        'G'||SEQ_GNO.NEXTVAL
+		       ,#{ memNo }
+		       ,#{ groupContent }
+		       ,#{ groupArea }
+		       ,#{ place }
+		       ,#{ groupMember}
+		       ,#{ originName }
+		       ,#{ changeName }
+		       ,#{ level }
+		       ,#{ gender }
+		       ,SYSDATE
+		       <if test="powerDuration != null">
+		       ,SYSDATE + 7
+		       </if>
+		       <if test="powerDuration == null">
+		       ,NULL
+		       </if>
+		       ,#{ groupTitle }
+		       ,TO_DATE(#{ startTime }, 'YYYY-MM-DD HH24:MI')
+		       ,TO_DATE(#{ endTime }, 'YYYY-MM-DD HH24:MI')
+		       ,'Y'
+		       )
+	</insert>
+	
+	<update id="updateGroup" parameterType="group">
+		UPDATE
+		       "GROUP"
+		   SET
+		        GROUP_CONTENT = #{groupContent}
+		       ,GROUP_AREA = #{ groupArea }
+		       ,PLACE = #{ place }
+		       ,GROUP_MEMBER = #{ groupMember }
+		       ,ORIGIN_NAME = #{ originName }
+		       ,CHANGE_NAME = #{ changeName}
+		       ,"LEVEL" = #{ level }
+		       ,GENDER = #{ gender }
+		       ,GROUP_TITLE = #{ groupTitle }
+		       ,START_TIME = TO_DATE(#{ startTime }, 'YYYY-MM-DD HH24:MI')
+		       ,END_TIME = TO_DATE(#{ endTime }, 'YYYY-MM-DD HH24:MI')
+			  <if test="powerDuration != 'null'">
+	      		,POWER_DURATION = SYSDATE + 7
+		      </if>
+		 WHERE
+		       GROUP_NO = #{ groupNo }
+	</update>
+	
+	
 	
 </mapper>

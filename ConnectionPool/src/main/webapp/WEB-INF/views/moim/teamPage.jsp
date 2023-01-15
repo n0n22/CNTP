@@ -17,9 +17,9 @@
 		background-color: antiquewhite;
 		border-radius: 10px;
 		width: 80%;
-		height : 300px;
 		border : 1px solid black;
 		padding-top: 5px;
+		height : 400px;
 	}
 	
 	.teamInfo{
@@ -68,7 +68,7 @@
 
 	<div class="outer" align="center">
 
-		<div style="width:1300px">
+		<div style="width:1300px;">
 			
 			<div>
 				<div class="badge-area" style="width:20%; float:left">
@@ -151,7 +151,6 @@
 			<br><br>
 			
 			<div class="teamMemberInfo" align="center">
-				
 				<div>
 					<p>팀원</p>
 					<table class="teamMemberInfoTable" border="1">
@@ -168,6 +167,7 @@
 							</tr>
 						</c:forEach>
 					</table>
+					
 					<br>
 
 					<div class="memberUpdate-area" align="center">
@@ -179,7 +179,6 @@
 								<button class="btn btn-primary" style="width:300px;">팀장/부팀장 수정</button>
 							</form>
 						</c:if>
-						
 					</div>
 				</div>
 
@@ -245,6 +244,8 @@
 											<form action="chattingRoom.mo" method="post">
 												<input type="hidden" name="moimNo" value="${ team.teamNo }">
 												<input type="hidden" name="memNo" value="${ loginMember.memNo }">
+												<input type="hidden" name="moimMember" value="${ team.groupMember }">
+												<input type="hidden" name="moimTitle" value="${ team.teamTitle }">
 												<button class="btn btn-primary" style="width:300px;">채팅하기</button>
 											</form>
 										</c:when>
@@ -263,6 +264,8 @@
 												<form action="chattingRoom.mo" method="post">
 													<input type="hidden" name="moimNo" value="${ team.teamNo }">
 													<input type="hidden" name="memNo" value="${ loginMember.memNo }">
+													<input type="hidden" name="moimMember" value="${ team.groupMember }">
+													<input type="hidden" name="moimTitle" value="${ team.teamTitle }">
 													<button class="btn btn-primary" style="width:300px;">채팅하기</button>
 												</form>
 											</div>

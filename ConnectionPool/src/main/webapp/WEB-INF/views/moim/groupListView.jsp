@@ -85,14 +85,17 @@
 	                        </td>
 	                    </tr>
 	                </table>
-	
+					<br>
 	                <div class="btn-area" align="right">
-	                    <button class="btn">검색하기</button>
-	                    <a class="btn" href="groupEnrollForm.mo">글 작성하기</a>
+	                    <button class="btn btn-primary">검색하기</button>
+	                    <c:if test="${ not empty loginMember }">
+		                    <a class="btn btn-primary" href="groupEnrollForm.mo">글 작성하기</a>
+	                    </c:if>
 	                </div>
-	            </div>
-            	</form>
+	           	</form>
+            </div>
 
+			<br>
             <div class="grouptList-area">
             
             	<c:choose>
@@ -105,11 +108,14 @@
 			                <div class="group" align="center">
 			    
 			                    <div class="thum">
-			                        <img class="thum" width="290px" src="${ g.changeName }">
+			                        <img class="thum" height="300px" width="290px" src="${ g.changeName }">
 			                    </div>
 			    
 			                    <div class="group-info">
 			                        <table>
+			                        	<tr>
+			                        		<td>#${ g.powerDuration }</td>
+			                        	</tr>
 			                            <tr>
 			                                <td width="150">#지역 ${ g.groupArea }</td>
 			                                <td width="150">#모집인원 ${ g.groupMember }</td>

@@ -143,8 +143,7 @@ public class MoimServiceImpl implements MoimService {
 
 	@Override
 	public int insertGroup(Group group) {
-		// TODO Auto-generated method stub
-		return 0;
+		return moimDao.insertGroup(sqlSession, group);
 	}
 
 	@Override
@@ -154,8 +153,7 @@ public class MoimServiceImpl implements MoimService {
 
 	@Override
 	public int updateGroup(Group group) {
-		// TODO Auto-generated method stub
-		return 0;
+		return moimDao.updateGroup(sqlSession, group);
 	}
 
 	@Override

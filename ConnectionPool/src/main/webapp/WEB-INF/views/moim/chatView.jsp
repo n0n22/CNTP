@@ -70,8 +70,8 @@
 		<div style="width:600px; border-radius:10px; margin:auto;">
 	        <!-- 제목 div -->
 	        <div style="display : flex; justify-content: space-between;" id="chatTitleMemberCountArea">
-	            <h2>소모임제목/팀이름</h2>
-	            <h5>모집인원 10 / 현재인원  5 </h5>
+	            <h2>${ moimTitle }</h2>
+	            <h5>모집현황 ${ moimMember } </h5>
 	        </div>
 	        
 	        <div id="chatContent-area">
@@ -241,7 +241,6 @@
 				}
 				
 				$('#chatContent-area').html(result);
-				$("#chatContent-area").scrollTop($("#chatContent-area")[0].scrollHeight);
 				setInterval(selectChattingList, 700);
 			},
 			error : function(){

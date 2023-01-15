@@ -41,15 +41,15 @@
 			<hr>
 			<br>
 
-			<form action="#">
+			<form action="insertGroup.mo" method="post" enctype="multipart/form-data">
 				<table class="groupEnrollTable" border="1">
 					<tr height="50">
 						<th width="200">제목</th>
-						<td width="600"><input type="text" style="height:50px" required></td>
+						<td width="600"><input type="text" style="height:50px" name="groupTitle" required></td>
 					</tr>
 					<tr height="50">
 						<th>썸네일</th>
-						<td><input type="text" style="height:50px"></td>
+						<td><input type="file" style="height:50px" name="upfile" required></td>
 					</tr>
 					<tr height="200">
 						<th>내용</th>
@@ -62,6 +62,7 @@
 						<th>지역</th>
 						<td>
 							<select name="groupArea" style="height:50px">
+								<option value="all">전체</option>
 								<option value="Seoul">서울특별시</option>
 								<option value="Gyeonggi">경기도</option>
 								<option value="Gangwon">강원도</option>
@@ -76,7 +77,9 @@
 					</tr>
 					<tr height="50">
 						<th>장소</th>
-						<td>이거 api할 수 있으면 하자</td>
+						<td>
+							<input type="text" name="place" maxlength="15">
+						</td>
 					</tr>
 					<tr height="50">
 						<th>성별</th>
@@ -92,23 +95,38 @@
 						<th>레벨</th>
 						<td>
 							<select name="level" style="height:50px">
-								<option>무관</option>
-								<option>초급</option>
-								<option>중급</option>
-								<option>고급</option>
+								<option value="E">무관</option>
+								<option value="B">초급</option>
+								<option value="M">중급</option>
+								<option value="S">고급</option>
 							</select>
 						</td>
 					</tr>
 					<tr height="50">
 						<th>모집인원</th>
-						<td><input type="number" min="2" max="12" style="height:50px" required>명</td>
+						<td><input type="number" min="2" max="12" style="height:50px" name="groupMember" required>명</td>
 					</tr>
 					<tr height="50">
 						<th>일시</th>
 						<td>
-							<input type="datetime-local" id="startTime" required> - <input type="datetime-local" id="endTime" required>
+							<input type="datetime-local" id="startTime" name="startTime" onchange="setMinValue1()" required> - <input type="datetime-local" id="endTime" name="endTime" onchange="setMinValue2()" required>
 							<!--후에 5분 단위로 바꿀 수 있다면 바꿔보자-->
 						</td>
+					</tr>
+					<tr>
+						<th>파워등록</th>
+			            <td colspan="2">
+			            	<c:choose>
+			            		<c:when test="${ loginMember.memPoint >= 10 }">
+					                <input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" value="true"> 
+					                <label for="powerDuration"> 파워 등록 시 10P가 소요됩니다. </label> 
+			            		</c:when>
+			            		<c:otherwise>
+			            			<input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" disabled> 
+					                <label for="powerDuration"> 파워 등록 시 10P가 소요됩니다. </label> 
+			            		</c:otherwise>
+			            	</c:choose>
+		            	</td>
 					</tr>
 				</table>
 				<br><br>
@@ -116,7 +134,7 @@
 				<div align="right">
 					<button>등록하기</button>
 				</div>
-				
+				<input type="hidden" name="memNo" value="${ loginMember.memNo }">
 			</form>
 		</div>
 	</div>
@@ -128,24 +146,26 @@
 	<script>
 		
 		let $startTime = $('#startTime');
-		// 이건 현재 시간을 구하는 것인가봅니다 어떻게 했는지 몰라요
-		let date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -5);
-
 		let $endTime = $('#endTime');
 
+		// 이건 현재 시간을 구하는 것인가봅니다 어떻게 했는지 몰라요
+		let date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -8);
+
+		console.log(date);
+		
 		//시작날짜를 지금 시각으로 맞춤
 		$startTime.val(date);
 		$endTime.val(date);
 		
 		//시작일자의 최소를 현재 날짜로 바꿈
-		$('#startTime').attr('min', date);
+		$startTime.attr('min', date);
 		
 		
-		$('#startTime').on('change', function(){
+		$startTime.on('change', function(){
 			//끝일자의 값을 최소 일자로 바꿔줌
-			$('#endTime').val($('#startTime').val());
+			$endTime.val($('#startTime').val());
 			//끝일자의 최소를 시작일자로 바꿈
-			$('#endTime').attr('min', $('#startTime').val());
+			$endTime.attr('min', $('#startTime').val());
 		})
 
 		$(function(){
@@ -157,6 +177,20 @@
 				
 			})
 		})
+		
+		function setMinValue1() {
+			if($startTime.val() < date){
+				alert('현재 시간보다 이전의 시간은 설정할 수 없습니다.');
+				$startTime.val(date);
+			}
+		}
+		
+		function setMinValue2(){
+			if($endTime.val() < $startTime.val()){
+				alert('시작 시간보다 이전의 시간은 설정할 수 없습니다.');
+				$endTime.val($('#startTime').val());
+			}
+		}
 
 	</script>
 

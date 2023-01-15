@@ -128,10 +128,10 @@ public class MoimController {
 			// 팀멤버 테이블에 팀장 insert
 			// 경기기록도  insert
 			
-			mv.setViewName("moim/teamPage");
-			mv.addObject("alertMsg", "팀 생성이 완료되었습니다.");
-		} else {
+			session.setAttribute("alertMsg", "팀 생성이 완료되었습니다.");
 			session.setAttribute("loginMember", memberService.loginMember((Member)session.getAttribute("loginMember")));
+			mv.setViewName("moim/teamListView");
+		} else {
 			mv.setViewName("main");
 		}
 		return mv;
@@ -175,12 +175,12 @@ public class MoimController {
 	// 채팅 관련 기능 시작
 	
 	@RequestMapping("chattingRoom.mo")
-	public ModelAndView cahttingRoom(ModelAndView mv, Chatting chat) {
+	public ModelAndView cahttingRoom(ModelAndView mv, Chatting chat, String moimMember, String moimTitle) {
 		// teamNo 이용해서 채팅방 보내주기~
 		
 		//System.out.println(moimService.selectChattingList(chat));
 		
-		mv.addObject("chatList", moimService.selectChattingList(chat)).setViewName("moim/chatView");
+		mv.addObject("chatList", moimService.selectChattingList(chat)).addObject("moimMember", moimMember).addObject("moimTitle", moimTitle).setViewName("moim/chatView");
 		
 		return mv;
 	}
@@ -252,7 +252,7 @@ public class MoimController {
 		group.setGroupMember(groupMember);
 		
 		PageInfo pi = Pagination.getPageInfo(moimService.selectGroupCountList(group), currentPage, 10, 9);
-		
+		//System.out.println(pi);
 		mv.addObject("pi", pi).addObject("groupList", moimService.selectGroupList(pi, group)).addObject("group", group).setViewName("moim/groupListView");
 		
 		return mv;
@@ -261,15 +261,22 @@ public class MoimController {
 	@RequestMapping("groupDetail.mo")
 	public ModelAndView selectGroup(ModelAndView mv, String groupNo) {
 		
-		mv.addObject("group", moimService.selectGroup(groupNo)).setViewName("moim/groupDetailView");
+		mv.addObject("group", moimService.selectGroup(groupNo)).addObject("applyList", moimService.selectApplyList(groupNo)).setViewName("moim/groupDetailView");
 		
 		return mv;
 	}
 	
 	@RequestMapping("groupUpdateForm.mo")
-	public ModelAndView groupUpdateForm(ModelAndView mv/*, int groupNo*/) {
+	public ModelAndView groupUpdateForm(ModelAndView mv, String groupNo) {
 		
-		mv.setViewName("moim/groupUpdateForm");
+		Group group = moimService.selectGroup(groupNo);
+		
+		group.setGroupMember(group.getGroupMember().substring(group.getGroupMember().indexOf('/') + 1, group.getGroupMember().indexOf(')')));
+		group.setStartTime(group.getStartTime().replace(" ", "T").replace("/", "-").substring(0, 16));
+		group.setEndTime(group.getEndTime().replace(" ", "T").replace("/", "-").substring(0, 16));
+		//System.out.println(group);
+		
+		mv.addObject("group", group).setViewName("moim/groupUpdateForm");
 		
 		return mv;
 	}
@@ -429,7 +436,7 @@ public class MoimController {
 	@RequestMapping("updateApply.mo")
 	public ModelAndView updateApply(ModelAndView mv, Apply ap) {
 		
-		System.out.println(ap);
+		//System.out.println(ap);
 		
 		if(moimService.UpdateApply(ap) > 0) {
 			mv.setViewName("redirect:teamPage.mo?teamNo=" + ap.getMoimNo());
@@ -438,4 +445,59 @@ public class MoimController {
 		}
 		return mv;
 	}
+	
+	@RequestMapping("insertGroup.mo")
+	public ModelAndView insertGroup(ModelAndView mv, Group group, MultipartFile upfile, HttpSession session) {
+		
+		//System.out.println(group);
+		
+		group.setStartTime(group.getStartTime().replace("T", " "));
+		group.setEndTime(group.getEndTime().replace("T", " "));
+		
+		if(!upfile.getOriginalFilename().equals("")) {
+			group.setOriginName(upfile.getOriginalFilename());
+			group.setChangeName("resources/upfiles/" + saveFile(upfile, session));
+		}
+		//System.out.println(group);
+		
+		if(moimService.insertGroup(group) > 0) {
+			if(group.getPowerDuration() != null) {
+				// point(-10)
+			}
+			session.setAttribute("alertMsg", "등록완료하였습니다.");
+			mv.setViewName("redirect:groupList.mo");
+		} else {
+			session.setAttribute("errorMsg", "소그룹 등록 실패");
+			mv.setViewName("common/errorPage");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("updateGroup.mo")
+	public ModelAndView updateGroup(ModelAndView mv, Group group, MultipartFile reUpfile, HttpSession session) {
+		
+		group.setStartTime(group.getStartTime().replace("T", " "));
+		group.setEndTime(group.getEndTime().replace("T", " "));
+		
+		//System.out.println(group);
+		
+		if(!reUpfile.getOriginalFilename().equals("")) {
+			if(!group.getOriginName().equals("")) {
+				new File(session.getServletContext().getRealPath(group.getChangeName())).delete();
+			}
+			
+			group.setOriginName(reUpfile.getOriginalFilename());
+			group.setChangeName("resources/upfiles/" + saveFile(reUpfile, session));
+		}
+		
+		if(moimService.updateGroup(group) > 0) {
+			session.setAttribute("alertMsg", "소모임 정보 수정 완료");
+			mv.setViewName("redirect:groupDetail.mo?groupNo=" + group.getGroupNo());
+		} else {
+			mv.addObject("errorMsg", "소모임 정보 수정 실패").setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
 }
