@@ -44,6 +44,16 @@
 		}
 		
 		
+		.order-area {
+			width: 80%;
+		}
+		
+		
+		.order-area>div {
+			display:inline-block;		
+		}
+		
+
 
 
     </style>
@@ -84,6 +94,7 @@
     
                 </div>
             </div>
+            
            	<div class="order-area">
 	            <div class="select-order">
 	                <select name="order" id="orderSelect" class="form-control" align="right" onchange="keywordSearch();">
@@ -95,18 +106,26 @@
 	                    <option value="enrollDate" class="desc">가입일↓</option>
 	                </select>
 	            </div>
+	            
+		        <input type="hidden" value="" id="orderCondition" name="orderCondition">
+		        
+		        <div class="count-area">
+		        	<div class="count-select">
+		                <select name="bl" id="countSelect" class="form-control" align="right" onchange="keywordSearch();">
+		                    <option value="10" selected>10</option>
+		                    <option value="15">15</option>
+		                    <option value="30">30</option>
+		                </select>
+		            </div>
+		        </div>
+		        &nbsp;&nbsp;&nbsp;&nbsp;
+ 	            <button type="button" class="btn btn-outline-success" onclick="excelDownloadByHtml();">현재 목록 exel로</button>
+        		&nbsp;&nbsp;
+        		<button type="button" class="btn btn-success" onclick="allMemberList();">전체 목록 exel로</button>
+        
+		        
 	        </div>
-	        <input type="hidden" value="" id="orderCondition" name="orderCondition">
-	        <div class="count-area">
-	        	<div class="count-select">
-	                <select name="bl" id="countSelect" class="form-control" align="right" onchange="keywordSearch();">
-	                    <option value="10" selected>10</option>
-	                    <option value="15">15</option>
-	                    <option value="30">30</option>
-	                </select>
-	            </div>
-	        </div>
-            
+	        
             <!-- 
 			<input type="hidden" name="order" id="searchOrder" value="">
 			<input type="hidden" name="orderCondition" id="searchOrderCondition" value="">
@@ -270,7 +289,7 @@
         </div>
            
             
-		<div class="page-area">
+		<div class="page-area" align="center">
         	<ul class="pagination" align="center">
                	<c:choose>
                 	<c:when test="${pi.currentPage eq 1}">
@@ -308,9 +327,7 @@
         
         <div>
         
-        	<button type="button" class="btn btn-outline-success" onclick="excelDownloadByHtml();">현재 목록 exel로</button>
-        	<button type="button" class="btn btn-success" onclick="allMemberList();">전체 목록 exel로</button>
-        
+
         </div>    
 
 		<script>

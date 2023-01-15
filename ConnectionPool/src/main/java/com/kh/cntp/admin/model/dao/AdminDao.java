@@ -11,6 +11,7 @@ import com.kh.cntp.admin.model.vo.Banner;
 import com.kh.cntp.admin.model.vo.Report;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.vo.Member;
+import com.kh.cntp.moim.model.vo.TeamMember;
 import com.kh.cntp.notice.model.vo.Notice;
 
 @Repository
@@ -137,9 +138,59 @@ public class AdminDao {
 	
 	
 	// 정지 처리
-	public int stopMember(SqlSessionTemplate sqlSession, ArrayList<Integer> stopList) {
-		return sqlSession.insert("adminMapper.stopMember", stopList);
+//	public int stopMember(SqlSessionTemplate sqlSession, ArrayList<Integer> stopList) {
+//		return sqlSession.insert("adminMapper.stopMember", stopList);
+//	}
+	
+	
+	// 정지 처리된 적 있는지 조회
+	public int selectStopPenalty(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("adminMapper.selectStopPenalty", memNo);
 	}
+	
+	// 정지 날짜 업데이트
+	public int updateStopPenalty(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.update("adminMapper.updateStopPenalty", memNo);
+	}
+	
+	// 정지 날짜 인서트
+	public int insertStopPenalty(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.insert("adminMapper.insertStopPenalty", memNo);
+	}
+	
+	// 팀 멤버 정보 조회 
+	public ArrayList<TeamMember> selectTeamMem(SqlSessionTemplate sqlSession, int memNo) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectTeamMem", memNo);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	// 부리더를 리더로
+	public int updateSubLeader(SqlSessionTemplate sqlSession, int sl) {
+		return sqlSession.update("adminMapper.updateSubLeader", sl);
+	}
+	
+	
+	
+	
+	
+	// 팀 탈퇴
+	public int deleteTeamMember(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.delete("adminMapper.deleteTeamMember", memNo);
+	}
+	
+	
+	// 강퇴 멤버 상태 변경
+	public int updateMemberStatus(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.update("adminMapper.updateMemberStatus", memNo);
+	}
+	
+	
 	
 	
 	

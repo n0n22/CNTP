@@ -13,6 +13,7 @@ import com.kh.cntp.admin.model.vo.Banner;
 import com.kh.cntp.admin.model.vo.Report;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.vo.Member;
+import com.kh.cntp.moim.model.vo.TeamMember;
 import com.kh.cntp.notice.model.vo.Notice;
 
 @Service
@@ -137,13 +138,62 @@ public class AdminServiceImpl implements AdminService {
 	
 
 	// 정지 처리
+//	@Override
+//	public int stopMember(ArrayList<Integer> stopList) {
+//		return adminDao.stopMember(sqlSession, stopList);
+//	}
+	
+	
+	// 정지 처리된 적 있는지 조회
 	@Override
-	public int stopMember(ArrayList<Integer> stopList) {
-		return adminDao.stopMember(sqlSession, stopList);
+	public int selectStopPenalty(int memNo) {
+		return adminDao.selectStopPenalty(sqlSession, memNo);
+	}
+	
+	
+	// 정지 날짜 업데이트 
+	@Override
+	public int updateStopPenalty(int memNo) {
+		return adminDao.updateStopPenalty(sqlSession, memNo);
+	}
+	
+	// 정지 날짜 인서트
+	@Override
+	public int insertStopPenalty(int memNo) {
+		return adminDao.insertStopPenalty(sqlSession, memNo);
+	}
+	
+	
+	// 팀 멤버정보 조회해오기
+	@Override
+	public ArrayList<TeamMember> selectTeamMem(int memNo) {
+		return adminDao.selectTeamMem(sqlSession, memNo);
 	}
 	
 	
 	
+	// 리더일때 - 부리더가 있을 때
+	@Transactional
+	@Override
+	public int updateSubLeader(int memNo, int sl) {
+		return adminDao.updateSubLeader(sqlSession, sl) // 부리더를 리더로
+				* adminDao.deleteTeamMember(sqlSession, memNo) // 팀 탈퇴
+				* adminDao.updateMemberStatus(sqlSession, memNo); // 멤버상태변경
+	}
+	
+	
+	
+	
+	
+	
+	// 멤버일때
+	// 팀 탈퇴 후 멤버 상태 변경
+	@Transactional
+	@Override
+	public int memberCase(int memNo) {
+		return adminDao.deleteTeamMember(sqlSession, memNo) // 팀 탈퇴
+				* adminDao.updateMemberStatus(sqlSession, memNo); // 멤버상태변경
+	}
 	
 	
 	
@@ -215,6 +265,10 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteNotice(int nno) {
 		return adminDao.deleteNotice(sqlSession, nno);
 	}
+
+
+
+
 
 
 

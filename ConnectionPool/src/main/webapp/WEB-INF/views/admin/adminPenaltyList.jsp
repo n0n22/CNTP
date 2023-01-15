@@ -11,12 +11,7 @@
 <style>
 
 
-	.report-outer {
-		margin-left : 150px;
-		height : 90%;
 
-		padding: 20px;
-	}
 
 	.report-btn-area {
 		padding: 15px;
@@ -50,7 +45,7 @@
     <jsp:include page="../common/menubar_nosearch.jsp" />
     <jsp:include page="adminMenubar.jsp" />
 
-    <div class="report-outer">
+    <div class="admin-outer">
     
         
         <div class="report-btn-area">
@@ -89,7 +84,7 @@
 	                    </tbody>
 		            </table>
 
-                <button class="btn btn-danger" onclick="openConfirm()" id="confirmBtn">처리</btton>
+                <button class="btn btn-danger" onclick="openConfirm();" id="confirmBtn">처리</btton>
             </div>
 			<div class="page-area">
 				<ul class="pagination" align="center">
@@ -218,13 +213,16 @@
 				if(count > 0) { // 체크 한 상태라서 요청이 가야 함
 		    		alertify.confirm('체크 했어?', function() {
 					
-		    			// $('#penaltyForm').submit();
+		    			$('#penaltyForm').submit();
 		    		
+		   			}, function() {
+		   				
+		    			$('#penaltyForm').html('');
+		   				
 		   			});
 				} 
 				else { // 체크 안한 상태라서 요청이 가면 안됨
 		    		alertify.confirm('체크 안함', function() {
-		    			$('#penaltyForm').append('');
 		   			});
 				}
 				

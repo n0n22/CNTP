@@ -14,9 +14,14 @@
         }
 
         .admin-menubar-outer {
-            width: 150px;
+            width: 200px;
             height: 100%;
             position: fixed;
+            
+            padding : 20px;
+            background-color : lightgray;
+            
+            
         }
 
         .admin-menubar-outer a {
@@ -39,11 +44,20 @@
             padding: 10px;
 
             position: relative;
+            
+            border-radius : 5px;
+        }
+        
+        
+        .admin-menubar-outer a:hover {
+        	cursor : pointer;
+        	background-color : gray;
         }
 
 
 	    .admin-outer {
-            margin-left: 150px;
+            margin-left: 200px;
+            width:80%;
             height: 100%;
             padding: 25px;
         }

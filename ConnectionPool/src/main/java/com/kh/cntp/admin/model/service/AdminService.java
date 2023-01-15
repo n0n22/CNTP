@@ -7,6 +7,7 @@ import com.kh.cntp.admin.model.vo.Banner;
 import com.kh.cntp.admin.model.vo.Report;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.vo.Member;
+import com.kh.cntp.moim.model.vo.TeamMember;
 import com.kh.cntp.notice.model.vo.Notice;
 
 public interface AdminService {
@@ -78,7 +79,36 @@ public interface AdminService {
 	
 	
 	// 정지 처리
-	int stopMember(ArrayList<Integer> stopList);
+	// int stopMember(ArrayList<Integer> stopList);
+	
+	// 정지 받은 적 있는지 조회
+	int selectStopPenalty(int memNo);
+	
+	// 정지 날짜 업데이트
+	int updateStopPenalty(int memNo);
+	
+	// 정지 날짜 인서트
+	int insertStopPenalty(int memNo);
+	
+	
+	// 팀 멤버정보 조회해오기
+	ArrayList<TeamMember> selectTeamMem(int memNo);
+	
+	
+	
+	// 리더일때
+	
+	
+	// 리더일때 - 부리더가 있을때
+	int updateSubLeader(int memNo, int sl);
+	
+	
+	
+	
+	
+	// 멤버일때
+	// 팀 탈퇴 후 멤버 상태 변경
+	int memberCase(int memNo);
 	
 	
 	

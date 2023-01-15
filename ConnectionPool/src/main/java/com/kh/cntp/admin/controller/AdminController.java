@@ -24,6 +24,7 @@ import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.common.template.Pagination;
 import com.kh.cntp.common.template.Template;
 import com.kh.cntp.member.model.vo.Member;
+import com.kh.cntp.moim.model.vo.TeamMember;
 import com.kh.cntp.notice.model.service.NoticeService;
 import com.kh.cntp.notice.model.vo.Notice;
 
@@ -236,27 +237,96 @@ public class AdminController {
 	// 패널티 처리
 	@RequestMapping("penaltyInsert.ad")
 	public ModelAndView insertPenalty(int[] memNo, String[] penalty, ModelAndView mv) {
-		ArrayList<Integer> stopList = new ArrayList();
-		ArrayList<Integer> kickList = new ArrayList();
+		String grade = ""; // 등급
+		int sl = 0;
 		
-		
-		for (int i = 0; i < memNo.length; i++) {
-			Report re = new Report();
-			if(penalty[i].equals("정지")) {
-				stopList.add(memNo[i]);
-			} else {
-				kickList.add(memNo[i]);
-			}			
-		}
-		
-		
-		if(!stopList.isEmpty()) {
-			adminService.stopMember(stopList);
-		}
-		if(!kickList.isEmpty()) {
+		for(int i = 0; i < memNo.length; i++) {
+			
+			if(penalty[i].equals("정지")) { // 정지 : select -> update or insert
+				
+				if(adminService.selectStopPenalty(memNo[i]) > 0) { // 정지 받은 적이 있으면 update
+					adminService.updateStopPenalty(memNo[i]);
+				} else { // 정지받은 적이 없으면 insert
+					adminService.insertStopPenalty(memNo[i]);
+				}
+				
+			} else { // 탈퇴 
+				
+				ArrayList<TeamMember> list = adminService.selectTeamMem(memNo[i]);
+				
+				// 팀 멤버정보 조회해오기
+				if(!list.isEmpty()) { // 팀이 있으면
+					
+					for(TeamMember tm : list) {
+						if(tm.getMemNo() == memNo[i]) {
+							grade = tm.getTeamGrade(); // 등급을 뽑아냄					
+						}
+					}
+					
+					if(grade.equals("L")) { // 팀 리더일 때
+						for(TeamMember tm : list) {
+							if(tm.getTeamGrade().equals("S")) {
+								sl = tm.getMemNo(); 
+							}
+						}
+						if(sl > 0) { // 부리더가 있으면
+							
+							adminService.updateSubLeader(memNo[i], sl);
+							
+						} else { // 부리더가 없으면
+							
+							
+							
+						}
+						
+						
+						
+					} else if (grade.equals("S")) { // 부리더일때
+						
+					} else { // 멤버일 때
+						// 팀 탈퇴 후 멤버 상태 변경
+						adminService.memberCase(memNo[i]);
+					}
+					
+				} else { // 팀이 없으면
+					// 멤버 상태 변경
+				}
+				
+				
+				
+			}
+			
+			
+			
 			
 		}
 		
+		
+		
+		
+		
+		
+		
+		
+//		for (int i = 0; i < memNo.length; i++) {
+//			Report re = new Report();
+//			if(penalty[i].equals("정지")) {
+//				stopList.add(memNo[i]);
+//			} else {
+//				kickList.add(memNo[i]);
+//			}			
+//		}
+//		
+//		System.out.println(stopList);
+//		System.out.println(kickList);
+//		
+//		if(!stopList.isEmpty()) {
+//			adminService.stopMember(stopList);
+//		}
+//		if(!kickList.isEmpty()) {
+//			
+//		}
+//		
 		
 		mv.setViewName("redirect:penaltyList.ad");
 		return mv;
