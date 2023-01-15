@@ -132,5 +132,9 @@ public class MoimDao {
 	public Group selectGroup(SqlSessionTemplate sqlSession, String groupNo) {
 		return sqlSession.selectOne("moimMapper.selectGroup", groupNo);
 	}
+	
+	public int insertGroup(SqlSessionTemplate sqlSession, Group group) {
+		return sqlSession.insert("moimMapper.insertOneGroup", group);
+	}
 
 }

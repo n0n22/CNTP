@@ -131,7 +131,7 @@
 				                <label for="powerDuration"> 파워 등록 시 10P가 소요됩니다. </label> 
 		            		</c:when>
 		            		<c:otherwise>
-		            			<input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" value="true" disabled> 
+		            			<input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" disabled> 
 				                <label for="powerDuration"> 파워 등록 시 10P가 소요됩니다. </label> 
 		            		</c:otherwise>
 		            	</c:choose>
