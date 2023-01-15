@@ -50,7 +50,7 @@
 					<tr height="50">
 						<th>썸네일</th>
 						<td>
-							<input type="file" style="height:50px" name="reUpfile" required>
+							<input type="file" style="height:50px" name="reUpfile">
 							<c:if test="${ not empty group.originName }">
 		            			현재 업로드된 파일 : 
 		            			<a href="${ group.changeName }" download="${ group.originName }">${ group.originName }</a>
@@ -101,7 +101,7 @@
 						<th>레벨</th>
 						<td>
 							<select id="level" name="level" style="height:50px">
-								<option value="A">무관</option>
+								<option value="E">무관</option>
 								<option value="B">초급</option>
 								<option value="M">중급</option>
 								<option value="S">고급</option>
@@ -126,12 +126,12 @@
 			            	<c:choose>
 			            		<c:when test="${ loginMember.memPoint >= 10 }">
 			            			<c:choose>
-								        <c:when test="${ team.powerDuration ne 'true' }">
-							                <input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" value="true"><br>
+								        <c:when test="${ group.powerDuration eq '일반' }">
+							                <input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" value="true">
 						                	<label for="powerDuration"> 파워 등록 시 10P가 소요됩니다. </label> 
 								        </c:when>
 								        <c:otherwise>
-								        	<label>파워등록기간입니다(${team.powerDuration }까지)</label>
+								        	<label>파워등록기간입니다(${group.powerDuration }까지)</label>
 								        </c:otherwise>
 							        </c:choose>
 			            		</c:when>
@@ -148,6 +148,9 @@
 				<div align="right">
 					<button>등록하기</button>
 				</div>
+				<input name="originName" value="${ group.originName }" type="hidden">
+				<input name="changeName" value="${ group.changeName }" type="hidden">
+				<input name="groupNo" value="${ group.groupNo }" type="hidden">
 				<input type="hidden" name="memNo" value="${ loginMember.memNo }">
 			</form>
 		</div>
@@ -168,8 +171,8 @@
 		console.log(date);
 		
 		//시작날짜를 지금 시각으로 맞춤
-		$startTime.val(date);
-		$endTime.val(date);
+		$startTime.val('${group.startTime}');
+		$endTime.val('${ group.endTime }');
 		
 		//시작일자의 최소를 현재 날짜로 바꿈
 		$startTime.attr('min', date);

@@ -113,18 +113,18 @@
 			
 						<br>
 						
-						<div class="apply-area" align="right">
+						<div class="apply-area" align="center">
 							<div style="display:inline-block;">
 								<form action="chattingRoom.mo" method="post">
 									<input type="hidden" name="moimNo" value="${ group.groupNo }">
 									<input type="hidden" name="memNo" value="${ loginMember.memNo }">
 									<input type="hidden" name="moimMember" value="${ group.groupMember }">
 									<input type="hidden" name="moimTitle" value="${ group.groupTitle }">
-									<button class="btn btn-primary" style="width:300px;">채팅하기</button>
+									<button class="btn btn-primary">채팅하기</button>
 								</form>
 							</div>
 							<div style="display:inline-block;">
-								<button>신청/대기/완료</button>
+								<button class="btn btn-primary">신청/대기/완료</button>
 							</div>
 						</div>
 						

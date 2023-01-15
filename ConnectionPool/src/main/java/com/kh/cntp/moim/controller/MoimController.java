@@ -272,8 +272,9 @@ public class MoimController {
 		Group group = moimService.selectGroup(groupNo);
 		
 		group.setGroupMember(group.getGroupMember().substring(group.getGroupMember().indexOf('/') + 1, group.getGroupMember().indexOf(')')));
-		
-		System.out.println(group.getGroupMember());
+		group.setStartTime(group.getStartTime().replace(" ", "T").replace("/", "-").substring(0, 16));
+		group.setEndTime(group.getEndTime().replace(" ", "T").replace("/", "-").substring(0, 16));
+		//System.out.println(group);
 		
 		mv.addObject("group", group).setViewName("moim/groupUpdateForm");
 		
@@ -470,6 +471,32 @@ public class MoimController {
 			mv.setViewName("common/errorPage");
 		}
 		
+		return mv;
+	}
+	
+	@RequestMapping("updateGroup.mo")
+	public ModelAndView updateGroup(ModelAndView mv, Group group, MultipartFile reUpfile, HttpSession session) {
+		
+		group.setStartTime(group.getStartTime().replace("T", " "));
+		group.setEndTime(group.getEndTime().replace("T", " "));
+		
+		//System.out.println(group);
+		
+		if(!reUpfile.getOriginalFilename().equals("")) {
+			if(!group.getOriginName().equals("")) {
+				new File(session.getServletContext().getRealPath(group.getChangeName())).delete();
+			}
+			
+			group.setOriginName(reUpfile.getOriginalFilename());
+			group.setChangeName("resources/upfiles/" + saveFile(reUpfile, session));
+		}
+		
+		if(moimService.updateGroup(group) > 0) {
+			session.setAttribute("alertMsg", "소모임 정보 수정 완료");
+			mv.setViewName("redirect:groupDetail.mo?groupNo=" + group.getGroupNo());
+		} else {
+			mv.addObject("errorMsg", "소모임 정보 수정 실패").setViewName("common/errorPage");
+		}
 		return mv;
 	}
 	

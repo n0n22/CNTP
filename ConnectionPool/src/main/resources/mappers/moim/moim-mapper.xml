@@ -625,7 +625,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		             ELSE '고급' END "LEVEL"
 		       ,CASE WHEN TO_CHAR(G.POWER_DURATION, 'YYYYMMDD') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDD')]]> THEN '파워'
 		             ELSE '일반' END "POWER_DURATION"
-		       ,TO_CHAR(G.CREATE_DATE, 'YYYY/MM/DD') "CREATE_DATE"
 		       ,TO_CHAR(G.START_TIME, 'YYYY/MM/DD hh24:mi:ss') "START_TIME"
 		       ,TO_CHAR(G.END_TIME, 'YYYY/MM/DD hh24:mi:ss') "END_TIME"
 		       ,CASE WHEN GROUP_MEMBER - 1 <![CDATA[<= (SELECT
@@ -680,7 +679,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		      TO_CHAR(START_TIME, 'YYYYMMDDHH24MISS') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')]]>
 		</if>
 		 ORDER
-		    BY G.POWER_DURATION, CREATE_DATE DESC
+		    BY G.POWER_DURATION, G.CREATE_DATE DESC
 		       
 	</select>
 	
@@ -715,7 +714,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       )
 	</insert>
 	
-	
+	<update id="updateGroup" parameterType="group">
+		UPDATE
+		       "GROUP"
+		   SET
+		        GROUP_CONTENT = #{groupContent}
+		       ,GROUP_AREA = #{ groupArea }
+		       ,PLACE = #{ place }
+		       ,GROUP_MEMBER = #{ groupMember }
+		       ,ORIGIN_NAME = #{ originName }
+		       ,CHANGE_NAME = #{ changeName}
+		       ,"LEVEL" = #{ level }
+		       ,GENDER = #{ gender }
+		       ,GROUP_TITLE = #{ groupTitle }
+		       ,START_TIME = TO_DATE(#{ startTime }, 'YYYY-MM-DD HH24:MI')
+		       ,END_TIME = TO_DATE(#{ endTime }, 'YYYY-MM-DD HH24:MI')
+			  <if test="powerDuration != 'null'">
+	      		,POWER_DURATION = SYSDATE + 7
+		      </if>
+		 WHERE
+		       GROUP_NO = #{ groupNo }
+	</update>
 	
 	
 	

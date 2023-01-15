@@ -95,7 +95,7 @@
 						<th>레벨</th>
 						<td>
 							<select name="level" style="height:50px">
-								<option value="A">무관</option>
+								<option value="E">무관</option>
 								<option value="B">초급</option>
 								<option value="M">중급</option>
 								<option value="S">고급</option>
