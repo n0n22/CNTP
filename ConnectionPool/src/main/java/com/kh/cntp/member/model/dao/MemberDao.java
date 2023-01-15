@@ -1,10 +1,15 @@
 package com.kh.cntp.member.model.dao;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.vo.Cert;
 import com.kh.cntp.member.model.vo.Member;
+import com.kh.cntp.member.model.vo.Point;
 
 @Repository
 public class MemberDao {
@@ -76,9 +81,25 @@ public class MemberDao {
 	public int myPageDelete(SqlSessionTemplate sqlSession, Member member) {
 		return sqlSession.update("memberMapper.myPageDelete", member);
 	}
+	
+	// 포인트 내역 개수 조회
+	public int selectPointCount(SqlSessionTemplate sqlSession, Point point) {
+		return sqlSession.selectOne("memberMapper.selectPointCount", point);
+	}
+	
+	// 포인트 내역 조회
+	public ArrayList<Point> selectPointList(SqlSessionTemplate sqlSession, PageInfo pi, Point point) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit()); 
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectPointList", point, rowBounds);
+	}
+	
 	//////////////////////////////////
 	// 인기도							//
 	//////////////////////////////////
+	
 	// 회원 프로필 조회
 	public Member showProfile(SqlSessionTemplate sqlSession, int memNo) {
 		return sqlSession.selectOne("memberMapper.showProfile", memNo);

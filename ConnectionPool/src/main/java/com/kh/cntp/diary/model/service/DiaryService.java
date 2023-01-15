@@ -8,6 +8,7 @@ import com.kh.cntp.diary.model.vo.Diary;
 import com.kh.cntp.reply.model.vo.Reply;
 
 public interface DiaryService {
+	
 	/*
 	// 게시글 리스트 조회 서비스 + 페이징 처리(select)
 	// 게시글 총 개수 조회
@@ -19,7 +20,7 @@ public interface DiaryService {
 	int insertDiary(Diary d);
 	
 	// 게시글 상세 조회 서비스
-	// 게시글 조회수 증가(update)
+	// 게시글 조회수 증가(update)->조회수증가 할 필요없음. 
 	//int increaseCount(int boardNo);
 	// 게시글 상세 조회(select)
 	Board selectDiary(int diaryNo);
@@ -29,7 +30,17 @@ public interface DiaryService {
 	
 	// 게시글 수정 서비스(update)
 	int updateDiary(Diary d);
-	*/
 	
+	/*
+	
+	//댓글 리스트 조회서비스(Ajax)(select)
+	ArrayList<Reply> selectReplyList(int DiaryNo);
+		
+	// 댓글 작성 서비스 (Ajax)(insert)
+	int insertReply(Reply r);
+		
+	// TOP-N분석(select)
+	ArrayList<Diary> selectTopDiary();
+	*/
 	
 }

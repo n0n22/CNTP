@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>        
 <!DOCTYPE html>
 <html>
 <head>
@@ -117,7 +119,7 @@
         font-size: 25px;
     }
     #title-line {
-        width: 950px;
+        width: 920px;
         margin: auto;
     }
 
@@ -228,12 +230,20 @@
     <div class="outer">
         <div class="top-bar">
             <div class="inline-block">
-                <div id="name-area" style="cursor: default;"><span id="userName">커풀</span> 님
-                    <br>🤔<span>무소속</span>
+                <div id="name-area" style="cursor: default;"><span id="userName">${sessionScope.loginMember.nickName}</span> 님
+                    <br>
+                    <c:if test="${ sessionScope.loginMember.badgeChangeName == null }">
+                    	노뱃지
+                   	</c:if>
+                   	<img src="${ sessionScope.loginMember.badgeChangeName }" width="30px">
+                   	<c:if test="${ sessionScope.loginMember.teamName == null }">
+                   		무소속	
+                   	</c:if>
+                   		<span>${ sessionScope.loginMember.teamName }</span>
                 </div>
                 <div>
-                    <div id="point-text">포인트&nbsp;<span id="point">180</span></div>
-                    <div id="ingido-text">인기도&nbsp;<span id="ingido">13</span></div>
+                    <div id="point-text">포인트&nbsp;<span id="point">${sessionScope.loginMember.memPoint}</span></div>
+                    <div id="ingido-text">인기도&nbsp;<span id="ingido">${sessionScope.loginMember.ingido}</span></div>
                 </div>
             </div>
             <div>
@@ -253,63 +263,88 @@
                 <div id="title-line"><hr></div>
             <div class="info-area" style="margin: auto;">
                <!-- 없을때-->
-                <div align="center">
-                    <br><br><br> 
-                    <p class="noTitle">포인트 내역이 없어요</p>
-                    <p class="noTitle">포인트는 출석체크 및 게시글,댓글 작성으로 얻을 수 있어요</p>
-                    <br><br><br>
-                </div>
                <!-- 있을때--> 
-                <div id="pointForm" class="container">
-                    <p>포인트 내역은 수정과 삭제가 불가능합니다.</p>            
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th>적립/사용날짜</th>
-                          <th>포인트 적립/사용 내역</th>
-                          <th>포인트 </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>2023-01-02</td>
-                          <td>출석체크</td>
-                          <td>+1</td>
-                        </tr>
-                        <tr>
-                          <td>2023-01-02</td>
-                          <td>팀 생성</td>
-                          <td>-50</td>
-                        </tr>
-                        <tr>
-                          <td>2023-01-01</td>
-                          <td>출석체크</td>
-                          <td>+1</td>
-                        </tr>
-                        <tr>
-                            <td>2022-12-28</td>
-                            <td>출석체크</td>
-                            <td>+1</td>
-                        </tr>
-                        <tr>
-                            <td>2022-12-15</td>
-                            <td>출석체크</td>
-                            <td>+1</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+               <c:choose>
+               	<c:when test="${ empty plist }">
+               		<div align="center">
+                    	<br><br><br> 
+	                    <p class="noTitle">포인트 내역이 없어요</p>
+	                    <p class="noTitle">포인트는 출석체크 및 게시글,댓글 작성으로 얻을 수 있어요</p>
+	                    <br><br><br>
+                	</div>
+               	</c:when>
+               	<c:otherwise>
+               		<div id="pointForm" class="container">
+	                    
+	                    <ul class="nav">
+						  <li class="nav-item">
+						    <a class="nav-link" href="myPagePoint.me">전체보기</a>
+						  </li>
+						  <li class="nav-item">
+						    <a class="nav-link" href="myPagePoint.me?category=적립">적립내역</a>
+						  </li>
+						  <li class="nav-item">
+						    <a class="nav-link" href="myPagePoint.me?category=사용">사용내역</a>
+						  </li>
+						</ul>       
+						
+	                    <table class="table">
+	                      <thead>
+	                        <tr>
+	                          <th>적립/사용날짜</th>
+	                          <th>포인트 적립/사용 내역</th>
+	                          <th>포인트 </th>
+	                        </tr>
+	                      </thead>
+	                      <tbody>	
+	                    	<c:forEach var="p" items="${plist}">
+	                    		<tr>
+	                    			<td>${ p.pointDate }</td>
+	                    			<td>${ p.pointContent }</td>
+	                    			<c:if test="${ p.point.contains(\"+\") }">
+		                    			<td style="color:green">${ p.point }</td>
+	                    			</c:if>
+	                    			<c:if test="${ p.point.contains(\"-\") }">
+		                    			<td style="color:red">${ p.point }</td>
+	                    			</c:if>
+	                    		</tr>
+	                    	</c:forEach>
+	                      </tbody>
+	                    </table>
+                  	</div>
+               	</c:otherwise>
+               </c:choose>
             </div>
             <br><br><br>
-            <div class="container" id="pagination">
-                <ul class="pagination">
-                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </div>
+            
+            <c:if test="${ not empty plist }">
+	            <div class="container" id="pagination">
+	                <ul class="pagination">
+	                	<c:choose>
+	                		<c:when test="${ pi.currentPage eq 1 }">
+	                			<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+	                		</c:when>
+	                		<c:otherwise>
+	                			<li class="page-item"><a class="page-link" href="myPagePoint.me?cpage=${ pi.currentPage - 1 }&category=${category}">Previous</a></li>
+	                		</c:otherwise>
+	                	</c:choose>
+	                	
+	                	<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+               				<li class="page-item"><a class="page-link" href="myPagePoint.me?cpage=${p}&category=${category}">${ p }</a></li>
+	                	</c:forEach>
+	                	
+                	 	<c:choose>
+	                		<c:when test="${ pi.currentPage eq pi.maxPage  }">
+	                			<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+	                		</c:when>
+	                		<c:otherwise>
+	                			<li class="page-item"><a class="page-link" href="myPagePoint.me?cpage=${ pi.currentPage + 1 }&category=${category}">Next</a></li>
+	                		</c:otherwise>
+	                	</c:choose>
+	                </ul>
+	            </div>
+            </c:if>
+            
         </div>
 
     </div>

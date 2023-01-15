@@ -1,12 +1,16 @@
 package com.kh.cntp.member.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.dao.MemberDao;
 import com.kh.cntp.member.model.vo.Cert;
 import com.kh.cntp.member.model.vo.Member;
+import com.kh.cntp.member.model.vo.Point;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -96,6 +100,19 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.myPageDelete(sqlSession, member);
 	}
 	
+	// 포인트 내역 개수 조회
+	@Override
+	public int selectPointCount(Point point) {
+		return memberDao.selectPointCount(sqlSession, point);
+	}
+	
+	// 포인트 내역 조회
+	@Override
+	public ArrayList<Point> selectPointList(PageInfo pi, Point point) {
+		return memberDao.selectPointList(sqlSession, pi, point);
+	}
+	
+	
 	//////////////////////////////////
 	// 인기도							//
 	//////////////////////////////////
@@ -104,6 +121,11 @@ public class MemberServiceImpl implements MemberService {
 	public Member showProfile(int memNo) {
 		return memberDao.showProfile(sqlSession, memNo);
 	}
+
+
+
 	
+
+
 	
 }

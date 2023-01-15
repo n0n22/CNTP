@@ -1,7 +1,11 @@
 package com.kh.cntp.member.model.service;
 
+import java.util.ArrayList;
+
+import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.vo.Cert;
 import com.kh.cntp.member.model.vo.Member;
+import com.kh.cntp.member.model.vo.Point;
 
 public interface MemberService {
 	
@@ -45,4 +49,11 @@ public interface MemberService {
 	
 	// 회원 프로필 조회
 	Member showProfile(int memNo);
+	
+	// 포인트 내역 개수 조회
+	int selectPointCount(Point point);
+	
+	// 포인트 내역 조회
+	ArrayList<Point> selectPointList(PageInfo pi, Point point);
+	
 }

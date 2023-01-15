@@ -6,14 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.cntp.common.model.vo.PageInfo;
+import com.kh.cntp.common.template.Pagination;
 import com.kh.cntp.member.model.service.MemberService;
 import com.kh.cntp.member.model.vo.Member;
+import com.kh.cntp.member.model.vo.Point;
 
 @Controller
 public class myPageController {
-	// myPage 관련 컨트롤러 이 또한 화면지정을 위한 mapping값만 설정함 추후 수정예정
 	
 	@Autowired
 	private MemberService memberService;
@@ -89,8 +92,23 @@ public class myPageController {
 	
 	// 마이페이지 포인트 내역 조회
 	@RequestMapping("myPagePoint.me")
-	public String myPagePoint() {
-		return "member/myPage/myPagePoint";
+	public ModelAndView myPagePoint(HttpSession session,
+									ModelAndView mv,
+									@RequestParam(value="cpage", defaultValue="1")int cPage,
+									@RequestParam(value="category", defaultValue="all")String category) {
+		// Point에 현재 로그인한 회원번호,카테고리 set 
+		Point point = new Point();
+		point.setMemNo(((Member)session.getAttribute("loginMember")).getMemNo());
+		point.setCategory(category); 
+		
+		PageInfo pi = Pagination.getPageInfo(memberService.selectPointCount(point), cPage, 5, 5);
+		
+		mv.addObject("pi", pi);
+		mv.addObject("plist", memberService.selectPointList(pi, point));
+		mv.addObject("category", category);
+		mv.setViewName("member/myPage/myPagePoint");
+		
+		return mv;
 	}
 	
 	// 마이페이지 작성글 조회

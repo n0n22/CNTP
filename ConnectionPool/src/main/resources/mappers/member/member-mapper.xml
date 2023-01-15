@@ -4,7 +4,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="memberMapper">
-
+	
+	<!-- 멤버  -->
 	<resultMap id="memberResultSet" type="member" >
 		<result column="MEM_NO" property="memNo"/>
 		<result column="MEM_ID" property="memId"/>
@@ -30,6 +31,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="FAILCNT" property="failCnt"/>
 	</resultMap>
 	
+	<!-- 포인트 -->
+	<resultMap id="pointResultSet" type="point">
+		<result column="POINT_NO" property="pointNo"/>
+		<result column="MEM_NO" property="memNo"/>
+		<result column="POINT_CONTENT" property="pointContent"/>
+		<result column="POINT" property="point"/>
+		<result column="POINT_DATE" property="pointDate"/>
+		<result column="CATEGORY" property="category"/>
+	</resultMap>
+	
 	<!-- 로그인용 쿼리문  -->
 	<select id="loginMember" parameterType="member" resultMap="memberResultSet">
 		SELECT 
@@ -44,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       MEM_NAME,
 		       MEM_AREA,
 		       PHONE,
-		       BIRTHDAY,
+		       TO_CHAR(BIRTHDAY, 'YYYY-MM-DD') as "BIRTHDAY",
 		       DETAIL_AREA,
 		       MEM_STATUS,
 		       ENROLL_DATE,
@@ -254,6 +265,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   	   MEM_NO = #{memNo}			     	   		   
 	</update>
 	
+	<!-- 포인트 내역 개수 -->
+	<select id="selectPointCount" parameterType="point" resultType="_int">
+		SELECT
+			   COUNT(*)
+		  FROM 
+		       POINT
+		 WHERE 
+	           MEM_NO = #{memNo}
+   		<if test='category != "all"'>
+    	   AND
+		       CATEGORY = #{category}
+		</if>           
+	</select>
+	
+	<!-- 포인트 내역 조회 -->
+	<select id="selectPointList" parameterType="point" resultMap="pointResultSet">
+		SELECT 
+		       POINT_NO,
+		       MEM_NO,
+		       POINT_CONTENT,
+		       POINT,
+		       TO_CHAR(POINT_DATE, 'YYYY-MM-DD') as "POINT_DATE",
+		       CATEGORY
+		  FROM 
+		       POINT
+		 WHERE         
+		       MEM_NO = #{memNo}
+        <if test='category != "all"'>
+		   AND
+		       CATEGORY = #{category}
+		</if>
+		 ORDER
+		    BY
+		       POINT_NO DESC       
+	</select>
 	
 	<!-- 인기도 ******************************************************** -->
 	
