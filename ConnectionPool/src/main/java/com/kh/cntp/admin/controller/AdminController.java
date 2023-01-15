@@ -275,13 +275,18 @@ public class AdminController {
 							
 						} else { // 부리더가 없으면
 							
-							
+							if(list.size() > 1) { // 다른 팀원이 있을 때
+								
+							} else { // 다른 팀원이 없을 때
+								adminService.deleteTeam(memNo[i]);
+							}
 							
 						}
-						
-						
+											
 						
 					} else if (grade.equals("S")) { // 부리더일때
+						
+						
 						
 					} else { // 멤버일 때
 						// 팀 탈퇴 후 멤버 상태 변경
@@ -290,22 +295,13 @@ public class AdminController {
 					
 				} else { // 팀이 없으면
 					// 멤버 상태 변경
+					adminService.noTeamCase(memNo[i]);
+					
 				}
-				
-				
 				
 			}
 			
-			
-			
-			
 		}
-		
-		
-		
-		
-		
-		
 		
 		
 //		for (int i = 0; i < memNo.length; i++) {

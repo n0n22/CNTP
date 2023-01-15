@@ -167,16 +167,16 @@ public class AdminDao {
 	
 	
 	
-	
-	
+	// 팀 상태 변경
+	public int updateTeamStatus(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.update("adminMapper.updateTeamStatus", memNo);
+	}	
+		
 	
 	// 부리더를 리더로
 	public int updateSubLeader(SqlSessionTemplate sqlSession, int sl) {
 		return sqlSession.update("adminMapper.updateSubLeader", sl);
 	}
-	
-	
-	
 	
 	
 	// 팀 탈퇴
