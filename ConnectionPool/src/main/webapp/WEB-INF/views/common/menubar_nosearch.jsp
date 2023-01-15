@@ -270,7 +270,12 @@
     			url : 'showProfile.me',
     			data : {memNo:$memNo},
     			success : function(m){
-    				console.log(m);
+    				// console.log(m);
+    				// 로그인한 유저만 회원 프로필을 띄울 수 있음
+    				if(${empty loginMember}){
+    					return;
+    				}
+    					
     				var gender = m.gender == 'M' ? '남자' : '여자';
     				var grade = '';
     				switch(m.grade){
@@ -289,7 +294,7 @@
 		    		                    <!-- Modal Header -->
 		    		                    <div class="modal-header">
 		    		                        <h4 class="modal-title" align="center">커넥션플 회원 프로필</h4>
-		    		                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		    		                        <button type="button" class="close" onclick="modalClose(event)";>&times;</button>
 		    		                    </div>
 		    		                
 		    		                    <!-- Modal body -->
@@ -302,7 +307,8 @@
 		    		                                    <p class="card-text">성별 : \${gender}</p>
 		    		                                    <p class="card-text">지역 : \${m.memArea}</p>
 		    		                                    <p class="card-text">팀 : \${teamName}</p>
-		    		                                    &nbsp;<button onclick="ingido(\${m.memNo},1)">👍</button">&nbsp;<button onclick="ingido(\${m.memNo},-1)">👎</button>
+		    		                                    <p class="card-text">인기도 : <span id="ingido">\${m.ingido}</span></p>
+		    		                                    &nbsp;<button onclick="ingido(\${m.memNo},\${m.ingido},1)">👍</button>&nbsp;<button onclick="ingido(\${m.memNo},\${m.ingido},-1)">👎</button>
 		    		                                </div>
 		    		                            </div>
 		    		                        </div>
@@ -324,13 +330,44 @@
     			}
     		})
     	}
-    	
+    	// 회원 프로필 닫기
         function modalClose(event){
             $(event.target).attr('data-dismiss','modal');
             $('#modal').html('');
         }
-    
-    
+    	// 인기도 up & down
+    	// memNo에서는 올리는 회원 번호, 
+    	function ingido(targetNo, flag, ingido){
+    		console.log("targetNo : " + targetNo);
+    		console.log("flag : " + flag);
+    		console.log("ingido : " + ingido);
+    		if(${loginMember.memNo} === targetNo){
+    			alert('자신의 인기도는 올릴거나 내릴 수 없습니다.');
+    			return;
+    		}
+    		$.ajax({
+    			url : "ingido.me",
+    			type : "post",
+    			data : {
+    					memNo : ${loginMember.memNo},
+    					targetNo : targetNo,
+    					flag : flag
+    				   },
+    			success : function(result){
+    				if(result > 0){ // 인기도 변경 성공
+    					switch(flag){
+    						case 1 : alert('인기도 1을 올리셨습니다.'); $('#ingido').text(ingido + flag); break;
+    						case -1 : alert('인기도 1을 내리셨습니다.'); $('#ingido').text(ingido + flag); break;
+    					}
+    				} else{
+    					alert('이미 해당 회원의 인기도를 올리거나 내렸습니다.');
+    				}
+    			},
+    			error : function(){
+    				console.log('ajax 통신 실패');
+    			}
+    		})
+    	}
     </script>
     
     
