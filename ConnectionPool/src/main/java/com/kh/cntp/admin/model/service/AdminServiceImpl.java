@@ -183,6 +183,17 @@ public class AdminServiceImpl implements AdminService {
 	
 	
 	
+	// 부리더가 없고 다른 팀원도 없을 때
+	@Transactional
+	@Override
+	public int deleteTeam(int memNo) {
+		return adminDao.updateTeamStatus(sqlSession, memNo) // 팀 상태 변경
+				* adminDao.deleteTeamMember(sqlSession, memNo) // 팀탈퇴
+				* adminDao.updateMemberStatus(sqlSession, memNo); // 멤버상태변경
+	}
+	
+	
+	
 	
 	
 	
@@ -193,6 +204,14 @@ public class AdminServiceImpl implements AdminService {
 	public int memberCase(int memNo) {
 		return adminDao.deleteTeamMember(sqlSession, memNo) // 팀 탈퇴
 				* adminDao.updateMemberStatus(sqlSession, memNo); // 멤버상태변경
+	}
+	
+	
+	
+	// 팀이 없을때
+	@Override
+	public int noTeamCase(int memNo) {
+		return adminDao.updateMemberStatus(sqlSession, memNo); // 멤버상태변경
 	}
 	
 	
@@ -265,6 +284,8 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteNotice(int nno) {
 		return adminDao.deleteNotice(sqlSession, nno);
 	}
+
+
 
 
 

@@ -106,11 +106,18 @@ public interface AdminService {
 	
 	
 	
+	// 부리더가 없고 다른 팀원도 없을 때
+	int deleteTeam(int memNo);
+	
+	
+	
 	// 멤버일때
 	// 팀 탈퇴 후 멤버 상태 변경
 	int memberCase(int memNo);
 	
 	
+	// 팀이 없을때
+	int noTeamCase(int memNo);
 	
 	
 //-------------------------------------------

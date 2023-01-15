@@ -536,6 +536,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	
+	<!-- 팀 상태 변경 -->
+	<update id="updateTeamStatus">
+		UPDATE
+		       TEAM
+		   SET
+		       STATUS = 'N'
+		 WHERE
+		       TEAM_NO = (
+					       select
+							       team_no
+							from
+							     team_member
+							where 
+								  mem_no = #{memNo}
+		       				)		       
+	</update>
+	
+	
+	
 	
 	
 	<!-- 부리더를 리더로 -->
@@ -547,6 +566,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE
 			   MEM_NO = #{memNo}	
 	</update>
+	
+	
 	
 	
 	
