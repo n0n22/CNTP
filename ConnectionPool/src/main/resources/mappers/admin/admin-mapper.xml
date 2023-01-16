@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="bannerNo" column="BANNER_NO" />
 		<result property="memNo" column="MEM_NO" />
 		<result property="createDate" column="CREATE_DATE" />
-		<result property="OriginName" column="ORIGIN_NAME" />
+		<result property="originName" column="ORIGIN_NAME" />
 		<result property="changeName" column="CHANGE_NAME" />
 		<result property="status" column="STATUS" />
 		<result property="writer" column="NICKNAME" />
