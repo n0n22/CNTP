@@ -92,7 +92,7 @@ public class MoimController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="checkTeamName.mo")
+	@RequestMapping(value="checkTeamName.mo", produces="text/html; charset=UTF-8")
 	public String ajaxSelectTeam(String checkName) {
 		
 		if(moimService.ajaxSelectTeam(checkName) > 0) {
@@ -265,13 +265,15 @@ public class MoimController {
 		
 		Group group = moimService.selectGroup(groupNo);
 		
-		int startTimeNum = Integer.parseInt(group.getStartTime().replace("/", "").replace(" ", "").replace(":", ""));
-		int todayNum = Integer.parseInt(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+		long startTimeNum = Long.parseLong(group.getStartTime().replace("/", "").replace(" ", "").replace(":", ""));
+		long todayNum = Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
 		
 		String deadLine = "";
 		
 		if(startTimeNum <= todayNum) {
-			deadLine = "모집 기간 만료";
+			deadLine = "expired";
+		} else {
+			deadLine = "ok";
 		}
 		
 		
@@ -440,7 +442,11 @@ public class MoimController {
 		
 		if(moimService.insertApply(ap) > 0) {
 			// 성공
-			mv.setViewName("redirect:teamPage.mo?teamNo=" + ap.getMoimNo());
+			if(ap.getMoimNo().contains("T")) {
+				mv.setViewName("redirect:teamPage.mo?teamNo=" + ap.getMoimNo());
+			} else {
+				mv.setViewName("redirect:groupDetail.mo?groupNo=" + ap.getMoimNo());
+			}
 		} else {
 			mv.addObject("errorMsg", "신청 실패").setViewName("common/errorPage");
 		}
@@ -512,6 +518,15 @@ public class MoimController {
 			mv.addObject("errorMsg", "소모임 정보 수정 실패").setViewName("common/errorPage");
 		}
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="selectGroupApply.mo", produces="application/json; charset=UTF-8")
+	public String ajaxSelectGroupApply(Apply ap) {
+		
+		//System.out.println(ap);
+		
+		return new Gson().toJson(moimService.ajaxSelectGroupApply(ap));
 	}
 	
 }
