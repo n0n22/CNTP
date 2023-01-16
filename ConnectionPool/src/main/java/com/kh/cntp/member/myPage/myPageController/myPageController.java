@@ -7,7 +7,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -173,26 +172,25 @@ public class myPageController {
 	}
 	
 	// 출석체크
-	@ResponseBody
 	@RequestMapping("myPageAtCheck.me")
-	public String myPageAtCheck(int memNo, String pt, Point point) {
+	public String myPageAtCheck(int memNo, String pt, Point point, HttpSession session) {
 		point.setMemNo(memNo);
 		point.setPoint(pt);
 		
-		String result = "";
-		
 		if(memberService.countAtCheck(memNo) == 0) {
 			if(memberService.insertAtCheck(point) > 0){
+				session.setAttribute("alertMsg","출석체크 완료");
 				
-				result = "Y";
 			} else {
-				result = "W";
+				session.setAttribute("alertMsg","관리자에게 문의하세요");
 			}
+			
 		} else {
-			result = "N";
+			session.setAttribute("alertMsg", "이미 출석하셨습니다");
 		}
 		
 		
-		return result;
+		
+		return "redirect:myPageAtCheckForm.me";
 	}
 }
