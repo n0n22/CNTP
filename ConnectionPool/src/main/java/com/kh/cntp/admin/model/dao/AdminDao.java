@@ -159,12 +159,18 @@ public class AdminDao {
 	}
 	
 	// 팀 멤버 정보 조회 
-	public ArrayList<TeamMember> selectTeamMem(SqlSessionTemplate sqlSession, int memNo) {
-		return (ArrayList)sqlSession.selectList("adminMapper.selectTeamMem", memNo);
+//	public ArrayList<TeamMember> selectTeamMem(SqlSessionTemplate sqlSession, int memNo) {
+//		return (ArrayList)sqlSession.selectList("adminMapper.selectTeamMem", memNo);
+//	}
+	public TeamMember selectTeamMem(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("adminMapper.selectTeamMem", memNo);
 	}
 	
 	
-	
+	// 바꿀 팀원이 있을때 팀장으로 업데이트
+	public int updateTeamLeader(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.update("adminMapper.updateTeamLeader", memNo);
+	}
 	
 	
 	// 팀 상태 변경
@@ -173,13 +179,7 @@ public class AdminDao {
 	}	
 		
 	
-	// 부리더를 리더로
-	public int updateSubLeader(SqlSessionTemplate sqlSession, int sl) {
-		return sqlSession.update("adminMapper.updateSubLeader", sl);
-	}
-	
-	
-	// 팀 탈퇴
+	// 팀멤버 테이블에서 삭제
 	public int deleteTeamMember(SqlSessionTemplate sqlSession, int memNo) {
 		return sqlSession.delete("adminMapper.deleteTeamMember", memNo);
 	}
@@ -191,6 +191,10 @@ public class AdminDao {
 	}
 	
 	
+//	// 부리더를 리더로
+//	public int updateSubLeader(SqlSessionTemplate sqlSession, int sl) {
+//		return sqlSession.update("adminMapper.updateSubLeader", sl);
+//	}
 	
 	
 	

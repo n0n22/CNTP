@@ -182,12 +182,12 @@
                 </c:if>
                 <!-- 로그인 유저 직급이 'L' && 로그인 유저 팀이 homeTeam && 결과 작성이 되어 있을 경우 => 수정 버튼 -->
                 <c:if test="${ (loginMember.teamGrade eq 'L') and (loginMember.teamNo eq homeTeam.teamNo) and (battleResult.ok eq 'N') and (not empty awayTeam) }">
-	                <button class="btn btn-primary" onclick="updateForm()">결과수정</button>
-	                <form action="" method="post" id="updateFormSubmit">
+	                <form action="resultUpdateForm.bt" method="post" id="updateFormSubmit">
 	                	<input type="hidden" name="battleNo" value="${battleNo}"/>
 	                	<input type="hidden" name="homeTeam" value="${homeTeam.teamNo}"/>
 	                	<input type="hidden" name="awayTeam" value="${awayTeam.teamNo}"/>
 	                </form>
+	                <button class="btn btn-primary" onclick="updateForm()">결과수정</button>
 	                <script>
 	                	function updateForm(){
 	                		$('#updateFormSubmit').submit();
