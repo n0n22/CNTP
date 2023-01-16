@@ -168,11 +168,31 @@
                 <br>
                 <!-- 로그인 유저 직급이 'L' && 로그인 유저 팀이 homeTeam && 결과 작성이 안되어 있을 경우 => 작성 버튼 -->
                 <c:if test="${ (loginMember.teamGrade eq 'L') and (loginMember.teamNo eq homeTeam.teamNo) and (empty battleResult) and (not empty awayTeam) }">
-	                <button class="btn btn-primary" onclick="location.href='resultEnrollForm.bt?battleNo=${battleNo}&homeTeam=${homeTeam.teamNo}&awayTeam=${awayTeam.teamNo}'">결과작성</button>
+	                <form action="resultEnrollForm.bt" method="post" id="enrollFormSubmit">
+	                	<input type="hidden" name="battleNo" value="${battleNo}"/>
+	                	<input type="hidden" name="homeTeam" value="${homeTeam.teamNo}"/>
+	                	<input type="hidden" name="awayTeam" value="${awayTeam.teamNo}"/>
+	                </form>
+	                <button class="btn btn-primary" onclick="enrollForm()">결과작성</button>
+	                <script>
+	                	function enrollForm(){
+	                		$('#enrollFormSubmit').submit();
+	                	}
+	                </script>
                 </c:if>
                 <!-- 로그인 유저 직급이 'L' && 로그인 유저 팀이 homeTeam && 결과 작성이 되어 있을 경우 => 수정 버튼 -->
                 <c:if test="${ (loginMember.teamGrade eq 'L') and (loginMember.teamNo eq homeTeam.teamNo) and (battleResult.ok eq 'N') and (not empty awayTeam) }">
-	                <button class="btn btn-primary" onclick="location.href='resultEnrollForm.bt?battleNo=${battleNo}&homeTeam=${homeTeam.teamNo}&awayTeam=${awayTeam.teamNo}'">결과수정</button>
+	                <button class="btn btn-primary" onclick="updateForm()">결과수정</button>
+	                <form action="" method="post" id="updateFormSubmit">
+	                	<input type="hidden" name="battleNo" value="${battleNo}"/>
+	                	<input type="hidden" name="homeTeam" value="${homeTeam.teamNo}"/>
+	                	<input type="hidden" name="awayTeam" value="${awayTeam.teamNo}"/>
+	                </form>
+	                <script>
+	                	function updateForm(){
+	                		$('#updateFormSubmit').submit();
+	                	}	
+	                </script>
                 </c:if>
                 
                 <!--로그인 유저 직급이 'L' && 로그인 유저 팀이 awayTeam && 결과가 작성이 되어 있을 경우(N) -->

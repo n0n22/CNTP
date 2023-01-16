@@ -71,7 +71,7 @@
 	        <!-- 제목 div -->
 	        <div style="display : flex; justify-content: space-between;" id="chatTitleMemberCountArea">
 	            <h2>${ moimTitle }</h2>
-	            <h5>모집현황 ${ moimMember } </h5>
+	            <h5>참여인원 ${ moimMember } </h5>
 	        </div>
 	        
 	        <div id="chatContent-area">
@@ -185,7 +185,7 @@
 			url : 'ajaxSelectChatList.mo',
 			type : 'post',
 			data : {
-				moimNo : '${ chatList[0].moimNo }',
+				moimNo : '${ moimNo }',
 				memNo : '${ loginMember.memNo }'
 			},
 			success : function(list){
@@ -241,7 +241,6 @@
 				}
 				
 				$('#chatContent-area').html(result);
-				setInterval(selectChattingList, 700);
 			},
 			error : function(){
 				console.log('실패요');
@@ -255,13 +254,13 @@
 			url : 'insertChat.mo',
 			type : 'post',
 			data : {
-				moimNo : '${ chatList[0].moimNo }',
+				moimNo : '${ moimNo }',
 				memNo : '${ loginMember.memNo }',
 				chatContent : $('#chatContent-input').val()
 			},
 			success : function(result){
 				
-				//console.log(result);
+				console.log(result);
 				if(result == 'NNNNY'){
 					$('#chatContent-input').val('');
 					selectChattingList();
