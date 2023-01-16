@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -75,7 +76,12 @@ public class myPageController {
 	// 마이페이지 회원탈퇴 결과페이지
 	@RequestMapping("myPageDelete.me")
 	public ModelAndView myPageDelete(String agree, ModelAndView mv, HttpSession session) {
-
+		 
+//		if (((Member)session.getAttribute("loginMember")).getTeamGrade().equals("L")) {
+//			mv.addObject("alertMsg", "팀장 권한 위임 후 탈퇴 가능합니다");
+//			mv.setViewName("");
+//		} 
+		
 		if (agree.equals("동의합니다")) {
 			if(memberService.myPageDelete(((Member)session.getAttribute("loginMember"))) > 0) {
 				session.removeAttribute("loginMember");
@@ -164,5 +170,29 @@ public class myPageController {
 		mv.setViewName("member/myPage/myPageAttendanceCheck");
 		
 		return mv;
+	}
+	
+	// 출석체크
+	@ResponseBody
+	@RequestMapping("myPageAtCheck.me")
+	public String myPageAtCheck(int memNo, String pt, Point point) {
+		point.setMemNo(memNo);
+		point.setPoint(pt);
+		
+		String result = "";
+		
+		if(memberService.countAtCheck(memNo) == 0) {
+			if(memberService.insertAtCheck(point) > 0){
+				
+				result = "Y";
+			} else {
+				result = "W";
+			}
+		} else {
+			result = "N";
+		}
+		
+		
+		return result;
 	}
 }
