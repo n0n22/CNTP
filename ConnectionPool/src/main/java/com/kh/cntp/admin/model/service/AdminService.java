@@ -92,32 +92,32 @@ public interface AdminService {
 	
 	
 	// 팀 멤버정보 조회해오기
-	ArrayList<TeamMember> selectTeamMem(int memNo);
+	// ArrayList<TeamMember> selectTeamMem(int memNo);
+	TeamMember selectTeamMem(int memNo);
+	
+	// 바꿀 팀원이 있을 때
+	int updateTeamLeader(int memNo, int newLeader);
+	
+	
+	// 바꿀 팀원이 없을 때
+	int updateTeamStatus(int memNo);
+	
 	
 	
 	
 	// 리더일때
-	
-	
 	// 리더일때 - 부리더가 있을때
-	int updateSubLeader(int memNo, int sl);
-	
-	
-	
-	
-	
+	// int updateSubLeader(int memNo, int sl);
+		
 	// 부리더가 없고 다른 팀원도 없을 때
-	int deleteTeam(int memNo);
-	
-	
+	// int deleteTeam(int memNo);
 	
 	// 멤버일때
 	// 팀 탈퇴 후 멤버 상태 변경
-	int memberCase(int memNo);
-	
+	// int memberCase(int memNo);
 	
 	// 팀이 없을때
-	int noTeamCase(int memNo);
+	// int noTeamCase(int memNo);
 	
 	
 //-------------------------------------------
