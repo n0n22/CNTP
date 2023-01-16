@@ -289,7 +289,7 @@
     				case 'S' : grade = 'resources/images/special.jpg'; break;
     				default : grade = 'resources/images/cntp_flamingo.png'; break;
     				}
-    				let teamName = m.teamName == '' ? '무소속' : m.teamName;
+    				let teamName = m.teamName == null ? '무소속' : m.teamName;
     				
     				var modal = 
     			        `<div class="modal" id="myModal">
