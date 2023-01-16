@@ -36,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="group" id="groupResultMap">
 		<result column="GROUP_NO" 			property="groupNo"/>
 		<result column="NICKNAME" 			property="nickname"/>
+		<result column="GRADE" 			property="grade"/>
 		<result column="INGIDO"				property="ingido"/>
 		<result column="MEM_GENDER" 		property="memGender"/>
 		<result column="MEM_NO" 			property="memNo"/>
@@ -72,6 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="NICKNAME" 		property="nickname"/>
 		<result column="CHAT_CONTENT" 	property="chatContent"/>
 		<result column="CREATE_DATE" 	property="createDate"/>
+		<result column="GENDER" 	property="gender"/>
 	</resultMap>
 	
 	<resultMap type="resultHistory" id="resultHistoryResultMap">
@@ -214,6 +216,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ,A.MOIM_NO
 		       ,M.NICKNAME
 		       ,A.MEM_NO
+		       ,M.GENDER
 		       ,A.ACCEPT_YN
 		       ,TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') AS "APPLY_DATE"
 		       ,TO_CHAR(ACCEPT_DATE, 'YYYY-MM-DD') AS "ACCEPT_DATE"
@@ -523,6 +526,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT 
 		        G.GROUP_NO
 		       ,M.NICKNAME
+		       ,CASE WHEN M.GRADE = 'B' THEN '초급'
+		             WHEN M.GRADE = 'M' THEN '중급'
+		             WHEN M.GRADE = 'S' THEN '고급' END "GRADE"
 		       ,M.INGIDO
 		       ,CASE WHEN M.GENDER = 'F' THEN '여성'
 		             ELSE '남자' END "MEM_GENDER"

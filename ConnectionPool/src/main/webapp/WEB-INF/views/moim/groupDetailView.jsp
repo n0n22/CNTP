@@ -82,18 +82,29 @@
 	
 	        <c:choose>
 	        	<c:when test="${ loginMember.memNo ne group.memNo }">
-			        <div class="right-area">
+			        <div class="right-area" style="border:1px solid black;">
 		
 			            <div class="detailTitle" align="left">
+			            	
 			                <table class="groupInfoTable_1" border="1">
 			                    <tr>
 			                        <th>
-			                            <img width="500px" height="350" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"/>
+			                        	<c:choose>
+			                        		<c:when test="${ group.grade eq '초급' }">
+			                        			<img width="500px" height="350" src="${ pageContext.request.contextPath }/resources/images/beginner.jpg"/>
+			                        		</c:when>
+			                        		<c:when test="${ group.grade eq '중급' }">
+			                        			<img width="500px" height="350" src="${ pageContext.request.contextPath }/resources/images/middle.jpg"/>
+			                        		</c:when>
+			                        		<c:otherwise>
+			                        			<img width="500px" height="350" src="${ pageContext.request.contextPath }/resources/images/special.jpg"/>
+			                        		</c:otherwise>
+			                        	</c:choose>
 			                        </th>
 			                    </tr>
 			                </table>
 			            </div>
-			
+						<br>
 			            <div class="group-info">
 			                <table>
 			                    <tr>
@@ -108,10 +119,13 @@
 			                        <td>성별</td>
 			                        <td>${ group.memGender }</td>
 			                    </tr>
+			                    <tr>
+			                        <td>등급</td>
+			                        <td>${ group.grade }</td>
+			                    </tr>
 			                </table>
 			            </div>
-			
-						<br>
+			<br><br>
 						
 						<div class="apply-area" align="center">
 							<div style="display:inline-block;">
@@ -141,7 +155,6 @@
 			        		<tr>
 			        			<th width="100">닉네임</th>
 			        			<th width="80">성별</th>
-			        			<th width="80">인기도</th>
 			        			<th width="150">요청일시</th>
 			        			<th width="150">수락/거절</th>
 			        		</tr>
@@ -154,9 +167,8 @@
 			        			<c:otherwise>
 					        		<c:forEach items="${ applyList }" var="ap">
 						        		<tr>
-						        			<td>${ ap.nickname }</td>
-						        			<td>남자</td>
-						        			<td>5</td>
+						        			<td><p ingido="${ap.memNo}" title="프로필 보기" onclick="showProfile(event)">${ ap.nickname }</p></td>
+						        			<td>${ ap.gender }</td>
 						        			<td>${ ap.applyDate }</td>
 						        			<td>
 						        				<button>수락</button>
@@ -196,6 +208,8 @@
     </div>
     
     <br><br>
+    
+    
 	
 
 </body>
