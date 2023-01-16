@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.cntp.board.model.vo.Board;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.common.template.Pagination;
@@ -154,11 +155,12 @@ public class myPageController {
 	}
 	
 	// 출석체크 페이지
-	@RequestMapping("myPageAtCheckForm.me")
+	@RequestMapping(value="myPageAtCheckForm.me", produces="application/json; charset=UTF-8")
 	public ModelAndView myPageAtCheckForm(HttpSession session, ModelAndView mv) {
 		
 		int memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
 		
+		mv.addObject("checkList",new Gson().toJson(memberService.selectAtCheck(memNo)));
 		mv.setViewName("member/myPage/myPageAttendanceCheck");
 		
 		return mv;

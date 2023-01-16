@@ -70,6 +70,7 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.pwdChange", member);
 	}
 	
+	
 	/////////////////////////////////
 	// 마이페이지					   //
 	/////////////////////////////////
@@ -111,6 +112,12 @@ public class MemberDao {
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.selectMyBoardList", board, rowBounds);
 	}
+	
+	// 출석 내역 조회
+		public ArrayList<Point> selectAtCheck(SqlSessionTemplate sqlSession, int memNo) {
+			return (ArrayList)sqlSession.selectList("memberMapper.selectAtCheck", memNo);
+	}
+		
 	
 	//////////////////////////////////
 	// 인기도							//

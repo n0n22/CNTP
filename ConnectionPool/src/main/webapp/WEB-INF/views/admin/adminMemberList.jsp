@@ -474,17 +474,10 @@
 				
 			   // customWindow.close();
 
-			}
-			
-			
+			}			
 		};
 		
-	
-		
-	
-	
-	
-	
+
 	</script>
 
 

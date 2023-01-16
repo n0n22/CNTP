@@ -69,4 +69,7 @@ public interface MemberService {
 	
 	// 인기도 올리거나 내리기
 	int upOrDownIngido(HashMap<String, String> map);
+	
+	// 출석 내역 조회
+	ArrayList<Point> selectAtCheck(int memNo);
 }

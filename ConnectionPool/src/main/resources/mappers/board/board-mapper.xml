@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="origin_name"	property="originName" />
 		<result column="change_name"	property="changeName" />
 		<result column="count"			property="count" />
-		
+		<result column="status"			property="status" />
 	</resultMap>
 
 
@@ -46,10 +46,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				,count
 				,to_char(create_date, 'YYYY-MM-DD') as "CREATE_DATE"
 				,origin_name
+				,status
 		from
 				board
 		where
-				status = 'Y'
+				status != 'N'
 		order
 			by						
 				board_no desc
@@ -112,9 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where
 					status = 'Y'
 			 and
-			 		board_no = #{boardNo}						
-	
-	
+			 		board_no = #{boardNo}
 	</select>
 	
 	

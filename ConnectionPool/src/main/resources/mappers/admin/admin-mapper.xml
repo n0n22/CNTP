@@ -517,6 +517,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 팀 멤버정보 조회하기 -->
+<!-- 
 	<select id="selectTeamMem" parameterType="_int" resultMap="teamMemberResultSet">
 		SELECT
 		        TEAM_NO
@@ -532,8 +533,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		                   WHERE MEM_NO = #{memNo}
 		                 )
 	</select>
-	
-	
+ -->	
+	<!-- 리더가 아니고, 등급과 가입일자 순으로 정렬해서 조회 -->
+ 	<select id="selectTeamMem" parameterType="_int" resultMap="teamMemberResultSet">
+	 	SELECT *
+		  FROM
+		       (SELECT
+		               *
+		          FROM
+		               TEAM_MEMBER
+		         WHERE  
+		               TEAM_NO = (
+				                  SELECT TEAM_NO
+				                    FROM TEAM_MEMBER
+				                   WHERE MEM_NO = #{memNo}
+				                 )
+		           AND 
+		               TEAM_GRADE != 'L'
+		         ORDER 
+		            BY TEAM_GRADE DESC, TEAM_ENROLL_DATE)
+		 WHERE ROWNUM = 1
+ 	</select>
+ 	
+ 	<!-- 바꿀 팀원이 있을 때 팀 리더로 업데이트 -->
+ 	<update id="updateTeamLeader" parameterType="_int">
+ 		UPDATE
+ 		       TEAM_MEMBER
+ 		   SET
+ 		       TEAM_GRADE = 'L'
+ 		 WHERE
+ 		       MEM_NO = #{memNo}   
+ 	</update>
 	
 	
 	<!-- 팀 상태 변경 -->
@@ -551,25 +581,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 							where 
 								  mem_no = #{memNo}
 		       				)		       
-	</update>
-	
-	
-	
-	
-	
-	<!-- 부리더를 리더로 -->
-	<update id="updateSubLeader" parameterType="_int">
-		UPDATE
-		       TEAM_MEMBER
-		   SET
-		       TEAM_GRADE = 'L'
-		 WHERE
-			   MEM_NO = #{memNo}	
-	</update>
-	
-	
-	
-	
+	</update>	
 	
 	<!-- 팀 멤버 삭제  -->
 	<delete id="deleteTeamMember" parameterType="_int">
@@ -592,6 +604,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
+	
+	<!-- 부리더를 리더로 -->
+<!-- 	
+	<update id="updateSubLeader" parameterType="_int">
+		UPDATE
+		       TEAM_MEMBER
+		   SET
+		       TEAM_GRADE = 'L'
+		 WHERE
+			   MEM_NO = #{memNo}	
+	</update>
+-->
+	
 
 
 	
