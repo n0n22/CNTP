@@ -261,7 +261,19 @@ public class MoimController {
 	@RequestMapping("groupDetail.mo")
 	public ModelAndView selectGroup(ModelAndView mv, String groupNo) {
 		
-		mv.addObject("group", moimService.selectGroup(groupNo)).addObject("applyList", moimService.selectApplyList(groupNo)).setViewName("moim/groupDetailView");
+		Group group = moimService.selectGroup(groupNo);
+		
+		int startTimeNum = Integer.parseInt(group.getStartTime().replace("/", "").replace(" ", "").replace(":", ""));
+		int todayNum = Integer.parseInt(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+		
+		String deadLine = "";
+		
+		if(startTimeNum <= todayNum) {
+			deadLine = "모집 기간 만료";
+		}
+		
+		
+		mv.addObject("group", group).addObject("deadLine", deadLine).addObject("applyList", moimService.selectApplyList(groupNo)).setViewName("moim/groupDetailView");
 		
 		return mv;
 	}

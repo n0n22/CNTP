@@ -362,6 +362,12 @@
 										<div class="mt-2">
 											<span class="alpha alpha-red" onclick="chat()">채팅방</span>
 										</div>
+										<form action="chattingRoom.mo" method="post" id="chat">
+											<input type="hidden" name="moimNo" value="">
+											<input type="hidden" name="memNo" value="">
+											<input type="hidden" name="moimMember" value="">
+											<input type="hidden" name="moimTitle" value="">
+										</form>
 			
 									</div>
 									<script>
