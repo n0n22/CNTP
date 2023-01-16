@@ -364,6 +364,11 @@
 				
 				// 컬럼 숨기기
 				// console.log(ws.G1.hidden);
+				console.log(ws);
+				console.log(ws['!cols']);
+				ws['!cols'] = [];
+				ws['!cols'][5] = { hidden: true };
+
 				
 				// 시트 설정을 전달하면서 엑셀 파일 생성
 				let wb = XLSX.utils.table_to_book(document.getElementById('memberTable'), ws);
