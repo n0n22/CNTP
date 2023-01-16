@@ -69,4 +69,7 @@ public class BattleDao {
 	public int deleteBattlePool(SqlSessionTemplate sqlSession, int battleNo) {
 		return sqlSession.delete("battleMapper.deleteBattlePool", battleNo);
 	}
+	public int updateBattleResult(SqlSessionTemplate sqlSession, BattleResult br) {
+		return sqlSession.update("battleMapper.updateBattleResult", br);
+	}
 }

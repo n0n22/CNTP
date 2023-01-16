@@ -154,7 +154,7 @@
 
     }
    
-    .info-area button {
+    .atCheck{
         font-family: 'Pretendard-Regular';
         font-size: 15px;
         background-color: RGB(28,154,206);
@@ -169,13 +169,7 @@
         margin-bottom: 60px;
         font-size: 30px;
     }
-    #info-btn {
-        margin-top: 50px;
-        margin-bottom: 20px;
-        font-size: 20px;
-        width: 200px;
-        height: 50px;
-    }
+    
     .info-area button:hover {
         background-color: rgb(29, 172, 233);
         cursor: pointer;
@@ -242,9 +236,14 @@
             </div>
         </div>
         <div class="main-area">
-            <div id="title">출석체크</div>
+            <div id="title">
+            	출석내역조회
+            	
+            </div>
                 <div id="title-line"><hr></div>
+                
             <div class="info-area" style="margin: auto;">
+            <span><button class="atCheck">출석체크!</button></span>
             	<div id='calendar'></div>
             
             </div>     
@@ -256,8 +255,29 @@
 
     document.addEventListener('DOMContentLoaded', function() {
     	
+    	// Controller에서 Json으로 넘김
+    	var list = ${checkList};
+    	console.log(list);
+    	
+    	// 빈배열 , 빈 객체 생성
+    	let checkList = [];
+    	var checkEl = {};
+    	
         var calendarEl = document.getElementById('calendar'); // div요소 선택
-
+	
+        for (var i in list) { // Json으로 넘어온 객체배열 만큼
+        // 빈 객체에 Json객체배열의 객체 넣어줌	
+    	checkEl = {
+    				title : list[i].pointContent,
+    				start: list[i].pointDate
+    				}
+    	// 빈 배열에 객체 넣어줌
+    	checkList.push(checkEl);
+        
+        };
+    	
+    	console.log(checkList);
+        
         var calendar = new FullCalendar.Calendar(calendarEl, {
           selectable: true, // 달력 클릭하게 해주는 속성
           headerToolbar: {
@@ -265,25 +285,13 @@
             center: 'title', // X월 XXXX년 위치
             right: 'dayGridMonth,timeGridWeek,timeGridDay' // 오른쪽 상단 툴바
           },
-          dateClick: function(info) {// 날짜만 클릭 했을 때 핸들러
-            alert('clicked ' + info.dateStr); 
-          	
-          	
-          },
-          events: [ // 화면에 띄워줄 이벤트 객체 배열
-              {
-                title: '출석',
-                start: '2023-01-25'
-              },
-              {
-                title: 'URL요청??',
-                url: 'http://google.com/', // a태그 달기
-                start: '2023-01-20'
-              }
-            ]
+          events:  // 화면에 띄워줄 이벤트 객체 배열
+        		checkList // 위에서만든 객체배열 
         });
-
+        
+        
         calendar.render(); // 달력 화면에 뿌려주는 렌더링함수
+        
      	});
 		
 			

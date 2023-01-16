@@ -38,6 +38,8 @@
             <h2>게시글 상세보기페이지</h2>
             <br>
 
+
+			
             <a class="btn btn-secondary" style="float:right;" href="">목록으로</a>
             <br><br>
 
@@ -142,12 +144,55 @@
                     </tr>
                 </tbody>
             </table>
+            <hr>
+	        <div>
+	        	<c:if test="${ not empty loginMember }">
+	        		<button class="btn btn-sm btn-danger" onclick="openReportForm();">신고</button>
+	        	</c:if>
+        		<form id="reportvalue">
+					<input type="hidden" value="" name="memNickName" id="report-memNickName">
+					<input type="hidden" value="" name="content" id="report-content">
+					<input type="hidden" value="" name="reportBoard" id="report-reportBoard">
+					<input type="hidden" value="" name="boardNo" id="report-boardNo">
+				</form>
+	        </div>
         </div>
         <br><br>
 
     </div>
     
     <jsp:include page="../common/footer.jsp" />
+    
+    
+    	<script>
+		
+		function openReportForm() {		
+			
+			
+			if (${loginMember.memNo} == ${b.memberNo}) {
+				alertify.alert('알림', '본인의 글은 신고할 수 없습니다.', function(){ alertify.success('확인 완료'); });
+			} else {
+									
+				window.open('', '신고', 'width=450,height=300,location=yes,menubar=yes,scrollbar=no');
+				
+				$('#report-memNickName').val('${ b.memberNo }'); // 수정 필요
+				$('#report-content').val('${ b.content }');
+				$('#report-reportBoard').val('board');
+				$('#report-boardNo').val(${ b.boardNo });
+				
+				reportvalue.action = 'reportForm';
+				reportvalue.target = '신고';
+				reportvalue.method = 'post';
+				reportvalue.submit();
+
+			}			
+		};
+		
+
+	</script>
+    
+    
+    
     
 </body>
 </html>

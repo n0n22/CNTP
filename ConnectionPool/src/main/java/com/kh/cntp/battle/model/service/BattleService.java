@@ -44,6 +44,10 @@ public interface BattleService {
 	int cancelBattle(HashMap<String, String> cancel);
 // 배틀 삭제
 	int deleteBattlePool(int battleNo);
+
+// 배틀 결과 수정
+	int updateBattleResult(BattleResult br);
+	
 	
 
 }

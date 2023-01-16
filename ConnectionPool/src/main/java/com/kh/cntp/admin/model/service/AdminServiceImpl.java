@@ -165,54 +165,81 @@ public class AdminServiceImpl implements AdminService {
 	
 	
 	// 팀 멤버정보 조회해오기
+//	@Override
+//	public ArrayList<TeamMember> selectTeamMem(int memNo) {
+//		return adminDao.selectTeamMem(sqlSession, memNo);
+//	}
 	@Override
-	public ArrayList<TeamMember> selectTeamMem(int memNo) {
+	public TeamMember selectTeamMem(int memNo) {
 		return adminDao.selectTeamMem(sqlSession, memNo);
 	}
 	
 	
-	
-	// 리더일때 - 부리더가 있을 때
+	// 바꿀 팀원이 있을 때
 	@Transactional
 	@Override
-	public int updateSubLeader(int memNo, int sl) {
-		return adminDao.updateSubLeader(sqlSession, sl) // 부리더를 리더로
-				* adminDao.deleteTeamMember(sqlSession, memNo) // 팀 탈퇴
-				* adminDao.updateMemberStatus(sqlSession, memNo); // 멤버상태변경
+	public int updateTeamLeader(int memNo, int newLeader) {
+		return adminDao.updateTeamLeader(sqlSession, newLeader) // 새 팀장으로 업데이트
+				* adminDao.deleteTeamMember(sqlSession, memNo) // 팀멤버테이블에서 삭제
+				* adminDao.updateMemberStatus(sqlSession, memNo); // 멤버 상태 변경
 	}
 	
 	
-	
-	// 부리더가 없고 다른 팀원도 없을 때
+	// 바꿀 팀원이 없을 때
 	@Transactional
 	@Override
-	public int deleteTeam(int memNo) {
+	public int updateTeamStatus(int memNo) {
 		return adminDao.updateTeamStatus(sqlSession, memNo) // 팀 상태 변경
-				* adminDao.deleteTeamMember(sqlSession, memNo) // 팀탈퇴
-				* adminDao.updateMemberStatus(sqlSession, memNo); // 멤버상태변경
+				* adminDao.deleteTeamMember(sqlSession, memNo) // 팀멤버테이블에서 삭제
+				* adminDao.updateMemberStatus(sqlSession, memNo); // 멤버 상태 변경
 	}
 	
+
 	
 	
 	
 	
 	
-	// 멤버일때
-	// 팀 탈퇴 후 멤버 상태 변경
-	@Transactional
-	@Override
-	public int memberCase(int memNo) {
-		return adminDao.deleteTeamMember(sqlSession, memNo) // 팀 탈퇴
-				* adminDao.updateMemberStatus(sqlSession, memNo); // 멤버상태변경
-	}
 	
 	
 	
-	// 팀이 없을때
-	@Override
-	public int noTeamCase(int memNo) {
-		return adminDao.updateMemberStatus(sqlSession, memNo); // 멤버상태변경
-	}
+	
+	
+//	// 리더일때 - 부리더가 있을 때
+//	@Transactional
+//	@Override
+//	public int updateSubLeader(int memNo, int sl) {
+//		return adminDao.updateSubLeader(sqlSession, sl) // 부리더를 리더로
+//				* adminDao.deleteTeamMember(sqlSession, memNo) // 팀 탈퇴
+//				* adminDao.updateMemberStatus(sqlSession, memNo); // 멤버상태변경
+//	}
+//	
+//	
+//	
+//	// 부리더가 없고 다른 팀원도 없을 때
+//	@Transactional
+//	@Override
+//	public int deleteTeam(int memNo) {
+//		return adminDao.updateTeamStatus(sqlSession, memNo) // 팀 상태 변경
+//				* adminDao.deleteTeamMember(sqlSession, memNo) // 팀탈퇴
+//				* adminDao.updateMemberStatus(sqlSession, memNo); // 멤버상태변경
+//	}
+//		
+//	
+//	// 멤버일때
+//	// 팀 탈퇴 후 멤버 상태 변경
+//	@Transactional
+//	@Override
+//	public int memberCase(int memNo) {
+//		return adminDao.deleteTeamMember(sqlSession, memNo) // 팀 탈퇴
+//				* adminDao.updateMemberStatus(sqlSession, memNo); // 멤버상태변경
+//	}
+//	
+//	// 팀이 없을때
+//	@Override
+//	public int noTeamCase(int memNo) {
+//		return adminDao.updateMemberStatus(sqlSession, memNo); // 멤버상태변경
+//	}
 	
 	
 	
@@ -284,6 +311,7 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteNotice(int nno) {
 		return adminDao.deleteNotice(sqlSession, nno);
 	}
+
 
 
 
