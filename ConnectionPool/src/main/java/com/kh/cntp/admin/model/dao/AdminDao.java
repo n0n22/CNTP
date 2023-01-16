@@ -166,6 +166,11 @@ public class AdminDao {
 		return sqlSession.selectOne("adminMapper.selectTeamMem", memNo);
 	}
 	
+	// 소속팀이 있는지 조회
+	public TeamMember selectTeam(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("adminMapper.selectTeam", memNo);
+	}
+	
 	
 	// 바꿀 팀원이 있을때 팀장으로 업데이트
 	public int updateTeamLeader(SqlSessionTemplate sqlSession, int memNo) {
@@ -195,6 +200,7 @@ public class AdminDao {
 //	public int updateSubLeader(SqlSessionTemplate sqlSession, int sl) {
 //		return sqlSession.update("adminMapper.updateSubLeader", sl);
 //	}
+	
 	
 	
 	

@@ -78,11 +78,31 @@ public interface AdminService {
 	ArrayList<Report> selectPenaltyList(PageInfo pi);
 	
 	
+	
+	
+	// 정지 받은 적 있는지 조회
+//	int selectStopPenalty(int memNo);
+	
+	// 팀 멤버정보 조회해오기
+	// ArrayList<TeamMember> selectTeamMem(int memNo);
+//	TeamMember selectTeamMem(int memNo);
+	
+	
+	// 패널티 처리 - 트랜잭션을 위해 한꺼번에
+	int givePenalties(int[] memNo, String[] penalty);
+	
+	
+	
+	// 소속된 팀이 있는지 조회
+//	int selectTeam(int memNo);
+	
+	
+	
+	
+/*	
 	// 정지 처리
 	// int stopMember(ArrayList<Integer> stopList);
 	
-	// 정지 받은 적 있는지 조회
-	int selectStopPenalty(int memNo);
 	
 	// 정지 날짜 업데이트
 	int updateStopPenalty(int memNo);
@@ -91,9 +111,6 @@ public interface AdminService {
 	int insertStopPenalty(int memNo);
 	
 	
-	// 팀 멤버정보 조회해오기
-	// ArrayList<TeamMember> selectTeamMem(int memNo);
-	TeamMember selectTeamMem(int memNo);
 	
 	// 바꿀 팀원이 있을 때
 	int updateTeamLeader(int memNo, int newLeader);
@@ -101,9 +118,6 @@ public interface AdminService {
 	
 	// 바꿀 팀원이 없을 때
 	int updateTeamStatus(int memNo);
-	
-	
-	
 	
 	// 리더일때
 	// 리더일때 - 부리더가 있을때
@@ -118,6 +132,9 @@ public interface AdminService {
 	
 	// 팀이 없을때
 	// int noTeamCase(int memNo);
+*/	
+	
+	
 	
 	
 //-------------------------------------------

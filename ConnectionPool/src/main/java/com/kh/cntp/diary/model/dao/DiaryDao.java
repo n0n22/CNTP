@@ -31,9 +31,9 @@ public int updateDiary (SqlSessionTemplate sqlSession, Diary d) {
 	
 }
 	
-	
-	
 */	
+	
+	
 	
 	
 	

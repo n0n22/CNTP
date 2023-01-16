@@ -92,7 +92,7 @@
 										<p style="display:none" class="thisTeamNo">${ team.teamNo }</p>
 									</td>
 									<td>${ team.powerDuration }</td>
-									<td>${ team.teamArea }</td>
+									<td>${ team.korArea }</td>
 									<td>${ team.nickname }</td>
 									<td>${ team.teamName }</td>
 									<td>${ team.teamMember }</td>
@@ -132,7 +132,7 @@
 			
 			<c:if test="${ not empty loginMember }">
 				<div align="right">
-					<a href="teamEnrollFrom.mo">팀 만들기</a>
+					<a href="teamEnrollFrom.mo" class="btn btn-primary">팀 만들기</a>
 				</div>
 			</c:if>
 			

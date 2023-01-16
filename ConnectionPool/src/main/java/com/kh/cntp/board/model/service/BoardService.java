@@ -32,6 +32,12 @@ public interface BoardService {
 		int updateBoard(Board b);
 		
 		
+		//댓글 리스트 조회서비스(Ajax) (select)
+		ArrayList<Reply>selectBoardReplyList(int boardNo);
+		
+		
+		//댓글  작성서비스 (ajax) (insert)
+		int insertBoardReply(Reply r);
 		
 	
 	

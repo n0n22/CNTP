@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.cntp.board.model.vo.Board;
 import com.kh.cntp.common.model.vo.PageInfo;
+import com.kh.cntp.reply.model.vo.Reply;
 
 @Repository
 public class BoardDao {
@@ -50,7 +51,13 @@ public class BoardDao {
 	}
 	
 	
+	public ArrayList<Reply> selectBoardReplyList(SqlSessionTemplate sqlSession, int boardNo) {
+		return (ArrayList)sqlSession.selectList("replyMapper.selectBoardReplyList", boardNo);
+	}
 	
+	public int insertBoardReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.insert("replyMapper.insertBoardReply" ,r);
+	}
 	
 	
 	

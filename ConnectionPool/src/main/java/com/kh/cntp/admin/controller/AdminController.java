@@ -281,11 +281,35 @@ public class AdminController {
 	@RequestMapping("penaltyInsert.ad")
 	public ModelAndView insertPenalty(int[] memNo, String[] penalty, ModelAndView mv, HttpSession session) {
 		
+//		for(int i = 0; i < memNo.length; i++) {
+//			
+//			if(penalty[i].equals("정지")) { // 정지 : select -> update or insert
+//				if(adminService.selectStopPenalty(memNo[i]) > 0) { // 정지 받은 적이 있으면 update
+//					penalty[i] = "정지O";
+//				} else { // 정지받은 적이 없으면 insert
+//					penalty[i] = "정지X";
+//				}
+//				
+//			} else { // 탈퇴 
+//				TeamMember tm = adminService.selectTeamMem(memNo[i]);
+//				int team = adminService.selectTeam(memNo[i]);
+//				if(team > 0 && tm != null) { // 소속팀이 있고, 바꿀 멤버가 있을 때
+//					penalty[i] = "바꿀멤버O";
+//				} else if(team > 0 && tm == null) { // 소속 팀이 있고, 바꿀 멤버가 없을 때
+//					penalty[i] = "바꿀멤버X";
+//				} else {
+//					penalty[i] = "팀X";
+//				}
+//			}
+//		}
 		
 		
-		
-		
-		
+		if(adminService.givePenalties(memNo, penalty) > 0) {
+			session.setAttribute("alertMsg", "처리를 완료했습니다.");
+			mv.setViewName("redirect:penaltyList.ad");
+		} else {
+			mv.addObject("errorMsg", "패널티 부과 처리 실패").setViewName("common/errorPage");
+		}
 		
 		return mv;
 	}

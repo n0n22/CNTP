@@ -21,12 +21,14 @@
 	<jsp:include page="../common/menubar_nosearch.jsp"/>
 		
 	    <script>
+	    // 전날(prev)을 담을 변수
 	    let p = '';
+	    // 다음날(next)을 담을 변수
 	    let n = '';
 	    
         $(function(){
-        	
-            let now = new Date('${now}');	// 현재 페이지 날짜
+        	// 현재 페이지 날짜
+            let now = new Date('${now}');	
             // 현재 페이지 요일
             let day = ''
             switch(now.getDay()){
@@ -38,18 +40,21 @@
 	            case 5 : day = '금요일'; break;
 	            case 6 : day = '<span style="color:blue;">토요일</span>'; break;
             }
-            
-            var arr = formatDate(now).split('-');  // yyyy-mm-dd을 -로 분리하여 배열에 담음
+            // YYYY-MM-DD를 '-'로 분리하여 배열에 담음 => arr = ['YYYY', 'MM', 'DD']
+            // YYYY년 MM월 DD일 몇요일 형태로 값을 뿌려줌
+            var arr = formatDate(now).split('-');
             $('.mainDate').html(arr[0] + '년 ' + arr[1] + '월 ' + arr[2] + '일 ' + day);
             
-            let prev = new Date(now.setDate(now.getDate() - 1)); // 전날 날짜
-            p = formatDate(prev); // yyyy-mm-dd
+            // 전날 날짜 계산 => YYYY-MM-DD 형식으로 변환
+            let prev = new Date(now.setDate(now.getDate() - 1));
+            p = formatDate(prev);
             
-            let next = new Date(now.setDate(now.getDate() + 2)); // 다음날 날짜
-            n = formatDate(next); // yyyy-mm-dd
+            // 다음날 날짜 계산 => YYYY-MM-DD 형식으로 변환
+            let next = new Date(now.setDate(now.getDate() + 2));
+            n = formatDate(next);
 
         })
-        // 날짜 형식을 'YYYY-MM-DD로 바꿔주는 함수'
+        // 날짜 형식을 'YYYY-MM-DD'로 바꿔 반환해주는 함수
         function formatDate(date){
         	let year = date.getFullYear();
         	let month =
@@ -58,13 +63,15 @@
         		date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
         	return `\${year}-\${month}-\${days}`;
         }
-        // page 이동을 해줄 함수
+        // 날짜별로 page 이동을 해줄 함수
+        // 매개값이 0이면 전날 / 매개값이 1이면 다음날로 이동
         function page(num){
         	switch(num){
         	case 0 : location.href = 'battleList.bt?cpage=' + p; break;
         	case 1 : location.href = 'battleList.bt?cpage=' + n; break;
         	}
         }
+        
         function enrollForm(){
         	$('#enrollFormSubmit').attr("action", "enrollForm.bt").submit();
         }
@@ -164,14 +171,14 @@
         
         <div class="row g-1">
         
-        <!-- 게시글이 없을 경우 -->
+        <!-- 게시글이 없는 경우 -->
         <c:if test="${empty battleList}">
         	<div>
 				<h2 align="center">조회된 배틀이 없습니다.</h2>        	
         	</div>
         </c:if>
         
-        <!-- 게시글이 있을 경우 -->
+        <!-- 게시글이 있는 경우 -->
         <c:if test="${battleList ne null}">
 			<c:forEach items="${battleList}" var="bl">
 	            <div class="col-md-4">
