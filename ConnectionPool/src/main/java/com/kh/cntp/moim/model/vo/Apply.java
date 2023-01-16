@@ -11,4 +11,5 @@ public class Apply {
 	private String acceptYn;
 	private String applyDate;
 	private String acceptDate;
+	private String gender;
 }

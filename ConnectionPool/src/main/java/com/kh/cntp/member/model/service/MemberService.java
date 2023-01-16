@@ -1,6 +1,7 @@
 package com.kh.cntp.member.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.cntp.board.model.vo.Board;
 import com.kh.cntp.common.model.vo.PageInfo;
@@ -62,4 +63,10 @@ public interface MemberService {
 	
 	// 내가 작성한 게시글 조회
 	ArrayList<Board> selectMyBoardList(PageInfo pi, Board board);
+	
+	// 인기도 중복 검사
+	int checkIngido(String ingido);
+	
+	// 인기도 올리거나 내리기
+	int upOrDownIngido(HashMap<String, String> map);
 }

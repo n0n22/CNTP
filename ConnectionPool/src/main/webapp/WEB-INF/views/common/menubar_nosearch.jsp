@@ -341,10 +341,10 @@
         }
     	// 인기도 up & down
     	// memNo에서는 올리는 회원 번호, 
-    	function ingido(targetNo, flag, ingido){
+    	function ingido(targetNo, ingido, flag){
     		console.log("targetNo : " + targetNo);
-    		console.log("flag : " + flag);
     		console.log("ingido : " + ingido);
+    		console.log("flag : " + flag);
     		
     		if(<c:out value="${loginMember.memNo}" default="none"/> == targetNo){
     			alert('자신의 인기도는 올릴거나 내릴 수 없습니다.');
@@ -355,10 +355,11 @@
     			type : "post",
     			data : {
     					memNo : <c:out value="${loginMember.memNo}" default="none"/>,
-    					targetNo : targetNo,
-    					flag : flag
+    					flag : flag,
+    					targetNo : targetNo
     				   },
     			success : function(result){
+    				console.log(result);
     				if(result > 0){ // 인기도 변경 성공
     					switch(flag){
     						case 1 : alert('인기도 1을 올리셨습니다.'); $('#ingido').text(ingido + flag); break;
