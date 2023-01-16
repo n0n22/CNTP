@@ -416,7 +416,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		                JOIN 
 		                   (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
 		                      FROM BOARD
-		                      JOIN MEMBER USING(MEM_NO)  
+		                      JOIN MEMBER USING(MEM_NO)
+		                     WHERE MEM_STATUS != 'K'
 		                    ) "B" ON (B.BOARD_NO = R.BOARD_NO)
 		                WHERE REPORT_RESULT = 'O'
 		                GROUP BY MEM_NO, MEM_ID
@@ -451,6 +452,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		           (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
 		              FROM BOARD
 		              JOIN MEMBER USING(MEM_NO)  
+		             WHERE MEM_STATUS != 'K'
 		            ) "B" ON (B.BOARD_NO = R.BOARD_NO)
 		        WHERE REPORT_RESULT = 'O'
 		        GROUP BY MEM_NO, MEM_ID
@@ -536,7 +538,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  -->	
 	<!-- 리더가 아니고, 등급과 가입일자 순으로 정렬해서 조회 -->
  	<select id="selectTeamMem" parameterType="_int" resultMap="teamMemberResultSet">
-	 	SELECT *
+	 	SELECT 
+	 		   MEM_NO
 		  FROM
 		       (SELECT
 		               *
@@ -597,12 +600,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE
 		       MEMBER
 		   SET
-		       STATUS = 'K'
+		       MEM_STATUS = 'K'
 		 WHERE
 		       MEM_NO = #{memNo}
 	</update>
-
-
+	
+	<!-- 소속된 팀이 있는지 조회 -->
+	<select id="selectTeam" parameterType="_int" resultMap="teamMemberResultSet">
+		SELECT
+		       *
+		  FROM
+		       TEAM_MEMBER
+		 WHERE
+		       MEM_NO = #{memNo}
+	</select>
 
 	
 	<!-- 부리더를 리더로 -->
