@@ -1,10 +1,12 @@
 package com.kh.cntp.member.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.cntp.board.model.vo.Board;
 import com.kh.cntp.common.model.vo.PageInfo;
@@ -125,6 +127,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectMyBoardList(sqlSession, pi, board);
 	}
 	
+	// 출석 내역 조회
+	@Override
+	public ArrayList<Point> selectAtCheck(int memNo) {
+		return memberDao.selectAtCheck(sqlSession, memNo);
+	}
 	
 	//////////////////////////////////
 	// 인기도							//
@@ -135,8 +142,16 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.showProfile(sqlSession, memNo);
 	}
 
+	@Override
+	public int checkIngido(String ingido) {
+		return memberDao.checkIngido(sqlSession, ingido);
+	}
 
-
+	@Override
+	@Transactional
+	public int upOrDownIngido(HashMap<String, String> map) {
+		return memberDao.upOrDownIngido(sqlSession, map) * memberDao.insertIngidoRecord(sqlSession, map);
+	}
 
 
 

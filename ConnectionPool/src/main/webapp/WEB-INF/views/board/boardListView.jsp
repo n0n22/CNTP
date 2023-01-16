@@ -70,17 +70,26 @@
         <tbody>
         
         	<c:forEach items="${ list }" var="b">
-            <tr>
-                <td class="bno">${b.boardNo }</td>
-                <td>${b.category }</td>
-                <td>${b.title }</td>
-                <td>${b.memberNo }</td>
-                <td>${b.createDate }</td>
-                <td>${b.count }</td>
-             
-                
+        		<c:choose>
+        			<c:when test="${b.status eq 'R'}">
+        				<tr>
+        					<td>${b.boardNo }</td>
+        					<td colspan="5">신고된 게시글입니다.</td>
+        				</tr>
+        			</c:when>
+        			<c:otherwise>        				
+			            <tr class="clickTr">
+			                <td class="bno">${b.boardNo }</td>
+			                <td>${b.category }</td>
+			                <td>${b.title }</td>
+			                <td>${b.memberNo }</td>
+			                <td>${b.createDate }</td>
+			                <td>${b.count }</td>
+			            </tr>        		
+        			</c:otherwise>
+        		</c:choose>
+                           
             </c:forEach>    
-            </tr>
             
             
         </tbody>
@@ -91,7 +100,7 @@
             <script>
             
             	$(function(){
-					$('#boardList>tbody>tr').click(function(){
+					$('#boardList>tbody>.clickTr').click(function(){
 						location.href = 'detail.bo?bno=' + $(this).children('.bno').text();
 					})
             	})

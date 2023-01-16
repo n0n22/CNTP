@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="bannerNo" column="BANNER_NO" />
 		<result property="memNo" column="MEM_NO" />
 		<result property="createDate" column="CREATE_DATE" />
-		<result property="OriginName" column="ORIGIN_NAME" />
+		<result property="originName" column="ORIGIN_NAME" />
 		<result property="changeName" column="CHANGE_NAME" />
 		<result property="status" column="STATUS" />
 		<result property="writer" column="NICKNAME" />
@@ -416,7 +416,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		                JOIN 
 		                   (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
 		                      FROM BOARD
-		                      JOIN MEMBER USING(MEM_NO)  
+		                      JOIN MEMBER USING(MEM_NO)
+		                     WHERE MEM_STATUS != 'K'
 		                    ) "B" ON (B.BOARD_NO = R.BOARD_NO)
 		                WHERE REPORT_RESULT = 'O'
 		                GROUP BY MEM_NO, MEM_ID
@@ -451,6 +452,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		           (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
 		              FROM BOARD
 		              JOIN MEMBER USING(MEM_NO)  
+		             WHERE MEM_STATUS != 'K'
 		            ) "B" ON (B.BOARD_NO = R.BOARD_NO)
 		        WHERE REPORT_RESULT = 'O'
 		        GROUP BY MEM_NO, MEM_ID
@@ -517,6 +519,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 팀 멤버정보 조회하기 -->
+<!-- 
 	<select id="selectTeamMem" parameterType="_int" resultMap="teamMemberResultSet">
 		SELECT
 		        TEAM_NO
@@ -532,8 +535,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		                   WHERE MEM_NO = #{memNo}
 		                 )
 	</select>
-	
-	
+ -->	
+	<!-- 리더가 아니고, 등급과 가입일자 순으로 정렬해서 조회 -->
+ 	<select id="selectTeamMem" parameterType="_int" resultMap="teamMemberResultSet">
+	 	SELECT 
+	 		   MEM_NO
+		  FROM
+		       (SELECT
+		               *
+		          FROM
+		               TEAM_MEMBER
+		         WHERE  
+		               TEAM_NO = (
+				                  SELECT TEAM_NO
+				                    FROM TEAM_MEMBER
+				                   WHERE MEM_NO = #{memNo}
+				                 )
+		           AND 
+		               TEAM_GRADE != 'L'
+		         ORDER 
+		            BY TEAM_GRADE DESC, TEAM_ENROLL_DATE)
+		 WHERE ROWNUM = 1
+ 	</select>
+ 	
+ 	<!-- 바꿀 팀원이 있을 때 팀 리더로 업데이트 -->
+ 	<update id="updateTeamLeader" parameterType="_int">
+ 		UPDATE
+ 		       TEAM_MEMBER
+ 		   SET
+ 		       TEAM_GRADE = 'L'
+ 		 WHERE
+ 		       MEM_NO = #{memNo}   
+ 	</update>
 	
 	
 	<!-- 팀 상태 변경 -->
@@ -551,25 +584,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 							where 
 								  mem_no = #{memNo}
 		       				)		       
-	</update>
-	
-	
-	
-	
-	
-	<!-- 부리더를 리더로 -->
-	<update id="updateSubLeader" parameterType="_int">
-		UPDATE
-		       TEAM_MEMBER
-		   SET
-		       TEAM_GRADE = 'L'
-		 WHERE
-			   MEM_NO = #{memNo}	
-	</update>
-	
-	
-	
-	
+	</update>	
 	
 	<!-- 팀 멤버 삭제  -->
 	<delete id="deleteTeamMember" parameterType="_int">
@@ -585,13 +600,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE
 		       MEMBER
 		   SET
-		       STATUS = 'K'
+		       MEM_STATUS = 'K'
 		 WHERE
 		       MEM_NO = #{memNo}
 	</update>
+	
+	<!-- 소속된 팀이 있는지 조회 -->
+	<select id="selectTeam" parameterType="_int" resultMap="teamMemberResultSet">
+		SELECT
+		       *
+		  FROM
+		       TEAM_MEMBER
+		 WHERE
+		       MEM_NO = #{memNo}
+	</select>
 
-
-
+	
+	<!-- 부리더를 리더로 -->
+<!-- 	
+	<update id="updateSubLeader" parameterType="_int">
+		UPDATE
+		       TEAM_MEMBER
+		   SET
+		       TEAM_GRADE = 'L'
+		 WHERE
+			   MEM_NO = #{memNo}	
+	</update>
+-->
+	
 
 
 	

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
     
 <%--
 	해당 모임 번호와 같은 chatting 리스트를 뽑아온다.
@@ -55,6 +56,7 @@
 		margin-bottom: 0px;
 		padding : 7px;
 	}
+	
 
 </style>
 
@@ -66,84 +68,98 @@
 	<br>
 	
 	<div class="outer">
-	    <!-- 전체를 감싸는 div-->
-		<div style="width:600px; border-radius:10px; margin:auto;">
-	        <!-- 제목 div -->
-	        <div style="display : flex; justify-content: space-between;" id="chatTitleMemberCountArea">
-	            <h2>${ moimTitle }</h2>
-	            <h5>모집현황 ${ moimMember } </h5>
-	        </div>
-	        
-	        <div id="chatContent-area">
-	        	<c:choose>
-	        		<c:when test="${ empty chatList }">
-	        		<!-- 아예 채팅이 없을 때 -->
-			        	대화가 없습니다.
-	        		</c:when>
-	        		<c:otherwise>
-					<!-- 채팅 리스트가 있을 때 -->
-						<c:forEach items="${ chatList }" var="chat">
-							<c:choose>
-								<c:when test="${ chat.memNo ne loginMember.memNo }">
-								<!-- 채팅 작성자와 로그인 유저의 회원번호가 다를 때 == 내 채팅이 아닐 때 -->
-								<!-- 대화내용 div-->
-								<!-- 좌 우 정렬 정할 div-->
-								<!-- 채팅 상태가 숨겨져있지 않을 때 -->
-							        <div id="chatAlign-other"> 
-							            <div style="width : 500px," class="align-left">
-							                <div style="max-width: 270px; margin-left: 5px;">
-							                    <div style="height : 20px">
-							                      		${ chat.nickname }
-							                    </div>
-							                    <div class="speechBubble-other">
-							                    	<P>${ chat.chatContent }</P>
-												</div>	
+		<div align="center">
+		    <!-- 전체를 감싸는 div-->
+			<div style="width:600px; border-radius:10px; margin:auto; display:inline-block;">
+				<!-- 소그룹 참여인원 -->
+				<!-- 참여자들 닉네임, 등급별 사진 정도 띄어줄까 싶지만,,,,,, 할 수 있음 하자
+		        <c:if test="${ fn:contains(moimNo, 'G') }">
+		        	<div class="groupMember-info" style="display:inline-block; width:600px; height:60px;">
+		        		<table border="1">
+		        			<tr width="100%">dkdk</tr>
+		        		</table>
+		        	</div>
+		        </c:if>
+		         -->
+		        <!-- 제목 div -->
+		        <div style="display : flex; justify-content: space-between;" id="chatTitleMemberCountArea">
+		            <h2>${ moimTitle }</h2>
+		            <h5>참여인원 ${ moimMember } </h5>
+		        </div>
+		        
+		        <div id="chatContent-area">
+		        	<c:choose>
+		        		<c:when test="${ empty chatList }">
+		        		<!-- 아예 채팅이 없을 때 -->
+				        	대화가 없습니다.
+		        		</c:when>
+		        		<c:otherwise>
+						<!-- 채팅 리스트가 있을 때 -->
+							<c:forEach items="${ chatList }" var="chat">
+								<c:choose>
+									<c:when test="${ chat.memNo ne loginMember.memNo }">
+									<!-- 채팅 작성자와 로그인 유저의 회원번호가 다를 때 == 내 채팅이 아닐 때 -->
+									<!-- 대화내용 div-->
+									<!-- 좌 우 정렬 정할 div-->
+									<!-- 채팅 상태가 숨겨져있지 않을 때 -->
+								        <div id="chatAlign-other"> 
+								            <div style="width : 500px," class="align-left">
+								                <div style="max-width: 270px; margin-left: 5px;">
+								                    <div style="height : 20px">
+								                      		${ chat.nickname }
+								                    </div>
+								                    <div class="speechBubble-other">
+								                    	<P>${ chat.chatContent }</P>
+													</div>	
+												</div>
+								                
+								            </div>
+											<div style="display: flex; align-content: flex-end; margin-left: 60px;">
+												<p style="margin-top: auto; margin-bottom: 0;">
+													<!-- 여긴 날짜 -->
+													${ chat.createDate }
+													<!-- 여긴 숨기기 버튼 -->
+													<button class="hiddenBtn" style="border : 0px; background-color : white" onclick="return hideBtn()"><mark></mark></button>
+												</p>
 											</div>
-							                
-							            </div>
-										<div style="display: flex; align-content: flex-end; margin-left: 60px;">
-											<p style="margin-top: auto; margin-bottom: 0;">
-												<!-- 여긴 날짜 -->
-												${ chat.createDate }
-												<!-- 여긴 숨기기 버튼 -->
-												<button class="hiddenBtn" style="border : 0px; background-color : white" onclick="return hideBtn()"><mark></mark></button>
-											</p>
-										</div>
-							        </div>
-								</c:when>
-								<c:otherwise>
-						        <!-- 채팅 작성자와 로그인 유저의 회원번호가 같을 때 == 내 채팅일 때 -->
-									<div id="chatAlign-mine" >
-										<div class="align-right">
-											<div style="max-width : 270px">
-												<div class="speechBubble-mine">
-													<P>${ chat.chatContent }</P>
+								        </div>
+									</c:when>
+									<c:otherwise>
+							        <!-- 채팅 작성자와 로그인 유저의 회원번호가 같을 때 == 내 채팅일 때 -->
+										<div id="chatAlign-mine" >
+											<div class="align-right">
+												<div style="max-width : 270px">
+													<div class="speechBubble-mine">
+														<P>${ chat.chatContent }</P>
+													</div>
+												</div>
+											</div>
+											<div class="align-right">
+												<div style="display: flex; align-content: flex-end; margin-right: 5px;">
+													<p style="margin-top: auto; margin-bottom: 0;">
+														<!-- 삭제 버튼 -->
+														<button class="deleteBtn" style="border : 0px; background-color : white" onclick="return deleteChat('${ chat.chatNo }')"><mark>삭제</mark></button>
+														<!-- 여긴 날짜 -->
+														${ chat.createDate }
+													</p>
 												</div>
 											</div>
 										</div>
-										<div class="align-right">
-											<div style="display: flex; align-content: flex-end; margin-right: 5px;">
-												<p style="margin-top: auto; margin-bottom: 0;">
-													<!-- 삭제 버튼 -->
-													<button class="deleteBtn" style="border : 0px; background-color : white" onclick="return deleteChat('${ chat.chatNo }')"><mark>삭제</mark></button>
-													<!-- 여긴 날짜 -->
-													${ chat.createDate }
-												</p>
-											</div>
-										</div>
-									</div>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-	        		</c:otherwise>
-	        	</c:choose>
-			</div>
-			
-	        <!-- 입력 div -->
-	        <div class="align-left">
-		            <input type="text" class="form-control form-control-lg" id="chatContent-input" onkeyup="enterFn()" required maxlength="150">
-		            <button class="btn btn-success" style="width:70px" onclick="insertChatContent();">입력</button>
-	        </div>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+		        		</c:otherwise>
+		        	</c:choose>
+				</div>
+				
+		        <!-- 입력 div -->
+		        <div class="align-left">
+			            <input type="text" class="form-control form-control-lg" id="chatContent-input" onkeyup="enterFn()" required maxlength="150">
+			            <button class="btn btn-success" style="width:70px" onclick="insertChatContent();">입력</button>
+		        </div>
+		        
+		        
+	    	</div>
 	    </div>
 	</div>
 	
@@ -185,7 +201,7 @@
 			url : 'ajaxSelectChatList.mo',
 			type : 'post',
 			data : {
-				moimNo : '${ chatList[0].moimNo }',
+				moimNo : '${ moimNo }',
 				memNo : '${ loginMember.memNo }'
 			},
 			success : function(list){
@@ -241,7 +257,6 @@
 				}
 				
 				$('#chatContent-area').html(result);
-				setInterval(selectChattingList, 700);
 			},
 			error : function(){
 				console.log('실패요');
@@ -255,13 +270,13 @@
 			url : 'insertChat.mo',
 			type : 'post',
 			data : {
-				moimNo : '${ chatList[0].moimNo }',
+				moimNo : '${ moimNo }',
 				memNo : '${ loginMember.memNo }',
 				chatContent : $('#chatContent-input').val()
 			},
 			success : function(result){
 				
-				//console.log(result);
+				console.log(result);
 				if(result == 'NNNNY'){
 					$('#chatContent-input').val('');
 					selectChattingList();

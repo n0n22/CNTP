@@ -110,7 +110,7 @@
 					</tr>
 					<tr height="50">
 						<td>${ team.teamIntro }</td>
-						<td>${ team.teamArea }</td>
+						<td>${ team.korArea }</td>
 					</tr>
 					<tr>
 						<th>현재 팀 인원</th>
@@ -162,7 +162,7 @@
 						<c:forEach items="${ teamMemberList }" var="tm">
 							<tr>
 								<td>${tm.teamGrade}</td>
-								<td class="nickname">${tm.nickname}</td>
+								<td class="nickname"><p ingido="${tm.memNo}" title="프로필 보기" onclick="showProfile(event)">${tm.nickname}</p></td>
 								<td class>${tm.teamEnrollDate}</td>
 							</tr>
 						</c:forEach>
@@ -193,35 +193,44 @@
 								<th width="150">수락/거절</th>
 							</tr>
 							<c:choose>
-								<c:when test="${ not empty applyList }">
-									<c:forEach items="${ applyList }" var="ap">
-										<tr>
-											<td>${ ap.nickname }</td>
-											<td>${ ap.applyDate }</td>
-											<td>
-												<div style="display:inline-block;">
-													<form action="updateApply.mo">
-														<input type="hidden" value="${ ap.applyNo }" name="applyNo">
-														<input type="hidden" value="${ team.teamNo }" name="moimNo">
-														<input type="hidden" value="${ ap.memNo }" name="memNo">
-														<button onclick="return confirmBtn('수락')">수락</button>
-													</form>
-												</div>
-												<div style="display:inline-block;">
-													<form action="deleteApply.mo">
-														<input type="hidden" value="${ ap.memNo }" name="memNo">
-														<input type="hidden" value="${ team.teamNo }" name="moimNo">
-														<button onclick="return confirmBtn('거절')">거절</button>
-													</form>
-												</div>
-											</td>
-										</tr>
-									</c:forEach>
+								<c:when test="${ teamMemberList.size() >= team.teamMember }">
+								<!-- 팀인원을 모두 모집했을 때 -->
+									<td colspan="3">모두 모집되었습니다.</td>
 								</c:when>
 								<c:otherwise>
-									<tr>
-										<td colspan="3">신청 내역이 없습니다.</td>
-									</tr>
+								<!-- 아직 모집중일 때 -->
+								<c:choose>
+									<c:when test="${ not empty applyList }">
+										<c:forEach items="${ applyList }" var="ap">
+											<tr>
+												<td><p ingido="${ap.memNo}" title="프로필 보기" onclick="showProfile(event)">${ ap.nickname }</p></td>
+												<td>${ ap.applyDate }</td>
+												<td>
+													<div style="display:inline-block;">
+														<form action="updateApply.mo">
+															<input type="hidden" value="${ ap.applyNo }" name="applyNo">
+															<input type="hidden" value="${ team.teamNo }" name="moimNo">
+															<input type="hidden" value="${ ap.memNo }" name="memNo">
+															<button onclick="return confirmBtn('수락')">수락</button>
+														</form>
+													</div>
+													<div style="display:inline-block;">
+														<form action="deleteApply.mo">
+															<input type="hidden" value="${ ap.memNo }" name="memNo">
+															<input type="hidden" value="${ team.teamNo }" name="moimNo">
+															<button onclick="return confirmBtn('거절')">거절</button>
+														</form>
+													</div>
+												</td>
+											</tr>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<tr>
+											<td colspan="3">신청 내역이 없습니다.</td>
+										</tr>
+									</c:otherwise>
+								</c:choose>
 								</c:otherwise>
 							</c:choose>
 						</table>
@@ -244,8 +253,8 @@
 											<form action="chattingRoom.mo" method="post">
 												<input type="hidden" name="moimNo" value="${ team.teamNo }">
 												<input type="hidden" name="memNo" value="${ loginMember.memNo }">
-												<input type="hidden" name="moimMember" value="${ team.groupMember }">
-												<input type="hidden" name="moimTitle" value="${ team.teamTitle }">
+												<input type="hidden" name="moimMember" value="${ teamMemberList.size()}">
+												<input type="hidden" name="moimTitle" value="${ team.teamName }">
 												<button class="btn btn-primary" style="width:300px;">채팅하기</button>
 											</form>
 										</c:when>
@@ -264,8 +273,8 @@
 												<form action="chattingRoom.mo" method="post">
 													<input type="hidden" name="moimNo" value="${ team.teamNo }">
 													<input type="hidden" name="memNo" value="${ loginMember.memNo }">
-													<input type="hidden" name="moimMember" value="${ team.groupMember }">
-													<input type="hidden" name="moimTitle" value="${ team.teamTitle }">
+													<input type="hidden" name="moimMember" value="${ teamMemberList.size()}">
+													<input type="hidden" name="moimTitle" value="${ team.teamName }">
 													<button class="btn btn-primary" style="width:300px;">채팅하기</button>
 												</form>
 											</div>
@@ -277,13 +286,22 @@
 									<c:choose>
 										<c:when test="${ teamMemberList.size() < team.teamMember }">
 										<!-- 모집중일 때 -->
-											<div style="height:150px"></div>
-											<form action="insertApply.mo" method="post" id="apply-form">
-												<input type="hidden" name="memNo" value="${ loginMember.memNo }">
-												<input type="hidden" name="teamNo" value="${ team.teamNo }">
-												<input type="hidden" name="moimNo" value="${ team.teamNo }">
-												<button id="apply-btn" class="btn btn-primary" style="width:300px;" onclick="return confirmBtn('신청')">신청하기</button>
-											</form>
+											<c:choose>
+												<c:when test="${ team.teamArea ne loginMember.memArea }">
+													<div style="height:150px"></div>
+													<p>지역 조건이 맞지 않습니다.</p>
+													<button class="btn btn-primary" disabled>신청불가</button>
+												</c:when>
+												<c:otherwise>
+													<div style="height:150px"></div>
+													<form action="insertApply.mo" method="post" id="apply-form">
+														<input type="hidden" name="memNo" value="${ loginMember.memNo }">
+														<input type="hidden" name="teamNo" value="${ team.teamNo }">
+														<input type="hidden" name="moimNo" value="${ team.teamNo }">
+														<button id="apply-btn" class="btn btn-primary" style="width:300px;" onclick="return confirmBtn('신청')">신청하기</button>
+													</form>
+												</c:otherwise>
+											</c:choose>
 										</c:when>
 										<c:otherwise>
 										<!-- 모집 마감일 때 -->
@@ -326,7 +344,7 @@
 					url : "selectApply.mo",
 					success : function(obj){
 						if(obj != null){
-							console.log('들어왔다.');
+							//console.log('들어왔다.');
 							if(obj.moimNo == "${ team.teamNo }"){
 								$('#apply-btn').css('width', '300px');
 								$('#apply-btn').html('신청취소');

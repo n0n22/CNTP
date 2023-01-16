@@ -1,6 +1,7 @@
 package com.kh.cntp.member.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -69,6 +70,7 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.pwdChange", member);
 	}
 	
+	
 	/////////////////////////////////
 	// 마이페이지					   //
 	/////////////////////////////////
@@ -111,6 +113,12 @@ public class MemberDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectMyBoardList", board, rowBounds);
 	}
 	
+	// 출석 내역 조회
+		public ArrayList<Point> selectAtCheck(SqlSessionTemplate sqlSession, int memNo) {
+			return (ArrayList)sqlSession.selectList("memberMapper.selectAtCheck", memNo);
+	}
+		
+	
 	//////////////////////////////////
 	// 인기도							//
 	//////////////////////////////////
@@ -119,6 +127,15 @@ public class MemberDao {
 	public Member showProfile(SqlSessionTemplate sqlSession, int memNo) {
 		return sqlSession.selectOne("memberMapper.showProfile", memNo);
 	}
-
+	// 인기도 중복 검사
+	public int checkIngido(SqlSessionTemplate sqlSession, String ingidio) {
+		return sqlSession.selectOne("memberMapper.checkIngido", ingidio);
+	}
+	public int upOrDownIngido(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("memberMapper.upOrDownIngido", map);
+	}
+	public int insertIngidoRecord(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.insert("memberMapper.insertIngidoRecord", map);
+	} 
 
 }

@@ -14,7 +14,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="TEAM_INTRO" 		property="teamIntro"/>
 		<result column="ORIGIN_NAME" 		property="originName"/>
 		<result column="CHANGE_NAME" 		property="changeName"/>
-		<result column="KOR_AREA" 			property="teamArea"/>
+		<result column="KOR_AREA" 			property="korArea"/>
+		<result column="TEAM_AREA" 			property="teamArea"/>
 		<result column="TEAM_TIME" 			property="teamTime"/>
 		<result column="KEYWORD" 			property="keyword"/>
 		<result column="CREATE_DATE" 		property="createDate"/>
@@ -36,12 +37,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="group" id="groupResultMap">
 		<result column="GROUP_NO" 			property="groupNo"/>
 		<result column="NICKNAME" 			property="nickname"/>
+		<result column="GRADE" 			property="grade"/>
 		<result column="INGIDO"				property="ingido"/>
 		<result column="MEM_GENDER" 		property="memGender"/>
 		<result column="MEM_NO" 			property="memNo"/>
 		<result column="GROUP_CONTENT" 		property="groupContent"/>
 		<result column="GROUP_TITLE" 		property="groupTitle"/>
-		<result column="KOR_AREA" 		    property="groupArea"/>
+		<result column="KOR_AREA" 		    property="korArea"/>
+		<result column="GROUP_AREA" 		property="groupArea"/>
 		<result column="PLACE" 				property="place"/>
 		<result column="GROUP_MEMBER" 		property="groupMember"/>
 		<result column="GROUP_STATUS" 		property="groupStatus"/>
@@ -72,6 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="NICKNAME" 		property="nickname"/>
 		<result column="CHAT_CONTENT" 	property="chatContent"/>
 		<result column="CREATE_DATE" 	property="createDate"/>
+		<result column="GENDER" 	property="gender"/>
 	</resultMap>
 	
 	<resultMap type="resultHistory" id="resultHistoryResultMap">
@@ -159,6 +163,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  ,ORIGIN_NAME
 			  ,CHANGE_NAME
 			  ,KOR_AREA
+			  ,TEAM_AREA
 			  ,CASE WHEN TEAM_TIME = 'all' THEN '무관'
                     WHEN TEAM_TIME = 'weekday' THEN '평일'
                     ELSE '주말' END "TEAM_TIME"
@@ -214,6 +219,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ,A.MOIM_NO
 		       ,M.NICKNAME
 		       ,A.MEM_NO
+		       ,M.GENDER
 		       ,A.ACCEPT_YN
 		       ,TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') AS "APPLY_DATE"
 		       ,TO_CHAR(ACCEPT_DATE, 'YYYY-MM-DD') AS "ACCEPT_DATE"
@@ -523,11 +529,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT 
 		        G.GROUP_NO
 		       ,M.NICKNAME
+		       ,CASE WHEN M.GRADE = 'B' THEN '초급'
+		             WHEN M.GRADE = 'M' THEN '중급'
+		             WHEN M.GRADE = 'S' THEN '고급' END "GRADE"
 		       ,M.INGIDO
 		       ,CASE WHEN M.GENDER = 'F' THEN '여성'
 		             ELSE '남자' END "MEM_GENDER"
 		       ,G.MEM_NO
 		       ,G.GROUP_CONTENT
+		       ,G.GROUP_AREA
 		       ,AR.KOR_AREA
 		       ,G.PLACE
 		       ,G.ORIGIN_NAME
@@ -613,6 +623,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        G.GROUP_NO
 		       ,M.NICKNAME
 		       ,G.MEM_NO
+		       ,G.GROUP_AREA
 		       ,A.KOR_AREA
 		       ,G.CHANGE_NAME
 		       ,G.GROUP_TITLE
@@ -736,6 +747,55 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       GROUP_NO = #{ groupNo }
 	</update>
 	
+	<select id="ajaxSelectGroupApply" parameterType="apply" resultMap="applyResultMap">
+		SELECT
+		        APPLY_NO
+		       ,MOIM_NO
+		       ,MEM_NO
+		       ,ACCEPT_YN
+		       ,APPLY_DATE
+		       ,ACCEPT_DATE
+		  FROM
+		       APPLY
+		 WHERE
+		       MEM_NO = #{memNo}
+		   AND
+		       MOIM_NO = #{moimNo}
+		   
+	</select>
+	
+	<select id="selectGroupApplyList" resultMap="applyResultMap">
+		SELECT
+		        APPLY_NO
+		       ,A.MOIM_NO
+		       ,M.MEM_NO
+		       ,ACCEPT_YN
+		       ,APPLY_DATE
+		       ,ACCEPT_DATE
+		       ,M.NICKNAME
+		 FROM
+		      APPLY "A"
+		 JOIN
+		      MEMBER "M" ON(M.MEM_NO = A.MEM_NO)
+		 JOIN
+		      "GROUP" "G" ON(G.GROUP_NO = A.MOIM_NO)
+		WHERE
+		      MOIM_NO = #{moimNo}
+		 AND
+		      G.GROUP_STATUS = 'Y'
+		 AND
+		       ACCEPT_YN = 'N'
+	</select>
+	
+	<update id="deleteGroup">
+		UPDATE
+		       "GROUP"
+		   SET
+		       GROUP_STATUS = 'N'
+		 WHERE
+		       GROUP_NO = #{groupNo}
+	
+	</update>
 	
 	
 </mapper>

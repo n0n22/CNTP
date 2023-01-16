@@ -28,7 +28,6 @@ public class BattlePoolController {
 	@Autowired
 	private BattleService battleService;
 	
-	
 	// 배틀풀 리스트 조회
 	@RequestMapping("battleList.bt")
 	public String selectBattlePoolList(Model model,
@@ -151,7 +150,6 @@ public class BattlePoolController {
 									 Model model,
 									 RedirectAttributes redirectAttributes) {
 		int result = battleService.insertBattleResult(br);
-		System.out.println(br);
 		if(result > 0) {
 			redirectAttributes.addAttribute("battleNo", br.getBattleNo());
 			return "redirect: battleDetail.bt";
@@ -245,4 +243,34 @@ public class BattlePoolController {
 		}
 		return "redirect: battleList.bt";
 	}
+	// 배틀풀 수정폼
+	@RequestMapping("resultUpdateForm.bt")
+	public String resultUpdateForm(int battleNo,
+								   String homeTeam,
+								   String awayTeam,
+								   Model model,
+								   HttpSession session) {
+				
+		model.addAttribute("battleNo", battleNo);
+		model.addAttribute("homeTeam", battleService.selectTeam(homeTeam));
+		model.addAttribute("awayTeam", battleService.selectTeam(awayTeam));
+		model.addAttribute("battleResult", battleService.selectBattleResult(battleNo));
+		
+		return "battle/battlePoolResultUpdateForm";
+	}
+	// 배틀풒 수정
+	@RequestMapping("updateBattleResult.bt")
+	public String updateBattleResult(BattleResult br, 
+									 Model model,
+									 RedirectAttributes redirectAttributes,
+									 HttpSession session) {
+		
+		if(battleService.updateBattleResult(br) > 0) session.setAttribute("alertMsg", "배틀 결과 수정 성공");
+		else session.setAttribute("alertMsg", "배틀 결과 수정 실패");
+		
+		redirectAttributes.addAttribute("battleNo", br.getBattleNo());
+		return "redirect: battleDetail.bt";
+	}
+	
 }
+

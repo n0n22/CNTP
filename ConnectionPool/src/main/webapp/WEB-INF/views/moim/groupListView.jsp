@@ -117,7 +117,7 @@
 			                        		<td>#${ g.powerDuration }</td>
 			                        	</tr>
 			                            <tr>
-			                                <td width="150">#지역 ${ g.groupArea }</td>
+			                                <td width="150">#지역 ${ g.korArea }</td>
 			                                <td width="150">#모집인원 ${ g.groupMember }</td>
 			                            </tr>
 			                            <tr>

@@ -22,6 +22,6 @@ public class Team {
 	private String badgeStatus;
 	private String status;
 	private String powerDuration;
-	
+	private String korArea;
 
 }
