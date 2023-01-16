@@ -5,22 +5,116 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="diaryMapper">
 	
+	<resultMap id="diaryResultSet" type="diary" >
+		<result column="diary_no" property="diaryNo" />
+		<result column="mem_no" property="memberNo" />
+		<result column="content" property="content" />
+		<result column="origin_name" property="origiinName" />
+		<result column="change_name" property="changeName" />
+		<result column="scope" property="scope" />
+		<result column="status" property="status" />
+		<result column="heart" property="heart" />
+	
+	</resultMap>
+
+	<select id="selectList" resultMap="diaryResultSet">
+		select
+				diary_no
+				,mem_no
+				,content
+				,to_char(create_date, 'YYYY-MM-DD') as "CREATE_DATE"
+				,origin_name
+		from		
+				diary
+		where
+				status = 'Y'
+		order
+		  by
+		  		diary_no desc			
 	
 	
 	
+	</select>
+	
+	<insert id="insertDiary" parameterType="diary">
+	insert
+	  into
+	  		diary
+	  		(
+	  		diary_no
+	  		,mem_no
+	  		,content
+	  		,origin_name
+	  		,change_name
+	  		)
+	  	values
+	  		(
+	  		seq_dno.nextval
+	  		,#{memberNo}
+	  		,#{content}
+	  		,#{originName}
+	  		,#{changeName}
+	  		)	
+	
+	</insert>
+	
+	<update id="increaseCount">
+		update
+				diary
+		set	
+				count = count + 1
+		where
+				diary_no = #{diaryNo}
+		and
+				status ='Y'							
+	
+	
+	</update>
+	
+	<select id="selectDiary" resultMap="diaryResultSet">
+		select
+				diary_no
+				,title
+				,mem_no
+				,content
+				,origin_name
+				,change_name
+				,to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		from
+				diary
+		where			
+				status = 'Y'
+		and
+				diary_no = #{diaryNo}		
+	
+	</select>
+	
+	<update id ="deleteDiary" parameterType="_int">
+		update
+				diary
+		set
+				status = 'N'
+		where
+				diary_no = #{diaryNo}				
 	
 	
 	
+	</update>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<update id="updateDiary" parameterType="diary">
+
+		update
+				diary
+		set			
+				title = #{Title}
+				content = #{content}
+				originName = #{originName}
+				changeName = #{changeName}
+		where
+				diary_no = #{diaryNo}		
+
+
+	</update>
 	
 	
 	

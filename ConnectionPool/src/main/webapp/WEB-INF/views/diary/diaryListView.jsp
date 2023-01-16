@@ -283,11 +283,11 @@ textarea{
                                     <div class="card-body">
                                         <div class="timeline-item-header">
                                             <img src="" alt="" />
-                                            <p>작성자<span> 닉네임</span></p>
-                                            <small>3 시간전</small>
+                                            <p>${d.memNo }<span> 닉네임</span></p>
+                                            <small>${d.createDate }</small>
                                         </div>
                                         <div class="timeline-item-post">
-                                            <p>오늘 새벽 수영완료.</p>
+                                            <p>${d.content }</p>
                                             <div class="timeline-options">
                                                 <a href="#"><i class="fa fa-comment"></i> 댓글 (4)</a>
                                                 <a href="#"><i class="fa fa-thumbs-up"></i> 좋아요 (15)</a>

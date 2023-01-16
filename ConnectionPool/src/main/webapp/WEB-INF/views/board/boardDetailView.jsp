@@ -134,7 +134,7 @@
 					</c:choose>
 
 					<tr>
-						<td colspan="3">댓글(<span id="rcount">3</span>)</td>
+						<td colspan="3">${board_reply }<span id="rcount"></span></td>
 					</tr>
 				</thead>
 

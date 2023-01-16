@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.cntp.board.model.vo.Board;
 import com.kh.cntp.diary.model.dao.DiaryDao;
 import com.kh.cntp.diary.model.vo.Diary;
+import com.kh.cntp.reply.model.vo.Reply;
 
 @Service
 public class DiaryServiceImpl implements DiaryService {
@@ -19,7 +20,7 @@ public class DiaryServiceImpl implements DiaryService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	/*
+	
 	@Override
 	public ArrayList<Diary> selectList() {
 		return diaryDao.selectList(sqlSession);
@@ -29,6 +30,12 @@ public class DiaryServiceImpl implements DiaryService {
 	public int insertDiary(Diary d) {
 		
 		return diaryDao.insertDiary(sqlSession, d);
+	}
+
+	@Override
+	public int increaseCount(int diaryNo) {
+		
+		return diaryDao.increaseCount(sqlSession, diaryNo );
 	}
 
 	@Override
@@ -51,7 +58,8 @@ public class DiaryServiceImpl implements DiaryService {
 
 	
 	
-	*/
+	
+
 	
 	
 	

@@ -10,7 +10,7 @@ import com.kh.cntp.diary.model.vo.Diary;
 @Repository
 public class DiaryDao {
 
-/*
+
 public ArrayList<Diary> selectList(SqlSessionTemplate sqlSession) {
 	return (ArrayList)sqlSession.selectList("diaryMapper.selectList");
 }
@@ -20,7 +20,14 @@ public int insertDiary(SqlSessionTemplate sqlSession, Diary d) {
 	return sqlSession.insert("diaryMapper.increaseCount", d);
 
 }
+
+
+public int increaseCount(SqlSessionTemplate sqlSession, int diaryNo) {
 	
+	return sqlSession.update("diaryMapper.increaseCount", diaryNo);
+}
+
+
 public Diary selectDiary(SqlSessionTemplate sqlSession, int diaryNo) {
 	return sqlSession.selectOne("diaryMapper.selectDiary", diaryNo);
 
@@ -35,10 +42,12 @@ public int updateDiary (SqlSessionTemplate sqlSession, Diary d) {
 	return sqlSession.update("diaryMapper.updateDiary", d);
 	
 }
+
+
 	
 	
 	
-	*/
+	
 	
 	
 	

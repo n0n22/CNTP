@@ -84,7 +84,7 @@
 			                <td class="bno">${b.boardNo }</td>
 			                <td>${b.category }</td>
 			                <td>${b.title }</td>
-			                <td>${b.memberNo }</td>
+			              	<td ingido="${b.memberNo}" onclick="showProfile(event)" >${b.memberNo} </td>
 			                <td>${b.createDate }</td>
 			                <td>${b.count }</td>
 			            </tr>        		
