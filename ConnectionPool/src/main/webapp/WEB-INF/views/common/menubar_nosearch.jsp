@@ -239,7 +239,7 @@
                     	<c:otherwise>
                     	 <!-- 로그인 되어있을때 시작 -->
                     	 	<c:if test="${ loginMember.memId eq 'admin' }">
-                    	 		<li class="username" data-toggle="modal" data-target="#myModal">${ loginMember.nickName }님</li>
+                    	 		<li class="username" ingido="${loginMember.memNo}" title="프로필 보기" onclick="showProfile(event)">${ loginMember.nickName }님</li>
 		                    	<li><div><a href="memberList.ad">관리자페이지</a></div></li>
 		                    	<li class="logout"><a href="logout.me">로그아웃</a></li>
 		                    </c:if>
