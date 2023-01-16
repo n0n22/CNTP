@@ -7,8 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<script type="text/javascript" src="//cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 
+<script type="text/javascript" src="//cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
     <style>
 
 
@@ -161,9 +161,48 @@
         </form>
         -->
         
-        <script>
-        
+   <script>
+	        
+      		// 자동완성 사용될 데이터가 모여있는 배열
+       		var names = [];
+       		var ids = [];
+       		var nicknames = [];
         	$(function() {
+        		
+        		
+           		
+           		$.ajax({
+           			url : "autoComplete.ad",
+           			type : "post",
+           			success : function(data){
+           				// console.log(data);
+           				$.each(data.names, function(i){
+           					names.push(data.names[i]);
+           				});
+           				$.each(data.ids, function(i){
+           					ids.push(data.ids[i]);
+           				});
+           				$.each(data.nicknames, function(i){
+           					nicknames.push(data.nicknames[i]);
+           				});
+           			},
+           			error : function(){
+           				console.log("ajax 통신실패")
+           			}
+           		})
+        		// 회원 이름 검색 시 자동완성
+        		$("#keywordInput").autocomplete({
+        			source : names
+        		})
+        		$("#conditionSelect").change(function(){
+        			switch($("#conditionSelect").val()){
+        			case 'name' : selectListNames(); break;
+        			case 'id' : selectListIds(); break;
+        			case 'nickname' : selectListNickNames(); break;
+        			}
+        		})
+        		
+        		
         		
         		
         		// 정렬기준 선택
@@ -196,8 +235,7 @@
         			
         			
         		});
-        	       		
-        		
+ 
         		
         	});
         	
@@ -208,7 +246,6 @@
         		
         		var value1 = $('#orderSelect option:selected'); // 선택된 정렬기준이
         		var test1 = value1.is('.desc'); // 내림차순을 포함하는가
-
         		if(test1) { // 내림차순
         			$('#orderCondition').val('desc');
         		}
@@ -232,7 +269,6 @@
         		
         		// 정렬 기준 넣기
         		var test2 = $('#orderSelect option:selected').is('.desc'); // 선택된 정렬기준이 내림차순을 포함하는가
-
         		if(test2) { // 내림차순
         			$('#orderCondition').val('desc');
         		}
@@ -249,6 +285,23 @@
         		$('#searchForm').submit();	
         		        		
         	};
+        	
+        	function selectListNames(){
+        		$("#keywordInput").autocomplete({
+        			source : names
+        		})
+        	}
+        	function selectListIds(){
+        		$("#keywordInput").autocomplete({
+        			source : ids
+        		})
+        	}
+        	function selectListNickNames(){
+        		$("#keywordInput").autocomplete({
+        			source : nicknames
+        		})
+        	}
+        	
         
 			
         
@@ -410,9 +463,7 @@
 						console.log('ajax 멤버 전체 목록 조회 실패');						
 					}
 					
-					
-				});							
-				
+				});	
 				
 			}
 			

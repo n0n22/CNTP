@@ -377,6 +377,24 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.deleteNotice(sqlSession, nno);
 	}
 
+	
+	
+	// 자동완성
+	@Override
+	public ArrayList<String> selectListName() {
+		return adminDao.selectListName(sqlSession);
+	}
+
+	@Override
+	public ArrayList<String> selectListId() {
+		return adminDao.selectListId(sqlSession);
+	}
+
+	@Override
+	public ArrayList<String> selectListNickname() {
+		return adminDao.selectListNickname(sqlSession);
+	}
+
 
 
 

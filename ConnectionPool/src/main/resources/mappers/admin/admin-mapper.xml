@@ -782,6 +782,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	   	       STATUS = 'Y'	
 	</update>
 	
+	<!-- 자동완성 -->
+	<select id="selectListName" resultType="string">
+		SELECT 
+		        MEM_NAME
+		  FROM 
+		        MEMBER
+		 WHERE 
+		  		GRADE != 'A'
+	</select>
+	<select id="selectListId" resultType="string">
+		SELECT 
+		        MEM_ID
+		  FROM 
+		        MEMBER
+		  WHERE 
+		  		GRADE != 'A'
+	</select>
+	<select id="selectListNickname" resultType="string">
+		SELECT 
+		        NICKNAME
+		  FROM 
+		        MEMBER
+ 		 WHERE 
+		  		GRADE != 'A'
+	</select>
 	
 	
 	

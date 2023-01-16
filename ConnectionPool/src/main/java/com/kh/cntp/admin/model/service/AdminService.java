@@ -174,6 +174,12 @@ public interface AdminService {
 	int deleteNotice(int nno);
 	
 	
+	// 자동완성
+	ArrayList<String> selectListName();
+	ArrayList<String> selectListId();
+	ArrayList<String> selectListNickname();
+	
+	
 	
 	
 	

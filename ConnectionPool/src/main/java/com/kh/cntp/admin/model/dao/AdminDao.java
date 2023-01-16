@@ -259,6 +259,18 @@ public class AdminDao {
 	public int deleteNotice(SqlSessionTemplate sqlSession, int nno) {
 		return sqlSession.update("adminMapper.deleteNotice", nno);
 	}
+	// 자동완성
+	public ArrayList<String> selectListName(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectListName");
+	}
+
+	public ArrayList<String> selectListId(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectListId");
+	}
+
+	public ArrayList<String> selectListNickname(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectListNickname");
+	}
 	
 	
 	

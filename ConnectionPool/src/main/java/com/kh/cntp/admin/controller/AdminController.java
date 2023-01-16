@@ -6,6 +6,8 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -486,11 +488,20 @@ public class AdminController {
 	}
 	
 	
-	
-	
-	
-	
-	
+	// 자동완성
+	@ResponseBody
+	@RequestMapping(value="autoComplete.ad", produces="application/json; charset=UTF-8")
+	public String autoComplete() {
+		ArrayList<String> names = adminService.selectListName();
+		ArrayList<String> ids = adminService.selectListId();
+		ArrayList<String> nicknames = adminService.selectListNickname();
+		JSONObject obj = new JSONObject();
+		obj.put("names", names);
+		obj.put("ids", ids);
+		obj.put("nicknames", nicknames);
+		// System.out.println(obj);
+		return obj.toJSONString();
+	}
 	
 	
 	
