@@ -30,8 +30,11 @@ public interface MoimService {
 	ArrayList<TeamMember> selectTeamMemberList(String teamNo);
 	
 	// apply 관련 정보 select
-	// 후에 group 상세 페이지에서도 중복 사용
+	// 후에 group 상세 페이지에서도 중복 사용하지 못 했음....
 	ArrayList<Apply> selectApplyList(String moimNo);
+	
+	ArrayList<Apply> selectGroupApplyList(String moimNo);
+	
 	
 	// 팀 승패 기록 select
 	ResultHistory seletResultHistory(String teamNo);
@@ -45,10 +48,12 @@ public interface MoimService {
 	
 	// --------------- 팀 상세페이지(팀장 입장) ---------------
 	// 신청 수락
-	int UpdateApply(Apply ap);
+	int updateApply(Apply ap);
+	
+	int updateGroupApply(int applyNo);
 	
 	// 신청 거절
-	int DeleteApply(int memNo);
+	int deleteApply(int memNo);
 	
 	// 팀 페이지 수정
 	int updateTeam(Team team);

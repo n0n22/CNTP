@@ -14,6 +14,7 @@ public class Group {
 	private String groupTitle;
 	private String groupContent;
 	private String groupArea;
+	private String korArea;
 	private String place;
 	private String groupMember; //모임 모집 인원
 	private String groupStatus; //모임 모집 인원

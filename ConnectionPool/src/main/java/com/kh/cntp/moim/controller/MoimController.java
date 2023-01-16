@@ -277,7 +277,7 @@ public class MoimController {
 		}
 		
 		
-		mv.addObject("group", group).addObject("deadLine", deadLine).addObject("applyList", moimService.selectApplyList(groupNo)).setViewName("moim/groupDetailView");
+		mv.addObject("group", group).addObject("deadLine", deadLine).addObject("applyList", moimService.selectGroupApplyList(groupNo)).setViewName("moim/groupDetailView");
 		
 		return mv;
 	}
@@ -425,10 +425,13 @@ public class MoimController {
 	@RequestMapping("deleteApply.mo")
 	public ModelAndView deleteApply(HttpSession session, ModelAndView mv, Apply ap) {
 		
-		if(moimService.DeleteApply(ap.getMemNo()) > 0) {
-			// 성공
+		if(moimService.deleteApply(ap.getMemNo()) > 0) {
 			session.setAttribute("alterMsg", "신청 취소 완료");
-			mv.setViewName("redirect:teamPage.mo?teamNo=" + ap.getMoimNo());
+			if(ap.getMoimNo().contains("T")) {
+				mv.setViewName("redirect:teamPage.mo?teamNo=" + ap.getMoimNo());
+			} else {
+				mv.setViewName("redirect:groupDetail.mo?groupNo=" + ap.getMoimNo());
+			}
 		} else {
 			mv.addObject("errorMsg", "신청 취소 실패").setViewName("common/errorPage");
 		}
@@ -458,7 +461,7 @@ public class MoimController {
 		
 		//System.out.println(ap);
 		
-		if(moimService.UpdateApply(ap) > 0) {
+		if(moimService.updateApply(ap) > 0) {
 			mv.setViewName("redirect:teamPage.mo?teamNo=" + ap.getMoimNo());
 		}else {
 			mv.addObject("errorMsg", "수락 실패").setViewName("common/errorPage");
@@ -527,6 +530,31 @@ public class MoimController {
 		//System.out.println(ap);
 		
 		return new Gson().toJson(moimService.ajaxSelectGroupApply(ap));
+	}
+	
+	@RequestMapping("updateGroupApply.mo")
+	public ModelAndView updateGroupApply(ModelAndView mv, Apply ap) {
+		
+		if(moimService.updateGroupApply(ap.getApplyNo()) > 0) {
+			mv.setViewName("redirect:groupDetail.mo?groupNo=" + ap.getMoimNo());
+		} else {
+			mv.addObject("errorMsg", "수락 실패").setViewName("common/errorMsg");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("deleteGroup.mo")
+	public ModelAndView deleteGroup(ModelAndView mv, Group group) {
+		
+		if(moimService.deleteGroup(group) > 0) {
+			mv.setViewName("redirect:groupList.mo");
+		} else {
+			mv.addObject("errorMsg", "삭제 실패").setViewName("common/errorPage");
+		}
+		
+		
+		return mv;
 	}
 	
 }

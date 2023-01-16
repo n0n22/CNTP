@@ -58,7 +58,7 @@
 	            	<br>
 	                <table>
 	                    <tr>
-	                        <td width="250">#지역 ${ group.groupArea }</td>
+	                        <td width="250">#지역 ${ group.korArea }</td>
 	                        <td width="250">#모집인원 ${ group.groupMember }</td>
 	                    </tr>
 	                    <tr>
@@ -144,6 +144,32 @@
 												<!-- 로그인이 되어 있고 모집 기간이 지났을 때 -->
 												<button class="btn btn-primary" disabled>모집 기간 만료</button>
 											</c:when>
+											<c:otherwise>
+												<!-- 로그인이 되어 있고 모집중일 때 -->
+												<c:choose>
+													<c:when test="${ group.groupArea ne '전체' and loginMember.memArea ne group.groupArea }">
+													<!-- 지역 조건 불충족 시 -->
+														<p>지역 조건이 맞지 않습니다.</p>
+														<button disabled class="btn btn-primary">신청불가</button>
+													</c:when>
+													<c:when test="${ group.level ne '무관' and loginMember.grade ne group.level}">
+													<!-- 등급 조건이 맞지 않을 때 -->
+														<p>레벨 조건이 맞지 않습니다.</p>
+														<button disabled class="btn btn-primary">신청불가</button>
+													</c:when>
+													<c:when test="${ group.gender ne '무관' and loginMember.gender ne group.gender }">
+														<p>성별 조건이 맞지 않습니다.</p>
+														<button disabled class="btn btn-primary">신청불가</button>
+													</c:when>
+													<c:otherwise>
+														<form action="insertApply.mo" method="post">
+															<input type="hidden" name="memNo" value="${ loginMember.memNo }">
+															<input type="hidden" name="moimNo" value="${ group.groupNo}">
+															<button class="btn btn-primary">신청하기</button>
+														</form>
+													</c:otherwise>
+												</c:choose>
+											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
 								</c:choose>
@@ -162,28 +188,51 @@
 			        	<table class="table table-hover">
 			        		<tr>
 			        			<th width="100">닉네임</th>
-			        			<th width="80">성별</th>
 			        			<th width="150">요청일시</th>
-			        			<th width="150">수락/거절</th>
+			        			<th width="200">수락/거절</th>
 			        		</tr>
 			        		<c:choose>
-			        			<c:when test="${ empty applyList }">
+			        			<c:when test="${ group.groupMember eq '모집마감' }">
+			        			<!-- 모집 인원을 모두 채웠을 때 -->
 			        				<tr>
-			        					<td colspan="5" align="center">신청내역이 없습니다.</td>
+			        					<td colspan="5" align="center">모두 모집하였습니다.</td>
 			        				</tr>
 			        			</c:when>
 			        			<c:otherwise>
-					        		<c:forEach items="${ applyList }" var="ap">
-						        		<tr>
-						        			<td><p ingido="${ap.memNo}" title="프로필 보기" onclick="showProfile(event)">${ ap.nickname }</p></td>
-						        			<td>${ ap.gender }</td>
-						        			<td>${ ap.applyDate }</td>
-						        			<td>
-						        				<button>수락</button>
-						        	            <button>거절</button>
-						        			</td>
-						        		</tr>
-					        		</c:forEach>
+			        			<!-- 아직 모집중일 때 -->
+					        		<c:choose>
+					        			<c:when test="${ empty applyList }">
+					        			<!-- 신청 내역이 없을 때 -->
+					        				<tr>
+					        					<td colspan="5" align="center">신청내역이 없습니다.</td>
+					        				</tr>
+					        			</c:when>
+					        			<c:otherwise>
+					        			<!-- 신청 내역이 있을 때 -->
+							        		<c:forEach items="${ applyList }" var="ap">
+								        		<tr>
+								        			<td><p ingido="${ap.memNo}" title="프로필 보기" onclick="showProfile(event)">${ ap.nickname }</p></td>
+								        			<td>${ ap.applyDate }</td>
+								        			<td>
+								        				<div style="display:inline-block;">
+								        					<form action="updateGroupApply.mo" method="post">
+								        						<input type="hidden" name="applyNo" value="${ ap.applyNo }">
+								        						<input type="hidden" name="moimNo" value="${ group.groupNo }">
+										        	            <button class="btn btn-primary" onclick="return confirmDecision('수락')">수락</button>
+								        					</form>
+								        				</div>
+								        				<div style="display:inline-block;">
+								        					<form action="deleteApply.mo">
+												 				<input type="hidden" name="moimNo" value="${ group.groupNo }">
+												 				<input type="hidden" name="memNo" value="${ ap.memNo }">
+												 				<button class="btn btn-primary" onclick="return confirmDecision('거절')">거절</button>
+								        					</form>
+								        				</div>
+								        			</td>
+								        		</tr>
+							        		</c:forEach>
+					        			</c:otherwise>
+					        		</c:choose>
 			        			</c:otherwise>
 			        		</c:choose>
 			        		
@@ -192,18 +241,24 @@
 						<br>
 						<div align="center">
 							<div style="display:inline-block;">
-								<form action="chattingRoom.mo" method="post">
-									<input type="hidden" name="moimNo" value="${ group.groupNo }">
-									<input type="hidden" name="memNo" value="${ loginMember.memNo }">
-									<input type="hidden" name="moimMember" value="${ group.groupMember }">
-									<input type="hidden" name="moimTitle" value="${ group.groupTitle }">
-									<button class="btn btn-primary">채팅하기</button>
+								<form action="deleteGroup.mo">
+									<input type="hidden" name="groupNo" value="${ group.groupNo }">
+					        		<button class="btn btn-primary" onclick="return confirmDecision('삭제')">삭제하기</button>
 								</form>
 							</div>
 							<div style="display:inline-block;">
 								<form action="groupUpdateForm.mo">
 									<input type="hidden" name="groupNo" value="${ group.groupNo }">
 					        		<button class="btn btn-primary">수정하기</button>
+								</form>
+							</div>
+							<div style="display:inline-block;">
+								<form action="chattingRoom.mo" method="post">
+									<input type="hidden" name="moimNo" value="${ group.groupNo }">
+									<input type="hidden" name="memNo" value="${ loginMember.memNo }">
+									<input type="hidden" name="moimMember" value="${ group.groupMember }">
+									<input type="hidden" name="moimTitle" value="${ group.groupTitle }">
+									<button class="btn btn-primary">채팅하기</button>
 								</form>
 							</div>
 						</div>
@@ -230,16 +285,16 @@
     					//console.log(obj.acceptYn);
     					
     					if(obj == null || obj.length == 0){
-    						result += '<form action="insertApply.mo" method="post">'
+    						/*result += '<form action="insertApply.mo" method="post">'
     									+	'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
     									+	'<input type="hidden" name="moimNo" value="${ group.groupNo}">'
     									+	'<button class="btn btn-primary">신청하기</button>'
     									+'</form>';
-    						$('#change-area').html(result);
+    						$('#change-area').html(result);*/
     					} else{
     						if(obj.acceptYn == 'Y'){
     							result += '<div style="display:inline-block;">'
-    									+ '<form action="chattingRoom.mo" method="post">'
+    									+ 	'<form action="chattingRoom.mo" method="post">'
 										+ 			'<input type="hidden" name="moimNo" value="${ group.groupNo }">'
 										+ 			'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
 										+ 			'<input type="hidden" name="moimMember" value="${ group.groupMember }">'
@@ -247,16 +302,27 @@
 										+ 			'<button class="btn btn-primary">채팅하기</button>'
 										+ 	'</form>'
 										+ '</div>'
-										+ 	'<form>'
+										+ '<div style="display:inline-block; width:10px;"></div>'
+										+ '<div style="display:inline-block;">'
+										+ 	'<form action="deleteApply.mo" method="post">'
 										+ 			'<input type="hidden" name="moimNo" value="${ group.groupNo }">'
 										+ 			'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
-										+ 			'<button class="btn btn-primary">채팅하기</button>'
-										+ 	'</form>';
+										+ 			'<button class="btn btn-primary" onclick="return confirmCancel()">참여 취소하기</button>'
+										+ 	'</form>'
+										+ '</div>';
     							$('#change-area').html(result);
     						}
     						else {
     							//console.log('왜 안들어와');
-    							$('#change-area').html('<button disabled class="btn btn-primary">신청대기중</button>');
+    							result += '<div>'
+										+ '<p>현재 신청 대기중입니다.</p>'
+    									+ '<form action="deleteApply.mo">'
+										+ 			'<input type="hidden" name="moimNo" value="${ group.groupNo }">'
+										+ 			'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
+										+ 			'<button class="btn btn-primary" onclick="return confirmApplyCancel()">신청 취소하기</button>'
+										+ 	'</form>'
+										+ '</div>'
+    							$('#change-area').html(result);
     						}
     					}
     				},
@@ -271,6 +337,34 @@
     		})
     	</script>
     </c:if>
+    
+    <script>
+    	function confirmCancel(){
+    		 if(confirm('정말 소모임 참여를 취소하시겠습니까?')){
+    			 return true;
+    		 } else{
+    			 return false;
+    		 }
+    		 
+    	}
+    	
+    	function confirmApplyCancel(){
+    		 if(confirm('정말 신청 취소하시겠습니까?')){
+    			 return true;
+    		 } else{
+    			 return false;
+    		 }
+    		 
+    	}
+    	
+    	function confirmDecision(keyword){
+    		if(confirm('정말 ' + keyword + '하시겠습니까?')){
+    			return true;
+    		} else{
+    			return false;
+    		}
+    	}
+    </script>
 	
 
 </body>
