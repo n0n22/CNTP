@@ -28,7 +28,6 @@ public class BattlePoolController {
 	@Autowired
 	private BattleService battleService;
 	
-	
 	// 배틀풀 리스트 조회
 	@RequestMapping("battleList.bt")
 	public String selectBattlePoolList(Model model,
