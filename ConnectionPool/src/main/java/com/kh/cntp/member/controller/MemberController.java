@@ -331,8 +331,4 @@ public class MemberController {
 	}
 		return String.valueOf(result2);
 	}
-	
-	
-
-	
 }
