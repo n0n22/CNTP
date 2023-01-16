@@ -5,5 +5,69 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="replyMapper">
 	
+	<resultMap id="replyResultSet" type="reply">
+		<result column="comment_no" property="commentNo" />
+		<result column="diary_no" property="diaryNo" />
+		<result column="board_no" property="boardNo" />
+		<result column="writer" property="writer" />
+		<result column="comment_content" property="commentContent" />
+		<result column="comment_Date" property="commentDate" />
+		<result column="status" property="status" />
+		
+	</resultMap>
+
+
+	<select id ="selectBoardReplyList" resultType="reply">
+		select
+				comment_no commentNo,
+				writer Writer ,
+				comment_content commentContent,
+				to_char(comment_date, 'YYYY-MM-DD') as "COMMENT_Date"
+		  from
+		        board_reply
+		  where
+		  		status = 'Y'
+		  	and
+				board_no = #{boardNo}
+			order
+			 by
+			  	comment_no desc			  			      	
+	
+	
+	</select>
+	
+	
+	<insert id ="insertBoardReply" parameterType="reply">
+		insert 
+	 	  into
+				board_reply 
+				(
+				comment_no,
+				comment_content,
+				writer,
+				board_no
+				)
+		values
+				(
+				seq_brno.nextval,
+				#{commentContent},
+				#{writer},
+				#{boardNo}
+				)		
+			
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>

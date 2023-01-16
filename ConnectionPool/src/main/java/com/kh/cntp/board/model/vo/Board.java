@@ -2,7 +2,7 @@ package com.kh.cntp.board.model.vo;
 
 import lombok.Data;
 
-@Data
+@Data                                           
 public class Board {
 	private int boardNo;
 	private int memberNo;

@@ -46,8 +46,8 @@ public class DiaryServiceImpl implements DiaryService {
 		return diaryDao.updateDiary(sqlSession, d);
 	}
 
-	*/
 	
+	*/
 	
 	
 	

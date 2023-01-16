@@ -109,22 +109,38 @@
 			
 			
 			
-            <!-- 댓글 기능은 나중에 ajax 배우고 나서 구현할 예정! 우선은 화면구현만 해놓음 -->
+           <!-- 댓글  -->
             <table id="replyArea" class="table" align="center">
-                <thead>
-                    <tr>
-                        <th colspan="2">
-                            <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
-                        </th>
-                        <th style="vertical-align:middle"><button class="btn btn-secondary">등록하기</button></th>
-                    </tr>
-                    <tr>
-                        <td colspan="3">댓글(<span id="rcount">3</span>)</td>
-                    </tr>
-                </thead>
-                
-                
-                <tbody>
+				<thead>
+					<c:choose>
+						<c:when test="${empty loginMember }">
+							<tr>
+                        		<th colspan="2">
+                            		<textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;">로그인 후 이용 가능합니다</textarea>
+                        		</th>
+                        		<th style="vertical-align:middle"><button class="btn btn-secondary">등록하기</button></th>
+                    		</tr>
+                    	</c:when>
+						<c:otherwise>
+							<tr>
+								<th colspan="2">
+								<textarea class="form-control" name=""id="content" cols="55" rows="2" style="resize: none; width: 100%;"></textarea>
+								</th>
+								<th style="vertical-align: middle"><button class="btn btn-secondary" onclick="addBoardReply();">등록하기</button></th>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+
+					<tr>
+						<td colspan="3">댓글(<span id="rcount">3</span>)</td>
+					</tr>
+				</thead>
+
+
+
+				<tbody>
+					
+					<!-- 
                     <tr>
                         <th>user02</th>
                         <td>ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ꿀잼</td>
@@ -140,12 +156,89 @@
                         <td>댓글입니다!!</td>
                         <td>2020-03-10</td>
                     </tr>
+                     -->
                 </tbody>
             </table>
         </div>
         <br><br>
 
     </div>
+    
+    <script>
+    	
+    	$(function(){
+    		selectBoardReplyList();
+    	});
+    
+    	function addBoardReply(){ //댓글 작성용 ajax
+    		
+    		if($('#content').val().trim() != ''){
+    			$.ajax({
+    				url: 'rinsert.bo',
+    				data :{
+    					boardNo : ${b.boardNo},
+    					commentContent : $('#content').val(),
+    					writer : ${loginMember.memNo}
+    				},
+    				success : function(status){
+    					console.log(status);
+    				
+    					if(status == 'success'){
+    						selectBoardReplyList();
+    						$('#content').val('');
+    					}
+    				
+    					
+    				},
+    				error: function(){
+    					console.log('실패!!ㅜㅜ');
+    				}
+    				
+    			})
+    		}
+    		else {
+    			alertify.alert('정상적인 댓글을 작성해주세요!!');
+    		}
+    				
+    		}
+    		
+    	
+    
+    	
+    	function selectBoardReplyList(){
+    		$.ajax({
+    			url: 'rlist.bo', //게시글에 달린 댓글만 조회. (현재 게시글의 글번호를 넘겨줌.)
+    			data: {bno : ${b.boardNo}},
+    			success : function(list){
+    				console.log(list);
+    				
+    				let value='';
+    				for(let i in list){
+    					value += '<tr>'
+							   + '<th>' + list[i].writer  + '</th>'
+							   + '<th>' + list[i].commentContent + '</th>'
+							   + '<th>' + list[i].commentDate   + '</th>'
+							   + '</tr>';
+					}
+    				
+    				$('#replyArea tbody').html(value);
+					$('#rcount').text(list.length);
+    			},
+    			error : function(){
+    				console.log('댓글 목록 조회 실패!!ㅜㅜ');
+    			}
+    		
+    		})
+    		
+    		
+    	}
+    
+    
+    
+    
+    </script>
+    
+    
     
     <jsp:include page="../common/footer.jsp" />
     

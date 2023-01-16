@@ -41,7 +41,7 @@
                 <table align="center">
                     <tr>
                         <th><label for="title">제목</label></th>
-                        <td><input type="text" id="title" class="form-control" value="게시판제목임ㅋㅋ" name="title" required></td>
+                        <td><input type="text" id="title" class="form-control" value="${b.title }" name="title" required></td>
                     </tr>
                     <tr>
                         <th><label for="memNo">작성자</label></th>
@@ -49,16 +49,23 @@
                     </tr>
                     <tr>
                         <th><label for="content">내용</label></th>
-                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="content" required>여긴내용쓰</textarea></td>
+                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="content" required>${b.content }</textarea></td>
                     </tr>
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
                         <td>
-                            <input type="file" id="upfile" class="form-control-file border" name="upfile">
+                            <input type="file" id="upfile" class="form-control-file border" name="reupfile">
+                            	
+                            <c:if test="${not empty b.originName }">	
                             	현재 업로드된 파일 : 
-                            <a href="" download="">flower.jpg</a>
+                            <a href="${b.changeName }" download="${b.originName }">${b.originName }</a>
+                            <input type="hidden" name="originName" value="${b.originName }">
+                            <input type="hidden" name="changeName" value="${b.changeName }">
+                            </c:if>
+                            
                         </td>
                     </tr>
+                    
                 </table>
                 <br>
 
