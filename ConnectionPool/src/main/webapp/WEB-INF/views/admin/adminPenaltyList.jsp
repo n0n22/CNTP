@@ -198,8 +198,8 @@
 					
 					// console.log($(this).parent().nextAll().eq(3).text());
 					
-					var str = '<input type="text" value="' + $(this).parent().next().text() + '" name="memNo">';
-					str += '<input type="text" value="' + $(this).parent().nextAll().eq(3).text() + '" name="penalty">';
+					var str = '<input type="hidden" value="' + $(this).parent().next().text() + '" name="memNo">';
+					str += '<input type="hidden" value="' + $(this).parent().nextAll().eq(3).text() + '" name="penalty">';
 					
 					
 					
