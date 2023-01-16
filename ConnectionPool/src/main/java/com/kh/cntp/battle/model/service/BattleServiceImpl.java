@@ -29,7 +29,13 @@ public class BattleServiceImpl implements BattleService{
 	public ArrayList<Battle> selectBattlePoolList(String cpage) {
 		return battleDao.selectBattlePoolList(sqlSession, cpage);
 	}
-	// BATTLE 테이블에 INSERT & POOLINFO에 INSERT
+	// 배틀풀 리스트 검색
+	@Override
+	public ArrayList<Battle> searchBattle(HashMap<String, String> condition) {
+		return battleDao.searchBattle(sqlSession, condition);
+	}
+	// 배틀풀 작성
+	// BATTLE 테이블에 INSERT & POOL_INFO 테이블에 INSERT
 	@Override
 	@Transactional
 	public int insertBattle(Battle battle, PoolInfo poolInfo) {
@@ -70,10 +76,7 @@ public class BattleServiceImpl implements BattleService{
 	public int battleResultOk(int battleNo, String victoryTeamNo, String defeatTeamNo) {
 		return battleDao.battleResultOk(sqlSession, battleNo) * battleDao.updateVictoryTeam(sqlSession, victoryTeamNo) * battleDao.updateDefeatTeam(sqlSession, defeatTeamNo);
 	}
-	@Override
-	public ArrayList<Battle> searchBattle(HashMap<String, String> condition) {
-		return battleDao.searchBattle(sqlSession, condition);
-	}
+
 	@Override
 	@Transactional
 	public int cancelBattle(HashMap<String, String> cancel) {

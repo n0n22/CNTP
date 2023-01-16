@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.cntp.battle.model.service.BattleService;
@@ -23,42 +24,58 @@ import com.kh.cntp.battle.model.vo.PoolInfo;
 import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.template.Template;
 
+import oracle.net.aso.a;
+
 @Controller
 public class BattlePoolController {
+	// 의존성 주입 : 필드 주입 
+	// 주입하려고 하는 객체의 타입과 일치하는 객체를 자동으로 주입
 	@Autowired
 	private BattleService battleService;
 	
 	// 배틀풀 리스트 조회
 	@RequestMapping("battleList.bt")
-	public String selectBattlePoolList(Model model,
-									   @RequestParam(value ="cpage", defaultValue="today") String cpage) {
-		
+	public ModelAndView selectBattlePoolList(@RequestParam(value ="cpage", defaultValue="today") String cpage,
+											 ModelAndView mv) {
+		// 전달받은 날짜가 없으면 오늘 날짜를 기본값으로
 		if(cpage.equals("today")) {
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			cpage = df.format(new Date());
 		}
+		// 요청한 날짜의 경기를 조회 후 ArrayList<Battle>에 담아 반환
+		// HttpServletRequest의 attribute 영역에 담아주고 응답화면 지정
+		mv.addObject("battleList", battleService.selectBattlePoolList(cpage))
+		  .addObject("now", cpage)
+		  .setViewName("battle/battlePoolList");
 		
-		ArrayList<Battle> battleList = battleService.selectBattlePoolList(cpage);
-		model.addAttribute("battleList", battleList);
-		model.addAttribute("now", cpage);
-		
-		return "battle/battlePoolList";
+		return mv;
 	}
-	// 배틀풀 상세보기
-	@RequestMapping("battleDetail.bt")
-	public String selectBattlePool(int battleNo, Model model) {
-		Battle battle = battleService.selectBattle(battleNo);
-		PoolInfo poolInfo = battleService.selectPoolInfo(battleNo);
-		ResultHistory homeTeamRecord = battleService.selectResultHistory(battle.getHomeTeam());
+	// 배틀풀 리스트 검색 
+	@RequestMapping("search.bt")
+	public ModelAndView searchBattle(String cpage,
+								     @RequestParam(value = "area", defaultValue="") String area,
+								     @RequestParam(value = "gender", defaultValue="") String gender,
+								     @RequestParam(value = "style", defaultValue="") String style,
+								     @RequestParam(value = "level", defaultValue="") String level,
+								     ModelAndView mv) {
+		// 동적 쿼리문을 위한 조건을 수행하기 위해 Map에 K, V 형태로 가공
+		HashMap<String, String> condition = new HashMap<String, String>();
+		condition.put("cpage", cpage);
+		condition.put("area", area);
+		condition.put("gender", gender);
+		condition.put("style", style);
+		condition.put("level", level);
 		
-		model.addAttribute("homeTeamRecord", homeTeamRecord);
-		model.addAttribute("battle", battle);
-		model.addAttribute("poolInfo", poolInfo);
-		model.addAttribute("battleResult", battleService.selectBattleResult(battleNo));
+		// 요청한 날짜 + 요청한 조건의 경기를 조회 후 ArrayList<Batlle>에 담아 반환
+		// HttpServletRequest의 attribute 영역에 담아주고 응답화면 지정
+		// 페이지 이동시에도 검색한 키워드 데이터를 계속 남기기 위해 condition 역시 attribute 영역에 저장
+		mv.addObject("battleList", battleService.searchBattle(condition))
+		  .addObject("now", cpage)
+		  .addObject("condition", condition)
+		  .setViewName("battle/battlePoolList");
 		
-		return "battle/battlePoolDetail";
+		return mv;
 	}
-	
 	// 배틀풀 작성폼 보기
 	@RequestMapping("enrollForm.bt")
 	public String enrollForm() {
@@ -66,65 +83,83 @@ public class BattlePoolController {
 	}
 	// 배틀풀 작성
 	@RequestMapping("insert.bt")
-	public String insertBattle(Battle battle,
-							   PoolInfo poolInfo,
-							   MultipartFile upfile,
-							   HttpSession session,
-							   Model model) {
+	public ModelAndView insertBattle(Battle battle,
+									 PoolInfo poolInfo,
+									 MultipartFile upfile,
+									 HttpSession session,
+									 ModelAndView mv) {
 		
 		if(!upfile.getOriginalFilename().equals("")) {
 			battle.setOriginName(upfile.getOriginalFilename());
 			battle.setChangeName("resources/upfiles/" + Template.saveFile(upfile, session));
 		}
-		int result = battleService.insertBattle(battle, poolInfo);
 		
-		if(result > 0) {
+		if(battleService.insertBattle(battle, poolInfo) > 0) {
 			session.setAttribute("alertMsg", "배틀풀 작성 성공");
-			return "redirect: battleList.bt";
+			mv.setViewName("redirect: battleList.bt");
 		} else {
-			model.addAttribute("errorMsg", "배틀풀 작성 실패");
-			return "common/errorPage";
+			mv.addObject("errorMsg", "배틀풀 작성 실패");
+			mv.setViewName("common/errorPage");
 		}
-		
+		return mv;
 	}
 	
-	// 배틀풀 결과
+	// 배틀풀 상세보기 : 배틀풀 경기 정보 / 경기장 정보 / 팀 전적 / 경기 결과 조회
+	@RequestMapping("battleDetail.bt")
+	public ModelAndView selectBattlePool(int battleNo, ModelAndView mv) {
+
+		Battle battle = battleService.selectBattle(battleNo);
+		
+		mv.addObject("battle", battle)
+		  .addObject("poolInfo", battleService.selectPoolInfo(battleNo))
+		  .addObject("homeTeamRecord", battleService.selectResultHistory(battle.getHomeTeam()))
+		  .addObject("battleResult", battleService.selectBattleResult(battleNo))
+		  .setViewName("battle/battlePoolDetail");
+		
+		return mv;
+	}
+	
+	// 배틀풀 결과 : 홈팀 정보 / 홈팀 전적 / 어웨이팀 정보 / 어웨이팀 전적  / 배틀 결과
 	@RequestMapping("battleResult.bt")
-	public String selectBattleResult(int battleNo,
-									 String homeTeam,
-									 String awayTeam,
-									 Model model
+	public ModelAndView selectBattleResult(int battleNo,
+										   String homeTeam,
+										   String awayTeam,
+										   ModelAndView mv
 									 ) {
-		model.addAttribute("battleNo", battleNo);
-		model.addAttribute("homeTeam", battleService.selectTeam(homeTeam));
-		model.addAttribute("homeTeamHistory", battleService.selectResultHistory(homeTeam));
-		model.addAttribute("awayTeam", battleService.selectTeam(awayTeam));
-		model.addAttribute("awayTeamHistory", battleService.selectResultHistory(awayTeam));
-		model.addAttribute("battleResult", battleService.selectBattleResult(battleNo));
-		return "battle/battleResultDetail";
+		mv.addObject("battleNo", battleNo)
+		  .addObject("homeTeam", battleService.selectTeam(homeTeam))
+		  .addObject("homeTeamHistory", battleService.selectResultHistory(homeTeam))
+		  .addObject("awayTeam", battleService.selectTeam(awayTeam))
+		  .addObject("awayTeamHistory", battleService.selectResultHistory(awayTeam))
+		  .addObject("battleResult", battleService.selectBattleResult(battleNo))
+		  .setViewName("battle/battleResultDetail");
+		
+		return mv;
 	}
-	// 배틀결과 작성
+	
+	// 배틀결과 작성폼 : 홈팀 정보, 어웨이팀 정보
 	@RequestMapping("resultEnrollForm.bt")
-	public String resultEnrollForm(int battleNo,
-								   String homeTeam,
-								   String awayTeam,
-								   Model model,
-								   HttpSession session) {
+	public ModelAndView resultEnrollForm(int battleNo,
+									     String homeTeam,
+									     String awayTeam,
+									     ModelAndView mv) {
 		
-		model.addAttribute("battleNo", battleNo);
-		model.addAttribute("homeTeam", battleService.selectTeam(homeTeam));
-		model.addAttribute("awayTeam", battleService.selectTeam(awayTeam));
+		mv.addObject("battleNo", battleNo)
+		  .addObject("homeTeam", battleService.selectTeam(homeTeam))
+		  .addObject("awayTeam", battleService.selectTeam(awayTeam))
+		  .setViewName("battle/battlePoolResultEnrollForm");
 		
-		return "battle/battlePoolResultEnrollForm";
+		return mv;
 	}
+	
 	// 배틀 신청
 	@RequestMapping("battleApply.bt")
-	public String applyBattle(String teamNo,
+	public ModelAndView applyBattle(String teamNo,
 							  String memNo,
 							  String chatContent,
 							  String battleNo,
 							  HttpSession session,
-							  Model model,
+							  ModelAndView mv,
 							  RedirectAttributes redirectAttributes) {
 		
 		HashMap<String, String> apply = new HashMap<String, String>();
@@ -138,11 +173,11 @@ public class BattlePoolController {
 		if(result > 0) {
 			redirectAttributes.addAttribute("battleNo", battleNo);
 			session.setAttribute("alertMsg", "배틀 신청이 완료되었습니다.");
-			return "redirect: battleDetail.bt";
+			mv.setViewName("redirect: battleDetail.bt");
 		} else {
-			model.addAttribute("errorMsg", "배틀 신청 실패");
-			return "common/errorPage";
+			mv.addObject("errorMsg", "배틀 신청 실패").setViewName("common/errorPage");
 		}
+		return mv;
 	} 
 	// 배틀 결과 작성
 	@RequestMapping("insertBattleResult.bt")
@@ -178,35 +213,7 @@ public class BattlePoolController {
 			return "common/errorPage";
 		}
 	}
-	// 배틀 리스트 검색 
-	@RequestMapping("search.bt")
-	public String searchBattle(String cpage,
-							   @RequestParam(value = "area", defaultValue="") String area,
-							   @RequestParam(value = "gender", defaultValue="") String gender,
-							   @RequestParam(value = "style", defaultValue="") String style,
-							   @RequestParam(value = "level", defaultValue="") String level,
-							   Model model) {
-		//System.out.println("cpage" + cpage); // 빈문자열이 담긴 경우와 그외
-		//System.out.println("area" + area);
-		//System.out.println("gender" + gender);
-		//System.out.println("style" + style);
-		//System.out.println("level" + level);
-		
-		HashMap<String, String> condition = new HashMap<String, String>();
-		condition.put("cpage", cpage);
-		condition.put("area", area);
-		condition.put("gender", gender);
-		condition.put("style", style);
-		condition.put("level", level);
-		//System.out.println(condition);
-		ArrayList<Battle> battleList = battleService.searchBattle(condition);
-		//System.out.println(battleList);
-		model.addAttribute("battleList", battleList);
-		model.addAttribute("now", cpage);
-		model.addAttribute("condition", condition);
-		
-		return "battle/battlePoolList";
-	}
+
 	
 	// 배틀 신청 취소
 	@RequestMapping("cancelBattle.bt")
