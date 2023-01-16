@@ -94,7 +94,7 @@ public class BoardController {
 				
 					new File(session.getServletContext().getRealPath(filePath)).delete();
 			}
-			session.setAttribute("alert", "삭제 성공~~");	
+			session.setAttribute("alertMsg", "삭제 성공~~");	
 				return "redirect:list.bo";
 		}else { //삭제 실패
 			model.addAttribute("errorMsg", "게시글 삭제 실패");
@@ -129,7 +129,7 @@ public class BoardController {
 			
 			if(boardService.updateBoard(b) > 0) {
 				session.setAttribute("alertMsg", "게시글이 수정되었습니다~~");
-				return "redirect:detail.bo?bno" + b.getBoardNo();
+				return "redirect:detail.bo?bno=" + b.getBoardNo();
 			}else {
 				model.addAttribute("errorMsg", "게시글 수정 실패~~!!");
 				return "common/errorPage";

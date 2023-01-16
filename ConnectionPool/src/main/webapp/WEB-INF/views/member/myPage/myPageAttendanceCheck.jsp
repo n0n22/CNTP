@@ -169,7 +169,13 @@
         margin-bottom: 60px;
         font-size: 30px;
     }
-    
+    #info-btn {
+        margin-top: 50px;
+        margin-bottom: 20px;
+        font-size: 20px;
+        width: 200px;
+        height: 50px;
+    }
     .info-area button:hover {
         background-color: rgb(29, 172, 233);
         cursor: pointer;
@@ -203,7 +209,7 @@
 <body>
 
 	<jsp:include page="../../common/menubar_nosearch.jsp"/>
-
+		
     <div class="outer">
         <div class="top-bar">
              <div class="inline-block">
@@ -235,29 +241,34 @@
                 </ul>
             </div>
         </div>
+           		<form action="myPageAtCheck.me">
         <div class="main-area">
             <div id="title">
-            	출석내역조회
-            	
+           		출석체크
+           		<input type="hidden" name="memNo" value="${ loginMember.memNo }">
+           		<input type="hidden" name="pt" value="+1">
+           		<span><button class="atCheck">출첵!</button></span>
             </div>
+           		</form>
+            	
                 <div id="title-line"><hr></div>
-                
             <div class="info-area" style="margin: auto;">
-            <span><button class="atCheck">출석체크!</button></span>
             	<div id='calendar'></div>
             
             </div>     
         </div>
         
-
     </div>
+    
 	<script>
 
     document.addEventListener('DOMContentLoaded', function() {
     	
     	// Controller에서 Json으로 넘김
     	var list = ${checkList};
+    	
     	console.log(list);
+    	
     	
     	// 빈배열 , 빈 객체 생성
     	let checkList = [];
@@ -285,6 +296,11 @@
             center: 'title', // X월 XXXX년 위치
             right: 'dayGridMonth,timeGridWeek,timeGridDay' // 오른쪽 상단 툴바
           },
+          dateClick: function(info) {// 날짜만 클릭 했을 때 핸들러
+            alert('clicked ' + info.dateStr); 
+          	
+          	
+          },
           events:  // 화면에 띄워줄 이벤트 객체 배열
         		checkList // 위에서만든 객체배열 
         });
@@ -299,6 +315,8 @@
 			$('.teamListTable>tbody>tr').click(function(){
 				location.href = 'detail.bo?bno=' + $(this).children('#boardNo').text();   
 			})
+			
+		
 		})	
 		
 		

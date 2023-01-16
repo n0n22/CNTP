@@ -360,7 +360,59 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   AND 
 		       POINT_CONTENT = '출석체크'
     </select>
+    
+    <!-- 출석 중복 조회 -->
+    <select id="countAtCheck" parameterType="_int" resultType="_int">
+    	SELECT 
+		       COUNT(*)
+		  FROM
+		       POINT
+		 WHERE 
+		       MEM_NO = #{memNo}
+		   AND
+		       POINT_CONTENT = '출석체크'
+		   AND
+		       POINT = '+1'
+		   AND
+		       CATEGORY = '적립'
+		   AND
+		       TO_CHAR(POINT_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+    </select>
 	
+	<!-- 출석체크 추가(포인트테이블) -->
+	<insert id="insertAtCheck" parameterType="point">
+		INSERT
+		  INTO
+		       POINT
+		       (
+		       POINT_NO,
+		       MEM_NO,
+		       POINT_CONTENT,
+		       POINT,
+		       POINT_DATE,
+		       CATEGORY
+		       )
+		VALUES 
+		       (
+		       SEQ_PNO.NEXTVAL,
+		       #{memNo},
+		       '출석체크',
+		       #{point},
+		       SYSDATE,
+		       '적립'
+		       )
+	</insert>
+	
+	<!-- 출석체크 추가(멤버테이블) -->
+	<update id="updatePointMember" parameterType="point">
+		UPDATE 
+		       MEMBER
+		   SET
+		       MEM_POINT = MEM_POINT + (#{point})
+		 WHERE
+		       MEM_NO = #{memNo}
+	
+	</update>
 	<!-- 인기도 ******************************************************** -->
 	
 	<!-- 회원 프로필 조회 -->

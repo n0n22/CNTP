@@ -15,7 +15,10 @@ public class DiaryServiceImpl implements DiaryService {
 	
 	@Autowired
 	private DiaryDao diaryDao;
-
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	
 	/*
 	@Override
 	public ArrayList<Diary> selectList() {
@@ -47,8 +50,8 @@ public class DiaryServiceImpl implements DiaryService {
 	}
 
 	
-	*/
 	
+	*/
 	
 	
 	
