@@ -44,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				,title
 				,mem_no
 				,count
+				,category
 				,to_char(create_date, 'YYYY-MM-DD') as "CREATE_DATE"
 				,origin_name
 				,status
@@ -105,6 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					,title
 					,mem_no
 					,content
+					,category
 					,origin_name
 					,change_name
 					,to_char(create_date, 'YYYY-MM-DD') as "create_date"
@@ -134,11 +136,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set
 				title = #{title}		
 				,content = #{content}
-				,memNo = #{memberNo}
-				,originName = #{originName}
-				,changeName = #{changeName}
-		and 
-				status = 'Y'
+				,mem_no = #{memberNo}
+				,origin_Name = #{originName}
+				,change_Name = #{changeName}
+		where 
+				board_no = #{boardNo}
 	
 	</update>
 	

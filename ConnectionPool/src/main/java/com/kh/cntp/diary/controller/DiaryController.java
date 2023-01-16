@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,7 +23,7 @@ public class DiaryController {
 	//수영일기 리스트 조회
 	@RequestMapping("list.di")
 	public ModelAndView selectList(ModelAndView mv) {
-		mv.addObject("list",diaryService.selectList).setViewName("diary/diaryListView");
+		mv.addObject("list",diaryService.selectList()).setViewName("diary/diaryListView");
 	
 		return mv;
 	}
@@ -58,7 +59,9 @@ public class DiaryController {
 	@RequestMapping ("detail.bi")
 	public ModelAndView selectDiary(ModelAndView mv, int dno) {
 		
-		if(diaryService.)		
+		if(diaryService.increaseCount(bno) > 0) {
+			mv.addObject("b",boardService)
+		}
 		
 		
 		
@@ -94,7 +97,7 @@ public class DiaryController {
 	
 	//수영일기 수정
 	@RequestMapping("update.di")
-	public String updateDiary(@ModelAttribute Board b ,Model model, MultipartFile reUpfile, HttpSession session ) {
+	public String updateDiary(@ModelAttribute Diary d ,Model model, MultipartFile reUpfile, HttpSession session ) {
 		
 		if(b.getOriginName() != null ) {
 			new File(session.getSetvletContext().getRealPath(d.getchangeName())).delete();
@@ -117,9 +120,9 @@ public class DiaryController {
 		return "common/errorPage";
 	}
 	
+	
 	*/
 	
-	
-	
+
 	
 }
