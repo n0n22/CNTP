@@ -309,6 +309,7 @@ public class MemberController {
 	@RequestMapping(value="showProfile.me", produces="application/json; charset=UTF-8")
 	public String showProfile(int memNo) {
 		Member m = memberService.showProfile(memNo);
+		System.out.println(m);
 		return new Gson().toJson(m);
 	}
 	// 인기도 올리는 기능
@@ -321,10 +322,8 @@ public class MemberController {
 		String ingido = "F" + memNo + "T" + targetNo;
 		// 중복 검사
 		int result = memberService.checkIngido(ingido);
-		System.out.println(result);
 		int result2 = 0;
 		if(result == 0){
-			System.out.println("결과" + result);
 			ingido += flag.equals("1")? "U" : "D";
 			// HashMap 객체에 담기
 			HashMap<String, String> map = new HashMap<String, String>();

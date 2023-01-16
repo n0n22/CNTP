@@ -274,21 +274,21 @@
     			url : 'showProfile.me',
     			data : {memNo:$memNo},
     			success : function(m){
-    				// console.log(m);
+    				console.log(m);
     				// 로그인한 유저만 회원 프로필을 띄울 수 있음
     				if(${empty loginMember}){
     					return;
     				}
     					
-    				var gender = m.gender == 'M' ? '남자' : '여자';
-    				var grade = '';
+    				let gender = m.gender == 'M' ? '남자' : '여자';
+    				let grade = '';
     				switch(m.grade){
     				case 'B' : grade = 'resources/images/beginner.jpg'; break;
     				case 'M' : grade = 'resources/images/middle.jpg'; break;
     				case 'S' : grade = 'resources/images/special.jpg'; break;
     				default : grade = 'resources/images/cntp_flamingo.png'; break;
     				}
-    				var teamName = m.teaName == '' ? '무소속' : m.teamName;
+    				let teamName = m.teamName == '' ? '무소속' : m.teamName;
     				
     				var modal = 
     			        `<div class="modal" id="myModal">
