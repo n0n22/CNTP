@@ -137,7 +137,7 @@
 		                <div><input class="userInput" type="text" name="memId" required placeholder="아이디"></div>
             		</c:otherwise>
             	</c:choose>
-                <div><input class="userInput" type="password" name="memPwd" placeholder="비밀번호"></div>
+                <div><input class="userInput" type="password" name="memPwd" required placeholder="비밀번호"></div>
                 
                 <div class="checkId"><input type="checkbox" name="checkId">아이디 저장</div>
                 

@@ -133,6 +133,22 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectAtCheck(sqlSession, memNo);
 	}
 	
+	// 출석체크 개수
+	@Override
+	public int countAtCheck(int memNo) {
+		return memberDao.countAtCheck(sqlSession, memNo);
+	}
+	
+	// 출석체크
+	@Override
+	@Transactional
+	public int insertAtCheck(Point point) {
+		return memberDao.insertAtCheck(sqlSession, point) * memberDao.updatePointMember(sqlSession, point);
+	}
+
+
+	
+	
 	//////////////////////////////////
 	// 인기도							//
 	//////////////////////////////////

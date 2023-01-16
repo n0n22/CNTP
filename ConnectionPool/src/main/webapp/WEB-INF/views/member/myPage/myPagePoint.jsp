@@ -268,6 +268,8 @@
                	<c:when test="${ empty plist }">
                		<div align="center">
                     	<br><br><br> 
+                    	<div id="point-text">포인트&nbsp;<span id="point">${sessionScope.loginMember.memPoint}</span></div>
+                    	<br><br>
 	                    <p class="noTitle">포인트 내역이 없어요</p>
 	                    <p class="noTitle">포인트는 출석체크 및 게시글,댓글 작성으로 얻을 수 있어요</p>
 	                    <br><br><br>

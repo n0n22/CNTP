@@ -72,4 +72,10 @@ public interface MemberService {
 	
 	// 출석 내역 조회
 	ArrayList<Point> selectAtCheck(int memNo);
+	
+	// 출석체크 중복 방지
+	int countAtCheck(int memNo);
+	
+	// 출석 체크
+	int insertAtCheck(Point point);
 }

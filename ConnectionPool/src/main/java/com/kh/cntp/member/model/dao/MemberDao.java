@@ -114,9 +114,27 @@ public class MemberDao {
 	}
 	
 	// 출석 내역 조회
-		public ArrayList<Point> selectAtCheck(SqlSessionTemplate sqlSession, int memNo) {
-			return (ArrayList)sqlSession.selectList("memberMapper.selectAtCheck", memNo);
+	public ArrayList<Point> selectAtCheck(SqlSessionTemplate sqlSession, int memNo) {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectAtCheck", memNo);
 	}
+		
+	// 출석체크 개수
+	public int countAtCheck(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("memberMapper.countAtCheck", memNo);
+	}
+	
+	// 출석체크 (포인트테이블추가)
+	public int insertAtCheck(SqlSessionTemplate sqlSession, Point point) {
+		return sqlSession.insert("memberMapper.insertAtCheck", point);
+	}
+	
+	// 출석체크 (멤버 테이블 업데이트)
+	public int updatePointMember(SqlSessionTemplate sqlSession, Point point) {
+		return sqlSession.update("memberMapper.updatePointMember", point);
+	}
+	
+		
+		
 		
 	
 	//////////////////////////////////
