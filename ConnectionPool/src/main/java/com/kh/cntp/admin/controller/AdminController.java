@@ -492,13 +492,10 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value="autoComplete.ad", produces="application/json; charset=UTF-8")
 	public String autoComplete() {
-		ArrayList<String> names = adminService.selectListName();
-		ArrayList<String> ids = adminService.selectListId();
-		ArrayList<String> nicknames = adminService.selectListNickname();
 		JSONObject obj = new JSONObject();
-		obj.put("names", names);
-		obj.put("ids", ids);
-		obj.put("nicknames", nicknames);
+		obj.put("names", adminService.selectListName());
+		obj.put("ids", adminService.selectListId());
+		obj.put("nicknames", adminService.selectListNickname());
 		// System.out.println(obj);
 		return obj.toJSONString();
 	}
