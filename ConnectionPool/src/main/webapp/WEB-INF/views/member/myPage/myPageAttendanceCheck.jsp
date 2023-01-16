@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>        
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>ConnectionPool 마이페이지</title>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.0.2/index.global.min.js'></script>
 <style>
     @font-face {
         font-family: 'Pretendard-Regular';
@@ -119,7 +120,7 @@
         font-size: 25px;
     }
     #title-line {
-        width: 920px;
+        width: 950px;
         margin: auto;
     }
 
@@ -192,35 +193,17 @@
         margin-left: 10px;
         color: rgb(47, 54, 82);
     }
-    #emailForm {
-        font-family: 'Pretendard-Regular';
-        width: 110px;
-        height: 40px;
-        padding: 5px;
-        border-color: rgb(223, 223, 223);
-        border-top: 0.5px;
-        border-left: 0.5px;
-        border-right: 0.5px;
-    }
-
-    .subText {
-        padding-left: 10px;
-        font-size: 13px;
-        color: rgb(70, 70, 70);
-    }
- 
-    
-    
     #pagination{
         display: flex;
         justify-content: center;
         align-items: center;
    }
-
    .noTitle{
         font-size: 16px;
         color: rgb(113, 113, 113);
    }
+
+   
 </style>
 </head>
 <body>
@@ -229,7 +212,7 @@
 
     <div class="outer">
         <div class="top-bar">
-            <div class="inline-block">
+             <div class="inline-block">
                 <div id="name-area" style="cursor: default;"><span id="userName">${sessionScope.loginMember.nickName}</span> 님
                     <br>
                     <c:if test="${ sessionScope.loginMember.badgeChangeName == null }">
@@ -248,106 +231,87 @@
             </div>
             <div>
                 <ul id="top-ul">
-                    <li><a  href="myPageInfo.me">회원정보</a></li>
-                    <li><a href="">출석체크</a></li>
+                    <li><a href="myPageInfo.me">회원정보</a></li>
+                    <li><a id="click" href="">출석체크</a></li>
                     <li><a href="myPageBoard.me">작성글 보기</a></li>
                     <li><a href="myPageDiary.me">수영일기</a></li>
                     <li><a href="myPageTeam.me">나의팀 보기</a></li>
                     <li><a href="myPageMoim.me">소모임 보기</a></li>
-                    <li><a id="click" href="myPagePoint.me">포인트 조회</a></li>
+                    <li><a href="myPagePoint.me">포인트 조회</a></li>
                 </ul>
             </div>
         </div>
         <div class="main-area">
-            <div id="title">포인트 내역 조회</div>
+            <div id="title">출석체크</div>
                 <div id="title-line"><hr></div>
             <div class="info-area" style="margin: auto;">
-               <!-- 없을때-->
-               <!-- 있을때--> 
-               <c:choose>
-               	<c:when test="${ empty plist }">
-               		<div align="center">
-                    	<br><br><br> 
-	                    <p class="noTitle">포인트 내역이 없어요</p>
-	                    <p class="noTitle">포인트는 출석체크 및 게시글,댓글 작성으로 얻을 수 있어요</p>
-	                    <br><br><br>
-                	</div>
-               	</c:when>
-               	<c:otherwise>
-               		<div id="pointForm" class="container">
-	                    
-	                    <ul class="nav">
-						  <li class="nav-item">
-						    <a class="nav-link" href="myPagePoint.me">전체보기</a>
-						  </li>
-						  <li class="nav-item">
-						    <a class="nav-link" href="myPagePoint.me?category=적립">적립내역</a>
-						  </li>
-						  <li class="nav-item">
-						    <a class="nav-link" href="myPagePoint.me?category=사용">사용내역</a>
-						  </li>
-						</ul>       
-						
-	                    <table class="table">
-	                      <thead>
-	                        <tr>
-	                          <th>적립/사용날짜</th>
-	                          <th>포인트 적립/사용 내역</th>
-	                          <th>포인트 </th>
-	                        </tr>
-	                      </thead>
-	                      <tbody>	
-	                    	<c:forEach var="p" items="${plist}">
-	                    		<tr>
-	                    			<td>${ p.pointDate }</td>
-	                    			<td>${ p.pointContent }</td>
-	                    			<c:if test="${ p.point.contains(\"+\") }">
-		                    			<td style="color:green">${ p.point }</td>
-	                    			</c:if>
-	                    			<c:if test="${ p.point.contains(\"-\") }">
-		                    			<td style="color:red">${ p.point }</td>
-	                    			</c:if>
-	                    		</tr>
-	                    	</c:forEach>
-	                      </tbody>
-	                    </table>
-                  	</div>
-               	</c:otherwise>
-               </c:choose>
-            </div>
-            <br><br><br>
+            	<div id='calendar'></div>
             
-            <c:if test="${ not empty plist }">
-	            <div class="container" id="pagination">
-	                <ul class="pagination">
-	                	<c:choose>
-	                		<c:when test="${ pi.currentPage eq 1 }">
-	                			<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-	                		</c:when>
-	                		<c:otherwise>
-	                			<li class="page-item"><a class="page-link" href="myPagePoint.me?cpage=${ pi.currentPage - 1 }&category=${category}">Previous</a></li>
-	                		</c:otherwise>
-	                	</c:choose>
-	                	
-	                	<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-								<li class="page-item"><a class="page-link" href="myPagePoint.me?cpage=${p}&category=${category}">${ p }</a></li>
-						</c:forEach>
-	                	
-                	 	<c:choose>
-	                		<c:when test="${ pi.currentPage eq pi.maxPage  }">
-	                			<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-	                		</c:when>
-	                		<c:otherwise>
-	                			<li class="page-item"><a class="page-link" href="myPagePoint.me?cpage=${ pi.currentPage + 1 }&category=${category}">Next</a></li>
-	                		</c:otherwise>
-	                	</c:choose>
-	                </ul>
-	            </div>
-            </c:if>
-            
+            </div>     
         </div>
+        
 
     </div>
+	<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+    	
+    	// Controller에서 Json으로 넘김
+    	var list = ${checkList};
+    	console.log(list);
+    	
+    	// 빈배열 , 빈 객체 생성
+    	let checkList = [];
+    	var checkEl = {};
+    	
+        var calendarEl = document.getElementById('calendar'); // div요소 선택
+	
+        for (var i in list) { // Json으로 넘어온 객체배열 만큼
+        // 빈 객체에 Json객체배열의 객체 넣어줌	
+    	checkEl = {
+    				title : list[i].pointContent,
+    				start: list[i].pointDate
+    				}
+    	// 빈 배열에 객체 넣어줌
+    	checkList.push(checkEl);
+        
+        };
+    	
+    	console.log(checkList);
+        
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          selectable: true, // 달력 클릭하게 해주는 속성
+          headerToolbar: {
+            left: 'prev,next today', // 왼쪽 상단 툴바
+            center: 'title', // X월 XXXX년 위치
+            right: 'dayGridMonth,timeGridWeek,timeGridDay' // 오른쪽 상단 툴바
+          },
+          dateClick: function(info) {// 날짜만 클릭 했을 때 핸들러
+            alert('clicked ' + info.dateStr); 
+          	
+          	
+          },
+          events:  // 화면에 띄워줄 이벤트 객체 배열
+        		checkList // 위에서만든 객체배열 
+        });
+        
+        
+        calendar.render(); // 달력 화면에 뿌려주는 렌더링함수
+        
+     	});
+		
+			
+		$(function(){
+			$('.teamListTable>tbody>tr').click(function(){
+				location.href = 'detail.bo?bno=' + $(this).children('#boardNo').text();   
+			})
+		})	
+		
+		
+	</script>
+	
+	
+
 
    
 	<jsp:include page="../../common/footer.jsp"/>

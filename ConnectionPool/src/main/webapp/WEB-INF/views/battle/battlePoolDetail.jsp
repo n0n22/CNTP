@@ -362,6 +362,12 @@
 										<div class="mt-2">
 											<span class="alpha alpha-red" onclick="chat()">채팅방</span>
 										</div>
+										<form action="chattingRoom.mo" method="post" id="chat">
+											<input type="hidden" name="moimNo" value="${battle.battleNo}">
+											<input type="hidden" name="memNo" value="${loginMember.memNo}">
+											<input type="hidden" name="moimMember" value="2">
+											<input type="hidden" name="moimTitle" value="${battle.title}">
+										</form>
 			
 									</div>
 									<script>
@@ -371,7 +377,7 @@
 											}
 										}
 										function chat(){
-											location.href = 'chattingRoom.mo';
+											$('#chat').submit();
 										}
 									</script>
 								</c:if>

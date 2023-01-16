@@ -179,8 +179,8 @@ public class MoimController {
 		// teamNo 이용해서 채팅방 보내주기~
 		
 		//System.out.println(moimService.selectChattingList(chat));
-		
-		mv.addObject("chatList", moimService.selectChattingList(chat)).addObject("moimMember", moimMember).addObject("moimTitle", moimTitle).setViewName("moim/chatView");
+		//System.out.println(chat);
+		mv.addObject("chatList", moimService.selectChattingList(chat)).addObject("moimMember", moimMember).addObject("moimNo", chat.getMoimNo()).addObject("moimTitle", moimTitle).setViewName("moim/chatView");
 		
 		return mv;
 	}
@@ -205,6 +205,8 @@ public class MoimController {
 		chat.setMoimNo(moimNo);
 		chat.setMemNo(memNo);
 		chat.setChatContent(chatContent);
+		
+		//System.out.println(chat);
 		
 		String message = "";
 		
@@ -261,7 +263,19 @@ public class MoimController {
 	@RequestMapping("groupDetail.mo")
 	public ModelAndView selectGroup(ModelAndView mv, String groupNo) {
 		
-		mv.addObject("group", moimService.selectGroup(groupNo)).addObject("applyList", moimService.selectApplyList(groupNo)).setViewName("moim/groupDetailView");
+		Group group = moimService.selectGroup(groupNo);
+		
+		int startTimeNum = Integer.parseInt(group.getStartTime().replace("/", "").replace(" ", "").replace(":", ""));
+		int todayNum = Integer.parseInt(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+		
+		String deadLine = "";
+		
+		if(startTimeNum <= todayNum) {
+			deadLine = "모집 기간 만료";
+		}
+		
+		
+		mv.addObject("group", group).addObject("deadLine", deadLine).addObject("applyList", moimService.selectApplyList(groupNo)).setViewName("moim/groupDetailView");
 		
 		return mv;
 	}

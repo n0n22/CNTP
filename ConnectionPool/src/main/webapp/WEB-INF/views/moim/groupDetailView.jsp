@@ -125,7 +125,7 @@
 			                    </tr>
 			                </table>
 			            </div>
-			<br><br>
+						<br><br>
 						
 						<div class="apply-area" align="center">
 							<div style="display:inline-block;">
@@ -138,6 +138,17 @@
 								</form>
 							</div>
 							<div style="display:inline-block;">
+								<c:choose>
+									<c:when test="${ group.groupMember eq '모집마감' }">
+										<button disabled>모집 완료</button>
+									</c:when>
+									<c:when test="${ deadLine eq '모집 기간 만료' }">
+										<button disabled>모집 기간 만료</button>
+									</c:when>
+									<c:otherwise>
+										<
+									</c:otherwise>
+								</c:choose>
 								<button class="btn btn-primary">신청/대기/완료</button>
 							</div>
 						</div>
@@ -209,7 +220,11 @@
     
     <br><br>
     
-    
+    <c:if test="${ login }">
+    	<script>
+    		
+    	</script>
+    </c:if>
 	
 
 </body>
