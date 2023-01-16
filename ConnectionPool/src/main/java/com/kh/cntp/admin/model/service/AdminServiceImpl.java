@@ -201,22 +201,25 @@ public class AdminServiceImpl implements AdminService {
 				
 			case "탈퇴" :	
 				TeamMember teamInfo = adminDao.selectTeam(sqlSession, memNo[i]);
-
 				
 				if (teamInfo != null) { // 소속 팀 정보가 있을 때
+					
 					TeamMember nl = adminDao.selectTeamMem(sqlSession, memNo[i]);
-					
-					if(nl != null) { // 소속팀이 있고, 바꿀 멤버가 있을 때
-						result *= adminDao.updateTeamLeader(sqlSession, nl.getMemNo()) // 새 팀장으로 업데이트
-								* adminDao.deleteTeamMember(sqlSession, memNo[i]); // 팀멤버테이블에서 삭제
-					} else { // 소속 팀이 있고, 바꿀 멤버가 없을 때
-						result *= adminDao.updateTeamStatus(sqlSession, memNo[i]) // 팀 상태 변경
-								* adminDao.deleteTeamMember(sqlSession, memNo[i]); // 팀멤버테이블에서 삭제
-					} 					
-					
-					// 무조건 실행
-					result *= adminDao.updateMemberStatus(sqlSession, memNo[i]); // 멤버 상태 변경				
 
+					if(teamInfo.getTeamGrade().equals("L")) { // 리더였을 때
+						
+						if(nl != null) { // 소속팀이 있고, 바꿀 멤버가 있을 때
+							result *= adminDao.updateTeamLeader(sqlSession, nl.getMemNo()); // 새 팀장으로 업데이트
+						} else { // 소속 팀이 있고, 바꿀 멤버가 없을 때
+							result *= adminDao.updateTeamStatus(sqlSession, memNo[i]); // 팀 상태 변경
+						} 
+					}
+					// 무조건 실행
+						
+					// 그냥 멤버였을 때
+					result *= adminDao.deleteTeamMember(sqlSession, memNo[i]); // 팀멤버테이블에서 삭제													
+					result *= adminDao.updateMemberStatus(sqlSession, memNo[i]); // 멤버 상태 변경			
+					
 				} else { // 소속 팀이 없을 때					
 					result *= adminDao.updateMemberStatus(sqlSession, memNo[i]); // 멤버 상태 변경
 				}
