@@ -790,14 +790,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        MEMBER
 		 WHERE 
 		  		GRADE != 'A'
+		   AND
+		   		MEM_STATUS = 'Y'
+		  
 	</select>
 	<select id="selectListId" resultType="string">
 		SELECT 
 		        MEM_ID
 		  FROM 
 		        MEMBER
-		  WHERE 
+		 WHERE 
 		  		GRADE != 'A'
+  		   AND
+		   		MEM_STATUS = 'Y'
+		  
 	</select>
 	<select id="selectListNickname" resultType="string">
 		SELECT 
@@ -806,8 +812,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        MEMBER
  		 WHERE 
 		  		GRADE != 'A'
+		   AND
+		   		MEM_STATUS = 'Y'
 	</select>
-	
-	
 	
 </mapper>
