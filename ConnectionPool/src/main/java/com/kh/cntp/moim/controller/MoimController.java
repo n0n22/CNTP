@@ -277,6 +277,7 @@ public class MoimController {
 		}
 		
 		
+		
 		mv.addObject("group", group).addObject("deadLine", deadLine).addObject("applyList", moimService.selectGroupApplyList(groupNo)).setViewName("moim/groupDetailView");
 		
 		return mv;
