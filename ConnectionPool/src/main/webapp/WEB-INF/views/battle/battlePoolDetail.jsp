@@ -368,7 +368,6 @@
 											<input type="hidden" name="moimMember" value="2">
 											<input type="hidden" name="moimTitle" value="${battle.title}">
 										</form>
-			
 									</div>
 									<script>
 										function cancel(){
