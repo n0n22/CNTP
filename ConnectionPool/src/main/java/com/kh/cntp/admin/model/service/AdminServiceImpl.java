@@ -220,12 +220,14 @@ public class AdminServiceImpl implements AdminService {
 					}
 					
 					// 그냥 멤버였을 때
-					result *= adminDao.deleteTeamMember(sqlSession, memNo[i]); // 팀멤버테이블에서 삭제														
+					result *= adminDao.deleteTeamMember(sqlSession, memNo[i]); // 팀멤버테이블에서 삭제
+					System.out.println("result 3 :" + result);
 				} 
 				
 				// 무조건 실행
 				// 소속 팀이 없을 때	
 				result *= adminDao.updateMemberStatus(sqlSession, memNo[i]); // 멤버 상태 변경
+				System.out.println("result 4 :" + result);
 			}
 		}
 		
