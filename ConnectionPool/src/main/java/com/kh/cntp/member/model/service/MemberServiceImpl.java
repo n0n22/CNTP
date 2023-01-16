@@ -127,6 +127,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectMyBoardList(sqlSession, pi, board);
 	}
 	
+	// 출석 내역 조회
+	@Override
+	public ArrayList<Point> selectAtCheck(int memNo) {
+		return memberDao.selectAtCheck(sqlSession, memNo);
+	}
 	
 	//////////////////////////////////
 	// 인기도							//
@@ -147,6 +152,7 @@ public class MemberServiceImpl implements MemberService {
 	public int upOrDownIngido(HashMap<String, String> map) {
 		return memberDao.upOrDownIngido(sqlSession, map) * memberDao.insertIngidoRecord(sqlSession, map);
 	}
+
 
 
 	

@@ -256,8 +256,29 @@
 
     document.addEventListener('DOMContentLoaded', function() {
     	
+    	// Controller에서 Json으로 넘김
+    	var list = ${checkList};
+    	console.log(list);
+    	
+    	// 빈배열 , 빈 객체 생성
+    	let checkList = [];
+    	var checkEl = {};
+    	
         var calendarEl = document.getElementById('calendar'); // div요소 선택
-
+	
+        for (var i in list) { // Json으로 넘어온 객체배열 만큼
+        // 빈 객체에 Json객체배열의 객체 넣어줌	
+    	checkEl = {
+    				title : list[i].pointContent,
+    				start: list[i].pointDate
+    				}
+    	// 빈 배열에 객체 넣어줌
+    	checkList.push(checkEl);
+        
+        };
+    	
+    	console.log(checkList);
+        
         var calendar = new FullCalendar.Calendar(calendarEl, {
           selectable: true, // 달력 클릭하게 해주는 속성
           headerToolbar: {
@@ -270,20 +291,13 @@
           	
           	
           },
-          events: [ // 화면에 띄워줄 이벤트 객체 배열
-              {
-                title: '출석',
-                start: '2023-01-25'
-              },
-              {
-                title: 'URL요청??',
-                url: 'http://google.com/', // a태그 달기
-                start: '2023-01-20'
-              }
-            ]
+          events:  // 화면에 띄워줄 이벤트 객체 배열
+        		checkList // 위에서만든 객체배열 
         });
-
+        
+        
         calendar.render(); // 달력 화면에 뿌려주는 렌더링함수
+        
      	});
 		
 			

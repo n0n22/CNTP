@@ -347,6 +347,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       BOARD_NO DESC       
 	</select>
 	
+	<!-- 출석 내역 조회 -->
+	<select id="selectAtCheck" parameterType="_int" resultMap="pointResultSet">
+		SELECT 
+		       MEM_NO,
+		       TO_CHAR(POINT_DATE, 'YYYY-MM-DD') as "POINT_DATE",
+		       POINT_CONTENT
+		  FROM
+		       POINT
+		 WHERE 
+		       MEM_NO = #{memNo}
+		   AND 
+		       POINT_CONTENT = '출석체크'
+    </select>
+	
 	<!-- 인기도 ******************************************************** -->
 	
 	<!-- 회원 프로필 조회 -->
