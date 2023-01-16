@@ -101,7 +101,7 @@ public interface MoimService {
 	// 소그룸 글 삭제
 	int deleteGroup(Group group);
 	
-	
+	Apply ajaxSelectGroupApply(Apply ap);
 	
 	
 	

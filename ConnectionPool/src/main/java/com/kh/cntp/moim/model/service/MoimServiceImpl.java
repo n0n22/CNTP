@@ -162,6 +162,11 @@ public class MoimServiceImpl implements MoimService {
 		return 0;
 	}
 
+	@Override
+	public Apply ajaxSelectGroupApply(Apply ap) {
+		return moimDao.ajaxSelectGroupApply(sqlSession, ap);
+	}
+
 	
 
 	

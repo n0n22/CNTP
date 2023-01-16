@@ -128,28 +128,25 @@
 						<br><br>
 						
 						<div class="apply-area" align="center">
-							<div style="display:inline-block;">
-								<form action="chattingRoom.mo" method="post">
-									<input type="hidden" name="moimNo" value="${ group.groupNo }">
-									<input type="hidden" name="memNo" value="${ loginMember.memNo }">
-									<input type="hidden" name="moimMember" value="${ group.groupMember }">
-									<input type="hidden" name="moimTitle" value="${ group.groupTitle }">
-									<button class="btn btn-primary">채팅하기</button>
-								</form>
-							</div>
-							<div style="display:inline-block;">
+							<div style="display:inline-block;" id="change-area">
 								<c:choose>
-									<c:when test="${ group.groupMember eq '모집마감' }">
-										<button disabled>모집 완료</button>
-									</c:when>
-									<c:when test="${ deadLine eq '모집 기간 만료' }">
-										<button disabled>모집 기간 만료</button>
+									<c:when test="${ empty loginMember }">
+										<!-- 로그인이 안 되어 있을 때는 무조건 -->
+										<a class="btn btn-primary" href="loginForm.me">로그인 후<br>이용 가능합니다.</a>
 									</c:when>
 									<c:otherwise>
-										<
+										<c:choose>
+											<c:when test="${ group.groupMember eq '모집마감' }">
+												<!-- 로그인 되어 있고 모집이 다 되었을 때 -->
+												<button class="btn btn-primary" disabled>모집 완료</button>
+											</c:when>
+											<c:when test="${ deadLine eq 'expired' }">
+												<!-- 로그인이 되어 있고 모집 기간이 지났을 때 -->
+												<button class="btn btn-primary" disabled>모집 기간 만료</button>
+											</c:when>
+										</c:choose>
 									</c:otherwise>
 								</c:choose>
-								<button class="btn btn-primary">신청/대기/완료</button>
 							</div>
 						</div>
 						
@@ -220,9 +217,58 @@
     
     <br><br>
     
-    <c:if test="${ login }">
+    <c:if test="${ not empty loginMember and group.groupMember ne '모집마감' and deadLine ne 'expired' }">
     	<script>
-    		
+    		$(function(){
+    			$.ajax({
+    				url : "selectGroupApply.mo",
+    				success : function(obj){
+    					
+    					var result = '';
+    					
+    					//console.log(obj);
+    					//console.log(obj.acceptYn);
+    					
+    					if(obj == null || obj.length == 0){
+    						result += '<form action="insertApply.mo" method="post">'
+    									+	'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
+    									+	'<input type="hidden" name="moimNo" value="${ group.groupNo}">'
+    									+	'<button class="btn btn-primary">신청하기</button>'
+    									+'</form>';
+    						$('#change-area').html(result);
+    					} else{
+    						if(obj.acceptYn == 'Y'){
+    							result += '<div style="display:inline-block;">'
+    									+ '<form action="chattingRoom.mo" method="post">'
+										+ 			'<input type="hidden" name="moimNo" value="${ group.groupNo }">'
+										+ 			'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
+										+ 			'<input type="hidden" name="moimMember" value="${ group.groupMember }">'
+										+ 			'<input type="hidden" name="moimTitle" value="${ group.groupTitle }">'
+										+ 			'<button class="btn btn-primary">채팅하기</button>'
+										+ 	'</form>'
+										+ '</div>'
+										+ 	'<form>'
+										+ 			'<input type="hidden" name="moimNo" value="${ group.groupNo }">'
+										+ 			'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
+										+ 			'<button class="btn btn-primary">채팅하기</button>'
+										+ 	'</form>';
+    							$('#change-area').html(result);
+    						}
+    						else {
+    							//console.log('왜 안들어와');
+    							$('#change-area').html('<button disabled class="btn btn-primary">신청대기중</button>');
+    						}
+    					}
+    				},
+    				error : function(){
+    					console.log('실패');
+    				},
+    				data : {
+    					moimNo : '${ group.groupNo }',
+    					memNo : '${ loginMember.memNo }'
+    				}
+    			})
+    		})
     	</script>
     </c:if>
 	

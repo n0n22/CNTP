@@ -141,4 +141,7 @@ public class MoimDao {
 		return sqlSession.update("moimMapper.updateGroup", group);
 	}
 
+	public Apply ajaxSelectGroupApply(SqlSessionTemplate sqlSession, Apply ap) {
+		return sqlSession.selectOne("moimMapper.ajaxSelectGroupApply", ap);
+	}
 }
