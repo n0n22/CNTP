@@ -147,17 +147,17 @@
 											<c:otherwise>
 												<!-- 로그인이 되어 있고 모집중일 때 -->
 												<c:choose>
-													<c:when test="${ group.groupArea ne '전체' and loginMember.memArea ne group.groupArea }">
+													<c:when test="${ group.groupArea ne 'all' and loginMember.memArea ne group.groupArea }">
 													<!-- 지역 조건 불충족 시 -->
 														<p>지역 조건이 맞지 않습니다.</p>
 														<button disabled class="btn btn-primary">신청불가</button>
 													</c:when>
-													<c:when test="${ group.level ne '무관' and loginMember.grade ne group.level}">
+													<c:when test="${ group.level ne '무관' and loginMember.grade ne engLevel}">
 													<!-- 등급 조건이 맞지 않을 때 -->
 														<p>레벨 조건이 맞지 않습니다.</p>
 														<button disabled class="btn btn-primary">신청불가</button>
 													</c:when>
-													<c:when test="${ group.gender ne '무관' and loginMember.gender ne group.gender }">
+													<c:when test="${ group.gender ne '무관' and loginMember.gender ne engGender }">
 														<p>성별 조건이 맞지 않습니다.</p>
 														<button disabled class="btn btn-primary">신청불가</button>
 													</c:when>

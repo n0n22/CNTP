@@ -276,9 +276,24 @@ public class MoimController {
 			deadLine = "ok";
 		}
 		
+		String engLevel = "";
+		String engGender = "";
 		
+		switch(group.getLevel()){
+			case "초급" : engLevel = "B";
+			break;
+			case "중급" : engLevel = "M";
+			break;
+			case "고급" : engLevel = "S";
+		}
 		
-		mv.addObject("group", group).addObject("deadLine", deadLine).addObject("applyList", moimService.selectGroupApplyList(groupNo)).setViewName("moim/groupDetailView");
+		switch(group.getGender()) {
+			case "여자만" : engGender = "F";
+			break;
+			case "남자만" : engGender = "M";
+		}
+		
+		mv.addObject("engGender", engGender).addObject("engLevel", engLevel).addObject("group", group).addObject("deadLine", deadLine).addObject("applyList", moimService.selectGroupApplyList(groupNo)).setViewName("moim/groupDetailView");
 		
 		return mv;
 	}
