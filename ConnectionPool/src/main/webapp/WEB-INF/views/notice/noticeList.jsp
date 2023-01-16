@@ -68,7 +68,7 @@
 		}
 		
 		input[type=radio]:hover + label:hover {
-			cursur: pointer;
+			cursor: pointer;
 		}
 		
 		input[type=radio]:checked + label {
