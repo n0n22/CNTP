@@ -244,7 +244,7 @@
 											<form action="chattingRoom.mo" method="post">
 												<input type="hidden" name="moimNo" value="${ team.teamNo }">
 												<input type="hidden" name="memNo" value="${ loginMember.memNo }">
-												<input type="hidden" name="moimMember" value="${ team.teamMember }">
+												<input type="hidden" name="moimMember" value="${ teamMemberList.size()}">
 												<input type="hidden" name="moimTitle" value="${ team.teamName }">
 												<button class="btn btn-primary" style="width:300px;">채팅하기</button>
 											</form>
@@ -264,7 +264,7 @@
 												<form action="chattingRoom.mo" method="post">
 													<input type="hidden" name="moimNo" value="${ team.teamNo }">
 													<input type="hidden" name="memNo" value="${ loginMember.memNo }">
-													<input type="hidden" name="moimMember" value="${ team.teamMember }">
+													<input type="hidden" name="moimMember" value="${ teamMemberList.size()}">
 													<input type="hidden" name="moimTitle" value="${ team.teamName }">
 													<button class="btn btn-primary" style="width:300px;">채팅하기</button>
 												</form>
