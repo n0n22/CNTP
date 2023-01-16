@@ -309,7 +309,6 @@ public class MemberController {
 	@RequestMapping(value="showProfile.me", produces="application/json; charset=UTF-8")
 	public String showProfile(int memNo) {
 		Member m = memberService.showProfile(memNo);
-		System.out.println(m);
 		return new Gson().toJson(m);
 	}
 	// 인기도 올리는 기능
