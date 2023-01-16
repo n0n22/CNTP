@@ -330,7 +330,7 @@
 	                	</c:choose>
 	                	
 	                	<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-								<li class="page-item"><a class="page-link" href="myPageBoard.me?cpage=${p}&category=${category}">${ p }</a></li>
+								<li class="page-item"><a class="page-link" href="myPagePoint.me?cpage=${p}&category=${category}">${ p }</a></li>
 						</c:forEach>
 	                	
                 	 	<c:choose>

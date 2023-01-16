@@ -162,7 +162,7 @@
 						<c:forEach items="${ teamMemberList }" var="tm">
 							<tr>
 								<td>${tm.teamGrade}</td>
-								<td class="nickname">${tm.nickname}</td>
+								<td class="nickname"><p ingido="${tm.memNo}" title="프로필 보기" onclick="showProfile(event)">${tm.nickname}</p></td>
 								<td class>${tm.teamEnrollDate}</td>
 							</tr>
 						</c:forEach>
@@ -196,7 +196,7 @@
 								<c:when test="${ not empty applyList }">
 									<c:forEach items="${ applyList }" var="ap">
 										<tr>
-											<td>${ ap.nickname }</td>
+											<td><p ingido="${ap.memNo}" title="프로필 보기" onclick="showProfile(event)">${ ap.nickname }</p></td>
 											<td>${ ap.applyDate }</td>
 											<td>
 												<div style="display:inline-block;">
@@ -326,7 +326,7 @@
 					url : "selectApply.mo",
 					success : function(obj){
 						if(obj != null){
-							console.log('들어왔다.');
+							//console.log('들어왔다.');
 							if(obj.moimNo == "${ team.teamNo }"){
 								$('#apply-btn').css('width', '300px');
 								$('#apply-btn').html('신청취소');

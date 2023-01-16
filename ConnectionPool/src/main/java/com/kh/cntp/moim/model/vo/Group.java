@@ -7,6 +7,7 @@ public class Group {
 	
 	private String groupNo;
 	private String nickname;
+	private String grade;
 	private int ingido;
 	private String memGender;
 	private int memNo;
