@@ -10,14 +10,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.cntp.board.model.service.BoardService;
 import com.kh.cntp.board.model.vo.Board;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.common.template.Pagination;
 import com.kh.cntp.common.template.Template;
+import com.kh.cntp.reply.model.vo.Reply;
 
 @Controller
 public class BoardController {
@@ -29,7 +32,7 @@ public class BoardController {
 	@RequestMapping ("list.bo")
 	public ModelAndView selectList(@RequestParam(value="cpage",defaultValue="1") int currentPage, ModelAndView mv) {
 		
-		PageInfo pi = Pagination.getPageInfo(boardService. selectListCount(),currentPage, 5,3); //int pageLimit 5, int boardLimit : 3
+		PageInfo pi = Pagination.getPageInfo(boardService. selectListCount(),currentPage, 10,5); //int pageLimit 10, int boardLimit : 5
 		mv.addObject("pi", pi).addObject("list", boardService.selectList(pi)).setViewName("board/boardListView");
 		
 		return mv;
@@ -135,6 +138,21 @@ public class BoardController {
 		}
 		
 		
+		@ResponseBody
+		@RequestMapping(value ="rlist.bo", produces="application/json; charset=UTF-8")
+		public String ajaxBoardSelectReplyList(int bno) {
+			//System.out.println(boardNo);
+			return new Gson().toJson(boardService.selectBoardReplyList(bno));
+		
+		}
+		
+		
+		@ResponseBody
+		@RequestMapping("rinsert.bo")
+		public String ajaxBoardInsertReply(Reply r) {
+			return boardService.insertBoardReply(r) > 0 ? "success " : "fail";
+			
+		}
 		
 }
 
