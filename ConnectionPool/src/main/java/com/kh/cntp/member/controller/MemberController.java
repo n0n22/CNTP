@@ -321,10 +321,8 @@ public class MemberController {
 		String ingido = "F" + memNo + "T" + targetNo;
 		// 중복 검사
 		int result = memberService.checkIngido(ingido);
-		System.out.println(result);
 		int result2 = 0;
 		if(result == 0){
-			System.out.println("결과" + result);
 			ingido += flag.equals("1")? "U" : "D";
 			// HashMap 객체에 담기
 			HashMap<String, String> map = new HashMap<String, String>();

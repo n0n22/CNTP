@@ -209,7 +209,7 @@
 <body>
 
 	<jsp:include page="../../common/menubar_nosearch.jsp"/>
-
+		
     <div class="outer">
         <div class="top-bar">
              <div class="inline-block">
@@ -241,11 +241,15 @@
                 </ul>
             </div>
         </div>
+           		<form action="myPageAtCheck.me">
         <div class="main-area">
             <div id="title">
            		출석체크
+           		<input type="hidden" name="memNo" value="${ loginMember.memNo }">
+           		<input type="hidden" name="pt" value="+1">
            		<span><button class="atCheck">출첵!</button></span>
             </div>
+           		</form>
             	
                 <div id="title-line"><hr></div>
             <div class="info-area" style="margin: auto;">
@@ -255,6 +259,7 @@
         </div>
         
     </div>
+    
 	<script>
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -311,32 +316,7 @@
 				location.href = 'detail.bo?bno=' + $(this).children('#boardNo').text();   
 			})
 			
-			$('.atCheck').click(function(){
-				
-				const memNo = ${ loginMember.memNo };
-				
-				$.ajax({
-					url : 'myPageAtCheck.me',
-					data : { memNo : memNo,
-						     pt : '+1'},
-						     
-					succces : function(result){
-						
-						if(result == 'Y'){
-							console.log('출석완료');
-							alert('출석완료!');
-						} else{
-							console.log('이미출석했음');
-						}
-						
-					},
-					error : function(){
-						console.log('실패');
-					}
- 												
-				})
-				
-			})
+		
 		})	
 		
 		

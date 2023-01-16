@@ -364,6 +364,11 @@
 				
 				// 컬럼 숨기기
 				// console.log(ws.G1.hidden);
+				console.log(ws);
+				console.log(ws['!cols']);
+				ws['!cols'] = [];
+				ws['!cols'][5] = { hidden: true };
+
 				
 				// 시트 설정을 전달하면서 엑셀 파일 생성
 				let wb = XLSX.utils.table_to_book(document.getElementById('memberTable'), ws);
@@ -406,10 +411,7 @@
 					}
 					
 					
-					
 				});							
-				
-				
 				
 				
 			}
@@ -421,64 +423,12 @@
 
 
 
-
-	    <button class="btn btn-sm btn-danger" onclick="openReportForm();">신고</button>
-
     </div>
-    
-      
-
-
-	<form id="reportvalue">
-		<input type="hidden" value="" name="memNickName" id="memNickName">
-		<input type="hidden" value="" name="content" id="content">
-		<input type="hidden" value="" name="reportBoard" id="reportBoard">
-		<input type="hidden" value="" name="boardNo" id="boardNo">
-	</form>
-
-    
     
 
     	
 	<jsp:include page="../common/footer.jsp" />
 
-
-
-	<script>
-		
-		function openReportForm() {
-			
-			// ------------- 수정해야함 ---------------------------------
-			if (${loginMember.memNo} == 4) {
-				alertify.alert('알림', '본인의 글은 신고할 수 없습니다.', function(){ alertify.success('확인 완료'); });
-			} else {
-				
-				// var customWindow = window.open('', '_blank', 'width=300,height=500');							
-				window.open('', '신고', 'width=450,height=300,location=yes,menubar=yes,scrollbar=no');
-				
-				$('#memNickName').val('닉네임7');
-				$('#content').val('바보야');
-				$('#reportBoard').val('board');
-				$('#boardNo').val(13);
-				
-				
-				
-				// console.log(reportvalue);
-				
-				reportvalue.action = 'reportForm';
-				// reportvalue.target = '_blank';
-				reportvalue.target = '신고';
-				reportvalue.method = 'post';
-				reportvalue.submit();
-				
-				
-			   // customWindow.close();
-
-			}			
-		};
-		
-
-	</script>
 
 
 

@@ -274,21 +274,20 @@
     			url : 'showProfile.me',
     			data : {memNo:$memNo},
     			success : function(m){
-    				// console.log(m);
     				// 로그인한 유저만 회원 프로필을 띄울 수 있음
     				if(${empty loginMember}){
     					return;
     				}
     					
-    				var gender = m.gender == 'M' ? '남자' : '여자';
-    				var grade = '';
+    				let gender = m.gender == 'M' ? '남자' : '여자';
+    				let grade = '';
     				switch(m.grade){
     				case 'B' : grade = 'resources/images/beginner.jpg'; break;
     				case 'M' : grade = 'resources/images/middle.jpg'; break;
     				case 'S' : grade = 'resources/images/special.jpg'; break;
     				default : grade = 'resources/images/cntp_flamingo.png'; break;
     				}
-    				var teamName = m.teaName == '' ? '무소속' : m.teamName;
+    				let teamName = m.teamName == '' ? '무소속' : m.teamName;
     				
     				var modal = 
     			        `<div class="modal" id="myModal">
@@ -342,9 +341,6 @@
     	// 인기도 up & down
     	// memNo에서는 올리는 회원 번호, 
     	function ingido(targetNo, ingido, flag){
-    		console.log("targetNo : " + targetNo);
-    		console.log("ingido : " + ingido);
-    		console.log("flag : " + flag);
     		
     		if(<c:out value="${loginMember.memNo}" default="none"/> == targetNo){
     			alert('자신의 인기도는 올릴거나 내릴 수 없습니다.');
@@ -359,7 +355,6 @@
     					targetNo : targetNo
     				   },
     			success : function(result){
-    				console.log(result);
     				if(result > 0){ // 인기도 변경 성공
     					switch(flag){
     						case 1 : alert('인기도 1을 올리셨습니다.'); $('#ingido').text(ingido + flag); break;

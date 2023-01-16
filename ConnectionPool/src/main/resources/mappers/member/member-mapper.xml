@@ -418,31 +418,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 회원 프로필 조회 -->
 	<select id="showProfile" parameterType="_int" resultMap="memberResultSet">
         SELECT 
-		       MEM_NO,
+		       M.MEM_NO,
 		       GENDER,
 		       INGIDO,
 		       NICKNAME,
 		       KOR_AREA AS "MEM_AREA",
-		       TO_CHAR(BIRTHDAY, 'YYYY-MM-DD') "BIRTHDAY",
+		       BIRTHDAY,
 		       DETAIL_AREA,
 		       TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE",
 		       GRADE,
-		       T.TEAM_NO,
+		       TEAM_NO,
                TEAM_NAME,
 		       TEAM_GRADE,
                BADGE_CHANGE_NAME
 		  FROM 
-		       MEMBER
+		       VW_MEMBER M
      LEFT JOIN
-		       TEAM_MEMBER T USING (MEM_NO)
-     LEFT JOIN
-               TEAM USING USING (MEM_NO) 
+		       TEAM USING (TEAM_NO)
           JOIN
 		  	   AREA ON (MEM_AREA = ENG_AREA)
 		 WHERE 
-               MEM_NO = #{memNo}
-		   AND
-		       MEM_STATUS = 'Y'
+               M.MEM_NO = #{memNo}
 	</select>
 	<!-- 인기도 중복 검사 -->
 	<select id="checkIngido" parameterType="string" resultType="_int">

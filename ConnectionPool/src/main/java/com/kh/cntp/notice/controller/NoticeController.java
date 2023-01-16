@@ -1,5 +1,7 @@
 package com.kh.cntp.notice.controller;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,12 +24,18 @@ public class NoticeController {
 	
 	// 공지사항 목록 조회 -> 공지사항 목록 페이지로 이동
 	@RequestMapping("list.no")
-	public ModelAndView selectNoticeList(@RequestParam(value="cpage", defaultValue="1") int cpage, @RequestParam(value="cate", defaultValue="all") String cate, ModelAndView mv) {
+	public ModelAndView selectNoticeList(@RequestParam(value="cpage", defaultValue="1") int cpage
+										,@RequestParam(value="cate", defaultValue="all") String cate
+										,@RequestParam(value="keyword", defaultValue="") String keyword
+										,ModelAndView mv) {
 		// cpage : 요청한 페이지
 		// cate : 요청한 카테고리
-		
-		PageInfo pi = Pagination.getPageInfo(noticeService.selectListCount(cate), cpage, 5, 10);	
-		mv.addObject("list", noticeService.selectList(cate, pi)).addObject("pi", pi).addObject("cate", cate).setViewName("notice/noticeList");		
+		HashMap map = new HashMap();
+		map.put("cate", cate);
+		map.put("keyword", keyword);
+		PageInfo pi = Pagination.getPageInfo(noticeService.selectListCount(map), cpage, 5, 10);	
+		mv.addObject("list", noticeService.selectList(map, pi)).addObject("pi", pi).addObject("cate", cate).addObject("keyword", keyword);
+		mv.setViewName("notice/noticeList");		
 		return mv;
 	}
 	
