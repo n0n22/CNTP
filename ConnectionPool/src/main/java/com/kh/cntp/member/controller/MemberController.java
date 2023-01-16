@@ -5,6 +5,7 @@ import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.mail.MessagingException;
@@ -305,6 +306,32 @@ public class MemberController {
 		Member m = memberService.showProfile(memNo);
 		return new Gson().toJson(m);
 	}
+	// 인기도 올리는 기능
+	// 1. 중복 체크 2. 인기도 인기도 올리거나 내리기 3. 인기도 기록 테이블에 INSERT 
+	@ResponseBody
+	@RequestMapping(value="ingido.me")
+	public String ingido(String memNo, String flag, String targetNo) {
+		// 인기도 식별 코드 만들기
+		// F + "인기도 누른 회원" + T + "인기도 당한 회원" + U(up)/D(down)
+		String ingido = "F" + memNo + "T" + targetNo;
+		// 중복 검사
+		int result = memberService.checkIngido(ingido);
+		System.out.println(result);
+		int result2 = 0;
+		if(result == 0){
+			System.out.println("결과" + result);
+			ingido += flag.equals("1")? "U" : "D";
+			// HashMap 객체에 담기
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("ingido", ingido);
+			map.put("targetNo", targetNo);
+			map.put("flag", flag);
+			// 인기도 변경 및 기록
+			result2 = memberService.upOrDownIngido(map);
+	}
+		return String.valueOf(result2);
+	}
+	
 	
 
 	

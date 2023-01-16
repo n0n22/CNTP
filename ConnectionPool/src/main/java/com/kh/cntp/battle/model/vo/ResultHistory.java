@@ -10,5 +10,5 @@ public class ResultHistory {
 	private int victory;
 	private int defeat;
 	private int record;
-	private float winRate;
+	private double winRate;
 }

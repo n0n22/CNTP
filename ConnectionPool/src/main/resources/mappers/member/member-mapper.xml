@@ -378,6 +378,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   AND
 		       MEM_STATUS = 'Y'
 	</select>
+	<!-- 인기도 중복 검사 -->
+	<select id="checkIngido" parameterType="string" resultType="_int">
+		SELECT
+				COUNT(*)
+		  FROM
+		  		INGIDO
+		 WHERE
+		 		INGIDO LIKE #{ingidio} || '%'
+		   AND
+		   		TO_CHAR(CREATE_DATE,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+	</select>
+	
+	<!-- 인기도 변경 -->
+	<update id="upOrDownIngido" parameterType="map">
+		UPDATE
+	        	MEMBER
+		   SET
+		        INGIDO = INGIDO + (#{flag})
+		 WHERE
+		        MEM_NO = #{targetNo}
+	</update>
+	<!-- 인기도 변경 기록 저장 -->
+	<insert id="insertIngidoRecord" parameterType="map">
+		INSERT
+		  INTO
+		        INGIDO
+		        (
+		        INGIDO
+		        )
+		VALUES
+		        (
+		        #{ingido}
+		        )
+	</insert>
+	
+	
+	
+	
 	
 	
 </mapper>
