@@ -69,12 +69,17 @@ public class MoimServiceImpl implements MoimService {
 
 	@Transactional
 	@Override
-	public int UpdateApply(Apply ap) {
+	public int updateApply(Apply ap) {
 		return moimDao.updateApply(sqlSession, ap.getApplyNo()) * moimDao.insertTeamMember(sqlSession, ap);
+	}
+	
+	@Override
+	public int updateGroupApply(int applyNo) {
+		return moimDao.updateApply(sqlSession, applyNo);
 	}
 
 	@Override
-	public int DeleteApply(int memNo) {
+	public int deleteApply(int memNo) {
 		return moimDao.deleteApply(sqlSession, memNo);
 	}
 
@@ -158,8 +163,17 @@ public class MoimServiceImpl implements MoimService {
 
 	@Override
 	public int deleteGroup(Group group) {
-		// TODO Auto-generated method stub
-		return 0;
+		return moimDao.deleteGroup(sqlSession, group);
+	}
+
+	@Override
+	public Apply ajaxSelectGroupApply(Apply ap) {
+		return moimDao.ajaxSelectGroupApply(sqlSession, ap);
+	}
+
+	@Override
+	public ArrayList<Apply> selectGroupApplyList(String moimNo) {
+		return moimDao.selectGroupApplyList(sqlSession, moimNo);
 	}
 
 	

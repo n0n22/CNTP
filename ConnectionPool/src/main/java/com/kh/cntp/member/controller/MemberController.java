@@ -135,6 +135,11 @@ public class MemberController {
 					SimpleDateFormat endViewFormat = new SimpleDateFormat("yyyy년MM월dd일"); // 년 월 일 로 표기 안할 시 2023-01-16 KST 00:00:00 로 뜸 
 					session.setAttribute("loginMsg", "정지된 회원입니다. 기한: " + endViewFormat.format(endDate) + "까지");
 					mv.setViewName("member/login");
+				} else {
+					
+					session.setAttribute("loginMember", loginMember);
+					memberService.loginCountReset(member);
+					mv.setViewName("redirect:/");
 				}
 				
 			} else { // 성공시 FAILCNT = 0 으로 업데이트

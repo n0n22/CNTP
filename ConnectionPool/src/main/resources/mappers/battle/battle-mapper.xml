@@ -402,5 +402,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE
 		        BATTLE_NO = #{battleNo}
 	</delete>
+<!-- 배틀 결과 수정 -->
+	<update id="updateBattleResult" parameterType="battleResult">
+		UPDATE
+		        BATTLE_RESULT
+		   SET
+		        VICTORY = #{victory}
+		        ,DEFEAT = #{defeat}
+		        ,VIC_RECORD = #{vicRecord}
+		        ,DEF_RECORD = #{defRecord}
+		 WHERE
+		        BATTLE_NO = #{battleNo}
+	</update>	
 	
 </mapper>

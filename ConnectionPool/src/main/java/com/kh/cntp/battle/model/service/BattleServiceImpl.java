@@ -85,6 +85,10 @@ public class BattleServiceImpl implements BattleService{
 	public int deleteBattlePool(int battleNo) {
 		return battleDao.deletePoolInfo(sqlSession, battleNo) * battleDao.deleteBattlePool(sqlSession, battleNo);
 	}
+	@Override
+	public int updateBattleResult(BattleResult br) {
+		return battleDao.updateBattleResult(sqlSession, br);
+	}
 
 	
 	
