@@ -179,8 +179,8 @@ public class MoimController {
 		// teamNo 이용해서 채팅방 보내주기~
 		
 		//System.out.println(moimService.selectChattingList(chat));
-		
-		mv.addObject("chatList", moimService.selectChattingList(chat)).addObject("moimMember", moimMember).addObject("moimTitle", moimTitle).setViewName("moim/chatView");
+		//System.out.println(chat);
+		mv.addObject("chatList", moimService.selectChattingList(chat)).addObject("moimMember", moimMember).addObject("moimNo", chat.getMoimNo()).addObject("moimTitle", moimTitle).setViewName("moim/chatView");
 		
 		return mv;
 	}
@@ -205,6 +205,8 @@ public class MoimController {
 		chat.setMoimNo(moimNo);
 		chat.setMemNo(memNo);
 		chat.setChatContent(chatContent);
+		
+		//System.out.println(chat);
 		
 		String message = "";
 		

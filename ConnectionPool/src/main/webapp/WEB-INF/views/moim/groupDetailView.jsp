@@ -220,7 +220,11 @@
     
     <br><br>
     
-    
+    <c:if test="${ login }">
+    	<script>
+    		
+    	</script>
+    </c:if>
 	
 
 </body>

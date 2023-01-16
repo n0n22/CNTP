@@ -152,4 +152,15 @@ public class myPageController {
 	public String myPageTeam() {
 		return "member/myPage/myPageTeam";
 	}
+	
+	// 출석체크 페이지
+	@RequestMapping("myPageAtCheckForm.me")
+	public ModelAndView myPageAtCheckForm(HttpSession session, ModelAndView mv) {
+		
+		int memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
+		
+		mv.setViewName("member/myPage/myPageAttendanceCheck");
+		
+		return mv;
+	}
 }
