@@ -37,7 +37,8 @@
             <h2>게시글 수정하기페이지</h2>
             <br>
 
-            <form id="updateForm" method="post" action="update.bo" enctype="">
+            <form id="updateForm" method="post" action="update.bo" enctype="multipart/form-data">
+                <input type="hidden" name="boardNo" value="${ b.boardNo }" />
                 <table align="center">
                     <tr>
                         <th><label for="title">제목</label></th>
@@ -54,7 +55,7 @@
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
                         <td>
-                            <input type="file" id="upfile" class="form-control-file border" name="reupfile">
+                            <input type="file" id="upfile" class="form-control-file border" name="reUpfile">
                             	
                             <c:if test="${not empty b.originName }">	
                             	현재 업로드된 파일 : 
