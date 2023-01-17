@@ -32,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="NICKNAME" 	property="nickname"/>
 		<result column="MEM_NO" 	property="memNo"/>
 		<result column="TEAM_ENROLL_DATE" 	property="teamEnrollDate"/>
+		<result column="GRADE" 	property="grade"/>
 	</resultMap>
 	
 	<resultMap type="group" id="groupResultMap">
@@ -202,6 +203,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        ,M.NICKNAME
 		        ,TM.MEM_NO
 		        ,TO_CHAR(TEAM_ENROLL_DATE, 'YYYY-MM-DD') AS "TEAM_ENROLL_DATE"
+		        ,M.GRADE
 		  FROM 
 		       TEAM_MEMBER "TM"
 		  JOIN

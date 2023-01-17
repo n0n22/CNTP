@@ -64,50 +64,80 @@
 							<p>글자수 <span class="count"></span> / 300</p>
 						</td>
 					</tr>
-					<tr height="50">
-						<th>지역</th>
-						<td>
-							<select id="groupArea" name="groupArea" style="height:50px">
-								<option value="all">전체</option>
-								<option value="Seoul">서울특별시</option>
-								<option value="Gyeonggi">경기도</option>
-								<option value="Gangwon">강원도</option>
-								<option value="Chungbuk">충청북도</option>
-								<option value="Chungnam">충청남도</option>
-								<option value="Jeonbuk">전라북도</option>
-								<option value="Jeonnam">전라남도</option>
-								<option value="Gyeongbuk">경상북도</option>
-								<option value="Gyeongnam">경상남도</option>
-							</select>
-						</td>
-					</tr>
-					<tr height="50">
-						<th>장소</th>
-						<td>
-							<input type="text" name="place" maxlength="15" value="${ group.place }">
-						</td>
-					</tr>
-					<tr height="50">
-						<th>성별</th>
-						<td>
-							<select id="gender" name="gender" style="height:50px">
-								<option value="A">무관</option>
-								<option value="M">남자만</option>
-								<option value="F">여자만</option>
-							</select>
-						</td>
-					</tr>
-					<tr height="50">
-						<th>레벨</th>
-						<td>
-							<select id="level" name="level" style="height:50px">
-								<option value="E">무관</option>
-								<option value="B">초급</option>
-								<option value="M">중급</option>
-								<option value="S">고급</option>
-							</select>
-						</td>
-					</tr>
+					<c:choose>
+						<c:when test="${ emptyYn eq 'Y' }">
+							<tr height="50">
+								<th>지역</th>
+								<td>
+									<select id="groupArea" name="groupArea" style="height:50px">
+										<option value="all">전체</option>
+										<option value="Seoul">서울특별시</option>
+										<option value="Gyeonggi">경기도</option>
+										<option value="Gangwon">강원도</option>
+										<option value="Chungbuk">충청북도</option>
+										<option value="Chungnam">충청남도</option>
+										<option value="Jeonbuk">전라북도</option>
+										<option value="Jeonnam">전라남도</option>
+										<option value="Gyeongbuk">경상북도</option>
+										<option value="Gyeongnam">경상남도</option>
+									</select>
+								</td>
+							</tr>
+							<tr height="50">
+								<th>장소</th>
+								<td>
+									<input type="text" name="place" maxlength="15" value="${ group.place }">
+								</td>
+							</tr>
+							<tr height="50">
+								<th>성별</th>
+								<td>
+									<select id="gender" name="gender" style="height:50px">
+										<option value="A">무관</option>
+										<option value="M">남자만</option>
+										<option value="F">여자만</option>
+									</select>
+								</td>
+							</tr>
+							<tr height="50">
+								<th>레벨</th>
+								<td>
+									<select id="level" name="level" style="height:50px">
+										<option value="E">무관</option>
+										<option value="B">초급</option>
+										<option value="M">중급</option>
+										<option value="S">고급</option>
+									</select>
+								</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<tr height="50">
+								<th>지역</th>
+								<td>
+									${ group.korArea }
+								</td>
+							</tr>
+							<tr height="50">
+								<th>장소</th>
+								<td>
+									${ group.place }
+								</td>
+							</tr>
+							<tr height="50">
+								<th>성별</th>
+								<td>
+									${ group.gender }
+								</td>
+							</tr>
+							<tr height="50">
+								<th>레벨</th>
+								<td>
+									${ group.level }
+								</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
 					<tr height="50">
 						<th>모집인원</th>
 						<td><input type="number" min="2" max="12" style="height:50px" name="groupMember" required value="${ group.groupMember }">명</td>
