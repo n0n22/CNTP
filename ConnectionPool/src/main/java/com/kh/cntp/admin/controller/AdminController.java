@@ -166,7 +166,7 @@ public class AdminController {
 	// 신고 등록 폼으로 이동
 	@RequestMapping("reportForm")
 	public String reportEnrollForm(@ModelAttribute Report report, Model model) {
-		System.out.println(report);
+		// System.out.println(report);
 		
 		model.addAttribute("report", report);
 		return "admin/reportEnrollForm";
