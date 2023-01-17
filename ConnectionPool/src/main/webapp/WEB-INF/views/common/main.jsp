@@ -27,6 +27,17 @@
 			width: 50%;
 			float: right;
 		}
+		.row2{
+			display: flex;
+		}
+		.row2>.left{
+			width: 50%;
+			float: left;
+		}
+		.row2>.right{
+			width: 50%;
+			float: right;
+		}
 		.ranking-area img{
 			border-radius: 50%;
 		}
@@ -76,8 +87,10 @@
 		<br>
 		<!-- topN 영역 시작 -->
 		<div class="ranking-area">
-			<!-- 다승 랭킹 시작 -->
+		
 			<div class="row1">
+			
+				<!-- 다승 랭킹 시작 -->
 				<div class="left">
 				    <table id="manyWin" align="center">
 				        <caption class="caption">다승 랭킹</caption>
@@ -95,34 +108,68 @@
 				    </table>
 				</div>
 				<!-- 다승 랭킹 끝-->
-				<div class="right">
-				<table align="center">
-				        <caption  class="caption">승률 랭킹</caption>
+				
+				<!-- 승률 랭킹 시작 -->
+				<div class="left">
+				    <table id="winRate" align="center">
+				        <caption class="caption">승률 랭킹</caption>
 				        <thead>
 				            <tr>
 				                <th align="center" scope="col" width="60px">랭킹</th>
 				                <th align="center" scope="col" width="60px">뱃지</th>
-				                <th align="center" scope="col" width="150px">팀이름</th>
-				                <th align="center" scope="col" width="100px">승률</th>
+				                <th align="center" scope="col" width="180px">팀이름</th>
+				                <th align="center" scope="col" width="150px">승률</th>
 				            </tr>
 				        </thead>
 				        <tbody align="center">
-				            <tr>
-				                <td>1</td>
-				                <td>
-				                    <img src="https://opgg-static.akamaized.net/images/profile_icons/profileIcon3495.jpg?image=q_auto,f_webp,w_64&amp;v=1673596760664" width="32" alt="profile_image" class="icon" height="32">
-				                </td>
-				                <td>
-				                    <strong>칼과 창 방패</strong>
-				                </td>
-				                <td>
-				                    50%
-				                </td>
-				            </tr>
+
 				        </tbody>
 				    </table>
-				
 				</div>
+				<!-- 승률 랭킹 끝 -->
+				
+			</div>
+			
+			<div class="row2">
+			
+				<!--연승 랭킹 시작 -->
+				<div class="left">
+				    <table id="winningStreak" align="center">
+				        <caption class="caption">연승 랭킹</caption>
+				        <thead>
+				            <tr>
+				                <th align="center" scope="col" width="60px">랭킹</th>
+				                <th align="center" scope="col" width="60px">뱃지</th>
+				                <th align="center" scope="col" width="180px">팀이름</th>
+				                <th align="center" scope="col" width="150px">연승</th>
+				            </tr>
+				        </thead>
+				        <tbody align="center">
+
+				        </tbody>
+				    </table>
+				</div>
+				<!-- 연승 랭킹 끝-->
+				
+				<!-- 경기수 랭킹 시작 -->
+				<div class="left">
+				    <table id="matches" align="center">
+				        <caption class="caption">경기수 랭킹</caption>
+				        <thead>
+				            <tr>
+				                <th align="center" scope="col" width="60px">랭킹</th>
+				                <th align="center" scope="col" width="60px">뱃지</th>
+				                <th align="center" scope="col" width="180px">팀이름</th>
+				                <th align="center" scope="col" width="150px">경기수</th>
+				            </tr>
+				        </thead>
+				        <tbody align="center">
+
+				        </tbody>
+				    </table>
+				</div>
+				<!-- 경기수 랭킹 끝 -->
+				
 			</div>
 
 		</div>
@@ -142,7 +189,10 @@
 			
 			selectBanner();
 			
-			topManyWin();
+			battleRank('win');
+			battleRank('winRate');
+			battleRank('winningStreak');
+			battleRank('matches');
 			
 		});
 		
@@ -177,17 +227,26 @@
 			});		
 		};
 		
-		function topManyWin(){
+		function battleRank(condition){
 			$.ajax({
-				url : "manyWin.top",
+				url : "battleRank.top",
+				data : {condition:condition},
 				success : function(data){
-					let manyWin = ''
+					console.log(data);
+					let rank = ''
 					for(let i in data){
 						
 						let d = data[i];
-						manyWin += 
+						let difference = '';
+						switch(condition){
+							case 'win': difference = d.victory + ' 승'; break; 
+							case 'winRate': difference = d.winRate + ' %'; break; 
+							case 'winningStreak': difference = d.winningStreak + ' 연승'; break; 
+							case 'matches': difference = d.record + ' 경기'; break; 
+						}
+						rank += 
 							`
-							<tr onclick="location.href='teamPage.mo?teamNo=?\${d.teamNo}'">
+							<tr onclick="location.href='teamPage.mo?teamNo=\${d.teamNo}'">
 				                <td>\${Number(i) + 1}</td>
 				                <td>
 				                    <img src="\${d.badge}" width="32" alt="profile_image" class="icon" height="32">
@@ -196,11 +255,16 @@
 				                    <strong>\${d.teamName}</strong>
 				                </td>
 				                <td>
-				                	\${d.victory}
+				                	\${difference}
 				                </td>
 			            	</tr>`
 					}
-					$('#manyWin tbody').html(manyWin);
+					switch(condition){
+						case 'win': $('#manyWin tbody').html(rank); break; 
+						case 'winRate': $('#winRate tbody').html(rank); break; 
+						case 'winningStreak': $('#winningStreak tbody').html(rank); break; 
+						case 'matches': $('#matches tbody').html(rank); break; 
+					}
 				}
 			})
 		}

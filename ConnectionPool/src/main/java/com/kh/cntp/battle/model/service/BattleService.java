@@ -54,7 +54,7 @@ public interface BattleService {
 	
 	
 // topN
-	ArrayList<ResultHistory> selectListManyWin();
+	ArrayList<ResultHistory> selectListBattleRank(String condition);
 	
 
 }
