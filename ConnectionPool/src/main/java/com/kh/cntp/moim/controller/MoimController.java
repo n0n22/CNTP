@@ -303,13 +303,17 @@ public class MoimController {
 		
 		Group group = moimService.selectGroup(groupNo);
 		
-		if(!group.getGroupMember().equals("모집마감")) {
+		if(!group.getGroupMember().contains("모집마감")) {
+			//모집 마감이 아니라면 => (x/x)
 			group.setGroupMember(group.getGroupMember().substring(group.getGroupMember().indexOf('/') + 1, group.getGroupMember().indexOf(')')));
 		} else {
-			group.setGroupMember(group.getGroupMember().substring(group.getGroupMember().indexOf('(') + 1, group.getGroupMember().indexOf(')')));
+			// 모집마감이라면 => 모짐마감(x)
+			group.setGroupMember(group.getGroupMember().substring(5, group.getGroupMember().indexOf(')')));
 		}
 		group.setEndTime(group.getEndTime().replace(" ", "T").replace("/", "-").substring(0, 16));
 		group.setStartTime(group.getStartTime().replace(" ", "T").replace("/", "-").substring(0, 16));
+		
+		//System.out.println(group.getGroupMember());
 		
 		mv.addObject("group", group).setViewName("moim/groupUpdateForm");
 		
