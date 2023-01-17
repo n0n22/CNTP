@@ -133,7 +133,7 @@
 								<c:choose>
 									<c:when test="${ empty loginMember }">
 										<!-- 로그인이 안 되어 있을 때는 무조건 -->
-										<a class="btn btn-primary" href="loginForm.me">로그인 후<br>이용 가능합니다.</a>
+										<a class="btn btn-primary" style="width:200px" href="loginForm.me">로그인 후<br>이용 가능합니다.</a>
 									</c:when>
 									<c:otherwise>
 										<c:choose>
@@ -245,14 +245,6 @@
 							<div style="display:inline-block;">
 								<form action="groupUpdateForm.mo">
 									<input type="hidden" name="groupNo" value="${ group.groupNo }">
-									<c:choose>
-										<c:when test="${ fn:contains(group.groupMember, '(1/') }">
-											<input type="hidden" name="emptyYn" value="Y">
-										</c:when>
-										<c:otherwise>
-											<input type="hidden" name="emptyYn" value="N">
-										</c:otherwise>
-									</c:choose>
 					        		<button class="btn btn-primary">수정하기</button>
 								</form>
 							</div>

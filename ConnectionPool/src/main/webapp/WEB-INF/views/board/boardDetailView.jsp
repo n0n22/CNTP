@@ -164,7 +164,7 @@
             <hr>
 	        <div>
 	        	<c:if test="${ not empty loginMember }">
-	        		<button class="btn btn-sm btn-danger" onclick="openReportForm();">신고</button>
+	        		<button class="btn btn-sm btn-danger" onclick="openReportForm('board');">신고</button>
 	        	</c:if>
         		<form id="reportvalue">
 					<input type="hidden" value="" name="memNickName" id="report-memNickName">
@@ -260,7 +260,7 @@
     
     <script>
 	
-    /*
+
 		function openReportForm(div, e, commentNo) {		
 			
 			
@@ -294,7 +294,7 @@
 
 			}
 		};
-		*/
+
 
 	</script>
     
