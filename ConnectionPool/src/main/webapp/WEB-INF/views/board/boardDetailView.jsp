@@ -259,7 +259,8 @@
     
     
     <script>
-		
+	
+    /*
 		function openReportForm(div, e, commentNo) {		
 			
 			
@@ -293,7 +294,7 @@
 
 			}
 		};
-		
+		*/
 
 	</script>
     
