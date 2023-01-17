@@ -52,5 +52,9 @@ public interface BattleService {
 // 배틀 신청 중복 확인
 	int checkBattle(String battleNo);
 	
+	
+// topN
+	ArrayList<ResultHistory> selectListManyWin();
+	
 
 }

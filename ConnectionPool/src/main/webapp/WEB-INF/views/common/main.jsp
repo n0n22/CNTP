@@ -8,6 +8,33 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
+	<style>
+		.banner-area{
+			margin-top: 3px;
+		}
+		.ranking-area{
+			width: 1100px;
+			margin: auto;
+		}
+		.row1{
+			display: flex;
+		}
+		.row1>.left{
+			width: 50%;
+			float: left;
+		}
+		.row1>.right{
+			width: 50%;
+			float: right;
+		}
+		.ranking-area img{
+			border-radius: 50%;
+		}
+		.ranking-area tr{
+			text-align: center;
+		}
+	
+	</style>
 </head>
 <body>
 
@@ -15,7 +42,7 @@
 	
 	
 	<div class="outer">
-	
+		<!-- 배너 영역 시작 -->
 		<div class="banner-area" align="center">
 			
 			<div id="demo" class="carousel slide" data-ride="carousel">
@@ -35,8 +62,62 @@
 					<span class="carousel-control-next-icon"></span>
 				</a>
 			</div>
-  
 		</div>
+		<!-- 배너 영역 끝 -->
+		<br>
+		<!-- topN 영역 시작 -->
+		<div class="ranking-area">
+			<!-- 다승 랭킹 시작 -->
+			<div class="row1">
+				<div class="left">
+				    <table id="manyWin">
+				        <caption>다승 랭킹</caption>
+				        <thead>
+				            <tr>
+				                <th align="center" scope="col" width="60px">랭킹</th>
+				                <th align="center" scope="col" width="60px">뱃지</th>
+				                <th align="center" scope="col" width="150px">팀이름</th>
+				                <th align="center" scope="col" width="100px">승리</th>
+				            </tr>
+				        </thead>
+				        <tbody align="center">
+
+				        </tbody>
+				    </table>
+				</div>
+				<!-- 다승 랭킹 끝-->
+				<div class="right">
+				<table>
+				        <caption>승률 랭킹</caption>
+				        <thead>
+				            <tr>
+				                <th align="center" scope="col" width="60px">랭킹</th>
+				                <th align="center" scope="col" width="60px">뱃지</th>
+				                <th align="center" scope="col" width="150px">팀이름</th>
+				                <th align="center" scope="col" width="100px">승률</th>
+				            </tr>
+				        </thead>
+				        <tbody align="center">
+				            <tr>
+				                <td>1</td>
+				                <td>
+				                    <img src="https://opgg-static.akamaized.net/images/profile_icons/profileIcon3495.jpg?image=q_auto,f_webp,w_64&amp;v=1673596760664" width="32" alt="profile_image" class="icon" height="32">
+				                </td>
+				                <td>
+				                    <strong>칼과 창 방패</strong>
+				                </td>
+				                <td>
+				                    50%
+				                </td>
+				            </tr>
+				        </tbody>
+				    </table>
+				
+				</div>
+			</div>
+
+		</div>
+		<!-- topN 영역 끝-->
 	
 	</div>
 	
@@ -51,12 +132,9 @@
 			
 			selectBanner();
 			
+			topManyWin();
 			
 		});
-		
-		
-		
-		
 		
 		function selectBanner() {
 			
@@ -86,10 +164,42 @@
 				error : function() {
 					console.log('통신 실패');
 				}
-		
 			});		
-			
 		};
+		
+		function topManyWin(){
+			$.ajax({
+				url : "manyWin.top",
+				success : function(data){
+					console.log(data);
+					let manyWin = ''
+					for(let i in data){
+						let d = data[i];
+						manyWin += 
+							
+							`
+							<tr>
+				                <td>\${Number(i) + 1}</td>
+				                <td>
+				                    <img src="https://opgg-static.akamaized.net/images/profile_icons/profileIcon3495.jpg?image=q_auto,f_webp,w_64&amp;v=1673596760664" width="32" alt="profile_image" class="icon" height="32">
+				                </td>
+				                <td>
+				                    <strong>\${d.teamNo}</strong>
+				                </td>
+				                <td>
+				                	\${d.victory}
+				                </td>
+			            	</tr>`
+					}
+					$('#manyWin tbody').html(manyWin);
+					
+				}
+			})
+			
+		}
+		function topWinRate(){
+			
+		}
 
 
 

@@ -102,4 +102,9 @@ public class BattleServiceImpl implements BattleService{
 	public int checkBattle(String battleNo) {
 		return battleDao.checkBattle(sqlSession, battleNo);
 	}
+	
+	@Override
+	public ArrayList<ResultHistory> selectListManyWin() {
+		return battleDao.selectListManyWin(sqlSession);
+	}
 }
