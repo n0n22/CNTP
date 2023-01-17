@@ -92,8 +92,8 @@ public class BattleServiceImpl implements BattleService{
 	public int updateBattleResult(BattleResult br) {
 		return battleDao.updateBattleResult(sqlSession, br);
 	}
-
-	
-	
-
+	@Override
+	public int checkBattle(String battleNo) {
+		return battleDao.checkBattle(sqlSession, battleNo);
+	}
 }

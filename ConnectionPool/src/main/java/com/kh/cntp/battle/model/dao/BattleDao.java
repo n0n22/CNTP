@@ -77,4 +77,7 @@ public class BattleDao {
 	public int updateBattleResult(SqlSessionTemplate sqlSession, BattleResult br) {
 		return sqlSession.update("battleMapper.updateBattleResult", br);
 	}
+	public int checkBattle(SqlSessionTemplate sqlSession, String battleNo) {
+		return sqlSession.selectOne("battleMapper.checkBattle", battleNo);
+	}
 }
