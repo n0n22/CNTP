@@ -351,8 +351,8 @@ textarea{
                                     <div class="card-body">
                                         <div class="timeline-item-header">
                                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-                                            <p>작성자   <span>닉네임</span></p>
-                                            <small>7 시간 전</small>
+                                            <p>${d.memberNo }  <span>닉네임</span></p>
+                                            <small>${d.createDate }</small>
                                         </div>
                                         <div class="timeline-item-post">
                                             <p>오늘 저녁 수영도 완료!! 오수완~~^^</p>
@@ -365,7 +365,7 @@ textarea{
                                             <div class="timeline-comment">
                                                 <div class="timeline-comment-header">
                                                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-                                                    <p>박길동 <small>1 시간 전</small></p>
+                                                    <p>${d.memberNo } <small>${d.createDate }</small></p>
                                                 </div>
                                                 <p class="timeline-comment-text">저도 곧 수영장 갑니다! </p>
                                             </div>
