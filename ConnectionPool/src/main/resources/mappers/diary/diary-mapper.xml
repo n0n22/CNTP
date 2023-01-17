@@ -9,12 +9,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="diary_no" property="diaryNo" />
 		<result column="mem_no" property="memberNo" />
 		<result column="content" property="content" />
-		<result column="origin_name" property="origiinName" />
+		<result column="origin_name" property="originName" />
 		<result column="change_name" property="changeName" />
 		<result column="scope" property="scope" />
 		<result column="status" property="status" />
 		<result column="heart" property="heart" />
-	
+		<result column="create_date"	property="createDate" />
 	</resultMap>
 
 	<select id="selectList" resultMap="diaryResultSet">
@@ -57,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  		)	
 	
 	</insert>
-	
+	<!--  
 	<update id="increaseCount">
 		update
 				diary
@@ -70,11 +70,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	</update>
+	-->
 	
 	<select id="selectDiary" resultMap="diaryResultSet">
 		select
 				diary_no
-				,title
 				,mem_no
 				,content
 				,origin_name

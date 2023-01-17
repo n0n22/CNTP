@@ -43,7 +43,7 @@ public class DiaryController {
 		if (!upfile.getOriginalFilename().equals("")) {
 
 			d.setOriginName(upfile.getOriginalFilename()); // 원본명
-			d.setChangeName("resources/uploadFiles/" + Template.saveFile(upfile, session));
+			d.setChangeName("/resources/upfiles/" + Template.saveFile(upfile, session));
 		}
 
 		if (diaryService.insertDiary(d) > 0) { // 성공 => 게시글 리스트 페이지
@@ -56,7 +56,7 @@ public class DiaryController {
 		}
 
 	}
-
+	/*
 	// 수영일기 상세보기
 	@RequestMapping("detail.di")
 	public ModelAndView selectDiary(ModelAndView mv, int dno) {
@@ -69,7 +69,7 @@ public class DiaryController {
 
 		return mv;
 	}
-	
+	*/
 	// 수영일기 삭제
 	@RequestMapping("delete.di")
 	public String deleteDiary(int bno, HttpSession session, Model model, String filePath) {
