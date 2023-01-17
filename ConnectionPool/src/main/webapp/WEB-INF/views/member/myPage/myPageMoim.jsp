@@ -279,51 +279,49 @@
                 <div id="title-line"><hr></div>
             <div class="info-area" style="margin: auto;">
                 <!-- 없을때-->
-                <div align="center">
-                    <br><br><br> 
-                    <p class="noTitle">소속된 소모임이 없어요</p>
-                    <a href="">소모임 페이지로 이동하기</a>
-                    <br><br><br>
-                </div>
-                
-            <!-- 있을때-->
-                
-			<div>
-                <div class="grouptList-area">
-
-                    <!--이게 하나의 게시물-->
-		                <!--이게 하나의 게시물-->
-		                <div class="group" align="center">
-		    
-		                    <div class="thum">
-		                        <img class="thum" height="300px" width="290px" src="${ g.changeName }">
-		                    </div>
-		    
-		                    <div class="group-info">
-		                        <table>
-		                        	<tr>
-		                        		<td>#${ g.powerDuration }</td>
-		                        	</tr>
-		                            <tr>
-		                                <td width="150">#지역 ${ g.korArea }</td>
-		                                <td width="150">#모집인원 ${ g.groupMember }</td>
-		                            </tr>
-		                            <tr>
-		                                <td>#성별 ${ g.gender }</td>
-		                                <td>#레벨 ${ g.level }</td>
-		                            </tr>
-		                            <tr>
-		                                <td colspan="2"> #${ g.startTime }<br> ~ ${ g.endTime }</td>
-		                                <input type="hidden" class="groupNo" name="groupNo" value="${ g.groupNo }">
-		                            </tr>
-		                        </table>
-		                    </div>
+            	<!-- 있을때-->
+                <c:choose>
+                	<c:when test="${ empty groupList }">
+		                <div align="center">
+		                    <br><br><br> 
+		                    <p class="noTitle">소속된 소모임이 없어요</p>
+		                    <a href="">소모임 페이지로 이동하기</a>
+		                    <br><br><br><br><br><br>
 		                </div>
- 
-               		 </div>
-                
-          		 </div>
-    
+                </c:when>
+                <c:otherwise>
+                	<c:forEach items="${ groupList }" var="g">
+							
+				                <!--이게 하나의 게시물-->
+				                <div class="group" align="center">
+				    
+			                    <div class="thum">
+			                        <img class="thum" height="300px" width="290px" src="${ g.changeName }">
+			                    </div>
+				    
+			                    <div class="group-info">
+			                        <table>
+			                        	<tr>
+			                        		<td>#${ g.powerDuration }</td>
+			                        	</tr>
+			                            <tr>
+			                                <td width="150">#지역 ${ g.korArea }</td>
+			                                <td width="150">#모집인원 ${ g.groupMember }</td>
+			                            </tr>
+			                            <tr>
+			                                <td>#성별 ${ g.gender }</td>
+			                                <td>#레벨 ${ g.level }</td>
+			                            </tr>
+			                            <tr>
+			                                <td colspan="2"> #${ g.startTime }<br> ~ ${ g.endTime }</td>
+			                                <input type="hidden" class="groupNo" name="groupNo" value="${ g.groupNo }">
+			                            </tr>
+			                        </table>
+			                    </div>
+			                </div>
+			       </c:forEach>         
+                </c:otherwise>
+                </c:choose>
             </div>    
         </div>
 

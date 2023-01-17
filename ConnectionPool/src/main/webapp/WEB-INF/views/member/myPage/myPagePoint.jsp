@@ -271,7 +271,7 @@
                     	<br><br>
 	                    <p class="noTitle">포인트 내역이 없어요</p>
 	                    <p class="noTitle">포인트는 출석체크 및 게시글,댓글 작성으로 얻을 수 있어요</p>
-	                    <br><br><br>
+	                    <br><br><br><br><br><br>
                 	</div>
                	</c:when>
                	<c:otherwise>

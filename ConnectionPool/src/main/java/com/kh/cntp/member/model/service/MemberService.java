@@ -8,6 +8,7 @@ import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.vo.Cert;
 import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.member.model.vo.Point;
+import com.kh.cntp.moim.model.vo.Group;
 
 public interface MemberService {
 	
@@ -84,4 +85,7 @@ public interface MemberService {
 	
 	// 출석 체크
 	int insertAtCheck(Point point);
+	
+	// 소모임 조회 (마이페이지)
+	ArrayList<Group> myPageGroupList(int memNo);
 }

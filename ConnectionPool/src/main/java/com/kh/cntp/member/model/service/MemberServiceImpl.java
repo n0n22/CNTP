@@ -14,6 +14,7 @@ import com.kh.cntp.member.model.dao.MemberDao;
 import com.kh.cntp.member.model.vo.Cert;
 import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.member.model.vo.Point;
+import com.kh.cntp.moim.model.vo.Group;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -157,6 +158,13 @@ public class MemberServiceImpl implements MemberService {
 	public int insertAtCheck(Point point) {
 		return memberDao.insertAtCheck(sqlSession, point) * memberDao.updatePointMember(sqlSession, point);
 	}
+	
+	// 소모임 조회
+	@Override
+	public ArrayList<Group> myPageGroupList(int memNo) {
+		return memberDao.myPageGroupList(sqlSession, memNo);
+	}
+
 
 
 	
@@ -181,6 +189,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.upOrDownIngido(sqlSession, map) * memberDao.insertIngidoRecord(sqlSession, map);
 	}
 
+	
 	
 
 

@@ -26,7 +26,7 @@ public class DiaryController {
 	@RequestMapping("list.di")
 	public ModelAndView selectList(ModelAndView mv) {
 		mv.addObject("list", diaryService.selectList()).setViewName("diary/diaryListView");
-		System.out.println(diaryService.selectList());
+		//System.out.println(diaryService.selectList());
 		return mv;
 	}
 
@@ -59,10 +59,10 @@ public class DiaryController {
 	/*
 	// 수영일기 상세보기
 	@RequestMapping("detail.di")
-	public ModelAndView selectDiary(ModelAndView mv, int dno) {
+	public ModelAndView selectDiary(ModelAndView mv, Diary d) {
 
-		if (diaryService.increaseCount(dno) > 0) {
-			mv.addObject("d", diaryService.selectDiary(dno)).setViewName("diary/diaryDetailView");
+		if (diaryService.insertDiary(d) > 0) {
+			mv.addObject("d", diaryService.selectDiary(d)).setViewName("diary/diaryDetailView");
 		} else {
 			mv.addObject("errorMsg", "상세조회실패").setViewName("common/errorPage");
 		}

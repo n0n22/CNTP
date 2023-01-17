@@ -140,7 +140,7 @@
 					</c:choose>
 					<tr height="50">
 						<th>모집인원</th>
-						<td><input type="number" min="2" max="12" style="height:50px" name="groupMember" required value="${ group.groupMember }">명</td>
+						<td><input type="number" min="${ partiNum }" max="12" style="height:50px" name="groupMember" required value="${ group.groupMember }">명</td>
 					</tr>
 					<tr height="50">
 						<th>일시</th>
