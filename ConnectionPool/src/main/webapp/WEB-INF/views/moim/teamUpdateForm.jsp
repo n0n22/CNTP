@@ -69,7 +69,8 @@
 		            <td>
 		            	<c:choose>
 		            		<c:when test="${ teamMemberCount > 1 }">
-		            			${ team.teamArea }
+		            			${ team.korArea }<br>
+		            			* 팀원이 존재하기 때문에 변경할 수 없습니다.
 		            		</c:when>
 		            		<c:otherwise>
 				                <select name="teamArea" id="teamArea">
@@ -124,7 +125,7 @@
 		            <c:choose>
 		            	<c:when test="${ team.badgeStatus eq 'N' }">
 				            <td colspan="2">
-				                *팀 페이지에서 뱃지 구매 시 사용 가능합니다 
+				                * 팀 페이지에서 뱃지 구매 시 사용 가능합니다 
 				            </td>
 		            	</c:when>
 		            	<c:otherwise>
