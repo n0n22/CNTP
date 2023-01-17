@@ -83,6 +83,7 @@ public class MoimController {
 		return mv;
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("teamEnrollFrom.mo")
 	public ModelAndView teamEnrollFrom(ModelAndView mv) {
 		
@@ -104,6 +105,7 @@ public class MoimController {
 		}
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("insertTeam.mo")
 	public ModelAndView insertTeam(ModelAndView mv, Team team, MultipartFile upfile, HttpSession session) {
 		
@@ -137,6 +139,7 @@ public class MoimController {
 		return mv;
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("teamUpdateForm.mo")
 	public ModelAndView teamUpdateForm(ModelAndView mv, String teamNo, int teamMemberCount) throws ParseException {
 		
@@ -161,6 +164,7 @@ public class MoimController {
 		return mv;
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("teamMemberUpdateForm.mo")
 	public ModelAndView teamMemberUpdateForm(ModelAndView mv, String teamNo) {
 		// teamNo 사용해서 teamMember 정보를 가지고서 updateForm으로 이동
@@ -174,6 +178,7 @@ public class MoimController {
 	
 	// 채팅 관련 기능 시작
 	
+	//인터셉터 필요
 	@RequestMapping("chattingRoom.mo")
 	public ModelAndView cahttingRoom(ModelAndView mv, Chatting chat, String moimMember, String moimTitle) {
 		// teamNo 이용해서 채팅방 보내주기~
@@ -197,6 +202,7 @@ public class MoimController {
 		return mv;
 	}
 	
+	//인터셉터 필요
 	@ResponseBody
 	@RequestMapping(value="ajaxSelectChatList.mo", produces="application/json; charset=UTF-8")
 	public String ajaxSelectChattingList(String moimNo, String memNo) {
@@ -209,6 +215,7 @@ public class MoimController {
 		return new Gson().toJson(moimService.selectChattingList(chat));
 	}
 	
+	//인터셉터 필요
 	@ResponseBody
 	@RequestMapping(value="insertChat.mo", produces="text/html; charset=UTF-8")
 	public String ajaxInsertChatting(String moimNo, String memNo, String chatContent) {
@@ -230,6 +237,7 @@ public class MoimController {
 		return message;
 	}
 	
+	//인터셉터 필요
 	@ResponseBody
 	@RequestMapping(value="deleteChat.mo", produces="text/html; charset=UTF-8")
 	public String ajaxDeleteChatting(String chatNo) {
@@ -243,6 +251,7 @@ public class MoimController {
 		}
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("badgeShop.mo")
 	public ModelAndView badgeShop(ModelAndView mv) {
 		
@@ -310,6 +319,7 @@ public class MoimController {
 		return mv;
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("groupUpdateForm.mo")
 	public ModelAndView groupUpdateForm(ModelAndView mv, String groupNo) {
 		
@@ -346,6 +356,7 @@ public class MoimController {
 		return mv;
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("groupEnrollForm.mo")
 	public ModelAndView groupEnrollFrom(ModelAndView mv) {
 		
@@ -361,6 +372,7 @@ public class MoimController {
 		return new Gson().toJson(moimService.ajaxSelectApply(((Member)(session.getAttribute("loginMember"))).getMemNo()));
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("updateTeam.mo")
 	public ModelAndView updateTeam(ModelAndView mv, Team team, MultipartFile[] reUpfile, HttpSession session) {
 		
@@ -414,6 +426,7 @@ public class MoimController {
 		return mv;
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("updateBadge.mo")
 	public ModelAndView updateTeamBadgeStatus(ModelAndView mv, Team team, HttpSession session) {
 		if(moimService.updateTeamBadgeStatus(team) > 0) {
@@ -426,6 +439,7 @@ public class MoimController {
 		return mv;
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("teamMemberUpdate.mo")
 	public ModelAndView updateTeamMember(ModelAndView mv, String teamNo, int leader, String subLeader, HttpSession session) {
 
@@ -461,6 +475,7 @@ public class MoimController {
 		return mv;
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("deleteTeamMember.mo")
 	public ModelAndView deleteTeamMember(ModelAndView mv, TeamMember tm, HttpSession session) {
 		
@@ -474,6 +489,7 @@ public class MoimController {
 		return mv;
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("deleteApply.mo")
 	public ModelAndView deleteApply(HttpSession session, ModelAndView mv, Apply ap) {
 		// moimNo랑 memNo가 담겨 있음
@@ -488,10 +504,10 @@ public class MoimController {
 			mv.addObject("errorMsg", "신청 취소 실패").setViewName("common/errorPage");
 		}
 		
-		
 		return mv;
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("insertApply.mo")
 	public ModelAndView insertApply(ModelAndView mv, Apply ap) {
 		
@@ -508,6 +524,7 @@ public class MoimController {
 		return mv;
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("insertTeamMember.mo")
 	public ModelAndView insertTeamMember(ModelAndView mv, TeamMember tm, int applyNo) {
 		
@@ -525,6 +542,7 @@ public class MoimController {
 		return mv;
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("insertGroup.mo")
 	public ModelAndView insertGroup(ModelAndView mv, Group group, MultipartFile upfile, HttpSession session) {
 		
@@ -553,6 +571,7 @@ public class MoimController {
 		return mv;
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("updateGroup.mo")
 	public ModelAndView updateGroup(ModelAndView mv, Group group, MultipartFile reUpfile, HttpSession session) {
 		
@@ -579,6 +598,7 @@ public class MoimController {
 		return mv;
 	}
 	
+	//인터셉터 필요
 	@ResponseBody
 	@RequestMapping(value="selectGroupApply.mo", produces="application/json; charset=UTF-8")
 	public String ajaxSelectGroupApply(Apply ap) {
@@ -588,6 +608,7 @@ public class MoimController {
 		return new Gson().toJson(moimService.ajaxSelectGroupApply(ap));
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("updateApply.mo")
 	public ModelAndView updateGroupApply(ModelAndView mv, Apply ap) {
 		
@@ -600,6 +621,7 @@ public class MoimController {
 		return mv;
 	}
 	
+	//인터셉터 필요
 	@RequestMapping("deleteGroup.mo")
 	public ModelAndView deleteGroup(ModelAndView mv, Group group) {
 		
@@ -608,7 +630,6 @@ public class MoimController {
 		} else {
 			mv.addObject("errorMsg", "삭제 실패").setViewName("common/errorPage");
 		}
-		
 		
 		return mv;
 	}

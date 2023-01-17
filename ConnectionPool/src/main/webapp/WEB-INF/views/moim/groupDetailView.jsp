@@ -133,7 +133,7 @@
 								<c:choose>
 									<c:when test="${ empty loginMember }">
 										<!-- 로그인이 안 되어 있을 때는 무조건 -->
-										<a class="btn btn-primary" href="loginForm.me">로그인 후<br>이용 가능합니다.</a>
+										<a class="btn btn-primary" style="width:200px" href="loginForm.me">로그인 후<br>이용 가능합니다.</a>
 									</c:when>
 									<c:otherwise>
 										<c:choose>
