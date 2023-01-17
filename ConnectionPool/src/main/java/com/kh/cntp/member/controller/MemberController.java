@@ -205,10 +205,26 @@ public class MemberController {
 		return mv;
 	}
 	
+	// 아이디 중복체크
+	@ResponseBody
+	@RequestMapping("idCheck.me")
+	public String ajaxIdCheck(String checkId) {
+		
+		return memberService.ajaxIdCheck(checkId) > 0 ? "unavailable" : "Available";
+	}
+	
+	// 닉네임 중복체크
+	@ResponseBody
+	@RequestMapping("nickNameCheck.me")
+	public String ajaxNickNameCheck(String checkNickName) {
+		
+		return memberService.ajaxNickNameCheck(checkNickName) > 0 ? "unavailable" : "Available";
+	}
+	
 	// 회원가입 시 메일 인증
 	@ResponseBody
 	@RequestMapping("insertMailRequest.me")
-	public String insertMailRequest(String checkId, String checkEmail, HttpServletRequest request) throws MessagingException {
+	public String ajaxinsertMailRequest(String checkId, String checkEmail, HttpServletRequest request) throws MessagingException {
 		
 		String email = checkId + '@' + checkEmail;
 		String result = "";
@@ -246,14 +262,14 @@ public class MemberController {
 	// 비밀번호 재설정 인증(아이디와 이메일 체크 후 메일 전송)
 	@ResponseBody
 	@RequestMapping("findPwdMailRequest.me")
-	public String findPwdMailRequest(String checkId, String checkEmail, Member member, HttpServletRequest request) throws MessagingException {
+	public String ajaxfindPwdMailRequest(String checkId, String checkEmail, Member member, HttpServletRequest request) throws MessagingException {
 		
 		member.setMemId(checkId);
 		member.setEmail(checkEmail);
 		
 		String result = "";
 		
-		if(memberService.findPwdMailRequest(member) > 0) { // 아이디와 이메일이 같다면
+		if(memberService.ajaxfindPwdMailRequest(member) > 0) { // 아이디와 이메일이 같다면
 			result = "successEmail";
 			sendMail(member.getEmail(),request); // 메일보내기
 		} else {
@@ -265,7 +281,7 @@ public class MemberController {
 	// 메일 인증번호 확인
 	@ResponseBody
 	@RequestMapping("certNum.me")
-	public boolean certNumCheck(String certNum, HttpServletRequest request) {
+	public boolean ajaxcertNumCheck(String certNum, HttpServletRequest request) {
 		
 		// cert builder
 		Cert cert = Cert.builder()
@@ -273,7 +289,7 @@ public class MemberController {
 		.secretNo(certNum).build();
 		
 		// DB에 맞는 정보가 있으면 true 없으면 false 반환 
-		return memberService.certNumCheck(cert);
+		return memberService.ajaxcertNumCheck(cert);
 	}
 	
 	

@@ -32,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="NICKNAME" 	property="nickname"/>
 		<result column="MEM_NO" 	property="memNo"/>
 		<result column="TEAM_ENROLL_DATE" 	property="teamEnrollDate"/>
+		<result column="GRADE" 	property="grade"/>
 	</resultMap>
 	
 	<resultMap type="group" id="groupResultMap">
@@ -84,6 +85,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="LOSING_STREAK" 	property="losingStreak"/>
 		<result column="VICTORY" 		property="victory"/>
 		<result column="DEFEAT" 		property="defeat"/>
+	</resultMap>
+	
+	<resultMap type="member" id="memberResultMap">
+		<result column="MEM_NO"			property="memNo"/>
+		<result column="NICKNAME"		property="nickName"/>
+		<result column="ENROLL_DATE"	property="enrollDate"/>
+		<result column="GRADE"			property="grade"/>
 	</resultMap>
 	
 	<select id="ajaxSelectTeam" resultType="_int" parameterType="string">
@@ -195,6 +203,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        ,M.NICKNAME
 		        ,TM.MEM_NO
 		        ,TO_CHAR(TEAM_ENROLL_DATE, 'YYYY-MM-DD') AS "TEAM_ENROLL_DATE"
+		        ,M.GRADE
 		  FROM 
 		       TEAM_MEMBER "TM"
 		  JOIN
@@ -802,6 +811,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       GROUP_NO = #{groupNo}
 	
 	</update>
+	
+	<select id="selectAcceptMember" parameterType="string" resultMap="memberResultMap">
+		(SELECT
+		        MB.MEM_NO
+		       ,MB.NICKNAME
+		       ,TO_CHAR(A.ACCEPT_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+		       ,MB.GRADE
+		  FROM
+		       MEMBER "MB"
+		  JOIN
+		       APPLY "A" ON(MB.MEM_NO = A.MEM_NO)
+		 WHERE
+		       A.ACCEPT_YN = 'Y'
+		   AND 
+		       A.MOIM_NO = #{groupNo})
+		UNION
+		(SELECT
+		        M.MEM_NO
+		       ,M.NICKNAME
+		       ,TO_CHAR(G.CREATE_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+		       ,M.GRADE
+		  FROM
+		       MEMBER "M"
+		  JOIN
+		       "GROUP" "G" ON(G.MEM_NO = M.MEM_NO)
+		 WHERE
+		       G.GROUP_NO = #{groupNo})
+	</select>
 	
 	
 </mapper>

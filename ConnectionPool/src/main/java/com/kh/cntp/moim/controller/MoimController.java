@@ -180,6 +180,18 @@ public class MoimController {
 		
 		//System.out.println(moimService.selectChattingList(chat));
 		//System.out.println(chat);
+		
+		if(chat.getMoimNo().contains("G")) {
+			ArrayList<Member> groupMemberList = moimService.selectAcceptMember(chat.getMoimNo());
+			mv.addObject("chatMemberList", groupMemberList);
+			
+			moimMember = String.valueOf(groupMemberList.size());
+			
+			//System.out.println(groupMemberList);
+		} else if(chat.getMoimNo().contains("T")) {
+			mv.addObject("chatMemberList", moimService.selectTeamMemberList(chat.getMoimNo()));
+		}
+		
 		mv.addObject("chatList", moimService.selectChattingList(chat)).addObject("moimMember", moimMember).addObject("moimNo", chat.getMoimNo()).addObject("moimTitle", moimTitle).setViewName("moim/chatView");
 		
 		return mv;

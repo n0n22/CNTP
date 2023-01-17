@@ -145,8 +145,11 @@ public class myPageController {
 	
 	// 마이페이지 소모임 조회
 	@RequestMapping("myPageMoim.me")
-	public String myPageMoim() {
-		return "member/myPage/myPageMoim";
+	public ModelAndView myPageMoim(ModelAndView mv) {
+		
+		
+		mv.setViewName("member/myPage/myPageMoim");
+		return mv;
 	}
 	
 	// 마이페이지 팀 조회

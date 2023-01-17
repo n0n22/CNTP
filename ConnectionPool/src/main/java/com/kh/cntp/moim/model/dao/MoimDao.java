@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.model.vo.PageInfo;
+import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.moim.model.vo.Apply;
 import com.kh.cntp.moim.model.vo.Chatting;
 import com.kh.cntp.moim.model.vo.Group;
@@ -151,5 +152,9 @@ public class MoimDao {
 	
 	public int deleteGroup(SqlSessionTemplate sqlSession, Group group) {
 		return sqlSession.update("moimMapper.deleteGroup", group);
+	}
+	
+	public ArrayList<Member> selectAcceptMember(SqlSessionTemplate sqlSession, String groupNo){
+		return (ArrayList)sqlSession.selectList("moimMapper.selectAcceptMember", groupNo);
 	}
 }
