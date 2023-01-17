@@ -245,14 +245,6 @@
 							<div style="display:inline-block;">
 								<form action="groupUpdateForm.mo">
 									<input type="hidden" name="groupNo" value="${ group.groupNo }">
-									<c:choose>
-										<c:when test="${ fn:contains(group.groupMember, '(1/') }">
-											<input type="hidden" name="emptyYn" value="Y">
-										</c:when>
-										<c:otherwise>
-											<input type="hidden" name="emptyYn" value="N">
-										</c:otherwise>
-									</c:choose>
 					        		<button class="btn btn-primary">수정하기</button>
 								</form>
 							</div>

@@ -311,23 +311,37 @@ public class MoimController {
 	}
 	
 	@RequestMapping("groupUpdateForm.mo")
-	public ModelAndView groupUpdateForm(ModelAndView mv, String groupNo, String emptyYn) {
+	public ModelAndView groupUpdateForm(ModelAndView mv, String groupNo) {
 		
 		Group group = moimService.selectGroup(groupNo);
 		
+		String groupMember = group.getGroupMember();
+		String partiNum = "";
+		
+		//System.out.println(groupMember);
+		
 		if(!group.getGroupMember().contains("모집마감")) {
-			//모집 마감이 아니라면 => (x/x)
-			group.setGroupMember(group.getGroupMember().substring(group.getGroupMember().indexOf('/') + 1, group.getGroupMember().indexOf(')')));
+			//모집 마감이 아니라면 => (a/b)
+			// a값을 담아줌
+			group.setGroupMember(groupMember.substring(groupMember.indexOf('/') + 1, groupMember.indexOf(')')));
+			// b값을 담아줌
+			partiNum = groupMember.substring(1, groupMember.indexOf('/'));
 		} else {
-			// 모집마감이라면 => 모짐마감(x)
-			group.setGroupMember(group.getGroupMember().substring(5, group.getGroupMember().indexOf(')')));
+			// 모집마감이라면 => 모짐마감(a)
+			// 둘 다 a값을 담아줌. 모집인원의 현재값과 최소값을 가져가기 위함
+			group.setGroupMember(groupMember.substring(groupMember.indexOf('(') + 1, groupMember.indexOf(')')));
+			partiNum = group.getGroupMember();
 		}
+		//2023/01/01 12:00:00 형태를 -> 2023-01-01T12:00 형태로 변경하여 input Date의 min 값으로 활용
 		group.setEndTime(group.getEndTime().replace(" ", "T").replace("/", "-").substring(0, 16));
 		group.setStartTime(group.getStartTime().replace(" ", "T").replace("/", "-").substring(0, 16));
 		
-		//System.out.println(group.getGroupMember());
+//		System.out.println(group.getEndTime());
+//		System.out.println(group.getStartTime());
+//		System.out.println(group.getGroupMember());
+//		System.out.println(partiNum);
 		
-		mv.addObject("group", group).addObject("emptyYn", emptyYn).setViewName("moim/groupUpdateForm");
+		mv.addObject("group", group).addObject("partiNum", partiNum).setViewName("moim/groupUpdateForm");
 		
 		return mv;
 	}
