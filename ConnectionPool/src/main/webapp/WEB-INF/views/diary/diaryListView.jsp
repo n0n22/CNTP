@@ -267,6 +267,7 @@ textarea{
                      </div>
                 </div>
                 
+                
                 <div class="col-lg-7 col-xl-6">
                 	<!-- insert창  -->
                     <div class="card card-white grid-margin">
@@ -287,11 +288,13 @@ textarea{
                                 	</c:if>
                                 </div>
                             </div> <!--"post" 끝  -->
+                        </div>	
                         </form>
                     </div>
                 </div>
                     
-                    
+                   
+                    <c:forEach items="${list }" var="d">
                     <div class="profile-timeline">
                                 <div class="card card-white grid-margin">
                                     <div class="card-body">
@@ -303,8 +306,8 @@ textarea{
                                         <div class="timeline-item-post">
                                             <p>${d.content }</p>
                                             <div class="timeline-options">
-                                                <a href="#"><i class="fa fa-comment"></i>${d.reply }</a>
-                                                <a href="#"><i class="fa fa-thumbs-up"></i> 좋아요 (15)</a>
+                                                <a href="#"><i class="fa fa-comment"></i>${r.comentContent }</a>
+                                                <a href="#"><i class="fa fa-thumbs-up"></i> ${d.heart }</a>
                                                 <span class="material-symbols-outlined">lock_open
                                                   
                                                 </span>
@@ -335,9 +338,11 @@ textarea{
                                                 <button class="btn btn-outline-primary float-right">등록하기</button>
                                             </div> <!-- "post-options" 끝 -->
                                         </div> <!-- "timeline-item-post" 끝 -->
+                                    
                                     </div> <!-- "card-body" 끝-->
-                                
                                 </div>
+                         </div>
+                         </c:forEach>
                             
                          
                          
@@ -372,14 +377,16 @@ textarea{
                                     </div>
                                 </div>
                     </div>
+                   
+                    
+                    
                 </div>
             </div>
             <!-- Row -->
         </div>
         <!-- end page main wrapper -->
        <jsp:include page="../common/footer.jsp" />
-    </div>
-    </div>
+    
 
 
 </body>
