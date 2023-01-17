@@ -26,6 +26,16 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.insertMember", member);
 	}
 	
+	// 아이디 중복체크
+	public int ajaxIdCheck(SqlSessionTemplate sqlSession, String checkId) {
+		return sqlSession.selectOne("memberMapper.ajaxIdCheck", checkId);
+	}
+	
+	// 닉네임 중복체크
+	public int ajaxNickNameCheck(SqlSessionTemplate sqlSession, String checkNickName) {
+		return sqlSession.selectOne("memberMapper.ajaxNickNameCheck", checkNickName);
+	}
+	
 	// 로그인 실패 횟수
 	public int loginCount(SqlSessionTemplate sqlSession, Member member) {
 		return sqlSession.update("memberMapper.loginCount", member);
@@ -52,13 +62,13 @@ public class MemberDao {
 	}
 	
 	// 비밀번호 변경 시 메일 인증번호 요청
-	public int findPwdMailRequest(SqlSessionTemplate sqlSession, Member member) {
-		return sqlSession.selectOne("memberMapper.findPwdMailRequest", member);
+	public int ajaxfindPwdMailRequest(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.selectOne("memberMapper.ajaxfindPwdMailRequest", member);
 	}
 
 	// 인증번호 확인
-	public boolean certNumCheck(SqlSessionTemplate sqlSession, Cert cert) {
-		Cert result = sqlSession.selectOne("memberMapper.certNumCheck", cert);
+	public boolean ajaxcertNumCheck(SqlSessionTemplate sqlSession, Cert cert) {
+		Cert result = sqlSession.selectOne("memberMapper.ajaxcertNumCheck", cert);
 		if (result != null) {
 			sqlSession.delete("memberMapper.remove", cert);
 		}

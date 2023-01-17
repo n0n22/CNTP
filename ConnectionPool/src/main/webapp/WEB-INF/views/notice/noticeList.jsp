@@ -9,10 +9,14 @@
 <title>공지사항</title>
 
 	<style>
-
+		.outer {
+			width: 1100px;
+			margin: auto;
+		}
 
         .notice-title h2 {
             text-align: center;
+            margin-top: 30px;
         }
 
         .notice-search {
@@ -74,6 +78,14 @@
 		input[type=radio]:checked + label {
 			color :blue;
 		}
+		.notice-foot{
+			margin: auto;
+			text-align: center;
+		}
+		.page-area{
+			display: inline-block;
+		}
+	
 
     </style>
 
@@ -153,7 +165,7 @@
 
         <div class="notice-foot">
         	<div class="page-area">
-	        	<ul class="pagination" align="center">
+	        	<ul class="pagination">
 	               	<c:choose>
 	                	<c:when test="${ pi.currentPage eq 1 }">
 	                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
