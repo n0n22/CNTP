@@ -17,6 +17,7 @@ import com.kh.cntp.member.model.service.MemberService;
 import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.member.model.vo.Point;
 import com.kh.cntp.moim.model.service.MoimService;
+import com.kh.cntp.moim.model.vo.Group;
 
 @Controller
 public class myPageController {
@@ -145,10 +146,16 @@ public class myPageController {
 	
 	// 마이페이지 소모임 조회
 	@RequestMapping("myPageMoim.me")
-	public ModelAndView myPageMoim(ModelAndView mv) {
+	public ModelAndView myPageMoim(HttpSession session,
+								   ModelAndView mv
+								   ) {
 		
+		int memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
+		
+		mv.addObject("groupList",memberService.myPageGroupList(memNo));
 		
 		mv.setViewName("member/myPage/myPageMoim");
+		
 		return mv;
 	}
 	

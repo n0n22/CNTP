@@ -311,7 +311,7 @@ public class MoimController {
 	}
 	
 	@RequestMapping("groupUpdateForm.mo")
-	public ModelAndView groupUpdateForm(ModelAndView mv, String groupNo) {
+	public ModelAndView groupUpdateForm(ModelAndView mv, String groupNo, String emptyYn) {
 		
 		Group group = moimService.selectGroup(groupNo);
 		
@@ -327,7 +327,7 @@ public class MoimController {
 		
 		//System.out.println(group.getGroupMember());
 		
-		mv.addObject("group", group).setViewName("moim/groupUpdateForm");
+		mv.addObject("group", group).addObject("emptyYn", emptyYn).setViewName("moim/groupUpdateForm");
 		
 		return mv;
 	}

@@ -25,4 +25,35 @@
 	
 	
 	
+	<!-- Interceptor -->
+	<interceptors>
+		<interceptor>
+			<!-- 회원 관련 페이지 -->
+			<mapping path="/memberList.ad" />
+			<mapping path="/allMemberList.ad" />
+			<!-- 신고 관련 페이지 -->
+			<mapping path="/reportList.ad" />
+			<mapping path="/reportDetail.ad" />
+			<mapping path="/reportInvalid.ad" />
+			<mapping path="/reportConfirm.ad" />
+			<mapping path="/penaltyList.ad" />
+			<mapping path="/penaltyInsert.ad" />
+			<!-- 배너 관련 페이지 -->
+			<mapping path="/bannerList.ad" />
+			<mapping path="/bannerEnrollForm.ad" />
+			<mapping path="/bannerInsert.ad" />
+			<mapping path="/bannerUpdate.ad" />
+			<!-- 공지 관련 페이지 -->
+			<mapping path="/noticeEnrollForm.ad" />
+			<mapping path="/noticeUpdateForm.ad" />
+			<mapping path="/noticeInsert.ad" />
+			<mapping path="/noticeUpdate.ad" />
+			<mapping path="/noticeDelete.ad" />
+			<beans:bean class="com.kh.cntp.common.interceptor.AdminInterceptor" id="adminInterceptor"></beans:bean>
+		</interceptor>
+	</interceptors>
+	
+	
+	
+	
 </beans:beans>
