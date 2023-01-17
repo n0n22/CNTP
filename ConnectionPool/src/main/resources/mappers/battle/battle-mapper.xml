@@ -446,7 +446,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        BATTLE_NO = #{battleNo}
 	</select>
 	
-	<select id="selectListManyWin" resultMap="resultHistoryResultSet">
+	<select id="selectListBattleRank" parameterType="string" resultMap="resultHistoryResultSet">
 		SELECT 
 		        *
 		  FROM
@@ -465,7 +465,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				  		RESULT_HISTORY
 		          LEFT JOIN
 		                TEAM USING(TEAM_NO)
-		          ORDER BY VICTORY DESC, WIN_RATE DESC)
+		          <choose>
+		          	<when test="condition == 'win'">
+			          ORDER BY VICTORY DESC, WIN_RATE DESC)
+		          	</when>
+		          	<when test="condition == 'winRate'">
+			          ORDER BY WIN_RATE DESC, VICTORY DESC)
+		          	</when>
+		          	<when test="condition == 'winningStreak'">
+   				      ORDER BY WINNING_STREAK DESC, WIN_RATE DESC)
+		          	</when>
+		          	<otherwise>
+    			
+    			      ORDER BY RECORD DESC, WIN_RATE DESC)
+		          	</otherwise>
+		          </choose>
          WHERE ROWNUM BETWEEN 1 AND 5
 	
 	</select>

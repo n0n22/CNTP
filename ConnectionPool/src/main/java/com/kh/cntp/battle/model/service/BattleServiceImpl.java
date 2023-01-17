@@ -104,7 +104,7 @@ public class BattleServiceImpl implements BattleService{
 	}
 	
 	@Override
-	public ArrayList<ResultHistory> selectListManyWin() {
-		return battleDao.selectListManyWin(sqlSession);
+	public ArrayList<ResultHistory> selectListBattleRank(String condition) {
+		return battleDao.selectListBattleRank(sqlSession, condition);
 	}
 }
