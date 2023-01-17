@@ -252,31 +252,37 @@ textarea{
 <jsp:include page="../common/menubar_nosearch.jsp" />
 
 
-   <div class="col-lg-7 col-xl-6">
-                	<!-- insert창  -->
-                    <div class="card card-white grid-margin">
-                        <form id="contentInsert" action="insert.di" enctype="multipart/form-data" method="post">
-                        <div class="card-body">
-                            <div class="post">
-                                <textarea class="form-control" id="contentInsert" placeholder="내용을 입력해주세요" rows="4"name="content"></textarea>
-                              	
-                               <input type="hidden" name="memberNo" value="${loginMember.memNo }">
-                               
-                                <div class="post-options">
-                                <input type="file" id="upfile" name="upfile"><a href="#"><i class="fa fa-camera"></i></a>
-                                <input type="file" accept="video/*">   <a href="#"><i class="fas fa-video"></i></a>
-                                   	
-                                   	
-                                   	<c:if test="${not empty sessionScope.loginMember }">
-                                    <button class="btn btn-outline-primary float-right">등록하기</button>
-                                	</c:if>
-                                </div>
-                            </div> <!--"post" 끝  -->
-                        </form>
-                    </div>
-                </div>
-                    
-                    
+	<div class="col-lg-7 col-xl-6">
+		<!-- insert창  -->
+		<div class="card card-white grid-margin">
+			<form id="contentInsert" action="insert.di"
+				enctype="multipart/form-data" method="post">
+				<div class="card-body">
+					<div class="post">
+						<textarea class="form-control" id="contentInsert"
+							placeholder="내용을 입력해주세요" rows="4" name="content"></textarea>
+
+						<input type="hidden" name="memberNo" value="${loginMember.memNo }">
+
+						<div class="post-options">
+							<input type="file" id="upfile" name="upfile"><a href="#"><i
+								class="fa fa-camera"></i></a> <input type="file" accept="video/*">
+							<a href="#"><i class="fas fa-video"></i></a>
+
+
+							<c:if test="${not empty sessionScope.loginMember }">
+								<button class="btn btn-outline-primary float-right">등록하기</button>
+							</c:if>
+						</div>
+					</div>
+					<!--"post" 끝  -->
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
 
 	<jsp:include page="../common/footer.jsp" />
 </body>

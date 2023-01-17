@@ -12,6 +12,7 @@ import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.vo.Cert;
 import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.member.model.vo.Point;
+import com.kh.cntp.moim.model.vo.Group;
 
 @Repository
 public class MemberDao {
@@ -143,6 +144,10 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updatePointMember", point);
 	}
 	
+	// 소모임 조회
+	public ArrayList<Group> myPageGroupList(SqlSessionTemplate sqlSession, int memNo){
+		return (ArrayList)sqlSession.selectList("memberMapper.myPageGroupList", memNo);
+	}
 		
 		
 		
