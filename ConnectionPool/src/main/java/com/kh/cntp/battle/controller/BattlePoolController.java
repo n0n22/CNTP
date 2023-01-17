@@ -161,57 +161,56 @@ public class BattlePoolController {
 							  HttpSession session,
 							  ModelAndView mv,
 							  RedirectAttributes redirectAttributes) {
-		
+		// map형태로 데이터 가공
 		HashMap<String, String> apply = new HashMap<String, String>();
 		apply.put("teamNo", teamNo);
 		apply.put("memNo", memNo);
 		apply.put("chatContent", chatContent);
 		apply.put("battleNo", battleNo);
 		
-		int result = battleService.applyBattle(apply);
-		
-		if(result > 0) {
+		if(battleService.applyBattle(apply) > 0) {
 			redirectAttributes.addAttribute("battleNo", battleNo);
 			session.setAttribute("alertMsg", "배틀 신청이 완료되었습니다.");
 			mv.setViewName("redirect: battleDetail.bt");
 		} else {
-			mv.addObject("errorMsg", "배틀 신청 실패").setViewName("common/errorPage");
+			mv.addObject("errorMsg", "배틀 신청 실패")
+			  .setViewName("common/errorPage");
 		}
 		return mv;
 	} 
 	// 배틀 결과 작성
 	@RequestMapping("insertBattleResult.bt")
-	public String insertBattleResult(BattleResult br, 
-									 Model model,
-									 RedirectAttributes redirectAttributes) {
+	public ModelAndView insertBattleResult(BattleResult br, 
+									 	   ModelAndView mv,
+									 	   RedirectAttributes redirectAttributes) {
 		int result = battleService.insertBattleResult(br);
 		if(result > 0) {
 			redirectAttributes.addAttribute("battleNo", br.getBattleNo());
-			return "redirect: battleDetail.bt";
+			mv.setViewName("redirect: battleDetail.bt");
 		} else {
-			model.addAttribute("errorMsg", "배틀 결과 작성 실패");
-			return "common/errorPage";
+			mv.addObject("errorMsg", "배틀 결과 작성 실패")
+			  .setViewName("common/errorPage");
 		}
-		
+		return mv;
 	}
 	// 배틀 결과 승인
 	@RequestMapping("battleResultOk.bt")
-	public String battleResultOk(int battleNo,
-								 String victoryTeamNo,
-								 String defeatTeamNo,
-								 HttpSession session,
-								 Model model,
-								 RedirectAttributes redirectAttributes) {
+	public ModelAndView battleResultOk(int battleNo,
+									   String victoryTeamNo,
+									   String defeatTeamNo,
+									   HttpSession session,
+									   ModelAndView mv,
+									   RedirectAttributes redirectAttributes) {
 		
-		int result = battleService.battleResultOk(battleNo, victoryTeamNo, defeatTeamNo);
-		if(result > 0) {
+		if(battleService.battleResultOk(battleNo, victoryTeamNo, defeatTeamNo) > 0) {
 			session.setAttribute("alertMsg", "배틀 결과 승인이 완료되었습니다.");
 			redirectAttributes.addAttribute("battleNo", battleNo);
-			return "redirect: battleDetail.bt";
+			mv.setViewName("redirect: battleDetail.bt");
 		} else {
-			model.addAttribute("errorMsg", "배틀 결과 승인 실패");
-			return "common/errorPage";
+			mv.addObject("errorMsg", "배틀 결과 승인 실패")
+			  .setViewName("common/errorPage");
 		}
+		return mv;
 	}
 
 	
@@ -228,8 +227,7 @@ public class BattlePoolController {
 		cancel.put("memNo", memNo);
 		cancel.put("chatContent", "배틀 신청을 취소하였습니다.");
 		
-		int result = battleService.cancelBattle(cancel);
-		if(result > 0) {
+		if(battleService.cancelBattle(cancel) > 0) {
 			session.setAttribute("alertMsg", "배틀 신청이 취소되었습니다.");
 			redirectAttributes.addAttribute("battleNo", battleNo);
 		} else {
@@ -241,9 +239,8 @@ public class BattlePoolController {
 	@RequestMapping("deleteBattlePool.bt")
 	public String deleteBattlePool(int battleNo,
 								   HttpSession session) {
-		int result = battleService.deleteBattlePool(battleNo);
 		
-		if(result > 0 ) {
+		if(battleService.deleteBattlePool(battleNo) > 0 ) {
 			session.setAttribute("alertMsg", "배틀풀 삭제를 성공했습니다.");
 		} else {
 			session.setAttribute("alertMsg", "배틀풀 삭제를 실패했습니다.");
