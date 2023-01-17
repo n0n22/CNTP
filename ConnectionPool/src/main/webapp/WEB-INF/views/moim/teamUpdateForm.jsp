@@ -54,7 +54,8 @@
 		        <tr height="50">
 		            <th>팀 인원</th>
 		            <td>
-		                <input type="number" name="teamMember" value="${ team.teamMember }" max="12" min="2" required>명
+		                <input type="number" name="teamMember" value="${ team.teamMember }" max="12" min="${ teamMemberCount}" required>명<br>
+		                * 현재 팀원보다는 작게 설정할 수 없습니다.
 		            </td>
 		        </tr>
 		        <tr>
@@ -66,17 +67,24 @@
 		        <tr height="50">
 		            <th>주 활동지역</th>
 		            <td>
-		                <select name="teamArea" id="teamArea">
-		                    <option value="Seoul">서울특별시</option>
-							<option value="Gyeonggi">경기도</option>
-							<option value="Gangwon">강원도</option>
-							<option value="Chungbuk">충청북도</option>
-							<option value="Chungnam">충청남도</option>
-							<option value="Jeonbuk">전라북도</option>
-							<option value="Jeonnam">전라남도</option>
-							<option value="Gyeongbuk">경상북도</option>
-							<option value="Gyeongnam">경상남도</option>
-		                </select>
+		            	<c:choose>
+		            		<c:when test="${ teamMemberCount > 1 }">
+		            			${ team.teamArea }
+		            		</c:when>
+		            		<c:otherwise>
+				                <select name="teamArea" id="teamArea">
+				                    <option value="Seoul">서울특별시</option>
+									<option value="Gyeonggi">경기도</option>
+									<option value="Gangwon">강원도</option>
+									<option value="Chungbuk">충청북도</option>
+									<option value="Chungnam">충청남도</option>
+									<option value="Jeonbuk">전라북도</option>
+									<option value="Jeonnam">전라남도</option>
+									<option value="Gyeongbuk">경상북도</option>
+									<option value="Gyeongnam">경상남도</option>
+				                </select>
+		            		</c:otherwise>
+		            	</c:choose>
 		            </td>
 		        </tr>
 		        <tr height="50">
@@ -155,7 +163,7 @@
             <input type="hidden" name="badgeStatus" value="${ team.badgeStatus }">
 			<input name="teamNo" value="${ team.teamNo }" type="hidden">
 		    <div align="center">
-		        <a href="teamPage.mo?teamNo=${ team.teamNo }">취소하기</a> <button>수정하기</button>
+		        <a href="teamPage.mo?teamNo=${ team.teamNo }" class="btn btn-primary">취소하기</a> <button class="btn btn-primary">수정하기</button>
 		    </div>
 		</form>
 	</div>

@@ -53,41 +53,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 로그인용 쿼리문  -->
 	<select id="loginMember" parameterType="member" resultMap="memberResultSet">
-		SELECT 
-		       MEM_NO,
-		       MEM_ID,
-		       MEM_PWD,
-		       GENDER,
-		       INGIDO,
-		       MEM_POINT,
-		       EMAIL,
-		       NICKNAME,
-		       MEM_NAME,
-		       MEM_AREA,
-		       PHONE,
-		       TO_CHAR(BIRTHDAY, 'YYYY-MM-DD') as "BIRTHDAY",
-		       DETAIL_AREA,
-		       MEM_STATUS,
-		       ENROLL_DATE,
-		       GRADE,
-		       END_DATE,
-		       T.TEAM_NO,
-               TEAM_NAME,
-		       TEAM_GRADE,
-               BADGE_CHANGE_NAME,
-               FAILCNT
-		  FROM 
-		       MEMBER
-     LEFT JOIN 
-		       PENALTY USING (MEM_NO)
-     LEFT JOIN
-		       TEAM_MEMBER T USING (MEM_NO)
-     LEFT JOIN
-               TEAM USING USING (MEM_NO) 
-		 WHERE 
-		       MEM_ID = #{memId}
-		   AND
-		       MEM_STATUS = 'Y'
+		SELECT 		   
+		               M.MEM_NO,
+				       MEM_ID,
+				       MEM_PWD,
+				       GENDER,
+				       INGIDO,
+				       MEM_POINT,
+				       EMAIL,
+				       NICKNAME,
+				       MEM_NAME,
+				       MEM_AREA,
+				       PHONE,
+				       BIRTHDAY,
+				       DETAIL_AREA,
+				       MEM_STATUS,
+				       ENROLL_DATE,
+				       GRADE,
+				       END_DATE,
+				       TEAM_NO,
+				       TEAM_GRADE,
+		               FAILCNT,
+		               TEAM_NAME,
+		               BADGE_CHANGE_NAME
+		FROM
+		               VW_MEMBER "M"
+		     LEFT JOIN
+		               TEAM USING(TEAM_NO)
+		        WHERE M.MEM_ID = #{memId}
 	</select>
 	
 	<!-- 회원가입 -->

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>            
 <!DOCTYPE html>
 <html>
 <head>
@@ -245,20 +246,28 @@
     <div class="outer">
         <div class="top-bar">
             <div class="inline-block">
-                <div id="name-area" style="cursor: default;"><span id="userName">커풀</span> 님
-                    <br>🤔<span>무소속</span>
+                <div id="name-area" style="cursor: default;"><span id="userName">${sessionScope.loginMember.nickName}</span> 님
+                    <br>
+                    <c:if test="${ sessionScope.loginMember.badgeChangeName == null }">
+                    	노뱃지
+                   	</c:if>
+                   	<img src="${ sessionScope.loginMember.badgeChangeName }" width="30px">
+                   	<c:if test="${ sessionScope.loginMember.teamName == null }">
+                   		무소속	
+                   	</c:if>
+                   		<span>${ sessionScope.loginMember.teamName }</span>
                 </div>
                 <div>
-                    <div id="point-text">포인트&nbsp;<span id="point">180</span></div>
-                    <div id="ingido-text">인기도&nbsp;<span id="ingido">13</span></div>
+                    <div id="point-text">포인트&nbsp;<span id="point">${sessionScope.loginMember.memPoint}</span></div>
+                    <div id="ingido-text">인기도&nbsp;<span id="ingido">${sessionScope.loginMember.ingido}</span></div>
                 </div>
+                
             </div>
             <div>
                 <ul id="top-ul">
                     <li><a  href="myPageInfo.me">회원정보</a></li>
-                    <li><a href="">출석체크</a></li>
+                    <li><a href="myPageAtCheckForm.me">출석체크</a></li>
                     <li><a href="myPageBoard.me">작성글 보기</a></li>
-                    <li><a href="myPageDiary.me">수영일기</a></li>
                     <li><a href="myPageTeam.me">나의팀 보기</a></li>
                     <li><a id="click" href="myPageMoim.me">소모임 보기</a></li>
                     <li><a href="myPagePoint.me">포인트 조회</a></li>

@@ -86,7 +86,7 @@
 
 				<div class="img-area" style="width:80%; display:inline-block;">
 					<!-- 팀 이미지 -->
-					<img width="1040px" height="200px" class="teamImg" src="${ team.changeName }">
+					<img width="1040px" height="300px" class="teamImg" src="${ team.changeName }">
 				</div>
 				<c:if test="${ loginMember.teamGrade eq 'L' and loginMember.teamNo eq team.teamNo and team.badgeStatus eq 'N'}">
 					<div class="badge-shop" align="left" style="width:80%;">
@@ -141,6 +141,7 @@
 					<div class="update-area" align="center">
 						<form action="teamUpdateForm.mo" method="post">
 							<input type="hidden" value="${ team.teamNo }" name="teamNo" id="hiddenTeamNo">
+							<input type="hidden" value="${ teamMemberList.size() }" name="teamMemberCount" id="hiddenTeamNo">
 							<button class="btn btn-primary" style="width:300px">수정하기</button>
 						</form>
 					</div>
@@ -207,15 +208,15 @@
 												<td>${ ap.applyDate }</td>
 												<td>
 													<div style="display:inline-block;">
-														<form action="updateApply.mo">
+														<form action="insertTeamMember.mo" method="post">
 															<input type="hidden" value="${ ap.applyNo }" name="applyNo">
-															<input type="hidden" value="${ team.teamNo }" name="moimNo">
+															<input type="hidden" value="${ team.teamNo }" name="teamNo">
 															<input type="hidden" value="${ ap.memNo }" name="memNo">
 															<button onclick="return confirmBtn('수락')">수락</button>
 														</form>
 													</div>
 													<div style="display:inline-block;">
-														<form action="deleteApply.mo">
+														<form action="deleteApply.mo" method="post">
 															<input type="hidden" value="${ ap.memNo }" name="memNo">
 															<input type="hidden" value="${ team.teamNo }" name="moimNo">
 															<button onclick="return confirmBtn('거절')">거절</button>
@@ -265,7 +266,6 @@
 												<form action="deleteTeamMember.mo">
 													<input type="hidden" name="memNo" value="${ loginMember.memNo }">
 													<input type="hidden" name="teamNo" value="${ team.teamNo }">
-													<input type="hidden" name="moimNo" value="${ team.teamNo }">
 													<button class="btn btn-primary" style="width:150px;" onclick="return confirmBtn('탈퇴')">팀 탈퇴하기</button>
 												</form>
 											</div>
@@ -275,7 +275,7 @@
 													<input type="hidden" name="memNo" value="${ loginMember.memNo }">
 													<input type="hidden" name="moimMember" value="${ teamMemberList.size()}">
 													<input type="hidden" name="moimTitle" value="${ team.teamName }">
-													<button class="btn btn-primary" style="width:300px;">채팅하기</button>
+													<button class="btn btn-primary" style="width:150px;">채팅하기</button>
 												</form>
 											</div>
 										</c:otherwise>

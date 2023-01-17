@@ -385,7 +385,7 @@
 
 		<script>
 		
-
+			// 파일명 설정
 			function setFileName() {
 				
 				let dt = new Date();
@@ -418,16 +418,17 @@
 				// 컬럼 숨기기
 				// console.log(ws.G1.hidden);
 				console.log(ws);
-				console.log(ws['!cols']);
 				ws['!cols'] = [];
-				ws['!cols'][5] = { hidden: true };
+				console.log(ws['!cols']);
+				ws.set_row(0, {'hidden': true});
+				// ws['!cols'][5] = { hidden: true };
 
 				
 				// 시트 설정을 전달하면서 엑셀 파일 생성
 				let wb = XLSX.utils.table_to_book(document.getElementById('memberTable'), ws);
 				
 			    // 엑셀 다운로드
-				XLSX.writeFile(wb, fileName);
+				// XLSX.writeFile(wb, fileName);
 			};
 		
 			

@@ -92,6 +92,7 @@
 							<option value="Gyeongbuk">경상북도</option>
 							<option value="Gyeongnam">경상남도</option>
 		                </select>
+		                <br>* 팀원 가입 시 지역 변경이 어려우니 신중히 선택해주세요.
 		            </td>
 		        </tr>
 		        <tr height="50">
