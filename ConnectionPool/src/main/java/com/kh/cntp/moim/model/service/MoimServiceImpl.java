@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.model.vo.PageInfo;
+import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.moim.model.dao.MoimDao;
 import com.kh.cntp.moim.model.vo.Apply;
 import com.kh.cntp.moim.model.vo.Chatting;
@@ -173,6 +174,11 @@ public class MoimServiceImpl implements MoimService {
 	@Override
 	public int insertTeamMember(TeamMember tm, Apply ap) {
 		return moimDao.insertTeamMember(sqlSession, tm)*moimDao.deleteApply(sqlSession, ap);
+	}
+
+	@Override
+	public ArrayList<Member> selectAcceptMember(String groupNo) {
+		return moimDao.selectAcceptMember(sqlSession, groupNo);
 	}
 
 }
