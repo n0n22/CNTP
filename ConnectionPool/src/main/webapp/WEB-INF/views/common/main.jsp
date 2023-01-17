@@ -232,7 +232,6 @@
 				url : "battleRank.top",
 				data : {condition:condition},
 				success : function(data){
-					console.log(data);
 					let rank = ''
 					for(let i in data){
 						
@@ -268,13 +267,7 @@
 				}
 			})
 		}
-		function topWinRate(){
-			
-		}
-
-
-
-
+		
 
 	</script>
 
