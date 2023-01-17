@@ -37,6 +37,18 @@ public class MemberServiceImpl implements MemberService {
 	public int insertMember(Member member) {
 		return memberDao.insertMember(sqlSession, member);
 	}
+	
+	// 아이디 중복체크
+	@Override
+	public int ajaxIdCheck(String checkId) {
+		return memberDao.ajaxIdCheck(sqlSession, checkId);
+	}
+	
+	// 닉네임 중복체크
+	@Override
+	public int ajaxNickNameCheck(String checkNickName) {
+		return memberDao.ajaxNickNameCheck(sqlSession, checkNickName);
+	}
 
 	// 로그인 실패 횟수
 	@Override
@@ -70,14 +82,14 @@ public class MemberServiceImpl implements MemberService {
 	
 	// 비밀번호 변경 시 메일 인증번호 요청
 	@Override
-	public int findPwdMailRequest(Member member) {
-		return memberDao.findPwdMailRequest(sqlSession, member);
+	public int ajaxfindPwdMailRequest(Member member) {
+		return memberDao.ajaxfindPwdMailRequest(sqlSession, member);
 	}
 	
 	// 인증번호 확인
 	@Override
-	public boolean certNumCheck(Cert cert) {
-		return memberDao.certNumCheck(sqlSession, cert);
+	public boolean ajaxcertNumCheck(Cert cert) {
+		return memberDao.ajaxcertNumCheck(sqlSession, cert);
 	}
 	
 	// 비밀번호 변경
@@ -168,6 +180,8 @@ public class MemberServiceImpl implements MemberService {
 	public int upOrDownIngido(HashMap<String, String> map) {
 		return memberDao.upOrDownIngido(sqlSession, map) * memberDao.insertIngidoRecord(sqlSession, map);
 	}
+
+	
 
 
 

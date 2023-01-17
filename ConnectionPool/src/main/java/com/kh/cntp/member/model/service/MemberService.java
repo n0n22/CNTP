@@ -19,6 +19,12 @@ public interface MemberService {
 	// 회원가입
 	int insertMember(Member member);
 	
+	// 아이디 중복체크
+	int ajaxIdCheck(String checkId);
+	
+	// 닉네임 중복체크
+	int ajaxNickNameCheck(String checkNickName);
+	
 	// 로그인 실패 횟수 증가
 	int loginCount(Member member);
 	
@@ -35,10 +41,10 @@ public interface MemberService {
 	void sendMail(Cert cert);
 	
 	// 비밀번호 찾기 (인증메일요청)
-	int findPwdMailRequest(Member member);
+	int ajaxfindPwdMailRequest(Member member);
 	
 	// 인증번호 확인 
-	boolean certNumCheck(Cert cert);
+	boolean ajaxcertNumCheck(Cert cert);
 	
 	// 비밀번호 변경
 	int pwdChange(Member member);

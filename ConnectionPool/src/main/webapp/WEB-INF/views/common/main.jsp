@@ -84,7 +84,7 @@
 			</div>
 		</div>
 		<!-- 배너 영역 끝 -->
-		<br>
+		<br><br>
 		<!-- topN 영역 시작 -->
 		<div class="ranking-area">
 		
@@ -121,7 +121,7 @@
 				                <th align="center" scope="col" width="150px">승률</th>
 				            </tr>
 				        </thead>
-				        <tbody align="center">
+				        <tbody>
 
 				        </tbody>
 				    </table>
@@ -129,7 +129,7 @@
 				<!-- 승률 랭킹 끝 -->
 				
 			</div>
-			
+			<br><br>
 			<div class="row2">
 			
 				<!--연승 랭킹 시작 -->
