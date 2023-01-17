@@ -306,7 +306,7 @@ textarea{
                                         <div class="timeline-item-post">
                                             <p>${d.content }</p>
                                             <div class="timeline-options">
-                                                <a href="#"><i class="fa fa-comment"></i>${r.comentContent }</a>
+                                                <a href="#"><i class="fa fa-comment"></i>${r.commentContent }</a>
                                                 <a href="#"><i class="fa fa-thumbs-up"></i> ${d.heart }</a>
                                                 <span class="material-symbols-outlined">lock_open
                                                   
@@ -324,14 +324,14 @@ textarea{
                                                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
                                                     <p>${d.memberNo } <small>${d.createDate }</small></p>
                                                 </div>
-                                                <p class="timeline-comment-text">${d.content }</p>
+                                                <p class="timeline-comment-text">${r.comment }</p>
                                             </div>
                                             <div class="timeline-comment">
                                                 <div class="timeline-comment-header">
                                                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
                                                     <p>${d.memberNo } <small>${d.createDate }</small></p>
                                                 </div>
-                                                <p class="timeline-comment-text">${d.content}  </p>
+                                                <p class="timeline-comment-text">${r.commentContent}  </p>
                                             </div>
                                             <textarea class="form-control" placeholder="댓글을 입력해주세요" name="content"></textarea>
                                             <div class="post-options">
