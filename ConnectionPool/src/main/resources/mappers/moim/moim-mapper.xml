@@ -90,6 +90,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="MEM_NO"			property="memNo"/>
 		<result column="NICKNAME"		property="nickName"/>
 		<result column="ENROLL_DATE"	property="enrollDate"/>
+		<result column="GRADE"			property="grade"/>
 	</resultMap>
 	
 	<select id="ajaxSelectTeam" resultType="_int" parameterType="string">

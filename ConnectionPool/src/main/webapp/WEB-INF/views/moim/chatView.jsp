@@ -57,6 +57,10 @@
 		padding : 7px;
 	}
 	
+	.groupMemberNickname{
+		font-size:x-small;
+	}
+	
 
 </style>
 
@@ -79,16 +83,32 @@
 		        
 				<!-- 소그룹 참여인원 -->
 				<!-- 참여자들 닉네임, 등급별 사진 정도 띄어줄까 싶지만,,,,,, 할 수 있음 하자-->
-		        <c:if test="${ not empty groupMemberList }">
-		        	<div class="groupMember-info" style="display:inline-block; width:600px; height:60px; border:1px solid black;">
-		        		<div style="display:inline-block; width:50px; height:35px; border:1px solid black;" class="memberImg">
-		        			
-		        		</div>
-		        		<div style="display:inline-block; width:50px; height:35px; border:1px solid black;" class="memberImg">
-		        			
-		        		</div>
-		        	</div>
-		        </c:if>
+				<c:choose>
+					<c:when test="${ not empty groupMemberList }">
+			        	<div class="groupMember-info" style="display:inline-block; width:600px; height:60px;" align="left">
+				        	<c:forEach items="${ groupMemberList }" var="gm">
+				        		<div style="display:inline-block;" onclick="showProfile(event)">
+					        		<div style=" width:40px; height:35px;" class="memberImg">
+						        		<c:choose>
+						        			<c:when test="${ gm.grade eq 'B' }">
+							        			<img ingido="${gm.memNo}" title="프로필 보기" class="grade-img" width="35px" height="35px" src="${ pageContext.request.contextPath }/resources/images/beginner.jpg"/>
+					        				</c:when>
+					        				<c:when test="${ gm.grade eq 'M' }">
+							        			<img  ingido="${gm.memNo}" title="프로필 보기" class="grade-img" width="35px" height="35px" src="${ pageContext.request.contextPath }/resources/images/middle.jpg"/>
+					        				</c:when>
+					        				<c:otherwise>
+							        			<img ingido="${gm.memNo}" title="프로필 보기" class="grade-img" width="35px" height="35px" src="${ pageContext.request.contextPath }/resources/images/special.jpg"/>
+					        				</c:otherwise>
+				        				</c:choose>
+					        		</div>
+					        		<div style="width:50px; height:15px;" class="memberImg">
+					        			<p ingido="${gm.memNo}" title="프로필 보기" class="groupMemberNickname">${ gm.nickName }</p>
+					        		</div>
+				        		</div>
+				        	</c:forEach>
+			        	</div>
+		        	</c:when>
+		        </c:choose>
 		         
 		        <div id="chatContent-area">
 		        	<c:choose>

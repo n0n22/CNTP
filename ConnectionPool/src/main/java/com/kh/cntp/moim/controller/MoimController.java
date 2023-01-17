@@ -187,7 +187,7 @@ public class MoimController {
 			
 			moimMember = String.valueOf(groupMemberList.size());
 			
-			System.out.println(groupMemberList);
+			//System.out.println(groupMemberList);
 		}
 		
 		mv.addObject("chatList", moimService.selectChattingList(chat)).addObject("moimMember", moimMember).addObject("moimNo", chat.getMoimNo()).addObject("moimTitle", moimTitle).setViewName("moim/chatView");
