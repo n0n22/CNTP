@@ -24,11 +24,11 @@ public class ReplyDao {
 
 	//수영일기 댓글 조회
 	public ArrayList<Reply> DiaryselectReplyList(SqlSessionTemplate sqlSession, int diaryNo){
-		return (ArrayList)sqlSession.selectList("replyMapper.selectReplyList", diaryNo);
+		return (ArrayList)sqlSession.selectList("replyMapper.selectDiaryReplyList", diaryNo);
 	}
 	
 	public int DiaryinsertReply(SqlSessionTemplate sqlSession, Reply r) {
-		return sqlSession.insert("replyMapper.insertReply", r);
+		return sqlSession.insert("replyMapper.insertDiaryReply", r);
 	}
 	
 	

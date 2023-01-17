@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 	</resultMap>
 
-
+	<!--board 댓글 -->
 	<select id ="selectBoardReplyList" resultMap="replyResultSet">
 		select
 				comment_no commentNo,
@@ -57,6 +57,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			
 	</insert>
 	
+	<!-- 수영일기 댓글 -->
+	<select id ="selectDiaryReplyList" resultMap="replyResultSet">
+		select
+				comment_no commentNo,
+				writer Writer ,
+				comment_content commentContent,
+				to_char(comment_Date, 'YYYY-MM-DD') as "comment_Date"
+		  from
+		        diary_reply
+		  where
+		  		status = 'Y'
+		  	and
+				diary_no = #{diaryNo}
+			order
+			 by
+			  	diary_no desc			  			      	
+	
+	
+	</select>
+	
+	
+	<insert id ="insertDiaryReply" parameterType="reply">
+		insert 
+	 	  into
+				diary_reply 
+				(
+				comment_no,
+				comment_content,
+				writer,
+				diary_no
+				)
+		values
+				(
+				seq_brno.nextval,
+				#{commentContent},
+				#{writer},
+				#{diaryNo}
+				)		
+			
+	</insert>
 	
 	
 	
