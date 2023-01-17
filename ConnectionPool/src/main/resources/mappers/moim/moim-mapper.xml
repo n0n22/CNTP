@@ -277,7 +277,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		      ,TEAM_INTRO = #{ teamIntro }
 		      ,ORIGIN_NAME = #{ originName }
 		      ,CHANGE_NAME = #{ changeName }
+		      <if test='teamArea != null'>
 		      ,TEAM_AREA = #{ teamArea }
+		      </if>
 		      ,TEAM_TIME = #{ teamTime }
 		      ,KEYWORD = #{ keyword }
 		      ,BADGE_ORIGIN_NAME = #{ badgeOriginName }
@@ -320,11 +322,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       MEM_NO = #{ memNo }
 	</delete>
 	
-	<delete id="deleteApply" parameterType="_int">
+	<delete id="deleteApply" parameterType="apply">
 		DELETE
 			   APPLY
 		 WHERE
 		       MEM_NO = #{ memNo }
+		   AND
+		       MOIM_NO = #{ moimNo }
 	</delete>
 	
 	<insert id="insertApply">
@@ -342,7 +346,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       )
 	</insert>
 	
-	<update id="updateApply" parameterType="_int">
+	<update id="updateApply" parameterType="apply">
 		UPDATE 
 		       APPLY
 		   SET
@@ -350,15 +354,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		      ,ACCEPT_DATE = SYSDATE
 		 WHERE
 		       APPLY_NO = #{ applyNo }
+		  AND
+		       MOIM_NO = #{moimNo}
 	</update>
 	
-	<insert id="insertTeamMember">
+	<insert id="insertTeamMember" parameterType="teamMember">
 		INSERT
 		  INTO
 		        TEAM_MEMBER
 		VALUES
 		       (
-		        #{ moimNo }
+		        #{teamNo }
 		       ,'M'
 		       ,#{ memNo }
 		       ,SYSDATE
@@ -564,7 +570,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		                                          MOIM_NO = #{ groupNo }
 		                                      AND
 		                                          ACCEPT_YN = 'Y'
-		                                    )]]> THEN '모집마감'
+		                                    )]]> THEN '모집마감'||'('||G.GROUP_MEMBER||')'
 		        ELSE '('||((SELECT
 		                          COUNT(*)
 		                     FROM
@@ -740,7 +746,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ,GROUP_TITLE = #{ groupTitle }
 		       ,START_TIME = TO_DATE(#{ startTime }, 'YYYY-MM-DD HH24:MI')
 		       ,END_TIME = TO_DATE(#{ endTime }, 'YYYY-MM-DD HH24:MI')
-			  <if test="powerDuration != 'null'">
+			  <if test="powerDuration != null">
 	      		,POWER_DURATION = SYSDATE + 7
 		      </if>
 		 WHERE

@@ -130,11 +130,22 @@
 				</ul>
 			</div>
 			
-			<c:if test="${ not empty loginMember }">
-				<div align="right">
-					<a href="teamEnrollFrom.mo" class="btn btn-primary">팀 만들기</a>
-				</div>
-			</c:if>
+			<c:choose>
+				<c:when test="${ empty loginMember }">
+				
+				</c:when>
+				<c:when test="${ not empty loginMember and empty loginMember.teamNo }">
+					<div align="right">
+						<a href="teamEnrollFrom.mo" class="btn btn-primary">팀 만들기</a>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div align="right">
+						<button disabled class="btn btn-primary">팀 만들기</button>
+						<p>현재 팀에 소속되어 있어 새 팀 생성이 불가합니다.</p>
+					</div>
+				</c:otherwise>
+			</c:choose>
 			
 		</div>
 			
