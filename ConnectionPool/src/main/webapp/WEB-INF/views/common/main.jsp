@@ -33,6 +33,15 @@
 		.ranking-area tr{
 			text-align: center;
 		}
+		.caption {
+			caption-side: top;
+			text-align: center;
+		}
+		
+		.ranking-area tbody tr:hover{
+			cursor: pointer;
+			background: RGB(248,204,215);
+		}
 	
 	</style>
 </head>
@@ -70,14 +79,14 @@
 			<!-- 다승 랭킹 시작 -->
 			<div class="row1">
 				<div class="left">
-				    <table id="manyWin">
-				        <caption>다승 랭킹</caption>
+				    <table id="manyWin" align="center">
+				        <caption class="caption">다승 랭킹</caption>
 				        <thead>
 				            <tr>
 				                <th align="center" scope="col" width="60px">랭킹</th>
 				                <th align="center" scope="col" width="60px">뱃지</th>
-				                <th align="center" scope="col" width="150px">팀이름</th>
-				                <th align="center" scope="col" width="100px">승리</th>
+				                <th align="center" scope="col" width="180px">팀이름</th>
+				                <th align="center" scope="col" width="150px">승리</th>
 				            </tr>
 				        </thead>
 				        <tbody align="center">
@@ -87,8 +96,8 @@
 				</div>
 				<!-- 다승 랭킹 끝-->
 				<div class="right">
-				<table>
-				        <caption>승률 랭킹</caption>
+				<table align="center">
+				        <caption  class="caption">승률 랭킹</caption>
 				        <thead>
 				            <tr>
 				                <th align="center" scope="col" width="60px">랭킹</th>
@@ -118,8 +127,9 @@
 
 		</div>
 		<!-- topN 영역 끝-->
-	
 	</div>
+	
+	<br><br>
 	
 	
 	<jsp:include page="footer.jsp"/>
@@ -171,20 +181,19 @@
 			$.ajax({
 				url : "manyWin.top",
 				success : function(data){
-					console.log(data);
 					let manyWin = ''
 					for(let i in data){
+						
 						let d = data[i];
 						manyWin += 
-							
 							`
-							<tr>
+							<tr onclick="location.href='teamPage.mo?teamNo=?\${d.teamNo}'">
 				                <td>\${Number(i) + 1}</td>
 				                <td>
-				                    <img src="https://opgg-static.akamaized.net/images/profile_icons/profileIcon3495.jpg?image=q_auto,f_webp,w_64&amp;v=1673596760664" width="32" alt="profile_image" class="icon" height="32">
+				                    <img src="\${d.badge}" width="32" alt="profile_image" class="icon" height="32">
 				                </td>
 				                <td>
-				                    <strong>\${d.teamNo}</strong>
+				                    <strong>\${d.teamName}</strong>
 				                </td>
 				                <td>
 				                	\${d.victory}
@@ -192,10 +201,8 @@
 			            	</tr>`
 					}
 					$('#manyWin tbody').html(manyWin);
-					
 				}
 			})
-			
 		}
 		function topWinRate(){
 			
