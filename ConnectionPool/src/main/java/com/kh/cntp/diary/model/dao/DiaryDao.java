@@ -17,17 +17,17 @@ public ArrayList<Diary> selectList(SqlSessionTemplate sqlSession) {
 	
 	
 public int insertDiary(SqlSessionTemplate sqlSession, Diary d) {
-	return sqlSession.insert("diaryMapper.increaseCount", d);
+	return sqlSession.insert("diaryMapper.insertDiary", d);
 
 }
 
-
+/*
 public int increaseCount(SqlSessionTemplate sqlSession, int diaryNo) {
 	
 	return sqlSession.update("diaryMapper.increaseCount", diaryNo);
 }
 
-
+*/
 public Diary selectDiary(SqlSessionTemplate sqlSession, int diaryNo) {
 	return sqlSession.selectOne("diaryMapper.selectDiary", diaryNo);
 
