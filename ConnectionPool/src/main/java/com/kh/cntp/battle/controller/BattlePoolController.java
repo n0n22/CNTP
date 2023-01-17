@@ -14,10 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.Gson;
 import com.kh.cntp.battle.model.service.BattleService;
 import com.kh.cntp.battle.model.vo.Battle;
 import com.kh.cntp.battle.model.vo.BattleResult;
@@ -289,4 +291,25 @@ public class BattlePoolController {
 		redirectAttributes.addAttribute("battleNo", br.getBattleNo());
 		return "redirect: battleDetail.bt";
 	}
+	
+	
+	
+	
+	
+	
+	/*
+	 * topN
+	 * 
+	 * */
+	// 다승팀
+	@ResponseBody
+	@RequestMapping(value="battleRank.top", produces="application/json; charset=UTF-8")
+	public String selectListBattleRank(String condition) {
+		return new Gson().toJson(battleService.selectListBattleRank(condition));
+	}
+	
+	
+	
+	
+	
 }

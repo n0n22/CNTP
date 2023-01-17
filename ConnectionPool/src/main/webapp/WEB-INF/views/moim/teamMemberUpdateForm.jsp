@@ -48,9 +48,9 @@
 				
 				<br><br>
 				<div class="teamMeberUpdate-area" align="right"> 
-					<a href="teamPage.mo?teamNo=${ loginMember.teamNo }">취소하기</a>
+					<a href="teamPage.mo?teamNo=${ loginMember.teamNo }" class="btn btn-primary">취소하기</a>
 					<input type="hidden" name="teamNo" value="${loginMember.teamNo }">
-					<button>수정하기</button>
+					<button class="btn btn-primary">수정하기</button>
 				</div>
 			</form>
 		</div>

@@ -41,28 +41,34 @@ public class BattleServiceImpl implements BattleService{
 	public int insertBattle(Battle battle, PoolInfo poolInfo) {
 		return battleDao.insertBattle(sqlSession, battle) * battleDao.insertPoolInfo(sqlSession, poolInfo);
 	}
-	
+	// 배틀풀 상세보기 조회
 	@Override
 	public Battle selectBattle(int battleNo) {
 		return battleDao.selectBattle(sqlSession, battleNo);
 	}
+	// 경기장 정보 조회
 	@Override
 	public PoolInfo selectPoolInfo(int battleNo) {
 		return battleDao.selectPoolInfo(sqlSession, battleNo);
 	}
+	// 배틀신청
+	// BATTLE 테이블 UPDATE() * CHATTING 테이블에 INSERT(도발메시지)
 	@Override
 	@Transactional
 	public int applyBattle(HashMap<String, String> apply) {
 		return battleDao.applyBattle(sqlSession, apply) * battleDao.msg(sqlSession, apply);
 	}
+	// 팀정보 조회
 	@Override
 	public Team selectTeam(String team) {
 		return battleDao.selectTeam(sqlSession, team);
 	}
+	// 배틀 결과 조회
 	@Override
 	public BattleResult selectBattleResult(int battleNo) {
 		return battleDao.selectBattleResult(sqlSession, battleNo);
 	}
+	// 팀 전적 조회
 	@Override
 	public ResultHistory selectResultHistory(String teamNo) {
 		return battleDao.selectResultHistory(sqlSession, teamNo);
@@ -95,5 +101,10 @@ public class BattleServiceImpl implements BattleService{
 	@Override
 	public int checkBattle(String battleNo) {
 		return battleDao.checkBattle(sqlSession, battleNo);
+	}
+	
+	@Override
+	public ArrayList<ResultHistory> selectListBattleRank(String condition) {
+		return battleDao.selectListBattleRank(sqlSession, condition);
 	}
 }

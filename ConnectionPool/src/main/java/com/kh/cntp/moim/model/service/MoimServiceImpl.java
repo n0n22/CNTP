@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.model.vo.PageInfo;
+import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.moim.model.dao.MoimDao;
 import com.kh.cntp.moim.model.vo.Apply;
 import com.kh.cntp.moim.model.vo.Chatting;
@@ -67,20 +68,14 @@ public class MoimServiceImpl implements MoimService {
 		return moimDao.insertApply(sqlSession, ap);
 	}
 
-	@Transactional
 	@Override
 	public int updateApply(Apply ap) {
-		return moimDao.updateApply(sqlSession, ap.getApplyNo()) * moimDao.insertTeamMember(sqlSession, ap);
-	}
-	
-	@Override
-	public int updateGroupApply(int applyNo) {
-		return moimDao.updateApply(sqlSession, applyNo);
+		return moimDao.updateApply(sqlSession, ap);
 	}
 
 	@Override
-	public int deleteApply(int memNo) {
-		return moimDao.deleteApply(sqlSession, memNo);
+	public int deleteApply(Apply ap) {
+		return moimDao.deleteApply(sqlSession, ap);
 	}
 
 	@Override
@@ -101,8 +96,8 @@ public class MoimServiceImpl implements MoimService {
 
 	@Transactional
 	@Override
-	public int deleteTeamMember(int memNo) {
-		return moimDao.deleteTeamMember(sqlSession, memNo) * moimDao.deleteApply(sqlSession, memNo);
+	public int deleteTeamMember(TeamMember tm) {
+		return moimDao.deleteTeamMember(sqlSession, tm.getMemNo());
 	}
 
 	@Override
@@ -176,9 +171,14 @@ public class MoimServiceImpl implements MoimService {
 		return moimDao.selectGroupApplyList(sqlSession, moimNo);
 	}
 
-	
+	@Override
+	public int insertTeamMember(TeamMember tm, Apply ap) {
+		return moimDao.insertTeamMember(sqlSession, tm)*moimDao.deleteApply(sqlSession, ap);
+	}
 
-	
-	
+	@Override
+	public ArrayList<Member> selectAcceptMember(String groupNo) {
+		return moimDao.selectAcceptMember(sqlSession, groupNo);
+	}
 
 }

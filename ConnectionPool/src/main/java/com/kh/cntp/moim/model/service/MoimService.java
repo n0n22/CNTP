@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.model.vo.PageInfo;
+import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.moim.model.vo.Apply;
 import com.kh.cntp.moim.model.vo.Chatting;
 import com.kh.cntp.moim.model.vo.Group;
@@ -48,12 +49,12 @@ public interface MoimService {
 	
 	// --------------- 팀 상세페이지(팀장 입장) ---------------
 	// 신청 수락
+	int insertTeamMember(TeamMember tm, Apply ap);
+	
 	int updateApply(Apply ap);
 	
-	int updateGroupApply(int applyNo);
-	
 	// 신청 거절
-	int deleteApply(int memNo);
+	int deleteApply(Apply ap);
 	
 	// 팀 페이지 수정
 	int updateTeam(Team team);
@@ -62,7 +63,7 @@ public interface MoimService {
 	int updateTeamMember(ArrayList<TeamMember> teamMemberList);
 	
 	// 팀장이 아닐 경우에만 탈퇴할 수 있도록 걸어둬야 한다. 팀장이면 권한 수정하라고 alert 예정
-	int deleteTeamMember(int memNo);
+	int deleteTeamMember(TeamMember tm);
 	
 	// 팀 뱃지 status를 N에서 Y로 수정
 	// 성공 시 포인트 -100도 해줘야 한다.
@@ -82,6 +83,8 @@ public interface MoimService {
 	int ajaxInsertChatting(Chatting chat);
 	
 	int ajaxDeleteChatting(String chatNo);
+	
+	ArrayList<Member> selectAcceptMember(String groupNo);
 	
 	// --------------- 소그룹 시작 ---------------
 	

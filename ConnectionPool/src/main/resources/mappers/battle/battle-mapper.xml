@@ -63,6 +63,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- ResultHistory ResultSet -->
 	<resultMap id="resultHistoryResultSet" type="resultHistory">
 		<result column="TEAM_NO" 			property="teamNo"/>
+		<result column="TEAM_NAME" 			property="teamName"/>
+		<result column="BADGE" 				property="badge"/>
 		<result column="WINNING_STREAK" 	property="winningStreak"/>
 		<result column="LOSING_STREAK" 		property="losingStreak"/>
 		<result column="VICTORY" 			property="victory"/>
@@ -442,6 +444,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        AWAY_TEAM IS NULL
 		   AND
 		        BATTLE_NO = #{battleNo}
+	</select>
+	
+	<select id="selectListBattleRank" parameterType="string" resultMap="resultHistoryResultSet">
+		SELECT 
+		        *
+		  FROM
+		        (SELECT
+		                TEAM_NO
+				        ,TEAM_NAME
+		                ,NVL(BADGE_CHANGE_NAME, 'resources/images/noBadge.png') "BADGE"
+				        ,WINNING_STREAK
+				        ,LOSING_STREAK
+				        ,VICTORY
+				        ,DEFEAT
+				        ,VICTORY + DEFEAT AS RECORD -- 전적
+				        ,CASE WHEN VICTORY + DEFEAT = 0 THEN 0 -- 0으로 나누는 경우 예외처리
+				              ELSE TRUNC((VICTORY / (VICTORY + DEFEAT)), 4) * 100 END AS WIN_RATE -- 승률
+				  FROM
+				  		RESULT_HISTORY
+		          LEFT JOIN
+		                TEAM USING(TEAM_NO)
+		          <choose>
+		          	<when test="condition == 'win'">
+			          ORDER BY VICTORY DESC, WIN_RATE DESC)
+		          	</when>
+		          	<when test="condition == 'winRate'">
+			          ORDER BY WIN_RATE DESC, VICTORY DESC)
+		          	</when>
+		          	<when test="condition == 'winningStreak'">
+   				      ORDER BY WINNING_STREAK DESC, WIN_RATE DESC)
+		          	</when>
+		          	<otherwise>
+    			
+    			      ORDER BY RECORD DESC, WIN_RATE DESC)
+		          	</otherwise>
+		          </choose>
+         WHERE ROWNUM BETWEEN 1 AND 5
+	
 	</select>
 	
 </mapper>

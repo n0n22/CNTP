@@ -130,7 +130,7 @@ public class MoimController {
 			
 			session.setAttribute("alertMsg", "팀 생성이 완료되었습니다.");
 			session.setAttribute("loginMember", memberService.loginMember((Member)session.getAttribute("loginMember")));
-			mv.setViewName("moim/teamListView");
+			mv.setViewName("redircet:teamList.mo");
 		} else {
 			mv.setViewName("main");
 		}
@@ -138,7 +138,7 @@ public class MoimController {
 	}
 	
 	@RequestMapping("teamUpdateForm.mo")
-	public ModelAndView teamUpdateForm(ModelAndView mv, String teamNo) throws ParseException {
+	public ModelAndView teamUpdateForm(ModelAndView mv, String teamNo, int teamMemberCount) throws ParseException {
 		
 		Team team =  moimService.selectTeam(teamNo);
 		
@@ -155,7 +155,7 @@ public class MoimController {
 			team.setPowerDuration(format.format(powerDuration));
 		}
 		
-		mv.addObject("team", team);
+		mv.addObject("team", team).addObject("teamMemberCount", teamMemberCount);
 		mv.setViewName("moim/teamUpdateForm");
 		
 		return mv;
@@ -180,6 +180,16 @@ public class MoimController {
 		
 		//System.out.println(moimService.selectChattingList(chat));
 		//System.out.println(chat);
+		
+		if(chat.getMoimNo().contains("G")) {
+			ArrayList<Member> groupMemberList = moimService.selectAcceptMember(chat.getMoimNo());
+			mv.addObject("groupMemberList", groupMemberList);
+			
+			moimMember = String.valueOf(groupMemberList.size());
+			
+			System.out.println(groupMemberList);
+		}
+		
 		mv.addObject("chatList", moimService.selectChattingList(chat)).addObject("moimMember", moimMember).addObject("moimNo", chat.getMoimNo()).addObject("moimTitle", moimTitle).setViewName("moim/chatView");
 		
 		return mv;
@@ -303,10 +313,17 @@ public class MoimController {
 		
 		Group group = moimService.selectGroup(groupNo);
 		
-		group.setGroupMember(group.getGroupMember().substring(group.getGroupMember().indexOf('/') + 1, group.getGroupMember().indexOf(')')));
-		group.setStartTime(group.getStartTime().replace(" ", "T").replace("/", "-").substring(0, 16));
+		if(!group.getGroupMember().contains("모집마감")) {
+			//모집 마감이 아니라면 => (x/x)
+			group.setGroupMember(group.getGroupMember().substring(group.getGroupMember().indexOf('/') + 1, group.getGroupMember().indexOf(')')));
+		} else {
+			// 모집마감이라면 => 모짐마감(x)
+			group.setGroupMember(group.getGroupMember().substring(5, group.getGroupMember().indexOf(')')));
+		}
 		group.setEndTime(group.getEndTime().replace(" ", "T").replace("/", "-").substring(0, 16));
-		//System.out.println(group);
+		group.setStartTime(group.getStartTime().replace(" ", "T").replace("/", "-").substring(0, 16));
+		
+		//System.out.println(group.getGroupMember());
 		
 		mv.addObject("group", group).setViewName("moim/groupUpdateForm");
 		
@@ -429,19 +446,22 @@ public class MoimController {
 	}
 	
 	@RequestMapping("deleteTeamMember.mo")
-	public ModelAndView deleteTeamMember(ModelAndView mv, int memNo, HttpSession session) {
+	public ModelAndView deleteTeamMember(ModelAndView mv, TeamMember tm, HttpSession session) {
 		
-		moimService.deleteTeamMember(memNo);
-		
-		session.setAttribute("loginMember", memberService.loginMember((Member)session.getAttribute("loginMember")));
+		if(moimService.deleteTeamMember(tm) > 0) {
+			session.setAttribute("loginMember", memberService.loginMember((Member)session.getAttribute("loginMember")));
+			mv.setViewName("redirect:teamList.mo");
+		} else {
+			mv.addObject("errorMsg", "탈퇴 실패").setViewName("common/errorPage");
+		}
 		
 		return mv;
 	}
 	
 	@RequestMapping("deleteApply.mo")
 	public ModelAndView deleteApply(HttpSession session, ModelAndView mv, Apply ap) {
-		
-		if(moimService.deleteApply(ap.getMemNo()) > 0) {
+		// moimNo랑 memNo가 담겨 있음
+		if(moimService.deleteApply(ap) > 0) {
 			session.setAttribute("alterMsg", "신청 취소 완료");
 			if(ap.getMoimNo().contains("T")) {
 				mv.setViewName("redirect:teamPage.mo?teamNo=" + ap.getMoimNo());
@@ -472,16 +492,20 @@ public class MoimController {
 		return mv;
 	}
 	
-	@RequestMapping("updateApply.mo")
-	public ModelAndView updateApply(ModelAndView mv, Apply ap) {
+	@RequestMapping("insertTeamMember.mo")
+	public ModelAndView insertTeamMember(ModelAndView mv, TeamMember tm, int applyNo) {
 		
-		//System.out.println(ap);
+		Apply ap = new Apply();
+		ap.setApplyNo(applyNo);
+		ap.setMemNo(tm.getMemNo());
+		ap.setMoimNo(tm.getTeamNo());
 		
-		if(moimService.updateApply(ap) > 0) {
-			mv.setViewName("redirect:teamPage.mo?teamNo=" + ap.getMoimNo());
-		}else {
-			mv.addObject("errorMsg", "수락 실패").setViewName("common/errorPage");
+		if(moimService.insertTeamMember(tm, ap) > 0) {
+			mv.setViewName("redirect:teamPage.mo?teamNo=" + tm.getTeamNo());
+		} else {
+			mv.addObject("errorMsg", "신청 수락 실패").setViewName("common/errorPage");
 		}
+		
 		return mv;
 	}
 	
@@ -548,10 +572,10 @@ public class MoimController {
 		return new Gson().toJson(moimService.ajaxSelectGroupApply(ap));
 	}
 	
-	@RequestMapping("updateGroupApply.mo")
+	@RequestMapping("updateApply.mo")
 	public ModelAndView updateGroupApply(ModelAndView mv, Apply ap) {
 		
-		if(moimService.updateGroupApply(ap.getApplyNo()) > 0) {
+		if(moimService.updateApply(ap) > 0) {
 			mv.setViewName("redirect:groupDetail.mo?groupNo=" + ap.getMoimNo());
 		} else {
 			mv.addObject("errorMsg", "수락 실패").setViewName("common/errorMsg");

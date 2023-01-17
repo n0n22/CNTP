@@ -117,7 +117,7 @@
 					<c:choose>
 						<c:when test="${empty loginMember }">
 							<tr>
-                        		<th colspan="2">
+                        		<th colspan="3">
                             		<textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;">로그인 후 이용 가능합니다</textarea>
                         		</th>
                         		<th style="vertical-align:middle"><button class="btn btn-secondary">등록하기</button></th>
@@ -125,7 +125,7 @@
                     	</c:when>
 						<c:otherwise>
 							<tr>
-								<th colspan="2">
+								<th colspan="3">
 								<textarea class="form-control" name=""id="content" cols="55" rows="2" style="resize: none; width: 100%;"></textarea>
 								</th>
 								<th style="vertical-align: middle"><button class="btn btn-secondary" onclick="addBoardReply();">등록하기</button></th>
@@ -134,7 +134,7 @@
 					</c:choose>
 
 					<tr>
-						<td colspan="3">${board_reply }<span id="rcount"></span></td>
+						<td colspan="4">${board_reply }<span id="rcount"></span></td>
 					</tr>
 				</thead>
 
@@ -232,6 +232,7 @@
 							   + '<th>' + list[i].writer  + '</th>'
 							   + '<th>' + list[i].commentContent + '</th>'
 							   + '<th>' + list[i].commentDate   + '</th>'
+							   + '<td><button class="btn btn-sm btn-danger" onclick="openReportForm(' + "'board-reply'" + ', this, ' + list[i].commentNo + ');">신고</button></td>'
 							   + '</tr>';
 					}
     				
@@ -257,30 +258,43 @@
     <jsp:include page="../common/footer.jsp" />
     
     
-    	<script>
-		
-		function openReportForm() {		
+    <script>
+	
+    /*
+		function openReportForm(div, e, commentNo) {		
 			
 			
 			if (${loginMember.memNo} == ${b.memberNo}) {
 				alertify.alert('알림', '본인의 글은 신고할 수 없습니다.', function(){ alertify.success('확인 완료'); });
 			} else {
-									
+				
 				window.open('', '신고', 'width=450,height=300,location=yes,menubar=yes,scrollbar=no');
 				
-				$('#report-memNickName').val('${ b.memberNo }'); // 수정 필요
-				$('#report-content').val('${ b.content }');
-				$('#report-reportBoard').val('board');
-				$('#report-boardNo').val(${ b.boardNo });
+				if(div == 'board') {
+					
+					$('#report-memNickName').val('${ b.memberNo }'); // 수정 필요
+					$('#report-content').val('${ b.content }');
+					$('#report-boardNo').val(${ b.boardNo });
+					
+				} else if (div == 'board-reply') {
+					// console.log($(e).parent().prev().prev().prev().text());
+					$('#report-memNickName').val($(e).parent().prev().prev().prev().text());
+					$('#report-content').val($(e).parent().prev().prev().text());
+					$('#report-boardNo').val(commentNo);
+					
+				}			
+
+				$('#report-reportBoard').val(div);
 				
 				reportvalue.action = 'reportForm';
 				reportvalue.target = '신고';
 				reportvalue.method = 'post';
+				
 				reportvalue.submit();
 
-			}			
+			}
 		};
-		
+		*/
 
 	</script>
     

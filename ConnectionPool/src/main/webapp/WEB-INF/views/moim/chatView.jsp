@@ -71,22 +71,25 @@
 		<div align="center">
 		    <!-- 전체를 감싸는 div-->
 			<div style="width:600px; border-radius:10px; margin:auto; display:inline-block;">
-				<!-- 소그룹 참여인원 -->
-				<!-- 참여자들 닉네임, 등급별 사진 정도 띄어줄까 싶지만,,,,,, 할 수 있음 하자
-		        <c:if test="${ fn:contains(moimNo, 'G') }">
-		        	<div class="groupMember-info" style="display:inline-block; width:600px; height:60px;">
-		        		<table border="1">
-		        			<tr width="100%">dkdk</tr>
-		        		</table>
-		        	</div>
-		        </c:if>
-		         -->
 		        <!-- 제목 div -->
 		        <div style="display : flex; justify-content: space-between;" id="chatTitleMemberCountArea">
 		            <h2>${ moimTitle }</h2>
 		            <h5>참여인원 ${ moimMember } </h5>
 		        </div>
 		        
+				<!-- 소그룹 참여인원 -->
+				<!-- 참여자들 닉네임, 등급별 사진 정도 띄어줄까 싶지만,,,,,, 할 수 있음 하자-->
+		        <c:if test="${ not empty groupMemberList }">
+		        	<div class="groupMember-info" style="display:inline-block; width:600px; height:60px; border:1px solid black;">
+		        		<div style="display:inline-block; width:50px; height:35px; border:1px solid black;" class="memberImg">
+		        			
+		        		</div>
+		        		<div style="display:inline-block; width:50px; height:35px; border:1px solid black;" class="memberImg">
+		        			
+		        		</div>
+		        	</div>
+		        </c:if>
+		         
 		        <div id="chatContent-area">
 		        	<c:choose>
 		        		<c:when test="${ empty chatList }">
