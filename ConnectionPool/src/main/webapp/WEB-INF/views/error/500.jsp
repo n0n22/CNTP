@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>404 오류</title>
+<title>500 오류</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Cabin:400,700" rel="stylesheet">
