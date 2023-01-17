@@ -22,6 +22,7 @@
         .banner-image>div {
             float: left;
             margin: 50px;
+            paddin-left: 50px;
         }
 
         .page-area div {
@@ -90,7 +91,7 @@
 	            	<c:forEach var="banner" items="${ list }">
 			            <div class="banner-image-container">
 			                <div class="img-thumbnail banner-area">
-			                    <img src="${ banner.changeName }" style="width:400px; height:220px;">
+			                    <img src="${ banner.changeName }" style="width:420px; height:220px;">
 								<div class="delete-span" onclick="postFormSubmit(this, 'N');">
 									<span class="material-symbols-outlined">
 										delete
@@ -180,44 +181,50 @@
         
         
 
-        <div class="page-area">
+        <div>
             
-            <div class="banner-btn">
-                <a href="bannerEnrollForm.ad" class="btn btn-primary">등록</a>
-            </div>
-            <div class="banner-page">
-            	<c:if test="${ not empty list }">
-		        	<ul class="pagination">
-		               	<c:choose>
-		                	<c:when test="${ pi.currentPage eq 1 }">
-		                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
-		                    </c:when>
-		                    <c:otherwise>
-		                    	<li class="page-item"><a class="page-link" href="bannerList.ad?status=${ status }&cpage=${ pi.currentPage - 1 }">&lt;</a></li>
-		                    </c:otherwise>
-		                </c:choose>
-		                   
-		                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-		                	<c:choose>
-		                	<c:when test="${ p eq pi.currentPage }">
-			                   	<li class="page-item disabled"><a class="page-link" href="bannerList.ad?status=${ status }&cpage=${ p }">${ p }</a></li>
-		                	</c:when>
-		                	<c:otherwise>
-		                		<li class="page-item"><a class="page-link" href="bannerList.ad?status=${ status }&cpage=${ p }">${ p }</a></li>	
-		                	</c:otherwise>
-		                	</c:choose>
-		                </c:forEach>
-		                   
-						<c:choose>
-		                	<c:when test="${ pi.currentPage eq pi.maxPage }">
-			                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
-		                    </c:when>
-		                    <c:otherwise>
-			                    <li class="page-item"><a class="page-link" href="bannerList.ad?status=${ status }&cpage=${ pi.currentPage + 1 }">&gt;</a></li>
-		                    </c:otherwise>
-		                </c:choose>
-					</ul>
-				</c:if>
+            
+            <div class="admin-footer">
+            
+	            <div class="page-area">
+	            	<c:if test="${ not empty list }">
+			        	<ul class="pagination">
+			               	<c:choose>
+			                	<c:when test="${ pi.currentPage eq 1 }">
+			                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
+			                    </c:when>
+			                    <c:otherwise>
+			                    	<li class="page-item"><a class="page-link" href="bannerList.ad?status=${ status }&cpage=${ pi.currentPage - 1 }">&lt;</a></li>
+			                    </c:otherwise>
+			                </c:choose>
+			                   
+			                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+			                	<c:choose>
+			                	<c:when test="${ p eq pi.currentPage }">
+				                   	<li class="page-item disabled"><a class="page-link" href="bannerList.ad?status=${ status }&cpage=${ p }">${ p }</a></li>
+			                	</c:when>
+			                	<c:otherwise>
+			                		<li class="page-item"><a class="page-link" href="bannerList.ad?status=${ status }&cpage=${ p }">${ p }</a></li>	
+			                	</c:otherwise>
+			                	</c:choose>
+			                </c:forEach>
+			                   
+							<c:choose>
+			                	<c:when test="${ pi.currentPage eq pi.maxPage }">
+				                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
+			                    </c:when>
+			                    <c:otherwise>
+				                    <li class="page-item"><a class="page-link" href="bannerList.ad?status=${ status }&cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+			                    </c:otherwise>
+			                </c:choose>
+						</ul>
+					</c:if>
+	            </div>
+            
+	            <div class="banner-btn">
+	                <a href="bannerEnrollForm.ad" class="btn btn-primary">등록</a>
+	            </div>
+            
             </div>
             <div class="banner-hidden">
 

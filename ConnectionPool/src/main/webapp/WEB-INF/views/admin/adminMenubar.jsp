@@ -62,6 +62,15 @@
             padding: 25px;
         }
 	
+	
+		.admin-footer {
+			margin: auto;
+			text-align: center;			
+		}
+		
+		.page-area {
+			display: inline-block;	
+		}
 
 
 

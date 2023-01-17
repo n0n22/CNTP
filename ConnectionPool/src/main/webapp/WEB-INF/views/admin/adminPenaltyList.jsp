@@ -86,40 +86,43 @@
 
                 <button class="btn btn-danger" onclick="openConfirm();" id="confirmBtn">처리</btton>
             </div>
-			<div class="page-area">
-				<ul class="pagination" align="center">
-	               	<c:choose>
-	                	<c:when test="${ pi.currentPage eq 1 }">
-	                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
-	                    </c:when>
-	                    <c:otherwise>
-	                    	<li class="page-item"><a class="page-link" href="penaltyList.ad?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
-	                    </c:otherwise>
-	                </c:choose>
-	                
-	               
-	                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-		                <c:choose>
-		                	<c:when test="${ pi.currentPage eq p }">
-		                   		<li class="page-item disabled"><a class="page-link" href="penaltyList.ad?cpage=${ p }">${ p }</a></li>
-		                	</c:when>
-		                	<c:otherwise>
-		                		<li class="page-item"><a class="page-link" href="penaltyList.ad?cpage=${ p }">${ p }</a></li>
-		                	</c:otherwise>
+            
+            <div class="admin-footer">
+				<div class="page-area">
+					<ul class="pagination" align="center">
+		               	<c:choose>
+		                	<c:when test="${ pi.currentPage eq 1 }">
+		                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<li class="page-item"><a class="page-link" href="penaltyList.ad?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
+		                    </c:otherwise>
 		                </c:choose>
-	                </c:forEach>
-	               
-	                
-					<c:choose>
-	                	<c:when test="${ pi.currentPage eq pi.maxPage }">
-		                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
-	                    </c:when>
-	                    <c:otherwise>
-		                    <li class="page-item"><a class="page-link" href="penaltyList.ad?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
-	                    </c:otherwise>
-	                </c:choose>
-				</ul>
-			</div>
+		                
+		               
+		                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+			                <c:choose>
+			                	<c:when test="${ pi.currentPage eq p }">
+			                   		<li class="page-item disabled"><a class="page-link" href="penaltyList.ad?cpage=${ p }">${ p }</a></li>
+			                	</c:when>
+			                	<c:otherwise>
+			                		<li class="page-item"><a class="page-link" href="penaltyList.ad?cpage=${ p }">${ p }</a></li>
+			                	</c:otherwise>
+			                </c:choose>
+		                </c:forEach>
+		               
+		                
+						<c:choose>
+		                	<c:when test="${ pi.currentPage eq pi.maxPage }">
+			                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
+		                    </c:when>
+		                    <c:otherwise>
+			                    <li class="page-item"><a class="page-link" href="penaltyList.ad?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+		                    </c:otherwise>
+		                </c:choose>
+					</ul>
+				</div>
+            </div>
 
         </div>
 
