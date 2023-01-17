@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class ResultHistory {
 	private String teamNo;
+	private String teamName;
+	private String badge;
 	private int winningStreak;
 	private int losingStreak;
 	private int victory;

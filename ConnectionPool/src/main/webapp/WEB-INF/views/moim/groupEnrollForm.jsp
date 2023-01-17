@@ -131,8 +131,10 @@
 				</table>
 				<br><br>
 
-				<div align="right">
-					<button>등록하기</button>
+				<div align="center">
+					<p>* 지역, 성별, 레벨은 이미 다른 참여자가 있을 경우 변동이 어려우니<br>신중하게 선택해주십시오.</p>
+				
+					<button class="btn btn-primary">등록하기</button>
 				</div>
 				<input type="hidden" name="memNo" value="${ loginMember.memNo }">
 			</form>

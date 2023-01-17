@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -136,7 +137,7 @@
 									</c:when>
 									<c:otherwise>
 										<c:choose>
-											<c:when test="${ group.groupMember eq '모집마감' }">
+											<c:when test="${ fn:contains(group.groupMember, '모집마감') }">
 												<!-- 로그인 되어 있고 모집이 다 되었을 때 -->
 												<button class="btn btn-primary" disabled>모집 완료</button>
 											</c:when>
@@ -147,11 +148,6 @@
 											<c:otherwise>
 												<!-- 로그인이 되어 있고 모집중일 때 -->
 												<c:choose>
-													<c:when test="${ group.groupArea ne 'all' and loginMember.memArea ne group.groupArea }">
-													<!-- 지역 조건 불충족 시 -->
-														<p>지역 조건이 맞지 않습니다.</p>
-														<button disabled class="btn btn-primary">신청불가</button>
-													</c:when>
 													<c:when test="${ group.level ne '무관' and loginMember.grade ne engLevel}">
 													<!-- 등급 조건이 맞지 않을 때 -->
 														<p>레벨 조건이 맞지 않습니다.</p>
@@ -192,7 +188,7 @@
 			        			<th width="200">수락/거절</th>
 			        		</tr>
 			        		<c:choose>
-			        			<c:when test="${ group.groupMember eq '모집마감' }">
+			        			<c:when test="${ fn:contains(group.groupMember, '모집마감') }">
 			        			<!-- 모집 인원을 모두 채웠을 때 -->
 			        				<tr>
 			        					<td colspan="5" align="center">모두 모집하였습니다.</td>
@@ -215,7 +211,7 @@
 								        			<td>${ ap.applyDate }</td>
 								        			<td>
 								        				<div style="display:inline-block;">
-								        					<form action="updateGroupApply.mo" method="post">
+								        					<form action="updateApply.mo" method="post">
 								        						<input type="hidden" name="applyNo" value="${ ap.applyNo }">
 								        						<input type="hidden" name="moimNo" value="${ group.groupNo }">
 										        	            <button class="btn btn-primary" onclick="return confirmDecision('수락')">수락</button>
@@ -272,71 +268,137 @@
     
     <br><br>
     
-    <c:if test="${ not empty loginMember and group.groupMember ne '모집마감' and deadLine ne 'expired' }">
-    	<script>
-    		$(function(){
-    			$.ajax({
-    				url : "selectGroupApply.mo",
-    				success : function(obj){
-    					
-    					var result = '';
-    					
-    					//console.log(obj);
-    					//console.log(obj.acceptYn);
-    					
-    					if(obj == null || obj.length == 0){
-    						/*result += '<form action="insertApply.mo" method="post">'
-    									+	'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
-    									+	'<input type="hidden" name="moimNo" value="${ group.groupNo}">'
-    									+	'<button class="btn btn-primary">신청하기</button>'
-    									+'</form>';
-    						$('#change-area').html(result);*/
-    					} else{
-    						if(obj.acceptYn == 'Y'){
-    							result += '<div style="display:inline-block;">'
-    									+ 	'<form action="chattingRoom.mo" method="post">'
-										+ 			'<input type="hidden" name="moimNo" value="${ group.groupNo }">'
-										+ 			'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
-										+ 			'<input type="hidden" name="moimMember" value="${ group.groupMember }">'
-										+ 			'<input type="hidden" name="moimTitle" value="${ group.groupTitle }">'
-										+ 			'<button class="btn btn-primary">채팅하기</button>'
-										+ 	'</form>'
-										+ '</div>'
-										+ '<div style="display:inline-block; width:10px;"></div>'
-										+ '<div style="display:inline-block;">'
-										+ 	'<form action="deleteApply.mo" method="post">'
-										+ 			'<input type="hidden" name="moimNo" value="${ group.groupNo }">'
-										+ 			'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
-										+ 			'<button class="btn btn-primary" onclick="return confirmCancel()">참여 취소하기</button>'
-										+ 	'</form>'
-										+ '</div>';
-    							$('#change-area').html(result);
-    						}
-    						else {
-    							//console.log('왜 안들어와');
-    							result += '<div>'
-										+ '<p>현재 신청 대기중입니다.</p>'
-    									+ '<form action="deleteApply.mo">'
-										+ 			'<input type="hidden" name="moimNo" value="${ group.groupNo }">'
-										+ 			'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
-										+ 			'<button class="btn btn-primary" onclick="return confirmApplyCancel()">신청 취소하기</button>'
-										+ 	'</form>'
-										+ '</div>'
-    							$('#change-area').html(result);
-    						}
-    					}
-    				},
-    				error : function(){
-    					console.log('실패');
-    				},
-    				data : {
-    					moimNo : '${ group.groupNo }',
-    					memNo : '${ loginMember.memNo }'
-    				}
-    			})
-    		})
-    	</script>
-    </c:if>
+    <c:choose>
+	    <c:when test="${ not empty loginMember and deadLine ne 'expired' and fn:contains(group.groupMember, '/')}">
+	    	<script>
+	    		$(function(){
+	    			$.ajax({
+	    				url : "selectGroupApply.mo",
+	    				success : function(obj){
+	    					
+	    					var result = '';
+	    					
+	    					//console.log(obj);
+	    					//console.log(obj.acceptYn);
+	    					
+	    					if(obj == null || obj.length == 0){
+	    						/*result += '<form action="insertApply.mo" method="post">'
+	    									+	'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
+	    									+	'<input type="hidden" name="moimNo" value="${ group.groupNo}">'
+	    									+	'<button class="btn btn-primary">신청하기</button>'
+	    									+'</form>';
+	    						$('#change-area').html(result);*/
+	    					} else{
+	    						if(obj.acceptYn == 'Y'){
+	    							result += '<div style="display:inline-block;">'
+	    									+ 	'<form action="chattingRoom.mo" method="post">'
+											+ 			'<input type="hidden" name="moimNo" value="${ group.groupNo }">'
+											+ 			'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
+											+ 			'<input type="hidden" name="moimMember" value="${ group.groupMember }">'
+											+ 			'<input type="hidden" name="moimTitle" value="${ group.groupTitle }">'
+											+ 			'<button class="btn btn-primary">채팅하기</button>'
+											+ 	'</form>'
+											+ '</div>'
+											+ '<div style="display:inline-block; width:10px;"></div>'
+											+ '<div style="display:inline-block;">'
+											+ 	'<form action="deleteApply.mo" method="post">'
+											+ 			'<input type="hidden" name="moimNo" value="${ group.groupNo }">'
+											+ 			'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
+											+ 			'<button class="btn btn-primary" onclick="return confirmCancel()">참여 취소하기</button>'
+											+ 	'</form>'
+											+ '</div>';
+	    							$('#change-area').html(result);
+	    						}
+	    						else {
+	    							//console.log('왜 안들어와');
+	    							result += '<div>'
+											+ '<p>현재 신청 대기중입니다.</p>'
+	    									+ '<form action="deleteApply.mo">'
+											+ 			'<input type="hidden" name="moimNo" value="${ group.groupNo }">'
+											+ 			'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
+											+ 			'<button class="btn btn-primary" onclick="return confirmApplyCancel()">신청 취소하기</button>'
+											+ 	'</form>'
+											+ '</div>'
+	    							$('#change-area').html(result);
+	    						}
+	    					}
+	    				},
+	    				error : function(){
+	    					console.log('실패');
+	    				},
+	    				data : {
+	    					moimNo : '${ group.groupNo }',
+	    					memNo : '${ loginMember.memNo }'
+	    				}
+	    			})
+	    		})
+	    	</script>
+	    </c:when>
+	    <c:when test="${ not empty loginMember }">
+	    	<script>
+	    		$(function(){
+	    			$.ajax({
+	    				url : "selectGroupApply.mo",
+	    				success : function(obj){
+	    					
+	    					var result = '';
+	    					
+	    					//console.log(obj);
+	    					//console.log(obj.acceptYn);
+	    					
+	    					if(obj == null || obj.length == 0){
+	    						
+	    					} else{
+	    						if(obj.acceptYn == 'Y'){
+	    							result += '<div style="display:inline-block;">'
+	    									+ 	'<form action="chattingRoom.mo" method="post">'
+											+ 			'<input type="hidden" name="moimNo" value="${ group.groupNo }">'
+											+ 			'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
+											+ 			'<input type="hidden" name="moimMember" value="${ group.groupMember }">'
+											+ 			'<input type="hidden" name="moimTitle" value="${ group.groupTitle }">'
+											+ 			'<button class="btn btn-primary">채팅하기</button>'
+											+ 	'</form>'
+											+ '</div>'
+											+ '<div style="display:inline-block; width:10px;"></div>'
+											+ '<div style="display:inline-block;">'
+											+ 	'<form action="deleteApply.mo" method="post">'
+											+ 			'<input type="hidden" name="moimNo" value="${ group.groupNo }">'
+											+ 			'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
+											+ 			'<button class="btn btn-primary" onclick="return confirmCancel()">참여 취소하기</button>'
+											+ 	'</form>'
+											+ '</div>';
+	    							$('#change-area').html(result);
+	    						}
+	    						else {
+	    							result += '<div>'
+											+ '<p>모집 마감되었습니다..</p>'
+	    									+ '<form action="deleteApply.mo">'
+											+ 			'<input type="hidden" name="moimNo" value="${ group.groupNo }">'
+											+ 			'<input type="hidden" name="memNo" value="${ loginMember.memNo }">'
+											+ 			'<button class="btn btn-primary" onclick="return confirmApplyCancel()">신청 취소하기</button>'
+											+ 	'</form>'
+											+ '</div>'
+	    							$('#change-area').html(result);
+	    						}
+	    					}
+	    				},
+	    				error : function(){
+	    					console.log('실패');
+	    				},
+	    				data : {
+	    					moimNo : '${ group.groupNo }',
+	    					memNo : '${ loginMember.memNo }'
+	    				}
+	    			})
+	    		})
+	    	</script>
+	    </c:when>
+    </c:choose>
+    
+    
+    
+    
+    
     
     <script>
     	function confirmCancel(){
