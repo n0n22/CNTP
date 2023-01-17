@@ -15,22 +15,19 @@
 	
 	
 	<div class="outer">
-	<!--
+	
 		<div class="banner-area" align="center">
 			
 			<div id="demo" class="carousel slide" data-ride="carousel">
 
-				<!-- Indicators 
 				<ul class="carousel-indicators" id="bannerList">
 
 				</ul>
 				
-				<!-- The slideshow 
 				<div class="carousel-inner" id="bannerImgContainer">
 
 				</div>
 				
-				<!-- Left and right controls
 				<a class="carousel-control-prev" href="#demo" data-slide="prev">
 					<span class="carousel-control-prev-icon"></span>
 				</a>
@@ -40,9 +37,6 @@
 			</div>
   
 		</div>
-  	-->
-
-	
 	
 	</div>
 	
