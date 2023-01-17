@@ -303,9 +303,9 @@ public class BattlePoolController {
 	 * */
 	// 다승팀
 	@ResponseBody
-	@RequestMapping(value="manyWin.top", produces="application/json; charset=UTF-8")
-	public String selectListManyWin() {
-		return new Gson().toJson(battleService.selectListManyWin());
+	@RequestMapping(value="battleRank.top", produces="application/json; charset=UTF-8")
+	public String selectListBattleRank(String condition) {
+		return new Gson().toJson(battleService.selectListBattleRank(condition));
 	}
 	
 	

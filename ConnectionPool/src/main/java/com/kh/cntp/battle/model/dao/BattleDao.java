@@ -80,7 +80,7 @@ public class BattleDao {
 	public int checkBattle(SqlSessionTemplate sqlSession, String battleNo) {
 		return sqlSession.selectOne("battleMapper.checkBattle", battleNo);
 	}
-	public ArrayList<ResultHistory> selectListManyWin(SqlSessionTemplate sqlSession){
-		return (ArrayList)sqlSession.selectList("battleMapper.selectListManyWin");
+	public ArrayList<ResultHistory> selectListBattleRank(SqlSessionTemplate sqlSession, String condition){
+		return (ArrayList)sqlSession.selectList("battleMapper.selectListBattleRank", condition);
 	}
 }
