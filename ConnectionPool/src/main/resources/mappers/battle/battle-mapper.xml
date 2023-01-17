@@ -63,6 +63,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- ResultHistory ResultSet -->
 	<resultMap id="resultHistoryResultSet" type="resultHistory">
 		<result column="TEAM_NO" 			property="teamNo"/>
+		<result column="TEAM_NAME" 			property="teamName"/>
+		<result column="BADGE" 				property="badge"/>
 		<result column="WINNING_STREAK" 	property="winningStreak"/>
 		<result column="LOSING_STREAK" 		property="losingStreak"/>
 		<result column="VICTORY" 			property="victory"/>
@@ -446,10 +448,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectListManyWin" resultMap="resultHistoryResultSet">
 		SELECT 
-	        *
+		        *
 		  FROM
 		        (SELECT
-				        TEAM_NAME "TEAM_NO"
+		                TEAM_NO
+				        ,TEAM_NAME
+		                ,NVL(BADGE_CHANGE_NAME, 'resources/images/noBadge.png') "BADGE"
 				        ,WINNING_STREAK
 				        ,LOSING_STREAK
 				        ,VICTORY
@@ -462,7 +466,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		          LEFT JOIN
 		                TEAM USING(TEAM_NO)
 		          ORDER BY VICTORY DESC, WIN_RATE DESC)
-		          WHERE ROWNUM BETWEEN 1 AND 5
+         WHERE ROWNUM BETWEEN 1 AND 5
 	
 	</select>
 	
