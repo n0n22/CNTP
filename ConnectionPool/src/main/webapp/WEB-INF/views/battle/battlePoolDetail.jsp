@@ -390,6 +390,7 @@
 									<!-- 글 삭제 -->
 									<form action="deleteBattlePool.bt" method="post" id="deleteBattlePoolSubmit">
 										<input type="hidden" name="battleNo" value="${battle.battleNo}">
+										<input type="hidden" name="changeName" value="${battle.changeName}">
 									</form>
 									<script>
 										function deleteBattle(){

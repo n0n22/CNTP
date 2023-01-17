@@ -432,6 +432,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        ,DEF_RECORD = #{defRecord}
 		 WHERE
 		        BATTLE_NO = #{battleNo}
-	</update>	
+	</update>
+	<select id="checkBattle" parameterType="string" resultType="_int">
+		SELECT 
+		        COUNT(*)
+		  FROM
+		        BATTLE
+		 WHERE 
+		        AWAY_TEAM IS NULL
+		   AND
+		        BATTLE_NO = #{battleNo}
+	</select>
 	
 </mapper>
