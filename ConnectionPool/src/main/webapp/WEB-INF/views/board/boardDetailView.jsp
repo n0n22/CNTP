@@ -228,13 +228,15 @@
     				
     				let value='';
     				for(let i in list){
+    					console.log(list[i].commentContent);
     					value += '<tr>'
 							   + '<th>' + list[i].writer  + '</th>'
 							   + '<th>' + list[i].commentContent + '</th>'
 							   + '<th>' + list[i].commentDate   + '</th>'
 							   + '<td><button class="btn btn-sm btn-danger" onclick="openReportForm(' + "'board-reply'" + ', this, ' + list[i].commentNo + ');">신고</button></td>'
 							   + '</tr>';
-					}
+						
+    				}
     				
     				$('#replyArea tbody').html(value);
 					$('#rcount').text(list.length);

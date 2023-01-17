@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="diary_no" property="diaryNo" />
 		<result column="board_no" property="boardNo" />
 		<result column="writer" property="writer" />
-		<result column="comment_content" property="commentContent" />
+		<result column="commentContent" property="commentContent" />
 		<result column="comment_Date" property="commentDate" />
 		<result column="status" property="status" />
 		
