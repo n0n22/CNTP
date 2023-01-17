@@ -210,9 +210,9 @@
              <div>
                 <ul id="top-ul">
                     <li><a id="click" href="myPageInfo.me">회원정보</a></li>
+                    <li><a href="myPageAtCheckForm.me">출석체크</a></li>
                     <li><a href="myPageBoard.me">작성글 보기</a></li>
-                    <li><a href="myPageDiary.me">수영일기</a></li>
-                    <li><a id="click" href="myPageTeam.me">나의팀 보기</a></li>
+                    <li><a href="myPageTeam.me">나의팀 보기</a></li>
                     <li><a href="myPageMoim.me">소모임 보기</a></li>
                     <li><a href="myPagePoint.me">포인트 조회</a></li>
                 </ul>
