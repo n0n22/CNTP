@@ -129,6 +129,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       )
 	</insert>
 	
+	<!-- 아이디 중복체크 -->
+	<select id="ajaxIdCheck" parameterType="string" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM
+		  	   MEMBER
+		 WHERE 
+		 	   MEM_ID = #{checkId}	   	        
+	</select>
+	
+	<!-- 닉네임 중복체크 -->
+	<select id="ajaxNickNameCheck" parameterType="string" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM 
+		  	   MEMBER
+		 WHERE
+		 	   NICKNAME = #{checkNickName}	 	        
+	</select>
+	
 	<!-- 로그인 횟수 증가 -->
 	<update id="loginCount" parameterType="member">
 		UPDATE 
@@ -172,7 +192,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 비밀번호 찾기 시 메일요청을 위한  아이디,이메일 확인-->
-	<select id="findPwdMailRequest" parameterType="member" resultType="_int">
+	<select id="ajaxfindPwdMailRequest" parameterType="member" resultType="_int">
 		SELECT 
 		       COUNT(*)
 		  FROM
@@ -202,7 +222,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 인증번호 확인 -->
-	<select id="certNumCheck" parameterType="cert" resultType="cert">
+	<select id="ajaxcertNumCheck" parameterType="cert" resultType="cert">
 		SELECT
 		       CERT_IP,
 		       SECRET_NO,

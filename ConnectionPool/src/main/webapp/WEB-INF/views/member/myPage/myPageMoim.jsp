@@ -286,117 +286,43 @@
                     <br><br><br>
                 </div>
                 
-                <!-- 있을때-->
+            <!-- 있을때-->
                 
-
+			<div>
                 <div class="grouptList-area">
 
                     <!--이게 하나의 게시물-->
-                    <div class="group" align="center">
-        
-                        <div class="thum">
-                            <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                        </div>
-        
-                        <div class="group-info">
-                            <table>
-                                <tr>
-                                    <td width="150">#지역 제주도</td>
-                                    <td width="150">#모집인원 1/10</td>
-                                </tr>
-                                <tr>
-                                    <td>#여자만</td>
-                                    <td>#중수레벨</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"> #2023-01-10 15:00</td>
-                                    <input type="hidden" class="groupNo" name="groupNo" value="그룹넘버">
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-        
-    
-                    <!--이게 하나의 게시물-->
-                    <div class="group" align="center">
-        
-                        <div class="thum">
-                            <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                        </div>
-        
-                        <div class="group-info">
-                            <table>
-                                <tr>
-                                    <td width="150">#지역 제주도</td>
-                                    <td width="150">#모집인원 1/10</td>
-                                </tr>
-                                <tr>
-                                    <td>#여자만</td>
-                                    <td>#중수레벨</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"> #2023-01-10 15:00</td>
-                                    <input type="hidden" class="groupNo" name="groupNo" value="그룹넘버">
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-        
-    
-                    <!--이게 하나의 게시물-->
-                    <div class="group" align="center">
-        
-                        <div class="thum">
-                            <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                        </div>
-        
-                        <div class="group-info">
-                            <table>
-                                <tr>
-                                    <td width="150">#지역 제주도</td>
-                                    <td width="150">#모집인원 1/10</td>
-                                </tr>
-                                <tr>
-                                    <td>#여자만</td>
-                                    <td>#중수레벨</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"> #2023-01-10 15:00</td>
-                                    <input type="hidden" class="groupNo" name="groupNo" value="그룹넘버">
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    
-                     <!--이게 하나의 게시물-->
-                     <div class="group" align="center">
-        
-                        <div class="thum">
-                            <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                        </div>
-        
-                        <div class="group-info">
-                            <table>
-                                <tr>
-                                    <td width="150">#지역 제주도</td>
-                                    <td width="150">#모집인원 1/10</td>
-                                </tr>
-                                <tr>
-                                    <td>#여자만</td>
-                                    <td>#중수레벨</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"> #2023-01-10 15:00</td>
-                                    <input type="hidden" class="groupNo" name="groupNo" value="그룹넘버">
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-
+		                <!--이게 하나의 게시물-->
+		                <div class="group" align="center">
+		    
+		                    <div class="thum">
+		                        <img class="thum" height="300px" width="290px" src="${ g.changeName }">
+		                    </div>
+		    
+		                    <div class="group-info">
+		                        <table>
+		                        	<tr>
+		                        		<td>#${ g.powerDuration }</td>
+		                        	</tr>
+		                            <tr>
+		                                <td width="150">#지역 ${ g.korArea }</td>
+		                                <td width="150">#모집인원 ${ g.groupMember }</td>
+		                            </tr>
+		                            <tr>
+		                                <td>#성별 ${ g.gender }</td>
+		                                <td>#레벨 ${ g.level }</td>
+		                            </tr>
+		                            <tr>
+		                                <td colspan="2"> #${ g.startTime }<br> ~ ${ g.endTime }</td>
+		                                <input type="hidden" class="groupNo" name="groupNo" value="${ g.groupNo }">
+		                            </tr>
+		                        </table>
+		                    </div>
+		                </div>
  
-                </div>
+               		 </div>
                 
-            </div>
+          		 </div>
     
             </div>    
         </div>
@@ -405,5 +331,19 @@
 
    
 	<jsp:include page="../../common/footer.jsp"/>
+
+	<script>
+		$(function(){
+			
+			// 피드 게시물 클릭하면 해당 피드 게시물의 모임번호와 일치하는 detail페이지로 넘어가야 한다.
+			$('.group').click(function(){
+				
+				location.href = 'groupDetail.mo?groupNo=' + $(this).find('.groupNo').val();
+			})
+			
+		})
+	</script>
+	
+	
 </body>
 </html>
