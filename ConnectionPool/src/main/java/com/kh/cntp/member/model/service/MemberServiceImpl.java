@@ -177,16 +177,26 @@ public class MemberServiceImpl implements MemberService {
 	public Member showProfile(int memNo) {
 		return memberDao.showProfile(sqlSession, memNo);
 	}
-
+	// 인기도 중복 검사
 	@Override
 	public int checkIngido(String ingido) {
 		return memberDao.checkIngido(sqlSession, ingido);
 	}
-
+	// 인기도 변경
 	@Override
 	@Transactional
 	public int upOrDownIngido(HashMap<String, String> map) {
 		return memberDao.upOrDownIngido(sqlSession, map) * memberDao.insertIngidoRecord(sqlSession, map);
+	}
+	// 지역별 인기도 왕
+	@Override
+	public ArrayList<Member> areaIngidoRank() {
+		return memberDao.areaIngidoRank(sqlSession);
+	}
+	// 전체 인기도 랭킹
+	@Override
+	public ArrayList<Member> allIngidoRank() {
+		return memberDao.allIngidoRank(sqlSession);
 	}
 
 	

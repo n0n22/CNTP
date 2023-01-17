@@ -565,9 +565,60 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        )
 	</insert>
 	
+	<!-- 지역별 인기도 왕 조회 -->
+	<select id="areaIngidoRank" resultMap="memberResultSet">
+	SELECT 
+			B.NICKNAME, 
+			KOR_AREA "MEM_AREA", 
+			B.INGIDO, 
+			B.MEM_NO, 
+			NVL(TEAM_NAME, '무소속') "TEAM_NAME"
+	  FROM
+	        (SELECT MEM_AREA, MEM_NO
+	           FROM (
+	                SELECT 
+	                        MEM_NO, MEM_AREA, ROW_NUMBER() OVER(PARTITION BY MEM_AREA ORDER BY MEM_NAME DESC) AS "rn"
+	                  FROM
+	                        MEMBER M
+	                 WHERE
+	                        (MEM_AREA, INGIDO) IN (SELECT MEM_AREA, MAX(INGIDO)
+	                                                 FROM MEMBER
+	                                                GROUP BY MEM_AREA)
+	                )
+	        WHERE "rn" = 1) A
+	  JOIN
+	        MEMBER B ON(A.MEM_NO = B.MEM_NO)
+	  JOIN
+	        AREA ON(A.MEM_AREA = ENG_AREA)
+	  LEFT
+	  JOIN
+	        TEAM_MEMBER TM ON(B.MEM_NO = TM.MEM_NO)
+	  LEFT
+	  JOIN
+	        TEAM T  ON(TM.TEAM_NO = T.TEAM_NO)
+	  ORDER BY B.INGIDO DESC
+		
 	
+	</select>
 	
+	<select id="allIngidoRank" resultMap="memberResultSet">
+	SELECT *
+	  FROM (
+	        SELECT 
+	                NICKNAME, 
+	                KOR_AREA "MEM_AREA", 
+	                INGIDO, 
+	                MEM_NO
+	          FROM 
+	                MEMBER
+	          JOIN
+	                AREA ON(MEM_AREA = ENG_AREA)
+	         ORDER 
+	            BY INGIDO DESC
+	        )
+	 WHERE 
+	        ROWNUM BETWEEN 1 AND 9
 	
-	
+	</select>
 	
 </mapper>

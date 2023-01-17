@@ -270,6 +270,7 @@
     	function showProfile(event){
     		
     		// 회원 정보를 조회해오는 기능
+    		console.log($(event.target));
     		var $memNo = $(event.target).attr('ingido');
     		
     		$.ajax({

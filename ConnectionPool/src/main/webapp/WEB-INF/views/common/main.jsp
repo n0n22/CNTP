@@ -16,25 +16,14 @@
 			width: 1100px;
 			margin: auto;
 		}
-		.row1{
+		.row1, .row2, .row3{
 			display: flex;
 		}
-		.row1>.left{
+		.ranking-area .left{
 			width: 50%;
 			float: left;
 		}
-		.row1>.right{
-			width: 50%;
-			float: right;
-		}
-		.row2{
-			display: flex;
-		}
-		.row2>.left{
-			width: 50%;
-			float: left;
-		}
-		.row2>.right{
+		.ranking-area .right{
 			width: 50%;
 			float: right;
 		}
@@ -129,6 +118,7 @@
 				<!-- 승률 랭킹 끝 -->
 				
 			</div>
+		
 			<br><br>
 			<div class="row2">
 			
@@ -171,9 +161,61 @@
 				<!-- 경기수 랭킹 끝 -->
 				
 			</div>
+			
+			<br><br>
+			<div class="row3">
+			
+				<!--전체 인기도 랭킹 시작 -->
+				<div class="left">
+				    <table id="allIngido" align="center">
+				        <caption class="caption">전체 인기도 랭킹</caption>
+				        <thead>
+				            <tr>
+				                <th align="center" scope="col" width="60px">랭킹</th>
+				                <th align="center" scope="col" width="60px">닉네임</th>
+				                <th align="center" scope="col" width="180px">지역</th>
+				                <th align="center" scope="col" width="150px">인기도</th>
+				            </tr>
+				        </thead>
+				        <tbody align="center">
+
+				        </tbody>
+				    </table>
+				</div>
+				<!-- 전체 인기도 랭킹 끝-->
+				
+				<!-- 지역 인기도 랭킹 시작 -->
+				<div class="left">
+				    <table id="areaIngido" align="center">
+				        <caption class="caption">지역별 인기도 왕</caption>
+				        <thead>
+				            <tr>
+				                <th align="center" scope="col" width="80px">지역</th>
+				                <th align="center" scope="col" width="90px">닉네임</th>
+				                <th align="center" scope="col" width="180px">팀이름</th>
+				                <th align="center" scope="col" width="100px">인기도</th>
+				            </tr>
+				        </thead>
+				        <tbody align="center">
+
+				        </tbody>
+				    </table>
+				</div>
+				<!-- 지역 인기도 랭킹 끝 -->
+			</div>
+			
 
 		</div>
 		<!-- topN 영역 끝-->
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	</div>
 	
 	<br><br>
@@ -193,6 +235,9 @@
 			battleRank('winRate');
 			battleRank('winningStreak');
 			battleRank('matches');
+			
+			areaIngidoRank();
+			allIngidoRank();
 			
 		});
 		
@@ -268,6 +313,67 @@
 			})
 		}
 		
+		function areaIngidoRank(){
+			$.ajax({
+				url : "areaIngidoRank.top",
+				success : function(data){
+					let rank ='';
+					
+					for(let i in data){
+						let d = data[i];
+						rank += 
+							`
+							<tr>
+				                <td>\${d.memArea}</td>
+				                <td ingido="\${Number(d.memNo)}" onclick="showProfile(event)">
+				                	\${d.nickName}
+				                </td>
+				                <td>
+				                    <strong>\${d.teamName}</strong>
+				                </td>
+				                <td>
+				                	\${d.ingido}
+				                </td>
+			            	</tr>`
+					}
+					$('#areaIngido tbody').html(rank);
+					
+				},
+				error : function(){
+					console.log('ajax 통신 실패');
+				}
+			})
+		}
+		function allIngidoRank(){
+			$.ajax({
+				url : "allIngidoRank.top",
+				success : function(data){
+					let rank ='';
+					
+					for(let i in data){
+						let d = data[i];
+						rank += 
+							`
+							<tr>
+				                <td>\${Number(i) + 1}</td>
+				                <td ingido="\${d.memNo}" title="프로필 보기" onclick="showProfile(event)">
+				                	\${d.nickName}
+				                </td>
+				                <td>
+				                    <strong>\${d.memArea}</strong>
+				                </td>
+				                <td>
+				                	\${d.ingido}
+				                </td>
+			            	</tr>`
+					}
+					$('#allIngido tbody').html(rank);
+				},
+				error : function(){
+					console.log('ajax 통신 실패');
+				}
+			})
+		}
 
 	</script>
 

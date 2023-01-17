@@ -88,4 +88,10 @@ public interface MemberService {
 	
 	// 소모임 조회 (마이페이지)
 	ArrayList<Group> myPageGroupList(int memNo);
+	
+	// 지역별 인기도 왕
+	ArrayList<Member> areaIngidoRank();
+	
+	// 전체 인기도 랭킹
+	ArrayList<Member> allIngidoRank();
 }

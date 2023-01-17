@@ -164,11 +164,20 @@ public class MemberDao {
 	public int checkIngido(SqlSessionTemplate sqlSession, String ingidio) {
 		return sqlSession.selectOne("memberMapper.checkIngido", ingidio);
 	}
+	// 인기도 변경
 	public int upOrDownIngido(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.update("memberMapper.upOrDownIngido", map);
 	}
+	// 인기도 변경 기록 저장
 	public int insertIngidoRecord(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.insert("memberMapper.insertIngidoRecord", map);
 	} 
-
+	// 지역별 인기도 왕 리스트 조회
+	public ArrayList<Member> areaIngidoRank(SqlSessionTemplate sqlSession){
+		return (ArrayList) sqlSession.selectList("memberMapper.areaIngidoRank");
+	}
+	// 전체 인기도 랭킹 리스트 조회
+	public ArrayList<Member> allIngidoRank(SqlSessionTemplate sqlSession){
+		return (ArrayList) sqlSession.selectList("memberMapper.allIngidoRank");
+	}
 }

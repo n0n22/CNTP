@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
@@ -325,6 +326,7 @@ public class MemberController {
 	@RequestMapping(value="showProfile.me", produces="application/json; charset=UTF-8")
 	public String showProfile(int memNo) {
 		Member m = memberService.showProfile(memNo);
+		System.out.println(m);
 		return new Gson().toJson(m);
 	}
 	// 인기도 올리는 기능
@@ -350,4 +352,21 @@ public class MemberController {
 	}
 		return String.valueOf(result2);
 	}
+	
+	// 지역별 인기도왕
+	@ResponseBody
+	@RequestMapping(value="areaIngidoRank.top", produces="applicaiton/json; charset=UTF-8")
+	public String areaIngidoRank() {
+		ArrayList<Member> list = memberService.areaIngidoRank();
+		return new Gson().toJson(list);
+	}
+	
+	// 전체 인기도 랭킹
+	@ResponseBody
+	@RequestMapping(value="allIngidoRank.top", produces="applicaiton/json; charset=UTF-8")
+	public String allIngidoRank() {
+		ArrayList<Member> list = memberService.allIngidoRank();
+		return new Gson().toJson(list);
+	}
+	
 }
