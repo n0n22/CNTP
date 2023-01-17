@@ -183,11 +183,13 @@ public class MoimController {
 		
 		if(chat.getMoimNo().contains("G")) {
 			ArrayList<Member> groupMemberList = moimService.selectAcceptMember(chat.getMoimNo());
-			mv.addObject("groupMemberList", groupMemberList);
+			mv.addObject("chatMemberList", groupMemberList);
 			
 			moimMember = String.valueOf(groupMemberList.size());
 			
 			//System.out.println(groupMemberList);
+		} else if(chat.getMoimNo().contains("T")) {
+			mv.addObject("chatMemberList", moimService.selectTeamMemberList(chat.getMoimNo()));
 		}
 		
 		mv.addObject("chatList", moimService.selectChattingList(chat)).addObject("moimMember", moimMember).addObject("moimNo", chat.getMoimNo()).addObject("moimTitle", moimTitle).setViewName("moim/chatView");
@@ -309,7 +311,7 @@ public class MoimController {
 	}
 	
 	@RequestMapping("groupUpdateForm.mo")
-	public ModelAndView groupUpdateForm(ModelAndView mv, String groupNo) {
+	public ModelAndView groupUpdateForm(ModelAndView mv, String groupNo, String emptyYn) {
 		
 		Group group = moimService.selectGroup(groupNo);
 		
@@ -325,7 +327,7 @@ public class MoimController {
 		
 		//System.out.println(group.getGroupMember());
 		
-		mv.addObject("group", group).setViewName("moim/groupUpdateForm");
+		mv.addObject("group", group).addObject("emptyYn", emptyYn).setViewName("moim/groupUpdateForm");
 		
 		return mv;
 	}

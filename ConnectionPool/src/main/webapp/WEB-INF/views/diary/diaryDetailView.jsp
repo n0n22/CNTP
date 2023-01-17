@@ -251,6 +251,13 @@ textarea{
 	 
                                 <div class="card card-white grid-margin">
                                     <div class="card-body">
+                                    	<c:if test="${ loginUser.userId eq b.boardWriter }">
+	            <div align="center">
+	                <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
+	                <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
+	                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
+	            </div>
+            </c:if>
                                         <div class="timeline-item-header">
                                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
                                             <p>작성자   <span>닉네임</span></p>

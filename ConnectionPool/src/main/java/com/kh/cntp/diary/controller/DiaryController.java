@@ -26,7 +26,7 @@ public class DiaryController {
 	@RequestMapping("list.di")
 	public ModelAndView selectList(ModelAndView mv) {
 		mv.addObject("list", diaryService.selectList()).setViewName("diary/diaryListView");
-
+		System.out.println(diaryService.selectList());
 		return mv;
 	}
 
