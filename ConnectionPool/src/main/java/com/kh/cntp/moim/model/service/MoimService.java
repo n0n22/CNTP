@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.model.vo.PageInfo;
+import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.moim.model.vo.Apply;
 import com.kh.cntp.moim.model.vo.Chatting;
 import com.kh.cntp.moim.model.vo.Group;
@@ -82,6 +83,8 @@ public interface MoimService {
 	int ajaxInsertChatting(Chatting chat);
 	
 	int ajaxDeleteChatting(String chatNo);
+	
+	ArrayList<Member> selectAcceptMember(String groupNo);
 	
 	// --------------- 소그룹 시작 ---------------
 	
