@@ -138,22 +138,6 @@ public class BoardController {
 		}
 		
 		
-		@ResponseBody
-		@RequestMapping(value ="rlist.bo", produces="application/json; charset=UTF-8")
-		public String ajaxBoardSelectReplyList(int bno) {
-			//System.out.println(boardNo);
-			return new Gson().toJson(boardService.selectBoardReplyList(bno));
-		
-		}
-		
-		
-		@ResponseBody
-		@RequestMapping("rinsert.bo")
-		public String ajaxBoardInsertReply(Reply r) {
-			return boardService.insertBoardReply(r) > 0 ? "success " : "fail";
-			
-		}
-		
 }
 
 

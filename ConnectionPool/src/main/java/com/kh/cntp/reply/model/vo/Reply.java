@@ -11,7 +11,7 @@ public class Reply {
 	private int boardNo; //게시판번호
 	private String writer; //작성자
 	private String commentContent; //댓글내용
-	private Date commentDate; //댓글작성일
+	private String commentDate; //댓글작성일
 	private String status; //상태
 	
 }

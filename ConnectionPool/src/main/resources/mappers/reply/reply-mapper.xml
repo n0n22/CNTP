@@ -17,12 +17,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 
-	<select id ="selectBoardReplyList" resultType="reply">
+	<select id ="selectBoardReplyList" resultMap="replyResultSet">
 		select
 				comment_no commentNo,
 				writer Writer ,
 				comment_content commentContent,
-				to_char(comment_date, 'YYYY-MM-DD') as "COMMENT_Date"
+				to_char(comment_Date, 'YYYY-MM-DD') as "comment_Date"
 		  from
 		        board_reply
 		  where
