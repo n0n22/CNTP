@@ -61,6 +61,10 @@
 		font-size:x-small;
 	}
 	
+	.grade-img, .memberImg{
+		border-radius: 50%;
+	}
+	
 
 </style>
 
@@ -78,31 +82,38 @@
 		        <!-- 제목 div -->
 		        <div style="display : flex; justify-content: space-between;" id="chatTitleMemberCountArea">
 		            <h2>${ moimTitle }</h2>
-		            <h5>참여인원 ${ moimMember } </h5>
+		            <h5>참여인원 ${ moimMember }명</h5>
 		        </div>
 		        
 				<!-- 소그룹 참여인원 -->
 				<!-- 참여자들 닉네임, 등급별 사진 정도 띄어줄까 싶지만,,,,,, 할 수 있음 하자-->
 				<c:choose>
-					<c:when test="${ not empty groupMemberList }">
+					<c:when test="${ not empty chatMemberList }">
 			        	<div class="groupMember-info" style="display:inline-block; width:600px; height:60px;" align="left">
-				        	<c:forEach items="${ groupMemberList }" var="gm">
+				        	<c:forEach items="${ chatMemberList }" var="cm">
 				        		<div style="display:inline-block;" onclick="showProfile(event)">
 					        		<div style=" width:40px; height:35px;" class="memberImg">
 						        		<c:choose>
-						        			<c:when test="${ gm.grade eq 'B' }">
-							        			<img ingido="${gm.memNo}" title="프로필 보기" class="grade-img" width="35px" height="35px" src="${ pageContext.request.contextPath }/resources/images/beginner.jpg"/>
+						        			<c:when test="${ cm.grade eq 'B' }">
+							        			<img ingido="${cm.memNo}" title="프로필 보기" class="grade-img" width="35px" height="35px" src="${ pageContext.request.contextPath }/resources/images/beginner.jpg"/>
 					        				</c:when>
-					        				<c:when test="${ gm.grade eq 'M' }">
-							        			<img  ingido="${gm.memNo}" title="프로필 보기" class="grade-img" width="35px" height="35px" src="${ pageContext.request.contextPath }/resources/images/middle.jpg"/>
+					        				<c:when test="${ cm.grade eq 'M' }">
+							        			<img  ingido="${cm.memNo}" title="프로필 보기" class="grade-img" width="35px" height="35px" src="${ pageContext.request.contextPath }/resources/images/middle.jpg"/>
 					        				</c:when>
 					        				<c:otherwise>
-							        			<img ingido="${gm.memNo}" title="프로필 보기" class="grade-img" width="35px" height="35px" src="${ pageContext.request.contextPath }/resources/images/special.jpg"/>
+							        			<img ingido="${cm.memNo}" title="프로필 보기" class="grade-img" width="35px" height="35px" src="${ pageContext.request.contextPath }/resources/images/special.jpg"/>
 					        				</c:otherwise>
 				        				</c:choose>
 					        		</div>
 					        		<div style="width:50px; height:15px;" class="memberImg">
-					        			<p ingido="${gm.memNo}" title="프로필 보기" class="groupMemberNickname">${ gm.nickName }</p>
+					        			<c:choose>
+					        				<c:when test="${ fn:contains(moimNo, 'G') }">
+							        			<p ingido="${cm.memNo}" title="프로필 보기" class="groupMemberNickname">${ cm.nickName }</p>
+					        				</c:when>
+					        				<c:otherwise>
+							        			<p ingido="${cm.memNo}" title="프로필 보기" class="groupMemberNickname">${ cm.nickname }</p>
+					        				</c:otherwise>
+					        			</c:choose>
 					        		</div>
 				        		</div>
 				        	</c:forEach>
