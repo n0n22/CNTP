@@ -253,7 +253,7 @@
 	                        <br><br><br> 
 	                        <p class="noTitle">작성한 게시글이 없어요</p>
 	                        <a href="">자유게시판으로 이동</a>
-	                        <br><br><br>
+	                        <br><br><br><br><br><br>
 	                    </div>
                 	</c:when>
                 	<c:otherwise>
