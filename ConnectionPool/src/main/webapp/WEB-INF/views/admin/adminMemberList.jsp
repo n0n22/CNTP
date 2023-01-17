@@ -56,6 +56,7 @@
 
 
 
+
     </style>
 
 
@@ -320,7 +321,6 @@
                             <th width="15%">닉네임</th>
                             <th width="15%">인기도</th>
                             <th width="20%">가입일</th>
-                            <th width="10%">탈퇴</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -332,7 +332,6 @@
 	                            <td>${ m.nickName }</td>
 	                            <td>${ m.ingido }</td>
 	                            <td>${ m.enrollDate }</td>
-	                            <td><a href="" class="btn btn-sm btn-secondary">탈퇴</a></td>
 	                        </tr>
                     	</c:forEach>
                     </tbody>
@@ -340,42 +339,45 @@
             </div>
              
         </div>
-           
-            
-		<div class="page-area" align="center">
-        	<ul class="pagination" align="center">
-               	<c:choose>
-                	<c:when test="${pi.currentPage eq 1}">
-                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
-                    </c:when>
-                    <c:otherwise>
-                    	<li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${pi.currentPage - 1}&keyword=${keyword}&condition=${condition}">&lt;</a></li>
-                    </c:otherwise>
-                </c:choose>
-                
-               
-                <c:forEach begin="${pi.startPage}" end="${pi.endPage}" var="p">
-	                <c:choose>
-	                	<c:when test="${pi.currentPage eq p}">
-	                   		<li class="page-item disabled"><a class="page-link">${ p }</a></li>
-	                	</c:when>
-	                	<c:otherwise>
-	                		<li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${p}&keyword=${keyword}&condition=${condition}">${p}</a></li>
-	                	</c:otherwise>
+        
+        
+		<div class="admin-footer">
+			<div class="page-area" align="center">
+	        	<ul class="pagination" align="center">
+	               	<c:choose>
+	                	<c:when test="${pi.currentPage eq 1}">
+	                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${pi.currentPage - 1}&keyword=${keyword}&condition=${condition}">&lt;</a></li>
+	                    </c:otherwise>
 	                </c:choose>
-                </c:forEach>
-               
-                
-				<c:choose>
-                	<c:when test="${pi.currentPage eq pi.maxPage}">
-	                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
-                    </c:when>
-                    <c:otherwise>
-	                    <li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${pi.currentPage + 1}&keyword=${keyword}&condition=${condition}">&gt;</a></li>
-                    </c:otherwise>
-                </c:choose>
-			</ul>			
+	                
+	               
+	                <c:forEach begin="${pi.startPage}" end="${pi.endPage}" var="p">
+		                <c:choose>
+		                	<c:when test="${pi.currentPage eq p}">
+		                   		<li class="page-item disabled"><a class="page-link">${ p }</a></li>
+		                	</c:when>
+		                	<c:otherwise>
+		                		<li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${p}&keyword=${keyword}&condition=${condition}">${p}</a></li>
+		                	</c:otherwise>
+		                </c:choose>
+	                </c:forEach>
+	               
+	                
+					<c:choose>
+	                	<c:when test="${pi.currentPage eq pi.maxPage}">
+		                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+		                    <li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${pi.currentPage + 1}&keyword=${keyword}&condition=${condition}">&gt;</a></li>
+	                    </c:otherwise>
+	                </c:choose>
+				</ul>			
+			</div>
 		</div>
+            
 
         
         <div>
@@ -414,21 +416,13 @@
 				
 				// 시트(worksheet) 생성 : table_to_sheet(테이블, 시트명);
 				let ws = XLSX.utils.table_to_sheet(document.getElementById('memberTable'), '회원목록');
-				
-				// 컬럼 숨기기
-				// console.log(ws.G1.hidden);
-				console.log(ws);
-				ws['!cols'] = [];
-				console.log(ws['!cols']);
-				ws.set_row(0, {'hidden': true});
-				// ws['!cols'][5] = { hidden: true };
 
 				
 				// 시트 설정을 전달하면서 엑셀 파일 생성
 				let wb = XLSX.utils.table_to_book(document.getElementById('memberTable'), ws);
 				
 			    // 엑셀 다운로드
-				// XLSX.writeFile(wb, fileName);
+				XLSX.writeFile(wb, fileName);
 			};
 		
 			
