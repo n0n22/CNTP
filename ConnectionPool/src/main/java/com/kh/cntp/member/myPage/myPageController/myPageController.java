@@ -16,13 +16,15 @@ import com.kh.cntp.common.template.Pagination;
 import com.kh.cntp.member.model.service.MemberService;
 import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.member.model.vo.Point;
+import com.kh.cntp.moim.model.service.MoimService;
 
 @Controller
 public class myPageController {
 	
 	@Autowired
 	private MemberService memberService;
-
+	@Autowired
+	private MoimService moimService;
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder; 
 	
@@ -147,16 +149,19 @@ public class myPageController {
 		return "member/myPage/myPageMoim";
 	}
 	
-	// 마이페이지 수영일기 조회
-	@RequestMapping("myPageDiary.me")
-	public String myPageDiary() {
-		return "member/myPage/myPageDiary";
-	}
-	
 	// 마이페이지 팀 조회
 	@RequestMapping("myPageTeam.me")
-	public String myPageTeam() {
-		return "member/myPage/myPageTeam";
+	public ModelAndView myPageTeam(HttpSession session, ModelAndView mv) {
+		
+		String teamNo = ((Member)session.getAttribute("loginMember")).getTeamNo();
+		
+		mv.addObject("team", moimService.selectTeam(teamNo));
+		mv.addObject("teamMemberList", moimService.selectTeamMemberList(teamNo));
+		mv.addObject("applyList", moimService.selectApplyList(teamNo));
+		mv.addObject("resultHistory", moimService.seletResultHistory(teamNo));
+		mv.setViewName("member/myPage/myPageTeam");
+		
+		return mv;
 	}
 	
 	// 출석체크 페이지
