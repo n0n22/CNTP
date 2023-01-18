@@ -136,7 +136,7 @@
 				</c:when>
 				<c:when test="${ not empty loginMember and empty loginMember.teamNo }">
 					<div align="right">
-						<a href="teamEnrollFrom.mo" class="btn btn-primary">팀 만들기</a>
+						<a href="teamEnrollForm.mo" class="btn btn-primary">팀 만들기</a>
 					</div>
 				</c:when>
 				<c:otherwise>

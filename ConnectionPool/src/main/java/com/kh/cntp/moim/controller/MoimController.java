@@ -84,7 +84,7 @@ public class MoimController {
 	}
 	
 	//인터셉터 필요
-	@RequestMapping("teamEnrollFrom.mo")
+	@RequestMapping("teamEnrollForm.mo")
 	public ModelAndView teamEnrollFrom(ModelAndView mv) {
 		
 		mv.setViewName("moim/teamEnrollForm");

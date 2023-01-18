@@ -51,6 +51,35 @@
 			<mapping path="/noticeDelete.ad" />
 			<beans:bean class="com.kh.cntp.common.interceptor.AdminInterceptor" id="adminInterceptor"></beans:bean>
 		</interceptor>
+		<interceptor>
+			<!-- 팀 관련 -->
+			<mapping path="/teamEnrollForm.mo"/>
+			<mapping path="/insertTeam.mo"/>
+			<mapping path="/teamUpdateForm.mo"/>
+			<mapping path="/updateTeam.mo"/>
+			<mapping path="/teamMemberUpdateForm.mo"/>
+			<mapping path="/teamMemberUpdate.mo"/>
+			<mapping path="/insertTeamMember.mo"/>
+			<mapping path="/deleteTeamMember.mo"/>
+			<mapping path="/badgeShop.mo"/>
+			<mapping path="/updateBadge.mo"/>
+			<!-- 채팅 관련 -->
+			<mapping path="/chattingRoom.mo"/>
+			<mapping path="/ajaxSelectChatList.mo"/>
+			<mapping path="/insertChat.mo"/>
+			<mapping path="/deleteChat.mo"/>
+			<!-- 소그룹 관련 -->
+			<mapping path="/groupEnrollForm.mo"/>
+			<mapping path="/insertGroup.mo"/>
+			<mapping path="/groupUpdateForm.mo"/>
+			<mapping path="/updateGroup.mo"/>
+			<mapping path="/deleteGroup.mo"/>
+			<mapping path="/insertApply.mo"/>
+			<mapping path="/selectGroupApply.mo"/>
+			<mapping path="/updateApply.mo"/>
+			<mapping path="/deleteApply.mo"/>
+			<beans:bean class="com.kh.cntp.common.interceptor.LoginInterceptor" id="loginInterceptor"></beans:bean>
+		</interceptor>
 	</interceptors>
 	
 	
