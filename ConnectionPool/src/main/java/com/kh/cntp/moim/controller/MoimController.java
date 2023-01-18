@@ -106,6 +106,7 @@ public class MoimController {
 	}
 	
 	//인터셉터 필요
+	// 팀 등록 + 전적 등록 + 리더 팀멤버 등록 + 로그인 유저 다시 담아줌
 	@RequestMapping("insertTeam.mo")
 	public ModelAndView insertTeam(ModelAndView mv, Team team, MultipartFile upfile, HttpSession session) {
 		
@@ -365,6 +366,7 @@ public class MoimController {
 		return mv;
 	}
 	
+	// teamPage나 groupDetailView에 들어갈 때 해당 모임에 신청했는지 확인하는 메소드
 	@ResponseBody
 	@RequestMapping(value="selectApply.mo", produces="application/json; charset=UTF-8")
 	public String ajaxSelectApply(HttpSession session) {
@@ -372,6 +374,7 @@ public class MoimController {
 		return new Gson().toJson(moimService.ajaxSelectApply(((Member)(session.getAttribute("loginMember"))).getMemNo()));
 	}
 	
+	// 뱃지를 바꿨을 수도 있으니 로그인유저 다시
 	//인터셉터 필요
 	@RequestMapping("updateTeam.mo")
 	public ModelAndView updateTeam(ModelAndView mv, Team team, MultipartFile[] reUpfile, HttpSession session) {
@@ -397,6 +400,9 @@ public class MoimController {
 		if(team.getBadgeStatus().equals("Y")) {
 			// 뱃지를 구매한 팀만 따지면 된다.
 			if(!reUpfile[1].getOriginalFilename().equals("")) {
+				
+				session.setAttribute("loginMember", memberService.loginMember((Member)session.getAttribute("loginMember")));
+				
 				// 새로운 뱃지 사진이 들어왔을 때
 				if(!team.getBadgeOriginName().equals("")) {
 					// 1. 기존에 원래 뱃지 사진 있는데 새 뱃지 파일이 들어왔을 때
@@ -439,6 +445,7 @@ public class MoimController {
 		return mv;
 	}
 	
+	// 세션에 로그인멤버 다시 담기
 	//인터셉터 필요
 	@RequestMapping("teamMemberUpdate.mo")
 	public ModelAndView updateTeamMember(ModelAndView mv, String teamNo, int leader, String subLeader, HttpSession session) {

@@ -337,35 +337,59 @@
 	
 	<jsp:include page="../common/footer.jsp"/>
 	
-	<c:if test="${ not empty loginMember and loginMember.teamNo ne team.teamNo and teamMemberList.size() < team.teamMember }">
-		<script>
-			$(function(){
-				$.ajax({
-					url : "selectApply.mo",
-					success : function(obj){
-						if(obj != null){
-							//console.log('들어왔다.');
-							if(obj.moimNo == "${ team.teamNo }"){
+	<c:choose>
+		<c:when test="${ not empty loginMember and loginMember.teamNo ne team.teamNo and teamMemberList.size() < team.teamMember }">
+			<script>
+				$(function(){
+					$.ajax({
+						url : "selectApply.mo",
+						success : function(obj){
+							if(obj != null){
+								//console.log('들어왔다.');
+								if(obj.moimNo == "${ team.teamNo }"){
+									$('#apply-btn').css('width', '300px');
+									$('#apply-btn').html('신청취소');
+									$('#apply-btn').removeAttr('disabled');
+									$('#apply-form').attr('action', 'deleteApply.mo');
+								} else{
+									$('#apply-btn').attr('disabled', 'true');
+									$('#apply-btn').removeAttr('onclick');
+									$('#apply-btn').css('width', '300px');
+									$('#apply-btn').html('현재 다른 신청내역이 있습니다.');
+								}
+							}
+							
+						},
+						error : function(){
+							console.log('ajax 통신 실패');
+						}
+					})
+				})
+			</script>
+		</c:when>
+		<c:when test="${ not empty loginMember and loginMember.teamNo ne team.teamNo and teamMemberList.size() >= team.teamMember }">
+			<script>
+				$(function(){
+					$.ajax({
+						url : "selectApply.mo",
+						success : function(obj){
+							if(obj != null && obj.moimNo == "${ team.teamNo }"){
+								//console.log('들어왔다.');
 								$('#apply-btn').css('width', '300px');
-								$('#apply-btn').html('신청취소');
+								$('#apply-btn').html('이미 모집 마감되었습니다.<br>신청취소');
 								$('#apply-btn').removeAttr('disabled');
 								$('#apply-form').attr('action', 'deleteApply.mo');
-							} else{
-								$('#apply-btn').attr('disabled', 'true');
-								$('#apply-btn').removeAttr('onclick');
-								$('#apply-btn').css('width', '300px');
-								$('#apply-btn').html('현재 신청내역이 있습니다.');
 							}
+							
+						},
+						error : function(){
+							console.log('ajax 통신 실패');
 						}
-						
-					},
-					error : function(){
-						console.log('ajax 통신 실패');
-					}
+					})
 				})
-			})
-		</script>
-	</c:if>	
+			</script>
+		</c:when>
+	</c:choose>	
 	 
 	 <script>
 	 	function confirmBtn(keyword){
