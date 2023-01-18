@@ -148,9 +148,9 @@ public class AdminController {
 	
 	// 신고글 상세 조회 -> 신고글 상세 페이지로 이동
 	@RequestMapping("reportDetail.ad")
-	public ModelAndView selectReport(int rno, ModelAndView mv) {
-		
-		mv.addObject("report", adminService.selectReport(rno));
+	public ModelAndView selectReport(@ModelAttribute Report report, ModelAndView mv) {
+				
+		mv.addObject("report", adminService.selectReport(report));
 		mv.setViewName("admin/adminReportDetail");
 		
 		return mv;
@@ -166,9 +166,14 @@ public class AdminController {
 	// 신고 등록 폼으로 이동
 	@RequestMapping("reportForm")
 	public String reportEnrollForm(@ModelAttribute Report report, Model model) {
-		// System.out.println(report);
+		System.out.println(report);
 		
-		model.addAttribute("report", report);
+		if (adminService.selectReportCount(report) > 0) {
+			model.addAttribute("alert", "이미 신고한 게시글입니다.");
+		} else {
+			model.addAttribute("report", report);			
+		}
+		
 		return "admin/reportEnrollForm";
 	}
 	

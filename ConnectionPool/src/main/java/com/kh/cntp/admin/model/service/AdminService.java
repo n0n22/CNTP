@@ -52,9 +52,12 @@ public interface AdminService {
 	ArrayList<Report> selectReportList(PageInfo pi, String result);
 
 	// 신고 상세 조회
-	Report selectReport(int rno);
+	Report selectReport(Report report);
 	
 	
+	
+	// 신고 횟수 조회
+	int selectReportCount(Report report);
 	
 	
 	

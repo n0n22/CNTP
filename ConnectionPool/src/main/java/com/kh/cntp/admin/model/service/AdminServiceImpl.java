@@ -90,11 +90,16 @@ public class AdminServiceImpl implements AdminService {
 	
 	// 신고 상세 조회
 	@Override
-	public Report selectReport(int rno) {
-		return adminDao.selectReport(sqlSession, rno);
+	public Report selectReport(Report report) {
+		return adminDao.selectReport(sqlSession, report);
 	}
 	
 	
+	// 신고 횟수 조회
+	@Override
+	public int selectReportCount(Report report) {
+		return adminDao.selectReportCount(sqlSession, report);
+	}
 	
 	
 	
@@ -103,7 +108,7 @@ public class AdminServiceImpl implements AdminService {
 	@Transactional
 	@Override
 	public int insertReport(Report report) {
-		return adminDao.insertReport(sqlSession, report) * adminDao.updateBoardStatus(sqlSession, report.getBoardNo());
+		return adminDao.insertReport(sqlSession, report) * adminDao.updateBoardStatus(sqlSession, report);
 	}
 	
 	
@@ -111,7 +116,7 @@ public class AdminServiceImpl implements AdminService {
 	@Transactional
 	@Override
 	public int invalidReport(Report report) {
-		return adminDao.invalidReport(sqlSession, report.getReportNo()) * adminDao.reUpdateBoardStatus(sqlSession, report.getBoardNo());
+		return adminDao.invalidReport(sqlSession, report.getReportNo()) * adminDao.reUpdateBoardStatus(sqlSession, report);
 	}
 	
 	
@@ -394,6 +399,7 @@ public class AdminServiceImpl implements AdminService {
 	public ArrayList<String> selectListNickname() {
 		return adminDao.selectListNickname(sqlSession);
 	}
+
 
 
 

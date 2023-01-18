@@ -171,6 +171,7 @@
 					<input type="hidden" value="" name="content" id="report-content">
 					<input type="hidden" value="" name="reportBoard" id="report-reportBoard">
 					<input type="hidden" value="" name="boardNo" id="report-boardNo">
+					<input type="hidden" value="${ loginMember.memNo }" name="reporter" id="reporter">
 				</form>
 	        </div>
         </div>
@@ -233,7 +234,7 @@
 							   + '<th>' + list[i].writer  + '</th>'
 							   + '<th>' + list[i].commentContent + '</th>'
 							   + '<th>' + list[i].commentDate   + '</th>'
-							   + '<td><button class="btn btn-sm btn-danger" onclick="openReportForm(' + "'board-reply'" + ', this, ' + list[i].commentNo + ');">신고</button></td>'
+							   + '<td><button class="btn btn-sm btn-danger" onclick="openReportForm(' + "'board_reply'" + ', this, ' + list[i].commentNo + ');">신고</button></td>'
 							   + '</tr>';
 						
     				}
@@ -278,7 +279,7 @@
 					$('#report-content').val('${ b.content }');
 					$('#report-boardNo').val(${ b.boardNo });
 					
-				} else if (div == 'board-reply') {
+				} else if (div == 'board_reply') {
 					// console.log($(e).parent().prev().prev().prev().text());
 					$('#report-memNickName').val($(e).parent().prev().prev().prev().text());
 					$('#report-content').val($(e).parent().prev().prev().text());

@@ -145,7 +145,7 @@
 			// tr 클릭 시 신고 상세보기
 			$('#reportTable tbody .clickTr').click(function() {
 				
-				location.href = 'reportDetail.ad?rno=' + $(this).children().eq(0).text();
+				location.href = 'reportDetail.ad?reportBoard=' + $(this).children().eq(2).text() + '&reportNo=' + $(this).children().eq(0).text();
 				//console.log($(this).children().eq(0).text());
 				
 			});			

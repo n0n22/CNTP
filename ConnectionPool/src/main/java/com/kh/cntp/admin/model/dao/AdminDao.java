@@ -85,10 +85,15 @@ public class AdminDao {
 	
 	
 	// 신고 상세 조회
-	public Report selectReport(SqlSessionTemplate sqlSession, int rno) {
-		return sqlSession.selectOne("adminMapper.selectReport", rno);
+	public Report selectReport(SqlSessionTemplate sqlSession, Report report) {
+		return sqlSession.selectOne("adminMapper.selectReport", report);
 	}
 	
+	
+	// 신고 횟수 조회
+	public int selectReportCount(SqlSessionTemplate sqlSession, Report report) {
+		return sqlSession.selectOne("adminMapper.selectReportCount", report);
+	}
 	
 	
 	
@@ -99,8 +104,8 @@ public class AdminDao {
 	
 	
 	// 신고 등록 - BOARD update : 게시글 상태 업데이트
-	public int updateBoardStatus(SqlSessionTemplate sqlSession, int boardNo) {
-		return sqlSession.update("adminMapper.updateBoardStatus", boardNo);
+	public int updateBoardStatus(SqlSessionTemplate sqlSession, Report report) {
+		return sqlSession.update("adminMapper.updateBoardStatus", report);
 	}
 	
 	
@@ -110,8 +115,8 @@ public class AdminDao {
 	}
 	
 	// 신고 무효 - BOARD update : 게시글 상태 되돌리기
-	public int reUpdateBoardStatus(SqlSessionTemplate sqlSession, int boardNo) {
-		return sqlSession.update("adminMapper.reUpdateBoardStatus", boardNo);
+	public int reUpdateBoardStatus(SqlSessionTemplate sqlSession, Report report) {
+		return sqlSession.update("adminMapper.reUpdateBoardStatus", report);
 	}
 	
 	
