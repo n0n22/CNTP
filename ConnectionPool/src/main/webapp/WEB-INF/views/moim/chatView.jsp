@@ -156,8 +156,6 @@
 												<p style="margin-top: auto; margin-bottom: 0;">
 													<!-- 여긴 날짜 -->
 													${ chat.createDate }
-													<!-- 여긴 숨기기 버튼 -->
-													<button class="hiddenBtn" style="border : 0px; background-color : white" onclick="return hideBtn()"><mark></mark></button>
 												</p>
 											</div>
 								        </div>
@@ -270,7 +268,6 @@
 							           +     '<div style="display: flex; align-content: flex-end; margin-left: 60px;">'
 							           +         '<p style="margin-top: auto; margin-bottom: 0;">'
 							           +             list[i].createDate
-							           +			 '<button class="hiddenBtn" style="border : 0px; background-color : white" onclick="return hideBtn()"><mark></mark></button>'
 							           +         '</p>'
 							           +     '</div>'
 							           + '</div>';
@@ -301,7 +298,7 @@
 				}
 				
 				$('#chatContent-area').html(result);
-				scrollDown();
+				//scrollDown();
 			},
 			error : function(){
 				console.log('실패요');
