@@ -216,6 +216,11 @@
 			
 		})
 		
+	function scrollDown(){
+		selectChattingList();
+		$("#chatContent-area").scrollTop(5000000);
+	}
+		
 	// enter 치면 insert 되게 만들어줌
 	function enterFn(){
         if(window.event.keyCode == 13){
@@ -300,6 +305,7 @@
 				console.log('실패요');
 			}
 		})
+		
 	}
 	
 	// 댓글 작성하는 메소드
@@ -314,13 +320,15 @@
 			},
 			success : function(result){
 				
-				console.log(result);
+				//console.log(result);
 				if(result == 'NNNNY'){
 					$('#chatContent-input').val('');
 					selectChattingList();
 				} else{
 					window.alert('잠시 후에 다시 시도해주세요');
 				}
+				
+				scrollDown();
 			},
 			error : function(){
 				console.log('실패요');
