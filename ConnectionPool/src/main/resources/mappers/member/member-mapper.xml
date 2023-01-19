@@ -500,7 +500,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       M.MEM_NO = #{memNo}
 		 ORDER
 		    BY G.POWER_DURATION, G.CREATE_DATE DESC
-		       
 	</select>
 	
 	<!-- 인기도 ******************************************************** -->
@@ -618,7 +617,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        )
 	 WHERE 
 	        ROWNUM BETWEEN 1 AND 9
-	
 	</select>
 	
 </mapper>
