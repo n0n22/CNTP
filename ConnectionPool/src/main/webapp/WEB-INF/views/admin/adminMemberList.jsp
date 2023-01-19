@@ -193,7 +193,11 @@
            		})
         		// 회원 이름 검색 시 자동완성
         		$("#keywordInput").autocomplete({
-        			source : names
+        		    minLength: 2,
+        			source : function(request, response){
+        				var results = $.ui.autocomplete.filter(names, request.term);
+        				response(results.slice(0,10));
+        			}
         		})
         		$("#conditionSelect").change(function(){
         			switch($("#conditionSelect").val()){
@@ -289,22 +293,33 @@
         	
         	function selectListNames(){
         		$("#keywordInput").autocomplete({
-        			source : names
+        		    minLength: 2,
+         			source : function(request, response){
+        				var results = $.ui.autocomplete.filter(names, request.term);
+        				response(results.slice(0,10));
+        			}
         		})
         	}
         	function selectListIds(){
         		$("#keywordInput").autocomplete({
-        			source : ids
+        		    minLength: 2,
+         			source : function(request, response){
+        				var results = $.ui.autocomplete.filter(ids, request.term);
+        				response(results.slice(0,10));
+        			}
         		})
         	}
         	function selectListNickNames(){
         		$("#keywordInput").autocomplete({
-        			source : nicknames
+        		    minLength: 2,
+         			source : function(request, response){
+        				var results = $.ui.autocomplete.filter(nicknames, request.term);
+        				response(results.slice(0,10));
+        			}
         		})
         	}
         	
-        
-			
+	
         
         
         </script>
