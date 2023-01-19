@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="change_name"	property="changeName" />
 		<result column="count"			property="count" />
 		<result column="status"			property="status" />
+		<result column="nickName"			property="nickName" />
 	</resultMap>
 
 
@@ -44,12 +45,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				,title
 				,mem_no
 				,count
+				,nickName
 				,category
 				,to_char(create_date, 'YYYY-MM-DD') as "CREATE_DATE"
 				,origin_name
 				,status
 		from
 				board
+		join 	
+				member using(mem_no)	
 		where
 				status != 'N'
 		order
@@ -65,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				(
 				board_no
 				,title
-				,mem_no
+				,nickName
 				,content
 				,category
 				,origin_name
@@ -75,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				(
 				seq_bno.nextval
 				,#{title}
-				,#{memberNo}
+				,#{nickName}
 				,#{content}
 				,#{category}
 				,#{originName}
@@ -105,6 +109,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					board_no
 					,title
 					,mem_no
+					,nickName
 					,content
 					,category
 					,origin_name
@@ -112,6 +117,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					,to_char(create_date, 'YYYY-MM-DD') as "create_date"
 			from
 					board
+			join 	
+					member using(mem_no)	
 			where
 					status = 'Y'
 			 and
@@ -136,7 +143,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set
 				title = #{title}		
 				,content = #{content}
-				,mem_no = #{memberNo}
+				,nickName = #{nickName}
 				,origin_Name = #{originName}
 				,change_Name = #{changeName}
 		where 

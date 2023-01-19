@@ -55,6 +55,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			
 	</insert>
 	
+	
+	
 	<!-- 수영일기 댓글 -->
 	<select id ="selectDiaryReplyList" resultMap="replyResultSet">
 		select

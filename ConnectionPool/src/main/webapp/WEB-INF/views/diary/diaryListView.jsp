@@ -294,12 +294,12 @@ textarea{
                 </div>
                     
                    
-                    <c:forEach items="${list }" var="d">
+                    <%-- <c:forEach items="${list }" var="d">--%>
                     <div class="profile-timeline">
                                 <div class="card card-white grid-margin">
                                     <div class="card-body">
                                         <div class="timeline-item-header">
-                                            <img src="" alt="" />
+                                            <img src="${changeName }" alt="" />
                                             <p>${d.memberNo }<span> 닉네임</span></p>
                                             <small>${d.createDate }</small>
                                         </div>
@@ -342,7 +342,7 @@ textarea{
                                     </div> <!-- "card-body" 끝-->
                                 </div>
                          </div>
-                         </c:forEach>
+                         <%-- </c:forEach>--%>
                             
                          
                          
