@@ -61,7 +61,7 @@
         font-size: 27px;
     }
     .find-pwd-area button {
-        background-color: RGB(28,154,206);
+  		background-color: #9b9b9b;
         color: white;
         width: 250px;
         height: 40px;
@@ -71,7 +71,6 @@
         font-family: 'Pretendard-Regular';
     }
     .find-pwd-area button:hover {
-        background-color: rgb(29, 172, 233);
         cursor: pointer;
     }
 	
@@ -142,7 +141,7 @@
             </form>
             
             <script>
-            	
+	         
             	function emailCert(){
             		
             		const $idInput = $('#checkId').val();
@@ -154,7 +153,6 @@
             			$('#checkResult').hide();
             			$('#emailCert-btn').html('재요청');	
             			
-            			
             			$.ajax({
             				method : 'post',
                 			url : 'findPwdMailRequest.me', 
@@ -162,10 +160,13 @@
                 					 checkEmail : $emailInput },
                 			success : function(result){
                 				if(result == 'successEmail'){
+                					
                 					$('#emailForm').append(
 									'<input id="checkCertNum" type="text" name="checkCertNum" placeholder="인증번호를 입력해주세요" style="width: 183px; margin-top:8px;">'+
 									'<button type="button" id="CertNum-btn" onclick="CertNum();" style="margin-left:13px;">확인</button>'+
 									'<div id="certMessage" style="font-size : 12px; color: red; margin: 5px;"><div>'
+									
+									
 									);
                 					
                 				}
@@ -202,6 +203,7 @@
             					if (certYN == true){ // 성공
             						$('#certMessage').show();
             						$('#certMessage').html('메일인증 완료');
+            						$('#submit').css('background-color', 'rgb(29, 172, 233)');
             						$('#submit').attr('disabled', false);
             					}
             					else{

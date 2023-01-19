@@ -70,7 +70,7 @@
         /* margin-bottom: 20px; */
     }
     .find-pwd-area button {
-        background-color: RGB(28,154,206);
+        background-color: #9b9b9b;
         color: white;
         width: 250px;
         height: 40px;
@@ -81,7 +81,6 @@
         margin-bottom: 20px;
     }
     .find-pwd-area button:hover {
-        background-color: rgb(29, 172, 233);
         cursor: pointer;
     }
     .checkResult {
@@ -120,14 +119,14 @@
                 
                 <h1 id="main-text">비밀번호 재설정</h1>
                 <div>
-                    <div><input type="password" name="memPwd" id="newPwd" placeholder="8~15자 (영문/숫자/특수문자)"></div>
+                    <div><input type="password" name="memPwd" id="memPwd" placeholder="8~15자 (영문/숫자/특수문자)" required></div>
                     <label class="checkResult" id="pwdCheck">&nbsp;</label>
                 </div>
                 <div>
-                    <div><input type="password" id="newPwd2" placeholder="비밀번호를 한번 더 입력해주세요"></div>
+                    <div><input type="password" id="memPwd2" placeholder="비밀번호를 한번 더 입력해주세요"></div>
                     <label class="checkResult"  id="pwdCheck2">&nbsp;</label>
                 </div>
-                <div><button type="submit">비밀번호 재설정</button></div>
+                <div><button disabled type="submit" id="pass-btn">비밀번호 재설정</button></div>
               
                	<div></div>
             </form>
@@ -135,5 +134,51 @@
     </div>
 
    	<jsp:include page="../common/footer.jsp"/>
+   	
+   	<script>
+	    // 비밀번호 유효성 검사
+	    $('#memPwd').focusout(function(){
+	        var regExp = /^[a-zA-Z\d!@#$%^]{8,15}$/;
+	        var $checkPwd = $('#memPwd').val();
+	
+	        if($checkPwd=="") {
+	            $('#pwdCheck').html('필수 입력사항입니다.');
+	        } else if(!regExp.test($checkPwd)) {
+	            $('#pwdCheck').html('8~15자의 영문 대 소문자, 숫자, 특수문자로 입력해주세요.');
+	        } else {
+	            $('#pwdCheck').html('');
+	        }
+	    });
+
+    	// 비밀번호 일치 검사
+    	$('#memPwd2').focusout(function(){
+        var $checkPwd = $('#memPwd').val();
+        var $checkPwd2 = $('#memPwd2').val();
+
+        // 비밀번호 수정시에만 체크
+        if($checkPwd != '') {
+            $('#memPwd2').attr('disabled', false);
+
+            if($checkPwd2=="") {
+                $('#pwdCheck2').html('필수 입력사항입니다.');
+                $('#pwdCheck2').css('color','rgb(47, 54, 82)');
+                
+            } else if(!($checkPwd2==$checkPwd)) {
+                $('#pass-btn').attr('disabled', true);
+                $('#pass-btn').css('background-color', '#9b9b9b');
+                $('#pwdCheck2').html('비밀번호가 일치하지 않습니다.');
+                $('#pwdCheck2').css('color','red');
+                
+            } else {
+            	$('#pwdCheck2').css('color','rgb(47, 54, 82)');
+                $('#pwdCheck2').html('비밀번호가 일치합니다');
+                $('#pass-btn').css('background-color', 'rgb(29, 172, 233)');
+            	$('#pass-btn').attr('disabled', false);
+            }
+        } 
+    });
+    	
+    	
+   	</script>
 </body>
 </html>

@@ -87,6 +87,23 @@
 			<!-- 신고 관련 -->
 			<mapping path="/reportForm"></mapping>
 			<mapping path="/reportInsert"></mapping>
+			
+			<!-- 회원 관련 -->
+			<mapping path="/logout.me"></mapping>
+			
+			<!-- 회원 관련 (마이페이지)-->
+			<mapping path="/myPageInfo.me"></mapping>
+			<mapping path="/myPageUpdate.me"></mapping>
+			<mapping path="/myPageDeleteForm.me"></mapping>
+			<mapping path="/myPageDelete.me"></mapping>
+			<mapping path="/myPagePoint.me"></mapping>
+			<mapping path="/myPageBoard.me"></mapping>
+			<mapping path="/myPageMoim.me"></mapping>
+			<mapping path="/myPageTeam.me"></mapping>
+			<mapping path="/myPageAtCheckForm.me"></mapping>
+			<mapping path="/myPageAtCheck.me"></mapping>
+			
+						
 			<beans:bean class="com.kh.cntp.common.interceptor.LoginInterceptor" id="loginInterceptor"></beans:bean>
 		</interceptor>
 	</interceptors>

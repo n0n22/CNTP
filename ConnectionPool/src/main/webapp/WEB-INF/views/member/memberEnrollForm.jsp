@@ -222,7 +222,7 @@
                     <div>  
                         <!-- 닉네임 -->
                         <!-- ajax로 중복확인할것-->
-                        <div><input type="text" id="memNickName" name="nickName" maxlength="12" required placeholder="닉네임 입력해주세요"></div>
+                        <div><input type="text" id="memNickName" name="nickName" maxlength="9" required placeholder="닉네임 입력해주세요"></div>
                         <label class="checkResult" id="nickNameCheck">&nbsp;</label>
                     </div>
                   
@@ -252,7 +252,7 @@
                     
                     <div>
                         <!-- 휴대전화 -->
-                        <div style="display: inline-block;"><input type="text" name="phone" maxlength="11" required oninput="this.value=this.value.replace(/[^-0-9]/g,'');" placeholder="핸드폰번호를 입력해주세요 - 포함"></div>
+                        <div style="display: inline-block;"><input type="text" name="phone" maxlength="13" required oninput="this.value=this.value.replace(/[^-0-9]/g,'');" placeholder="핸드폰번호를 입력해주세요 - 포함"></div>
                     </div>
 					
 					<div>
