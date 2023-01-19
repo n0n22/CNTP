@@ -299,7 +299,7 @@
 						}
 					// 채팅이 없을 때
 				}else{
-					result = '채팅내역이 없습니다.';
+					result = '채팅내역이 없습니다.';n
 				}
 				
 				$('#chatContent-area').html(result);

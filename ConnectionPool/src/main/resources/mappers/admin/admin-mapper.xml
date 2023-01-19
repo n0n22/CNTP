@@ -404,14 +404,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE
 		<if test="reportBoard == 'board'">
 		       BOARD
-		</if>
-		<if test="reportBoard == 'board_reply'">		
-		       BOARD_REPLY
-		</if>
 		   SET
 		       STATUS = 'R'
 		 WHERE
-		       BOARD_NO = #{boardNo}
+		       BOARD_NO = #{boardNo}     
+		</if>
+		<if test="reportBoard == 'board_reply'">		
+		       BOARD_REPLY
+		   SET
+		       STATUS = 'R'
+		 WHERE
+		       COMMENT_NO = #{boardNo}
+		</if>
 	</update>
 	
 	
@@ -431,14 +435,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE
 		<if test="reportBoard == 'board'">
 		       BOARD
-		</if>
-		<if test="reportBoard == 'board_reply'">		
-		       BOARD_REPLY
-		</if>
 		   SET
 		       STATUS = 'Y'
 		 WHERE
-		       BOARD_NO = #{boardNo}
+		       BOARD_NO = #{boardNo}     
+		</if>
+		<if test="reportBoard == 'board_reply'">		
+		       BOARD_REPLY
+		   SET
+		       STATUS = 'Y'
+		 WHERE
+		       COMMENT_NO = #{boardNo}
+		</if>
 	</update>
 	
 	<!-- 신고글 확정 처리  -->
