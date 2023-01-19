@@ -192,7 +192,7 @@
 				
 		        <!-- 입력 div -->
 		        <div class="align-left">
-			            <input type="text" class="form-control form-control-lg" id="chatContent-input" onkeyup="enterFn()" required maxlength="150">
+			            <input type="text" class="form-control form-control-lg" id="chatContent-input" onkeypress="enterFn()" required maxlength="150">
 			            <button class="btn btn-success" style="width:70px" onclick="insertChatContent();">입력</button>
 		        </div>
 		        
@@ -218,13 +218,14 @@
 		
 	function scrollDown(){
 		selectChattingList();
-		$("#chatContent-area").scrollTop(5000000);
+		$("#chatContent-area").scrollTop(500000000);
 	}
 		
 	// enter 치면 insert 되게 만들어줌
 	function enterFn(){
         if(window.event.keyCode == 13){
         	insertChatContent();
+        	scrollDown();
         };
     }
     
@@ -300,6 +301,7 @@
 				}
 				
 				$('#chatContent-area').html(result);
+				scrollDown();
 			},
 			error : function(){
 				console.log('실패요');
