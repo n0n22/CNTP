@@ -46,7 +46,8 @@
                     </tr>
                     <tr>
                         <th><label for="memNo">작성자</label></th>
-                        <td><input type="text" id="memNo" class="form-control" value="${b.memberNo}" name="memberNo" readonly></td>
+                        <td><input type="text" id="memNo" class="form-control"  value="${b.nickName}" name="nickName" readonly></td>
+                        <input type="hidden" id="nickName" class="form-control" value="${b.memberNo}" name="memberNo" readonly>
                     </tr>
                     <tr>
                         <th><label for="content">내용</label></th>

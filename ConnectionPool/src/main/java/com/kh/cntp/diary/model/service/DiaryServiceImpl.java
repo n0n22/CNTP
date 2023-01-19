@@ -31,13 +31,7 @@ public class DiaryServiceImpl implements DiaryService {
 		
 		return diaryDao.insertDiary(sqlSession, d);
 	}
-	/*
-	@Override
-	public int increaseCount(int diaryNo) {
-		
-		return diaryDao.increaseCount(sqlSession, diaryNo );
-	}
-	*/
+	
 	@Override
 	public Diary selectDiary(int diaryNo) {
 		
