@@ -222,7 +222,7 @@
                     <div>  
                         <!-- 닉네임 -->
                         <!-- ajax로 중복확인할것-->
-                        <div><input type="text" id="memNickName" name="nickName" maxlength="12" required placeholder="닉네임 입력해주세요"></div>
+                        <div><input type="text" id="memNickName" name="nickName" maxlength="9" required placeholder="닉네임 입력해주세요"></div>
                         <label class="checkResult" id="nickNameCheck">&nbsp;</label>
                     </div>
                   
