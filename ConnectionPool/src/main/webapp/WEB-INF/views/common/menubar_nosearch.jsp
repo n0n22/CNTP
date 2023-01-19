@@ -20,7 +20,10 @@
     
     <!-- ajax -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    
+    <!-- jQuery 자동완성 라이브러리-->
 	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+	<!-- jQuery 자동완성 스타일시트 -->
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css">
     
     
@@ -270,12 +273,12 @@
     	function showProfile(event){
     		
     		// 회원 정보를 조회해오는 기능
-    		console.log($(event.target));
     		var $memNo = $(event.target).attr('ingido');
     		
     		$.ajax({
     			url : 'showProfile.me',
     			data : {memNo:$memNo},
+    			type : "post",
     			success : function(m){
     				// 로그인한 유저만 회원 프로필을 띄울 수 있음
     				if(${empty loginMember}){
@@ -374,8 +377,7 @@
     	}
     	$(function(){
     		var cntp =     
-    		`
-    	         _____  _   _  _____ ______
+    		`    	         _____  _   _  _____ ______
     	        /  __ \\| \\ | ||_   _|| ___ \\
     	        | /  \\/|  \\| |  | |  | |_/ /
     	        | |    | . \` |  | |  |  __/
