@@ -171,10 +171,10 @@
 				        <caption class="caption">전체 인기도 랭킹</caption>
 				        <thead>
 				            <tr>
-				                <th align="center" scope="col" width="60px">랭킹</th>
-				                <th align="center" scope="col" width="60px">닉네임</th>
-				                <th align="center" scope="col" width="180px">지역</th>
-				                <th align="center" scope="col" width="150px">인기도</th>
+				                <th align="center" scope="col" width="80px">랭킹</th>
+				                <th align="center" scope="col" width="120px">닉네임</th>
+				                <th align="center" scope="col" width="140px">지역</th>
+				                <th align="center" scope="col" width="110px">인기도</th>
 				            </tr>
 				        </thead>
 				        <tbody align="center">
@@ -191,9 +191,9 @@
 				        <thead>
 				            <tr>
 				                <th align="center" scope="col" width="80px">지역</th>
-				                <th align="center" scope="col" width="90px">닉네임</th>
-				                <th align="center" scope="col" width="180px">팀이름</th>
-				                <th align="center" scope="col" width="100px">인기도</th>
+				                <th align="center" scope="col" width="120px">닉네임</th>
+				                <th align="center" scope="col" width="140px">팀이름</th>
+				                <th align="center" scope="col" width="110px">인기도</th>
 				            </tr>
 				        </thead>
 				        <tbody align="center">
