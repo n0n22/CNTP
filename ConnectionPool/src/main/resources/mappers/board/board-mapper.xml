@@ -151,7 +151,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	</update>
 	
+	<select id="selectSearchCount" resultType="_int" parameterType="hashmap">
+		select
+				count(*)
+		from
+				board b
+		join
+				member using (mem_no)
+		where 	
+				b.status = 'Y'					
+		<if test="condition == 'nickName'">
+		AND NICKNAME
+		</if>
+		<if test="condition == 'content'">
+		AND BOARD_CONTENT
+		</if>
+		<if test="condition == 'title'">
+		AND BOARD_TITLE
+		</if>
+		 LIKE '%' || #{ keyword } || '%'
 	
+	</select>		
+	
+	
+	
+	
+	
+
 	
 	
 	

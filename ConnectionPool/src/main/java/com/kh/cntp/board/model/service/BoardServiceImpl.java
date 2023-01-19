@@ -1,6 +1,7 @@
 package com.kh.cntp.board.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,12 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.insertBoardReply(sqlSession, r);
 	}
 
+	
+	@Override
+	public int selectSearchCount(HashMap<String, String> map) {
+		
+		return boardDao.selectSearchCount(sqlSession, map);
+	}
 	
 	
 	

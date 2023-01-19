@@ -1,6 +1,7 @@
 package com.kh.cntp.board.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.cntp.board.model.vo.Board;
 import com.kh.cntp.common.model.vo.PageInfo;
@@ -39,7 +40,10 @@ public interface BoardService {
 		//댓글  작성서비스 (ajax) (insert)
 		int insertBoardReply(Reply r);
 		
-	
+		//검색. 
+		int selectSearchCount(HashMap<String, String> map);
+		
+		
 	
 	
 	
