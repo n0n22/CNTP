@@ -205,18 +205,19 @@
 	
 	
 	<script>
-	
+	var len = $("#chatContent-area")[0].scrollHeight + 10000;
 	$(function(){
 			// 계속 새로고침해서 채팅 보이게 해주는 메소드
 			setInterval(selectChattingList, 700);
 			// 스크롤은 맨 아래로
 			//$("#chatContent-area").scrollTop($("#chatContent-area")[0].scrollHeight);
 			scrollDown();
-		})
+	})
 		
 	function scrollDown(){
 		selectChattingList();
-		$("#chatContent-area").scrollTop(500000000);
+		len = $("#chatContent-area")[0].scrollHeight + 20000;
+		$("#chatContent-area").scrollTop(len);
 	}
 		
 	// enter 치면 insert 되게 만들어줌
@@ -238,7 +239,7 @@
 	
 	
 	// ajax로 select 해오는 함수
-	function selectChattingList(){
+	function selectChattingList(keyword){
 		$.ajax({
 			url : 'ajaxSelectChatList.mo',
 			type : 'post',
@@ -290,6 +291,10 @@
 							           +         '</div>'
 							           +     '</div>'
 							           +'</div>';
+							           
+							           
+							           
+								
 							}
 						}
 					// 채팅이 없을 때
@@ -299,11 +304,17 @@
 				
 				$('#chatContent-area').html(result);
 				//scrollDown();
+				//$("#chatContent-area").scrollTop(500000000);
+				if(keyword){
+					console.log('들어는 오니?');
+					scrollDown();
+				}
 			},
 			error : function(){
 				console.log('실패요');
 			}
 		})
+		
 		
 	}
 	
@@ -322,17 +333,23 @@
 				//console.log(result);
 				if(result == 'NNNNY'){
 					$('#chatContent-input').val('');
-					selectChattingList();
+					selectChattingList('keyword');
+					//scrollDown();
 				} else{
 					window.alert('잠시 후에 다시 시도해주세요');
 				}
 				
+				//scrollDown();
+			},
+			complete : function(){
 				scrollDown();
+				
 			},
 			error : function(){
 				console.log('실패요');
 			}
 		})
+		//scrollDown();
 	}
 		
 	
