@@ -294,7 +294,7 @@ textarea{
                 </div>
                     
                    
-                    <%-- <c:forEach items="${list }" var="d">--%>
+                     <c:forEach items="${list }" var="d">
                     <div class="profile-timeline">
                                 <div class="card card-white grid-margin">
                                     <div class="card-body">
@@ -342,7 +342,7 @@ textarea{
                                     </div> <!-- "card-body" 끝-->
                                 </div>
                          </div>
-                         <%-- </c:forEach>--%>
+                          </c:forEach>
                             
                          
                          

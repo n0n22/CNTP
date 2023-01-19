@@ -144,10 +144,10 @@
 
             <br clear="both"><br>
 
-            <form id="searchForm" action="" method="get" align="center">
+            <form id="searchForm" action="SearchNick.bo" method="get" align="center">
                 <div class="select">
                     <select class="custom-select" name="condition">
-                        <option value="memNo">작성자</option>
+                        <option value="nickName">작성자</option>
                         <option value="title">제목</option>
                         <option value="content">내용</option>
                     </select>
