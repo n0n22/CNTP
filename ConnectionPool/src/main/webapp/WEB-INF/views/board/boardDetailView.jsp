@@ -164,7 +164,7 @@
             <hr>
 	        <div>
 	        	<c:if test="${ not empty loginMember }">
-	        		<button class="btn btn-sm btn-danger" onclick="openReportForm('board');">신고</button>
+	        		<button class="btn btn-outline-danger" onclick="openReportForm('board');">신고</button>
 	        	</c:if>
         		<form id="reportvalue">
 					<input type="hidden" value="" name="memNickName" id="report-memNickName">
@@ -231,10 +231,14 @@
     				for(let i in list){
     					console.log(list[i]);
     					value += '<tr>'
-							   + '<th>' + list[i].writer  + '</th>'
-							   + '<th>' + list[i].commentContent + '</th>'
-							   + '<th>' + list[i].commentDate   + '</th>'
-							   + '<td><button class="btn btn-sm btn-danger" onclick="openReportForm(' + "'board_reply'" + ', this, ' + list[i].commentNo + ');">신고</button></td>'
+							   + '<th width="15%">' + list[i].writer  + '</th>'
+							   + '<th width="45%">' + list[i].commentContent + '</th>'
+							   + '<th width="20%">' + list[i].commentDate   + '</th>'
+							   + '<th width="20%">'
+							   			+ '<button class="btn btn-sm btn-warning">수정</button>'
+							   			+ '<button class="btn btn-sm btn-danger">삭제</button>'
+							   			+ '<button class="btn btn-sm btn-outline-danger" onclick="openReportForm(' + "'board_reply'" + ', this, ' + list[i].commentNo + ');">신고</button>'
+							   + '</th>' 
 							   + '</tr>';
 						
     				}
