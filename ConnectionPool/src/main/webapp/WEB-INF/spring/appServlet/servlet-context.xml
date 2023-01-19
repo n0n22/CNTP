@@ -86,6 +86,7 @@
 			
 			<!-- 신고 관련 -->
 			<mapping path="/reportForm"></mapping>
+			<mapping path="/reportInsert"></mapping>
 			
 			<!-- 회원 관련 -->
 			<mapping path="/logout.me"></mapping>
