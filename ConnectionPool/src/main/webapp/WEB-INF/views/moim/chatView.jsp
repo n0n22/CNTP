@@ -65,6 +65,10 @@
 		border-radius: 50%;
 	}
 	
+	.nicknameFont{
+		font-size : medium;
+	}
+	
 
 </style>
 
@@ -139,11 +143,11 @@
 								        <div id="chatAlign-other"> 
 								            <div style="width : 500px," class="align-left">
 								                <div style="max-width: 270px; margin-left: 5px;">
-								                    <div style="height : 20px">
-								                      		${ chat.nickname }
+								                    <div style="height : 20px" onclick="showProfile(event)" align="left">
+								                      	<p ingido="${chat.memNo}" title="프로필 보기">${ chat.nickname }</p>
 								                    </div>
 								                    <div class="speechBubble-other">
-								                    	<P>${ chat.chatContent }</P>
+								                    	<p>${ chat.chatContent }</p>
 													</div>	
 												</div>
 								                
@@ -249,8 +253,8 @@
 								result +='<div id="chatAlign-other">'
 									   +    '<div style="width : 500px," class="align-left">'
 							           +        '<div style="max-width: 270px; margin-left: 5px;">'
-							           +             '<div style="height : 20px">'
-							           +                list[i].nickname
+							           +             '<div style="height : 20px" align="left">'
+							           +                '<p class="nicknameFont" ingido="' + list[i].memNo + '" title="프로필 보기" class="groupMemberNickname" onclick="showProfile(event)">' + list[i].nickname + '</p>'
 							           +             '</div>'
 							           +		     '<div class="speechBubble-other">'
 							           +            	'<P>' + list[i].chatContent + '</P>'
