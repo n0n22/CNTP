@@ -247,137 +247,87 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       COUNT(*)
 		  FROM
 		        (
-				        SELECT
-						       R.REPORT_NO
-						       ,B.MEM_NO
-						       ,B.MEM_ID
-						       ,R.BOARD_NO
-						       ,R.REPORT_BOARD
-						       ,R.REPORT_REASON
-						       ,R.REPORTER
-						       ,M.MEM_ID "REPORTER_ID"
-						       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
-						       ,R.REPORT_RESULT
-						       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE"
-						  FROM
-						       REPORT "R"
-						  JOIN
-						       (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
-						          FROM BOARD
-						          JOIN MEMBER USING(MEM_NO)) "B" ON (B.BOARD_NO = R.BOARD_NO)
-						  JOIN
-						       MEMBER "M" ON(M.MEM_NO = R.REPORTER)
-						 WHERE
-						       REPORT_RESULT
+				  SELECT
+			               REPORT_NO
+			               ,DECODE(REPORT_BOARD, 'board', B.MEM_NO, 'board_reply', C.WRITER) "MEM_NO"
+			               ,DECODE(REPORT_BOARD, 'board', M1.MEM_ID, 'board_reply', M2.MEM_ID) "MEM_ID"
+			               ,R.BOARD_NO
+			               ,REPORT_BOARD
+			               ,REPORT_REASON
+			               ,REPORTER
+			               ,RM.MEM_ID "REPOTER_ID"
+			               ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
+			               ,REPORT_RESULT
+			               ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE"
+			          FROM
+			               REPORT "R"
+			          JOIN
+			               BOARD "B" ON (R.BOARD_NO = B.BOARD_NO)
+			          JOIN
+			               BOARD_REPLY "C" ON (R.BOARD_NO = C.COMMENT_NO)
+			          JOIN
+			               MEMBER "M1" ON (B.MEM_NO = M1.MEM_NO)
+			          JOIN
+			               MEMBER "M2" ON (C.WRITER = M2.MEM_NO)
+			          JOIN
+			               MEMBER "RM" ON (R.REPORTER = RM.MEM_NO)
+			       where
+			               REPORT_RESULT
 				        <if test="result == 'yet'">
 							   is null			 
 						</if>
 						<if test="result == 'end'">
 							   is not null
 						</if>
-				        AND REPORT_BOARD = 'board'
-					UNION
-						SELECT
-						       R.REPORT_NO
-						       ,C.MEM_NO
-						       ,C.MEM_ID
-						       ,R.BOARD_NO
-						       ,R.REPORT_BOARD
-						       ,R.REPORT_REASON
-						       ,R.REPORTER
-						       ,M.MEM_ID "REPORTER_ID"
-						       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
-						       ,R.REPORT_RESULT
-						       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE"
-						  FROM
-						       REPORT "R"
-						  JOIN
-						       (SELECT MEM_ID, MEM_NO, NICKNAME, COMMENT_NO, COMMENT_CONTENT
-						          FROM BOARD_REPLY
-						          JOIN MEMBER ON(MEM_NO = WRITER)) "C" ON (C.COMMENT_NO = R.BOARD_NO)
-						  JOIN
-						       MEMBER "M" ON(M.MEM_NO = R.REPORTER)
-						 WHERE
-						       REPORT_RESULT 
-				        <if test="result == 'yet'">
-							   is null			 
-						</if>
-						<if test="result == 'end'">
-							   is not null
-						</if>
-				           AND REPORT_BOARD = 'board_reply'
-				           order by report_date asc
-		           )
+			         ORDER
+			            BY
+			               REPORT_NO ASC
+		          )
 	</select>
 	
 	
 	<!-- 신고 목록 조회 -->
 	<select id="selectReportList" parameterType="string" resultMap="reportResultSet">
 		SELECT
-		       R.REPORT_NO
-		       ,B.MEM_NO
-		       ,B.MEM_ID
-		       ,R.BOARD_NO
-		       ,R.REPORT_BOARD
-		       ,R.REPORT_REASON
-		       ,R.REPORTER
-		       ,M.MEM_ID "REPORTER_ID"
-		       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
-		       ,R.REPORT_RESULT
-		       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE"
-		  FROM
-		       REPORT "R"
-		  JOIN
-		       (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
-		          FROM BOARD
-		          JOIN MEMBER USING(MEM_NO)) "B" ON (B.BOARD_NO = R.BOARD_NO)
-		  JOIN
-		       MEMBER "M" ON(M.MEM_NO = R.REPORTER)
-		 WHERE
-		       REPORT_RESULT
-        <if test="result == 'yet'">
-			   is null			 
-		</if>
-		<if test="result == 'end'">
-			   is not null
-		</if>
-        AND REPORT_BOARD = 'board'
-	UNION
-		SELECT
-		       R.REPORT_NO
-		       ,C.MEM_NO
-		       ,C.MEM_ID
-		       ,R.BOARD_NO
-		       ,R.REPORT_BOARD
-		       ,R.REPORT_REASON
-		       ,R.REPORTER
-		       ,M.MEM_ID "REPORTER_ID"
-		       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
-		       ,R.REPORT_RESULT
-		       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE"
-		  FROM
-		       REPORT "R"
-		  JOIN
-		       (SELECT MEM_ID, MEM_NO, NICKNAME, COMMENT_NO, COMMENT_CONTENT
-		          FROM BOARD_REPLY
-		          JOIN MEMBER ON(MEM_NO = WRITER)) "C" ON (C.COMMENT_NO = R.BOARD_NO)
-		  JOIN
-		       MEMBER "M" ON(M.MEM_NO = R.REPORTER)
-		 WHERE
-		       REPORT_RESULT
-        <if test="result == 'yet'">
-			   is null			 
-		</if>
-		<if test="result == 'end'">
-			   is not null
-		</if>
-           AND REPORT_BOARD = 'board_reply'
-           order by report_date asc
+               REPORT_NO
+               ,DECODE(REPORT_BOARD, 'board', B.MEM_NO, 'board_reply', C.WRITER) "MEM_NO"
+               ,DECODE(REPORT_BOARD, 'board', M1.MEM_ID, 'board_reply', M2.MEM_ID) "MEM_ID"
+               ,R.BOARD_NO
+               ,REPORT_BOARD
+               ,REPORT_REASON
+               ,REPORTER
+               ,RM.MEM_ID "REPOTER_ID"
+               ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
+               ,REPORT_RESULT
+               ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE"
+          FROM
+               REPORT "R"
+          JOIN
+               BOARD "B" ON (R.BOARD_NO = B.BOARD_NO)
+          JOIN
+               BOARD_REPLY "C" ON (R.BOARD_NO = C.COMMENT_NO)
+          JOIN
+               MEMBER "M1" ON (B.MEM_NO = M1.MEM_NO)
+          JOIN
+               MEMBER "M2" ON (C.WRITER = M2.MEM_NO)
+          JOIN
+               MEMBER "RM" ON (R.REPORTER = RM.MEM_NO)
+       where
+               REPORT_RESULT
+	        <if test="result == 'yet'">
+				   is null			 
+			</if>
+			<if test="result == 'end'">
+				   is not null
+			</if>
+         ORDER
+            BY
+               REPORT_NO ASC
 	</select>
 	
 	<!-- 신고 상세 조회 -->
 	<select id="selectReport" parameterType="report" resultMap="reportResultSet">
-		SELECT 
+		SELECT
 		       R.REPORT_NO
 		       ,R.REPORT_BOARD
 		       ,R.BOARD_NO      
@@ -386,22 +336,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
 		       ,R.REPORT_RESULT
 		       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE" 
-		       ,DECODE(#{reportBoard}, 'board', B.MEM_NO, 'board_reply', C.MEM_NO) "MEM_NO"
-		       ,DECODE(#{reportBoard}, 'board', B.MEM_ID, 'board_reply', C.MEM_ID) "MEM_ID"
-		       ,DECODE(#{reportBoard}, 'board', B.CONTENT, 'board_reply', C.CONTENT) "CONTENT"
-		       ,M.MEM_ID "REPORTER_ID" 
+		       ,DECODE(#{reportBoard}, 'board', B.MEM_NO, 'board_reply', C.WRITER) "MEM_NO"
+		       ,DECODE(#{reportBoard}, 'board', M1.MEM_ID, 'board_reply', M2.MEM_ID) "MEM_ID"
+		       ,DECODE(#{reportBoard}, 'board', B.CONTENT, 'board_reply', C.COMMENT_CONTENT) "CONTENT"
+		       ,RM.MEM_ID "REPORTER_ID" 
 		  FROM
 		       REPORT "R"
 		  JOIN
-		       (SELECT MEM_ID, MEM_NO, NICKNAME, COMMENT_NO, COMMENT_CONTENT "CONTENT"
-		          FROM BOARD_REPLY
-		          JOIN MEMBER ON(MEM_NO = WRITER)) "C" ON (C.COMMENT_NO = R.BOARD_NO)
-          JOIN
-		       (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, CONTENT
-		          FROM BOARD
-		          JOIN MEMBER USING(MEM_NO)) "B" ON (B.BOARD_NO = R.BOARD_NO)
+		       BOARD "B" ON (R.BOARD_NO = B.BOARD_NO)
 		  JOIN
-		       MEMBER "M" ON(M.MEM_NO = R.REPORTER)
+		       BOARD_REPLY "C" ON (R.BOARD_NO = C.COMMENT_NO)
+		  JOIN
+		       MEMBER "M1" ON (B.MEM_NO = M1.MEM_NO)
+		  JOIN
+		       MEMBER "M2" ON (C.WRITER = M2.MEM_NO)
+		  JOIN
+		       MEMBER "RM" ON (R.REPORTER = RM.MEM_NO)
 		 WHERE
 		       REPORT_NO = #{reportNo}
 	</select>
@@ -454,20 +404,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE
 		<if test="reportBoard == 'board'">
 		       BOARD
-		</if>
-		<if test="reportBoard == 'board_reply'">		
-		       BOARD_REPLY
-		</if>
 		   SET
 		       STATUS = 'R'
 		 WHERE
-		<if test="reportBoard == 'board'">
-		       BOARD_NO
+		       BOARD_NO = #{boardNo}     
 		</if>
 		<if test="reportBoard == 'board_reply'">		
-		       COMMENT_NO
+		       BOARD_REPLY
+		   SET
+		       STATUS = 'R'
+		 WHERE
+		       COMMENT_NO = #{boardNo}
 		</if>
-		       = #{boardNo}
 	</update>
 	
 	
@@ -487,14 +435,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE
 		<if test="reportBoard == 'board'">
 		       BOARD
-		</if>
-		<if test="reportBoard == 'board_reply'">		
-		       BOARD_REPLY
-		</if>
 		   SET
 		       STATUS = 'Y'
 		 WHERE
-		       BOARD_NO = #{boardNo}
+		       BOARD_NO = #{boardNo}     
+		</if>
+		<if test="reportBoard == 'board_reply'">		
+		       BOARD_REPLY
+		   SET
+		       STATUS = 'Y'
+		 WHERE
+		       COMMENT_NO = #{boardNo}
+		</if>
 	</update>
 	
 	<!-- 신고글 확정 처리  -->

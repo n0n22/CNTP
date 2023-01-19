@@ -16,6 +16,15 @@
 		align-content: center;
 		align-items:center;
 	}
+	
+	.pagingParent{
+		margin: auto;
+		text-align: center;
+	}
+	
+	.pagingArea{
+		display: inline-block;
+	}
 </style>
 </head>
 <body>
@@ -104,32 +113,33 @@
 				</tbody>
 			</table>
 			
-			<div id="pagingArea" align="center">
-				<ul class="pagination" align="center">
-					<c:choose>
-						<c:when test="${ pi.currentPage ne 1 }">
-							<li class="page-item"><a class="page-link" href="teamList.mo?cpage=${ pi.currentPage - 1 }&teamArea=${ team.teamArea }&teamMember=${ team.teamMember }&keyword=${ team.keyword }">Previous</a></li>
-						</c:when>
-						<c:otherwise>
-							<li class="page-item disabled"><a class="page-link" disabled>Previous</a></li>
-						</c:otherwise>
-					</c:choose>
-					
-					<c:forEach begin="${pi.startPage }" end="${pi.endPage }" var="p">
-						<li class="page-item"><a class="page-link" href="teamList.mo?cpage=${ p }&teamArea=${ team.teamArea }&teamMember=${ team.teamMember }&keyword=${ team.keyword }">${ p }</a></li>
-					</c:forEach>
-					
-					<c:choose>
-						<c:when test="${ pi.currentPage ne pi.maxPage }">
-							<li class="page-item"><a class="page-link" href="teamList.mo?cpage=${ pi.currentPage + 1 }&teamArea=${ team.teamArea }&teamMember=${ team.teamMember }&keyword=${ team.keyword }">Next</a></li>
-						</c:when>
-						<c:otherwise>
-							<li class="page-item disabled"><a class="page-link" disabled>Next</a></li>
-						</c:otherwise>
-					</c:choose>
-				</ul>
+			<div class="pagingParent">
+				<div class="pagingArea" align="center">
+					<ul class="pagination" align="center">
+						<c:choose>
+							<c:when test="${ pi.currentPage ne 1 }">
+								<li class="page-item"><a class="page-link" href="teamList.mo?cpage=${ pi.currentPage - 1 }&teamArea=${ team.teamArea }&teamMember=${ team.teamMember }&keyword=${ team.keyword }">Previous</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item disabled"><a class="page-link" disabled>Previous</a></li>
+							</c:otherwise>
+						</c:choose>
+						
+						<c:forEach begin="${pi.startPage }" end="${pi.endPage }" var="p">
+							<li class="page-item"><a class="page-link" href="teamList.mo?cpage=${ p }&teamArea=${ team.teamArea }&teamMember=${ team.teamMember }&keyword=${ team.keyword }">${ p }</a></li>
+						</c:forEach>
+						
+						<c:choose>
+							<c:when test="${ pi.currentPage ne pi.maxPage }">
+								<li class="page-item"><a class="page-link" href="teamList.mo?cpage=${ pi.currentPage + 1 }&teamArea=${ team.teamArea }&teamMember=${ team.teamMember }&keyword=${ team.keyword }">Next</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item disabled"><a class="page-link" disabled>Next</a></li>
+							</c:otherwise>
+						</c:choose>
+					</ul>
+				</div>
 			</div>
-			
 			<c:choose>
 				<c:when test="${ empty loginMember }">
 				

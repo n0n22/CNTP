@@ -26,6 +26,15 @@
         .group-wrap{
             width: 1000px;
         }
+        
+        .paging-parent{
+        	margin: auto;
+        	text-align : center;
+        }
+        
+        .paging-area{
+        	display : inline-block;
+        }
 
 </style>
 </head>
@@ -137,36 +146,37 @@
 
     
 
-               
+            <br>
 
                
             
-
-            <div class="paging-area" align="center">
-                <ul class="pagination" align="center">
-					<c:choose>
-						<c:when test="${ pi.currentPage ne 1 }">
-							<li class="page-item"><a class="page-link" href="groupList.mo?cpage=${ pi.currentPage - 1 }&groupArea=${ group.groupArea }&gender=${ group.gender }&level=${ group.level }&groupMember=${group.groupMember}">Previous</a></li>
-						</c:when>
-						<c:otherwise>
-							<li class="page-item disabled"><a class="page-link" disabled>Previous</a></li>
-						</c:otherwise>
-					</c:choose>
-					
-					<c:forEach begin="${pi.startPage }" end="${pi.endPage }" var="p">
-						<li class="page-item"><a class="page-link" href="groupList.mo?cpage=${ p }&groupArea=${ group.groupArea }&gender=${ group.gender }&level=${ group.level }&groupMember=${group.groupMember}">${ p }</a></li>
-					</c:forEach>
-					
-					<c:choose>
-						<c:when test="${ pi.currentPage ne pi.maxPage }">
-							<li class="page-item"><a class="page-link" href="groupList.mo?cpage=${ pi.currentPage + 1 }&groupArea=${ group.groupArea }&gender=${ group.gender }&level=${ group.level }&groupMember=${group.groupMember}">Next</a></li>
-						</c:when>
-						<c:otherwise>
-							<li class="page-item disabled"><a class="page-link" disabled>Next</a></li>
-						</c:otherwise>
-					</c:choose>
-				</ul>
-            </div>
+			<div class="paging-parent">
+	            <div class="paging-area" align="center">
+	                <ul class="pagination" align="center">
+						<c:choose>
+							<c:when test="${ pi.currentPage ne 1 }">
+								<li class="page-item"><a class="page-link" href="groupList.mo?cpage=${ pi.currentPage - 1 }&groupArea=${ group.groupArea }&gender=${ group.gender }&level=${ group.level }&groupMember=${group.groupMember}">Previous</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item disabled"><a class="page-link" disabled>Previous</a></li>
+							</c:otherwise>
+						</c:choose>
+						
+						<c:forEach begin="${pi.startPage }" end="${pi.endPage }" var="p">
+							<li class="page-item"><a class="page-link" href="groupList.mo?cpage=${ p }&groupArea=${ group.groupArea }&gender=${ group.gender }&level=${ group.level }&groupMember=${group.groupMember}">${ p }</a></li>
+						</c:forEach>
+						
+						<c:choose>
+							<c:when test="${ pi.currentPage ne pi.maxPage }">
+								<li class="page-item"><a class="page-link" href="groupList.mo?cpage=${ pi.currentPage + 1 }&groupArea=${ group.groupArea }&gender=${ group.gender }&level=${ group.level }&groupMember=${group.groupMember}">Next</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item disabled"><a class="page-link" disabled>Next</a></li>
+							</c:otherwise>
+						</c:choose>
+					</ul>
+	            </div>
+	        </div>
 
         </div>
 
