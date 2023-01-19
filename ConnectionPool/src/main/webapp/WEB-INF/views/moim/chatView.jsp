@@ -212,8 +212,8 @@
 			// 계속 새로고침해서 채팅 보이게 해주는 메소드
 			setInterval(selectChattingList, 700);
 			// 스크롤은 맨 아래로
-			$("#chatContent-area").scrollTop($("#chatContent-area")[0].scrollHeight);
-			
+			//$("#chatContent-area").scrollTop($("#chatContent-area")[0].scrollHeight);
+			scrollDown();
 		})
 		
 	function scrollDown(){
