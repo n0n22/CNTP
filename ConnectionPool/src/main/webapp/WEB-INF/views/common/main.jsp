@@ -38,7 +38,7 @@
 			text-align: center;
 		}
 		
-		.ranking-area tbody tr:hover{
+		.row1 tbody tr:hover, .row2 tbody tr:hover{
 			cursor: pointer;
 			background: RGB(248,204,215);
 		}

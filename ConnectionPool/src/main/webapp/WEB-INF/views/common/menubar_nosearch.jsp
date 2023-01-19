@@ -270,12 +270,12 @@
     	function showProfile(event){
     		
     		// 회원 정보를 조회해오는 기능
-    		console.log($(event.target));
     		var $memNo = $(event.target).attr('ingido');
     		
     		$.ajax({
     			url : 'showProfile.me',
     			data : {memNo:$memNo},
+    			type : "post",
     			success : function(m){
     				// 로그인한 유저만 회원 프로필을 띄울 수 있음
     				if(${empty loginMember}){
