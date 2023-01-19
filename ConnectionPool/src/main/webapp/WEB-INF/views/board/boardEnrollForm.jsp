@@ -49,9 +49,9 @@
                         <td><input type="text" id="title" class="form-control" name="title" required></td>
                     </tr>
                     <tr>
-                        <th><label for="mem_no">작성자</label></th>
-                        <td><input type="text" id="memNo" class="form-control" value="${loginMember.memNo }" name="memberNo" readonly></td>
-                        <input type="hidden" id="nickname" class="form-control" value="${loginMember.nickName}" name="nickName" readonly>
+                        <th><label for="memberNo">작성자</label></th>
+                         <td><input type="text" id="memNo" class="form-control" value="${loginMember.memNo }" name="memberNo" readonly></td>
+                        <input type="hidden" id="nickName" class="form-control" value="${loginMember.nickName}" name="nickName" readonly>
                     </tr>
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>

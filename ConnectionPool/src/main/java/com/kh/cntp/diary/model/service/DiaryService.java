@@ -18,11 +18,8 @@ public interface DiaryService {
 	
 	// 게시글 작성하기 서비스(insert)
 	int insertDiary(Diary d);
-	
-	// 게시글 상세 조회 서비스
-	// 게시글 조회수 증가(update)->조회수증가 좋아요때문에 필요. 
-	//int increaseCount(int boardNo);
-	
+
+
 	// 게시글 상세 조회(select)
 	Diary selectDiary(int diaryNo);
 	
