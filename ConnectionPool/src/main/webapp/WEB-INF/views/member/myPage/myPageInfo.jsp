@@ -249,14 +249,18 @@
             <div class="inline-block">
                 <div id="name-area" style="cursor: default;"><span id="userName">${sessionScope.loginMember.nickName}</span> 님
                     <br>
-                    <c:if test="${ sessionScope.loginMember.badgeChangeName == null }">
-                    	노뱃지
-                   	</c:if>
-                   	<img src="${ sessionScope.loginMember.badgeChangeName }" width="30px">
-                   	<c:if test="${ sessionScope.loginMember.teamName == null }">
-                   		무소속	
-                   	</c:if>
-                   		<span>${ sessionScope.loginMember.teamName }</span>
+                    <c:choose>
+                    	<c:when test="${sessionScope.loginMember.teamName == null}">
+                    		무소속	
+                    	</c:when>
+                    	<c:otherwise>
+		                    <c:if test="${ sessionScope.loginMember.badgeChangeName == null }">
+		                    	<img alt="" src="resources/upfiles/cntp_2023011310300944248.png" width="30px">
+		                   	</c:if>
+		                   	<img src="${ sessionScope.loginMember.badgeChangeName }" width="30px">
+	                   		<span>${ sessionScope.loginMember.teamName }</span>
+                    	</c:otherwise>
+                    </c:choose>
                 </div>
                 <div>
                     <div id="point-text">포인트&nbsp;<span id="point">${sessionScope.loginMember.memPoint}</span></div>
