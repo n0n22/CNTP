@@ -166,7 +166,7 @@ public class AdminController {
 	// 신고 등록 폼으로 이동
 	@RequestMapping("reportForm")
 	public String reportEnrollForm(@ModelAttribute Report report, Model model) {
-		System.out.println(report);
+		// System.out.println(report);
 		
 		if (adminService.selectReportCount(report) > 0) {
 			model.addAttribute("alert", "이미 신고한 게시글입니다.");
@@ -180,7 +180,7 @@ public class AdminController {
 	
 	
 	// 신고 등록
-	@RequestMapping("reportInsert.ad")
+	@RequestMapping("reportInsert")
 	public ModelAndView insertReport(@ModelAttribute Report report, ModelAndView mv) {
 		// System.out.println(report);
 		

@@ -229,7 +229,7 @@
     				
     				let value='';
     				for(let i in list){
-    					console.log(list[i].commentContent);
+    					console.log(list[i]);
     					value += '<tr>'
 							   + '<th>' + list[i].writer  + '</th>'
 							   + '<th>' + list[i].commentContent + '</th>'
@@ -265,9 +265,17 @@
 	
 
 		function openReportForm(div, e, commentNo) {		
+			// console.log(e);
+			var memNo = 0;
+			
+			if(div == 'board') {
+				memNo = ${b.memberNo};
+			} else {
+				memNo = $(e).parent().prev().prev().prev().text();
+			}
 			
 			
-			if (${loginMember.memNo} == ${b.memberNo}) {
+			if (${loginMember.memNo} == memNo) {
 				alertify.alert('알림', '본인의 글은 신고할 수 없습니다.', function(){ alertify.success('확인 완료'); });
 			} else {
 				
@@ -275,16 +283,16 @@
 				
 				if(div == 'board') {
 					
-					$('#report-memNickName').val('${ b.memberNo }'); // 수정 필요
+					$('#report-memNickName').val(memNo);
 					$('#report-content').val('${ b.content }');
 					$('#report-boardNo').val(${ b.boardNo });
 					
 				} else if (div == 'board_reply') {
 					// console.log($(e).parent().prev().prev().prev().text());
-					$('#report-memNickName').val($(e).parent().prev().prev().prev().text());
+					$('#report-memNickName').val(memNo);
 					$('#report-content').val($(e).parent().prev().prev().text());
 					$('#report-boardNo').val(commentNo);
-					
+					// console.log(commentNo);
 				}			
 
 				$('#report-reportBoard').val(div);
