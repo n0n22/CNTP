@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
@@ -98,7 +99,14 @@
                 <c:otherwise>
 	            	<!-- 결과있을 때-->
 	                <div>고객님의 정보와 일치하는 아이디입니다. </div>
-	                <div id="find-id">${ findId.memId }</div>
+	                <div id="find-id">
+	                <c:if test="${ findId.memId ne null && findId.memId != '' }">
+	                	${ fn:substring(findId.memId,0,4) }
+	                	<c:forEach begin="5" end="${fn:length(findId.memId) }" step="1">
+	                		*
+	                	</c:forEach>
+	                </c:if>
+	                </div>
                 </c:otherwise>
 			</c:choose>
             <div><button onclick="loginPage();">로그인하기</button></div>

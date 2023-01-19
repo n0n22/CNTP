@@ -136,7 +136,20 @@ public class BoardController {
 			}
 			
 		}
-		
+		/*
+		//검색 -> 작성자, 제목, 내용
+		//작성자 -> memberNo ? / nickName? 
+		@RequestMapping("mSerch.bo")
+		public <SEARCH> ModelAndView mSearch(@ModelAttribute SEARCH search,  ModelAndView mv, Board b) {
+			mv= mv.addObject(search);
+			return mv;
+			
+			mv.addObject("b",boardService.selectBoard(bno)).setViewName("board/boardUpdateForm");
+			return mv;
+			
+			
+		}
+		*/
 		
 }
 

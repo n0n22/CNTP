@@ -252,7 +252,7 @@
                     
                     <div>
                         <!-- 휴대전화 -->
-                        <div style="display: inline-block;"><input type="text" name="phone" maxlength="11" required oninput="this.value=this.value.replace(/[^-0-9]/g,'');" placeholder="핸드폰번호를 입력해주세요 - 포함"></div>
+                        <div style="display: inline-block;"><input type="text" name="phone" maxlength="13" required oninput="this.value=this.value.replace(/[^-0-9]/g,'');" placeholder="핸드폰번호를 입력해주세요 - 포함"></div>
                     </div>
 					
 					<div>

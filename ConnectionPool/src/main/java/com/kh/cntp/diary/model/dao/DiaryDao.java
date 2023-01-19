@@ -21,13 +21,7 @@ public int insertDiary(SqlSessionTemplate sqlSession, Diary d) {
 
 }
 
-/*
-public int increaseCount(SqlSessionTemplate sqlSession, int diaryNo) {
-	
-	return sqlSession.update("diaryMapper.increaseCount", diaryNo);
-}
 
-*/
 public Diary selectDiary(SqlSessionTemplate sqlSession, int diaryNo) {
 	return sqlSession.selectOne("diaryMapper.selectDiary", diaryNo);
 

@@ -50,7 +50,8 @@
                 </tr>
                 <tr>
                     <th>작성자</th>
-                    <td ingido="${b.memberNo}" onclick="showProfile(event)" >${b.memberNo} </td>
+                    <td ingido="${b.memberNo}" onclick="showProfile(event)" >${b.nickName } </td>
+                   	<input type="hidden" name="memberNo"  value="${b.memberNo}">
                     <th>작성일</th>
                     <td>${b.createDate }</td>
                 </tr>

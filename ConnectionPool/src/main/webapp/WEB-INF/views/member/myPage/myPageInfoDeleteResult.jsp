@@ -88,7 +88,7 @@
 
     <script>
         function mainPage() {
-            location.href="/";
+            location.href="/cntp";
         }
     </script>
 	

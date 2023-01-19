@@ -246,7 +246,7 @@
                                 <option value="">할게없음</option>
                                 <option value="">기타</option>
                             </select><br>
-                            <input name="" class="del-textarea" maxlength="100" value="회원 탈퇴 유의사항을 숙지하였으며 회원 탈퇴를 진행하겠습니까?">
+                            <input name="" class="del-textarea" maxlength="100" readonly value="회원 탈퇴 유의사항을 숙지하였으며 회원 탈퇴를 진행하겠습니까?">
                             <input name="agree" class="del-textarea" maxlength="5" value="" placeholder="동의합니다 입력">
                             
                          

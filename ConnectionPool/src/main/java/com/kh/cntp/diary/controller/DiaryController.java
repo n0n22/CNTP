@@ -56,20 +56,16 @@ public class DiaryController {
 		}
 
 	}
-	/*
+	
 	// 수영일기 상세보기
 	@RequestMapping("detail.di")
-	public ModelAndView selectDiary(ModelAndView mv, Diary d) {
+	public ModelAndView selectDiary(ModelAndView mv, int dno) {
 
-		if (diaryService.insertDiary(d) > 0) {
-			mv.addObject("d", diaryService.selectDiary(d)).setViewName("diary/diaryDetailView");
-		} else {
-			mv.addObject("errorMsg", "상세조회실패").setViewName("common/errorPage");
-		}
-
+		mv.addObject("dno", diaryService.selectDiary(dno)).setViewName("diary/diaryDetailView");
+		mv.addObject("errorMsg", "상세조회실패~!").setViewName("common/errorPage");
 		return mv;
 	}
-	*/
+	
 	// 수영일기 삭제
 	@RequestMapping("delete.di")
 	public String deleteDiary(int bno, HttpSession session, Model model, String filePath) {
@@ -108,7 +104,7 @@ public class DiaryController {
 
 		// d라는 Diary객체에 새로운 정보 (원본명, 저장경로)담기
 		d.setOriginName(reUpfile.getOriginalFilename());
-		d.setChangeName("resources/uploadFiles/" + changeName);
+		d.setChangeName("/resources/upfiles/" + changeName);
 
 		if (diaryService.updateDiary(d) > 0) {
 			session.setAttribute("alertMsg", "게시글이 업데이트 되었습니다~~");
