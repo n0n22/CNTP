@@ -529,19 +529,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE 
                M.MEM_NO = #{memNo}
 	</select>
-	<!-- 인기도 중복 검사 -->
-	<select id="checkIngido" parameterType="string" resultType="_int">
-		SELECT
-				COUNT(*)
-		  FROM
-		  		INGIDO
-		 WHERE
-		 		INGIDO LIKE #{ingidio} || '%'
-		   AND
-		   		TO_CHAR(CREATE_DATE,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
-	</select>
 	
-	<!-- 인기도 변경 -->
+	<!-- 인기도 변경 : 0이면 중복X, 1이면 중복O -->
 	<update id="upOrDownIngido" parameterType="map">
 		UPDATE
 	        	MEMBER
@@ -549,6 +538,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        INGIDO = INGIDO + (#{flag})
 		 WHERE
 		        MEM_NO = #{targetNo}
+		   AND
+		   		0 = (
+		   			
+		   			SELECT 
+		   					COUNT(*)
+		   			  FROM
+		   			  		INGIDO
+		   			 WHERE
+		   			 		INGIDO LIKE SUBSTR(#{ingido}, 0, LENGTH(#{ingido}) - 1) || '%'
+		   			   AND
+		   			   		TO_CHAR(CREATE_DATE,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+		   			)
+		   
 	</update>
 	<!-- 인기도 변경 기록 저장 -->
 	<insert id="insertIngidoRecord" parameterType="map">

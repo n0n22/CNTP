@@ -177,11 +177,6 @@ public class MemberServiceImpl implements MemberService {
 	public Member showProfile(int memNo) {
 		return memberDao.showProfile(sqlSession, memNo);
 	}
-	// 인기도 중복 검사
-	@Override
-	public int checkIngido(String ingido) {
-		return memberDao.checkIngido(sqlSession, ingido);
-	}
 	// 인기도 변경
 	@Override
 	@Transactional
