@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="diary_no" property="diaryNo" />
 		<result column="board_no" property="boardNo" />
 		<result column="writer" property="writer" />
-		<result column="commentContent" property="commentContent" />
+		<result column="comment_content" property="commentContent" />
 		<result column="comment_Date" property="commentDate" />
 		<result column="status" property="status" />
 		
@@ -19,11 +19,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!--board 댓글 -->
 	<select id ="selectBoardReplyList" resultMap="replyResultSet">
 		select
-				comment_no commentNo,
-				writer Writer ,
-				comment_content commentContent,
+				comment_no,
+				writer,
+				comment_content,
 				to_char(comment_Date, 'YYYY-MM-DD') as "comment_Date"
-		  from
+		  from 
 		        board_reply
 		  where
 		  		status = 'Y'
@@ -32,8 +32,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			order
 			 by
 			  	comment_no desc			  			      	
-	
-	
 	</select>
 	
 	
