@@ -88,7 +88,7 @@
         /* border: 1px solid palevioletred; */
     }
     #name-area {
-        font-size: 25px;
+        font-size: 22px;
     }
     #userName {
         color: rgb(63, 72, 107);
@@ -155,7 +155,7 @@
     .info-area button {
         font-family: 'Pretendard-Regular';
         font-size: 15px;
-        background-color: RGB(28,154,206);
+        background-color: #9b9b9b;
         color: white;
         /* width: 200px; */
         height: 40px;
@@ -175,7 +175,6 @@
         height: 50px;
     }
     .info-area button:hover {
-        background-color: rgb(29, 172, 233);
         cursor: pointer;
     }
     #delete-btn > a{
@@ -301,7 +300,7 @@
                         <!-- 닉네임 -->
                         <!-- ajax로 중복확인할것-->
                         <div class="subText">닉네임</div>
-                        <div><input type="text" id="userNickName" name="nickName" maxlength="12" value="${sessionScope.loginMember.nickName}" required placeholder=""></div>
+                        <div><input type="text" id="memNickName" name="nickName" maxlength="9" value="${sessionScope.loginMember.nickName}" required placeholder=""></div>
                         <label class="checkResult" id="nickNameCheck">&nbsp;</label>
                     </div>
                   
@@ -366,14 +365,12 @@
                         <div class="subText">수영 등급</div>
                         <div>
                             <input type="text" name="swimLevel" value="${sessionScope.loginMember.grade}" readonly required style="width: 200px;">
-
                             <select name="grade" id="levelForm">
                                 <option value="등급" hidden="" disabled="disabled" selected="selected" >등급변경</option>
                                 <option value="B">초급</option>
                                 <option value="M">중급</option>
                                 <option value="S">고급</option>
                             </select>
-                            
                         </div>
                         <div><label>&nbsp;</label></div>
                     </div>
@@ -386,18 +383,18 @@
 					<br>
                     <div>
                         <div class="subText">비밀번호</div>
-                        <div><input type="password" name="memPwd" id="userPwd" maxlength="15" placeholder=""></div>
+                        <div><input type="password" name="memPwd" id="memPwd" maxlength="15" placeholder=""></div>
                         <label class="checkResult" id="pwdCheck">&nbsp;</label>
                     </div>
 
                     <div>
                         <div class="subText">비밀번호 확인</div>
-                        <div><input type="password" id="userPwd2" maxlength="15"  placeholder=""></div>
+                        <div><input type="password" id="memPwd2" maxlength="15"  placeholder=""></div>
                         <label class="checkResult" id="pwdCheck2">&nbsp;</label>
                     </div>
 					
                     <div align="center">
-                        <div><button type="submit" id="info-btn" style="margin-top: 8px;">수정하기</button></div>
+                        <div><button disabled type="submit" id="info-btn" style="margin-top: 8px;">수정하기</button></div>
                     </div>
                 </form>
 				<br><br>
@@ -411,65 +408,84 @@
 
     <script>
         // 비밀번호 유효성 검사
-        $('#userPwd').focusout(function(){
+        $('#memPwd').focusout(function(){
             var regExp = /^[a-zA-Z\d!@#$%^]{8,15}$/;
-            var $checkPwd = $('#userPwd').val();
+            var $checkPwd = $('#memPwd').val();
 
             if($checkPwd=="") {
                 // 비밀번호 입력된거 지우면 -> input태그 1,2랑 라벨 입력값 날리고, readonly로
                 $('#pwdCheck').html('&nbsp;');
                 $('#pwdCheck2').html('&nbsp;');
-                $('#userPwd2').val('')
-                $('#userPwd2').attr('disabled', true);
-                $('#userPwd2').attr('placeholder', '');
+                $('#memPwd2').val('')
+                $('#memPwd2').attr('disabled', true);
+                $('#memPwd2').attr('placeholder', '');
             } else if(!regExp.test($checkPwd)) {
-                $('#userPwd2').attr('disabled', false);
-                $('#userPwd2').attr('placeholder', '비밀번호를 한번 더 입력해주세요');
+                $('#memPwd2').attr('disabled', false);
+                $('#memPwd2').attr('placeholder', '비밀번호를 한번 더 입력해주세요');
                 $('#pwdCheck').html('8~15자의 영문 대 소문자, 숫자, 특수문자로 입력해주세요.');
                 $togglePwd = 0;
             } else {
-                $('#userPwd2').attr('disabled', false);
-                $('#userPwd2').attr('placeholder', '비밀번호를 한번 더 입력해주세요');
+                $('#memPwd2').attr('disabled', false);
+                $('#memPwd2').attr('placeholder', '비밀번호를 한번 더 입력해주세요');
             }
             // judgeBtn()
         });
 
         // 비밀번호 일치 검사
-        $('#userPwd2').focusout(function(){
-            var $checkPwd = $('#userPwd').val();
-            var $checkPwd2 = $('#userPwd2').val();
+        $('#memPwd2').focusout(function(){
+            var $checkPwd = $('#memPwd').val();
+            var $checkPwd2 = $('#memPwd2').val();
 
             // 비밀번호 수정시에만 체크
             if($checkPwd != '') {
-                $('#userPwd2').attr('disabled', false);
+                $('#memPwd2').attr('disabled', false);
 
                 if($checkPwd2=="") {
                     $('#pwdCheck2').html('필수 입력사항입니다.');
                     $('#pwdCheck2').css('color','rgb(47, 54, 82)');
                     
                 } else if(!($checkPwd2==$checkPwd)) {
+                    $('#info-btn').attr('disabled', true);
+                    $('#info-btn').css('background-color', '#9b9b9b');
                     $('#pwdCheck2').html('비밀번호가 일치하지 않습니다.');
                     $('#pwdCheck2').css('color','red');
+                    
+                } else {
+                	$('#pwdCheck2').css('color','rgb(47, 54, 82)');
+                    $('#pwdCheck2').html('비밀번호가 일치합니다');
+                    $('#info-btn').css('background-color', 'rgb(29, 172, 233)');
+                	$('#info-btn').attr('disabled', false);
                 }
-            }
-            // judgeBtn()
+            } 
         });
 
-        // 이름 유효성 검사
-        $('#userName2').focusout(function(){
-            var regExp = /^[가-힣]{2,}$/;
-            var $userName = $('#userName2').val();
-
-            if($userName=="") {
-                $('#nameCheck').html('필수 입력사항입니다.');
-            } else if (!regExp.test($userName)) {
-                $('#nameCheck').html('이름을 다시 입력해주세요.');
-            } else {
-                $('#nameCheck').html('');
-            }
-            // judgeBtn()
+     	// 닉네임 중복체크
+        $('#memNickName').focusout(function(){
+        	var $memNickName = $('#memNickName').val();
+        	
+        	if($memNickName==""){
+        		$('#nickNameCheck').html('필수 입력사항입니다.');
+                $('#nickNameCheck').css('color','rgb(47, 54, 82)');
+        	} else{
+        		$.ajax({
+        			url : 'nickNameCheck.me',
+        			data : {'checkNickName' : $memNickName },
+        			success : function(result){
+        				if(result == 'unavailable'){
+        					$('#nickNameCheck').html('이미 존재하거나 탈퇴한 닉네임 입니다.');
+                            $('#nickNameCheck').css('color','red');
+                            $('#info-btn').attr('disabled', true);
+        				} else {
+        					$('#nickNameCheck').html('사용가능한 닉네임입니다.');
+                            $('#nickNameCheck').css('color','rgb(47, 54, 82)');
+        				}
+        				
+        			}
+        			
+        		})
+        	}
         });
-
+		
         // 이메일
         function emailCheck() {
             // console.log($('#emailForm option:selected').val());
@@ -488,6 +504,8 @@
                 console.log($('#emailSite').val());
             }
         }
+        
+        
     </script>
     
 	<jsp:include page="../../common/footer.jsp"/>

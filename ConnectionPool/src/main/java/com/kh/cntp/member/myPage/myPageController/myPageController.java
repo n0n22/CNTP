@@ -17,7 +17,6 @@ import com.kh.cntp.member.model.service.MemberService;
 import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.member.model.vo.Point;
 import com.kh.cntp.moim.model.service.MoimService;
-import com.kh.cntp.moim.model.vo.Group;
 
 @Controller
 public class myPageController {
@@ -188,14 +187,16 @@ public class myPageController {
 	
 	// 출석체크
 	@RequestMapping("myPageAtCheck.me")
-	public String myPageAtCheck(int memNo, String pt, Point point, HttpSession session) {
+	public String myPageAtCheck(int memNo, String pt, Point point, HttpSession session, Member member) {
 		point.setMemNo(memNo);
 		point.setPoint(pt);
+		member = (Member)session.getAttribute("loginMember");
+		
 		
 		if(memberService.countAtCheck(memNo) == 0) {
 			if(memberService.insertAtCheck(point) > 0){
 				session.setAttribute("alertMsg","출석체크 완료");
-				
+				session.setAttribute("loginMember", memberService.loginMember(member));
 			} else {
 				session.setAttribute("alertMsg","관리자에게 문의하세요");
 			}
