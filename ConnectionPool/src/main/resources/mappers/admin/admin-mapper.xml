@@ -276,7 +276,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 							   is not null
 						</if>
 				        AND REPORT_BOARD = 'board'
-				UNION
+					UNION
 						SELECT
 						       R.REPORT_NO
 						       ,C.MEM_NO
@@ -314,65 +314,65 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 신고 목록 조회 -->
 	<select id="selectReportList" parameterType="string" resultMap="reportResultSet">
 		SELECT
-				       R.REPORT_NO
-				       ,B.MEM_NO
-				       ,B.MEM_ID
-				       ,R.BOARD_NO
-				       ,R.REPORT_BOARD
-				       ,R.REPORT_REASON
-				       ,R.REPORTER
-				       ,M.MEM_ID "REPORTER_ID"
-				       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
-				       ,R.REPORT_RESULT
-				       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE"
-				  FROM
-				       REPORT "R"
-				  JOIN
-				       (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
-				          FROM BOARD
-				          JOIN MEMBER USING(MEM_NO)) "B" ON (B.BOARD_NO = R.BOARD_NO)
-				  JOIN
-				       MEMBER "M" ON(M.MEM_NO = R.REPORTER)
-				 WHERE
-				       REPORT_RESULT
-		        <if test="result == 'yet'">
-					   is null			 
-				</if>
-				<if test="result == 'end'">
-					   is not null
-				</if>
-		        AND REPORT_BOARD = 'board'
-		UNION
-				SELECT
-				       R.REPORT_NO
-				       ,C.MEM_NO
-				       ,C.MEM_ID
-				       ,R.BOARD_NO
-				       ,R.REPORT_BOARD
-				       ,R.REPORT_REASON
-				       ,R.REPORTER
-				       ,M.MEM_ID "REPORTER_ID"
-				       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
-				       ,R.REPORT_RESULT
-				       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE"
-				  FROM
-				       REPORT "R"
-				  JOIN
-				       (SELECT MEM_ID, MEM_NO, NICKNAME, COMMENT_NO, COMMENT_CONTENT
-				          FROM BOARD_REPLY
-				          JOIN MEMBER ON(MEM_NO = WRITER)) "C" ON (C.COMMENT_NO = R.BOARD_NO)
-				  JOIN
-				       MEMBER "M" ON(M.MEM_NO = R.REPORTER)
-				 WHERE
-				       REPORT_RESULT
-		        <if test="result == 'yet'">
-					   is null			 
-				</if>
-				<if test="result == 'end'">
-					   is not null
-				</if>
-		           AND REPORT_BOARD = 'board_reply'
-		           order by report_date asc
+		       R.REPORT_NO
+		       ,B.MEM_NO
+		       ,B.MEM_ID
+		       ,R.BOARD_NO
+		       ,R.REPORT_BOARD
+		       ,R.REPORT_REASON
+		       ,R.REPORTER
+		       ,M.MEM_ID "REPORTER_ID"
+		       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
+		       ,R.REPORT_RESULT
+		       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE"
+		  FROM
+		       REPORT "R"
+		  JOIN
+		       (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
+		          FROM BOARD
+		          JOIN MEMBER USING(MEM_NO)) "B" ON (B.BOARD_NO = R.BOARD_NO)
+		  JOIN
+		       MEMBER "M" ON(M.MEM_NO = R.REPORTER)
+		 WHERE
+		       REPORT_RESULT
+        <if test="result == 'yet'">
+			   is null			 
+		</if>
+		<if test="result == 'end'">
+			   is not null
+		</if>
+        AND REPORT_BOARD = 'board'
+	UNION
+		SELECT
+		       R.REPORT_NO
+		       ,C.MEM_NO
+		       ,C.MEM_ID
+		       ,R.BOARD_NO
+		       ,R.REPORT_BOARD
+		       ,R.REPORT_REASON
+		       ,R.REPORTER
+		       ,M.MEM_ID "REPORTER_ID"
+		       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
+		       ,R.REPORT_RESULT
+		       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE"
+		  FROM
+		       REPORT "R"
+		  JOIN
+		       (SELECT MEM_ID, MEM_NO, NICKNAME, COMMENT_NO, COMMENT_CONTENT
+		          FROM BOARD_REPLY
+		          JOIN MEMBER ON(MEM_NO = WRITER)) "C" ON (C.COMMENT_NO = R.BOARD_NO)
+		  JOIN
+		       MEMBER "M" ON(M.MEM_NO = R.REPORTER)
+		 WHERE
+		       REPORT_RESULT
+        <if test="result == 'yet'">
+			   is null			 
+		</if>
+		<if test="result == 'end'">
+			   is not null
+		</if>
+           AND REPORT_BOARD = 'board_reply'
+           order by report_date asc
 	</select>
 	
 	<!-- 신고 상세 조회 -->
@@ -461,7 +461,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   SET
 		       STATUS = 'R'
 		 WHERE
-		       BOARD_NO = #{boardNo}
+		<if test="reportBoard == 'board'">
+		       BOARD_NO
+		</if>
+		<if test="reportBoard == 'board_reply'">		
+		       COMMENT_NO
+		</if>
+		       = #{boardNo}
 	</update>
 	
 	

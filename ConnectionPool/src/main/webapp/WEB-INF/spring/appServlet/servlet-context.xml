@@ -86,6 +86,7 @@
 			
 			<!-- 신고 관련 -->
 			<mapping path="/reportForm"></mapping>
+			<mapping path="/reportInsert"></mapping>
 			<beans:bean class="com.kh.cntp.common.interceptor.LoginInterceptor" id="loginInterceptor"></beans:bean>
 		</interceptor>
 	</interceptors>
