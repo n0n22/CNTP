@@ -192,13 +192,8 @@
            			}
            		})
         		// 회원 이름 검색 시 자동완성
-        		$("#keywordInput").autocomplete({
-        		    minLength: 2,
-        			source : function(request, response){
-        				var results = $.ui.autocomplete.filter(names, request.term);
-        				response(results.slice(0,10));
-        			}
-        		})
+        		selectListNames();
+           		
         		$("#conditionSelect").change(function(){
         			switch($("#conditionSelect").val()){
         			case 'name' : selectListNames(); break;
