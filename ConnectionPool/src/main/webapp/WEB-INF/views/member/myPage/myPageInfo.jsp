@@ -308,7 +308,6 @@
                     <div>
                         <div class="subText">휴대전화</div>
                         <div style="display: inline-block;"><input type="text" name="phone" value="${sessionScope.loginMember.phone}" maxlength="13" required value="" oninput="this.value=this.value.replace(/[^-0-9]/g,'');" placeholder="-를 포함해서 입력해주세요"></div>
-                        <!-- <div style="display: inline-block;"><input type="text" name="phone" maxlength="13" oninput="this.value=this.value.replace(/^01[016789]-\d{3,4}-\d{4}$/g,'');" placeholder="-를 포함해서 입력해주세요" style="width: 223px;"></div> -->
                         <div><label>&nbsp;</label></div>
                     </div>
 					
