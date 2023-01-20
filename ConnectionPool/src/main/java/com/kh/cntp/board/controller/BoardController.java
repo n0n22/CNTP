@@ -153,7 +153,7 @@ public class BoardController {
 			//System.out.println(boardService.selectSearchCount(map));
 			mv.addObject("pi", pi).addObject("list", boardService.selectSearchList(map, pi)).setViewName("board/boardListView");
 			
-			
+			 
 			
 			return mv;
 		

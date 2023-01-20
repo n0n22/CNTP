@@ -53,6 +53,23 @@
                          <td><input type="text" id="memNo" class="form-control" value="${loginMember.memNo }" name="memberNo" readonly></td>
                         <input type="hidden" id="nickName" class="form-control" value="${loginMember.nickName}" name="nickName" readonly>
                     </tr>
+                      <tr>
+                        <th><label for="category">카테고리</label></th>
+                       
+                        <td>
+                        <!--  <input type="text" id="title" class="form-control" name="title" required>-->
+							<select name="select">
+								
+								<option value="option 1">질문</option>
+								<option value="option 2">후기</option>
+								<option value="option 3">정보</option>
+							</select>
+						</td>
+
+
+
+					
+                    </tr>
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
                         <td><input type="file" id="upfile" class="form-control-file border" name="upfile"></td>
