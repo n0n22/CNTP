@@ -74,7 +74,8 @@
 
 				<br>
 
-				<div class="groupContent" style="width:95%; height:150px;">
+				<div class="groupContent" style="width:550PX; height:150px;">
+					<br>
 					${group.groupContent }
 				</div>
 	        </div>
@@ -394,11 +395,6 @@
 	    	</script>
 	    </c:when>
     </c:choose>
-    
-    
-    
-    
-    
     
     <script>
     	function confirmCancel(){

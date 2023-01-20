@@ -65,7 +65,7 @@
 						</td>
 					</tr>
 					<c:choose>
-						<c:when test="${ emptyYn eq 'Y' }">
+						<c:when test="${ partiNum eq 1 }">
 							<tr height="50">
 								<th>지역</th>
 								<td>
@@ -225,7 +225,7 @@
 			})
 			
 			$('.groupUpdateTable #groupArea option').each(function(index, option){
-				if($(this).text() == '${ group.groupArea }'){
+				if($(this).text() == '${ group.korArea }'){
 					$(this).attr('selected', 'true');
 				}
 			})
