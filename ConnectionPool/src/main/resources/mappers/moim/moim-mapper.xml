@@ -652,8 +652,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		             ELSE '고급' END "LEVEL"
 		       ,CASE WHEN TO_CHAR(G.POWER_DURATION, 'YYYYMMDD') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDD')]]> THEN '파워'
 		             ELSE '일반' END "POWER_DURATION"
-		       ,TO_CHAR(G.START_TIME, 'YYYY/MM/DD hh24:mi:ss') "START_TIME"
-		       ,TO_CHAR(G.END_TIME, 'YYYY/MM/DD hh24:mi:ss') "END_TIME"
+		       ,TO_CHAR(G.START_TIME, 'YYYY/MM/DD hh24:mi') "START_TIME"
+		       ,TO_CHAR(G.END_TIME, 'YYYY/MM/DD hh24:mi') "END_TIME"
 		       ,CASE WHEN GROUP_MEMBER - 1 <![CDATA[<= (SELECT
 		                                          COUNT(*)
 		                                     FROM

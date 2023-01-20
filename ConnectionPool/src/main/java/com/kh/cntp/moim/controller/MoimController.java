@@ -627,9 +627,9 @@ public class MoimController {
 		
 		if(!group.getGroupMember().contains("모집마감")) {
 			//모집 마감이 아니라면 => (a/b)
-			// a값을 담아줌
-			group.setGroupMember(groupMember.substring(groupMember.indexOf('/') + 1, groupMember.indexOf(')')));
 			// b값을 담아줌
+			group.setGroupMember(groupMember.substring(groupMember.indexOf('/') + 1, groupMember.indexOf(')')));
+			// a값을 담아줌
 			partiNum = groupMember.substring(1, groupMember.indexOf('/'));
 		} else {
 			// 모집마감이라면 => 모짐마감(a)
@@ -638,9 +638,9 @@ public class MoimController {
 			partiNum = group.getGroupMember();
 		}
 		
-		//2023/01/01 12:00:00 형태를 -> 2023-01-01T12:00 형태로 변경하여 input Date의 min 값으로 활용
-		group.setEndTime(group.getEndTime().replace(" ", "T").replace("/", "-").substring(0, 16));
-		group.setStartTime(group.getStartTime().replace(" ", "T").replace("/", "-").substring(0, 16));
+		//2023/01/01 12:00 형태를 -> 2023-01-01T12:00 형태로 변경하여 input Date의 min 값으로 활용
+		group.setEndTime(group.getEndTime().replace(" ", "T").replace("/", "-"));
+		group.setStartTime(group.getStartTime().replace(" ", "T").replace("/", "-"));
 		
 		mv.addObject("group", group).addObject("partiNum", partiNum).setViewName("moim/groupUpdateForm");
 		
