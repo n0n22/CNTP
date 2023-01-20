@@ -139,7 +139,7 @@ public class BoardController {
 			}
 			
 		}
-		
+		/*
 		//검색 -> 작성자, 제목, 내용
 		//작성자 -> memberNo ? / nickName? 
 		@RequestMapping("SearchNick.bo")
@@ -151,15 +151,15 @@ public class BoardController {
 			
 			PageInfo pi = Pagination.getPageInfo(boardService.selectSearchCount(map),currentPage, 10,5); //int pageLimit 10, int boardLimit : 5
 			//System.out.println(boardService.selectSearchCount(map));
+			mv.addObject("pi", pi).addObject("list", boardService.selectSearchList(map, pi)).setViewName("board/boardListView");
 			
 			
 			
 			return mv;
-			
-			
-			
-		}
 		
+		}
+			
+		*/
 		
 }
 
