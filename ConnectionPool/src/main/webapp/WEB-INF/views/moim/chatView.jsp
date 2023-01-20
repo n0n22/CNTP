@@ -38,18 +38,18 @@
     }
 	.speechBubble-other{
 		margin-top: 5px;
-		background-color: rgb(23, 146, 23);
+		background-color: rgb(163, 232, 245);
 		border-radius: 15px;
 	}
 	.speechBubble-other p{
 		margin-bottom: 0px;
 		padding : 7px;
-		color : white;
+		color : black;
 	}
 	.speechBubble-mine{
 		margin-top: 5px;
 		margin-right: 5px;
-		background-color: rgb(231, 235, 30);
+		background-color: rgba(252, 202, 244, 0.948);
 		border-radius: 15px;
 	}
 	.speechBubble-mine p{
@@ -152,7 +152,7 @@
 												</div>
 								                
 								            </div>
-											<div style="display: flex; align-content: flex-end; margin-left: 60px;">
+											<div style="display: flex; align-content: flex-end;">
 												<p style="margin-top: auto; margin-bottom: 0;">
 													<!-- 여긴 날짜 -->
 													${ chat.createDate }
@@ -266,7 +266,7 @@
 							           +		     '</div>'
 							           +         '</div>'
 							           +     '</div>'
-							           +     '<div style="display: flex; align-content: flex-end; margin-left: 60px;">'
+							           +     '<div style="display: flex; align-content: flex-end;">'
 							           +         '<p style="margin-top: auto; margin-bottom: 0;">'
 							           +             list[i].createDate
 							           +         '</p>'
