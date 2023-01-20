@@ -182,7 +182,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				 category,
 				 nickName,
 				 count,
-				 createDate
+				 create_Date
 		from board b
 		join member using ( mem_no)
 		where b.status = 'Y'
