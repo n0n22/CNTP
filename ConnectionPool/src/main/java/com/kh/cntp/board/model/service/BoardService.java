@@ -44,7 +44,7 @@ public interface BoardService {
 		int selectSearchCount(HashMap<String, String> map);
 		
 		
-		//ArrayList<Board> selectSearchList(HashMap<String, String> map, PageInfo pi);
+		ArrayList<Board> selectSearchList(HashMap<String, String> map, PageInfo pi);
 		
 		
 	

@@ -59,18 +59,25 @@ public class BoardDao {
 	public int insertBoardReply(SqlSessionTemplate sqlSession, Reply r) {
 		return sqlSession.insert("replyMapper.insertBoardReply" ,r);
 	}
-
+	
+	
+	//검색
 	public int selectSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		
 		return sqlSession.selectOne("boardMapper.selectSearchCount", map);
 	}
-	/*
+	
 	public ArrayList<Board> selectSearchList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
 		
-		return sqlSession.;
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchList",map,rowBounds);
+		
+		
+		
 	}
 	
-	*/
+	
 	
 	
 	

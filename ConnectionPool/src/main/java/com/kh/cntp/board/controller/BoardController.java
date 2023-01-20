@@ -139,7 +139,7 @@ public class BoardController {
 			}
 			
 		}
-		/*
+		
 		//검색 -> 작성자, 제목, 내용
 		//작성자 -> memberNo ? / nickName? 
 		@RequestMapping("SearchNick.bo")
@@ -159,7 +159,7 @@ public class BoardController {
 		
 		}
 			
-		*/
+		
 		
 }
 

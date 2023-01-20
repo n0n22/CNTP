@@ -76,13 +76,13 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.selectSearchCount(sqlSession, map);
 	}
 	
-	/*
+	
 	@Override
 	public ArrayList<Board> selectSearchList(HashMap<String, String> map, PageInfo pi) {
 		 return boardDao.selectSearchList(sqlSession, map, pi);
 	}
 	
-	*/
+	
 	
 	 
 	
