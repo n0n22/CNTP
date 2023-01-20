@@ -450,7 +450,7 @@ SELECT
 				       CASE WHEN COUNT(*) >= 10 THEN '탈퇴'
 				            WHEN COUNT(*) >= 5  THEN '정지'
 				       END "PENALTY"
-				       ,TO_CHAR(MAX(COMPLETION_DATE), 'YYYY-MM-DD') "COMPLETION_DATE"
+				       ,MAX(COMPLETION_DATE) "COMPLETION_DATE"
 				  FROM 
 				       (
 				       SELECT 
@@ -460,7 +460,7 @@ SELECT
 				         FROM 
 				               VW_REPORT_DT
 				         WHERE 
-				               RM.MEM_STATUS != 'K'
+				               MEM_STATUS != 'K'
 				           AND 
 				               REPORT_RESULT = 'O'
 				       )
@@ -480,7 +480,7 @@ SELECT
 		       CASE WHEN COUNT(*) >= 10 THEN '탈퇴'
 		            WHEN COUNT(*) >= 5  THEN '정지'
 		       END "PENALTY"
-		       ,TO_CHAR(MAX(COMPLETION_DATE), 'YYYY-MM-DD') "COMPLETION_DATE"
+		       ,MAX(COMPLETION_DATE) "COMPLETION_DATE"
 		  FROM 
 		       (
 		       SELECT 
@@ -490,7 +490,7 @@ SELECT
 		         FROM 
 		               VW_REPORT_DT
 		         WHERE 
-		               RM.MEM_STATUS != 'K'
+		               MEM_STATUS != 'K'
 		           AND 
 		               REPORT_RESULT = 'O'
 		       )
@@ -521,8 +521,37 @@ SELECT
 		SELECT * FROM DUAL
 	</insert>
  -->	
-	
-	<!-- 정치 저리된 적 있는 지 조회 -->
+	<!-- 정지처리 -->
+	<update id="stopMember" parameterType="_int">
+		merge into penalty
+		using dual
+		on 
+		(
+				(SELECT
+				       COUNT(*)
+				  FROM 
+				       PENALTY
+				 WHERE
+				       MEM_NO = #{memNo}) = 1
+		)
+		when matched then
+				UPDATE
+				   SET
+				       END_DATE = SYSDATE + 7
+				 WHERE 
+				       MEM_NO = #{memNo}
+		when not matched then
+				INSERT (mem_no, end_date)
+			    VALUES
+			    	   (
+			           #{memNo}
+			           ,SYSDATE + 7
+			           )
+	</update>
+ <!-- 
+ 	* MERGE 구문으로 한꺼번에 처리
+ 	
+	정치 저리된 적 있는 지 조회 
 	<select id="selectStopPenalty" parameterType="_int" resultType="_int">
 		SELECT
 		       COUNT(*)
@@ -532,7 +561,7 @@ SELECT
 		       MEM_NO = #{memNo}
 	</select>
 	
-	<!-- 정지 날짜 업데이트 -->
+	정지 날짜 업데이트
 	<update id="updateStopPenalty" parameterType="_int">
 		UPDATE
 		       PENALTY
@@ -542,7 +571,7 @@ SELECT
 		       MEM_NO = #{memNo}
 	</update>
 	
-	<!-- 정지 날짜 인서트 -->
+	정지 날짜 인서트 
 	<insert id="insertStopPenalty" parameterType="_int">
 		INSERT
 		  INTO
@@ -553,7 +582,17 @@ SELECT
 	           ,SYSDATE + 7
 	           )
 	</insert>
-	
+ -->
+	 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 	<!-- 팀 멤버정보 조회하기 -->
 <!-- 
 	<select id="selectTeamMem" parameterType="_int" resultMap="teamMemberResultSet">

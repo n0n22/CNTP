@@ -196,46 +196,44 @@ public class AdminServiceImpl implements AdminService {
 			
 			switch (penalty[i]) {
 			case "정지" : 
-				if(adminDao.selectStopPenalty(sqlSession, memNo[i]) > 0) { // 정지 받은 적이 있으면 update
-					result *= adminDao.updateStopPenalty(sqlSession, memNo[i]);
-					break;
-				} else { // 정지받은 적이 없으면 insert
-					result *= adminDao.insertStopPenalty(sqlSession, memNo[i]);
-					break;
-				}
+				result *= adminDao.stopPenalty(sqlSession, memNo[i]);				
+//				if(adminDao.selectStopPenalty(sqlSession, memNo[i]) > 0) { // 정지 받은 적이 있으면 update
+//					result *= adminDao.updateStopPenalty(sqlSession, memNo[i]);
+//					break;
+//				} else { // 정지받은 적이 없으면 insert
+//					result *= adminDao.insertStopPenalty(sqlSession, memNo[i]);
+//					break;
+//				}
 				
 			case "탈퇴" :	
 				TeamMember teamInfo = adminDao.selectTeam(sqlSession, memNo[i]);
-				System.out.println(teamInfo);
 				
 				if (teamInfo != null) { // 소속 팀 정보가 있을 때
-					
 					TeamMember nl = adminDao.selectTeamMem(sqlSession, memNo[i]);
-					System.out.println(nl);
 					
 					if(teamInfo.getTeamGrade().equals("L")) { // 리더였을 때
 						
 						if(nl != null) { // 소속팀이 있고, 바꿀 멤버가 있을 때
 							result *= adminDao.updateTeamLeader(sqlSession, nl.getMemNo()); // 새 팀장으로 업데이트
-							System.out.println("result 1 :" + result);
+							
 						} else { // 소속 팀이 있고, 바꿀 멤버가 없을 때
 							result *= adminDao.updateTeamStatus(sqlSession, memNo[i]); // 팀 상태 변경
-							System.out.println("result 2 :" + result);
+
 						} 
 					}
 					
 					// 그냥 멤버였을 때
 					result *= adminDao.deleteTeamMember(sqlSession, memNo[i]); // 팀멤버테이블에서 삭제
-					System.out.println("result 3 :" + result);
+
 				} 
 				
 				// 무조건 실행
 				// 소속 팀이 없을 때	
 				result *= adminDao.updateMemberStatus(sqlSession, memNo[i]); // 멤버 상태 변경
-				System.out.println("result 4 :" + result);
 			}
+
 		}
-		
+
 		return result;
 	}
 	
