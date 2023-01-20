@@ -45,7 +45,7 @@ public interface MoimService {
 	// 신청하는 loginUser 번호, 팀 번호로다가
 	int insertApply(Apply ap);
 	
-	Apply ajaxSelectApply(int memNo);
+	Apply ajaxSelectApply(Apply ap);
 	
 	// --------------- 팀 상세페이지(팀장 입장) ---------------
 	// 신청 수락
@@ -108,34 +108,6 @@ public interface MoimService {
 	
 	// 소그룸 글 삭제
 	int deleteGroup(Group group);
-	
-	Apply ajaxSelectGroupApply(Apply ap);
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }
