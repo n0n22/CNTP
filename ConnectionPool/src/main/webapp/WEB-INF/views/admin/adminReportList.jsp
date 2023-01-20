@@ -28,6 +28,9 @@
 		width: 150px;
 	}
 	
+	#reportTable tbody tr:hover {
+		cursor : pointer
+	}
 	
 	
 

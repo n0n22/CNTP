@@ -51,8 +51,8 @@ public class MoimDao {
 		return sqlSession.selectOne("moimMapper.selectResultHistory", teamNo);
 	}
 	
-	public Apply ajaxSelectApply(SqlSessionTemplate sqlSession, int memNo) {
-		return sqlSession.selectOne("moimMapper.ajaxSelectApply", memNo);
+	public Apply ajaxSelectApply(SqlSessionTemplate sqlSession, Apply ap) {
+		return sqlSession.selectOne("moimMapper.ajaxSelectApply", ap);
 	}
 	
 	public int updateTeam(SqlSessionTemplate sqlSession, Team team) {
@@ -142,10 +142,6 @@ public class MoimDao {
 		return sqlSession.update("moimMapper.updateGroup", group);
 	}
 
-	public Apply ajaxSelectGroupApply(SqlSessionTemplate sqlSession, Apply ap) {
-		return sqlSession.selectOne("moimMapper.ajaxSelectGroupApply", ap);
-	}
-	
 	public ArrayList<Apply> selectGroupApplyList(SqlSessionTemplate sqlSession, String moimNo){
 		return (ArrayList)sqlSession.selectList("moimMapper.selectGroupApplyList", moimNo);
 	}

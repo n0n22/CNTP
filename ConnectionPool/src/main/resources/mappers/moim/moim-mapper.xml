@@ -264,10 +264,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       T.STATUS = 'Y'
 	</select>
 	
-	<select id="ajaxSelectApply" parameterType="_int" resultMap="applyResultMap">
+	<select id="ajaxSelectApply" parameterType="apply" resultMap="applyResultMap">
 		SELECT
 			    APPLY_NO
 			   ,MOIM_NO
+			   ,MEM_NO
 			   ,ACCEPT_YN
 			   ,APPLY_DATE
 			   ,ACCEPT_DATE
@@ -276,7 +277,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE
 		       MEM_NO = #{ memNo }
            AND
-               MOIM_NO LIKE 'T%'
+               MOIM_NO = #{moimNo}
 	</select>
 
 	<update id="updateTeam" parameterType="team">
@@ -651,8 +652,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		             ELSE '고급' END "LEVEL"
 		       ,CASE WHEN TO_CHAR(G.POWER_DURATION, 'YYYYMMDD') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDD')]]> THEN '파워'
 		             ELSE '일반' END "POWER_DURATION"
-		       ,TO_CHAR(G.START_TIME, 'YYYY/MM/DD hh24:mi:ss') "START_TIME"
-		       ,TO_CHAR(G.END_TIME, 'YYYY/MM/DD hh24:mi:ss') "END_TIME"
+		       ,TO_CHAR(G.START_TIME, 'YYYY/MM/DD hh24:mi') "START_TIME"
+		       ,TO_CHAR(G.END_TIME, 'YYYY/MM/DD hh24:mi') "END_TIME"
 		       ,CASE WHEN GROUP_MEMBER - 1 <![CDATA[<= (SELECT
 		                                          COUNT(*)
 		                                     FROM
@@ -760,22 +761,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       GROUP_NO = #{ groupNo }
 	</update>
 	
-	<select id="ajaxSelectGroupApply" parameterType="apply" resultMap="applyResultMap">
-		SELECT
-		        APPLY_NO
-		       ,MOIM_NO
-		       ,MEM_NO
-		       ,ACCEPT_YN
-		       ,APPLY_DATE
-		       ,ACCEPT_DATE
-		  FROM
-		       APPLY
-		 WHERE
-		       MEM_NO = #{memNo}
-		   AND
-		       MOIM_NO = #{moimNo}
-		   
-	</select>
+	
 	
 	<select id="selectGroupApplyList" resultMap="applyResultMap">
 		SELECT

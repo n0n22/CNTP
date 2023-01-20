@@ -74,7 +74,8 @@
 
 				<br>
 
-				<div class="groupContent" style="width:95%; height:150px;">
+				<div class="groupContent" style="width:550PX; height:150px;">
+					<br>
 					${group.groupContent }
 				</div>
 	        </div>
@@ -273,7 +274,7 @@
 	    	<script>
 	    		$(function(){
 	    			$.ajax({
-	    				url : "selectGroupApply.mo",
+	    				url : "selectApply.mo",
 	    				success : function(obj){
 	    					
 	    					var result = '';
@@ -338,7 +339,7 @@
 	    	<script>
 	    		$(function(){
 	    			$.ajax({
-	    				url : "selectGroupApply.mo",
+	    				url : "selectApply.mo",
 	    				success : function(obj){
 	    					
 	    					var result = '';
@@ -394,11 +395,6 @@
 	    	</script>
 	    </c:when>
     </c:choose>
-    
-    
-    
-    
-    
     
     <script>
     	function confirmCancel(){

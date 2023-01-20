@@ -343,6 +343,10 @@
 				$(function(){
 					$.ajax({
 						url : "selectApply.mo",
+						data : {
+							moimNo : '${ team.teamNo }',
+							memNo : '${ loginMember.memNo }'
+						},
 						success : function(obj){
 							if(obj != null){
 								//console.log('들어왔다.');
@@ -372,6 +376,10 @@
 				$(function(){
 					$.ajax({
 						url : "selectApply.mo",
+						data : {
+							moimNo : '${ team.teamNo }',
+							memNo : '${ loginMember.memNo }'
+						},
 						success : function(obj){
 							if(obj != null && obj.moimNo == "${ team.teamNo }"){
 								//console.log('들어왔다.');
