@@ -85,6 +85,10 @@
 		.page-area{
 			display: inline-block;
 		}
+		
+		#noticeTable tbody tr:hover {
+        	cursor : pointer;
+        }
 	
 
     </style>
@@ -157,11 +161,6 @@
 
         </div>
 		
-		<c:if test="${ loginMember.grade eq 'A' }">
-	        <div class="notice-hidden">
-	            <a href="noticeEnrollForm.ad" class="btn btn-sm btn-primary">글작성</a>
-	        </div>
-		</c:if>
 
         <div class="notice-foot">
         	<div class="page-area">
@@ -200,6 +199,11 @@
         	</div>
         </div>
 
+		<c:if test="${ loginMember.grade eq 'A' }">
+	        <div class="notice-hidden">
+	            <a href="noticeEnrollForm.ad" class="btn btn-sm btn-primary">글작성</a>
+	        </div>
+		</c:if>
 
     </div>
 

@@ -273,7 +273,7 @@
 	    	<script>
 	    		$(function(){
 	    			$.ajax({
-	    				url : "selectGroupApply.mo",
+	    				url : "selectApply.mo",
 	    				success : function(obj){
 	    					
 	    					var result = '';
@@ -338,7 +338,7 @@
 	    	<script>
 	    		$(function(){
 	    			$.ajax({
-	    				url : "selectGroupApply.mo",
+	    				url : "selectApply.mo",
 	    				success : function(obj){
 	    					
 	    					var result = '';

@@ -39,6 +39,15 @@ public class MoimController {
 	private MemberService memberService;
 	
 	// moimController 매핑값은 .mo로 통일!
+	
+	
+	/**
+	 * selectTeamList : 사용자에게 조건값을 받아서 DB에 있는 Team ResultSet을 select해오는 메소드
+	 * @param currentPage : 요청하는 페이지
+	 * @param teamArea : 팀 주요 활동지역 조건
+	 * @param keyword : 배틀, 친목, 온라인만 키워드 조건
+	 * @param teamMember : 팀 인원 조건
+	 */
 	@RequestMapping("teamList.mo")
 	public ModelAndView selectTeamList(ModelAndView mv,
 								 @RequestParam(value="cpage", defaultValue="1") int currentPage,
@@ -46,52 +55,34 @@ public class MoimController {
 								 @RequestParam(value="keyword", defaultValue="all") String keyword,
 								 @RequestParam(value="teamMember", defaultValue="all") String teamMember) {
 		
-		//System.out.println(teamMember);
 		Team team = new Team();
 		team.setTeamArea(teamArea);
 		team.setKeyword(keyword);
 		team.setTeamMember(teamMember);
 		
-		//System.out.println(team);
-		//System.out.println(moimService.selectTeamCountList(team));
-		
 		PageInfo pi = Pagination.getPageInfo(moimService.selectTeamCountList(team), currentPage, 10, 10);
 		
 		mv.addObject("pi", pi).addObject("teamList", moimService.selectTeamList(pi, team)).addObject("team", team).setViewName("moim/teamListView");
 		
-		
 		return mv;
 	}
 	
-	@RequestMapping("teamPage.mo")
-	public ModelAndView teamPage(ModelAndView mv, String teamNo) {
-		// 팀 페이지 갈 때 TEAM, TEAM_MEMBER, APPLY 테이블 다 들고 가야됨 => 어째 이런 일이,,,,,,,,,
-		// 한번의 select문으로 조인해서 가져올 수는 있는데, 3개의 vo에 담아야 하니 이를 어떻게 해야 할까
-		
-		/*
-		System.out.println(moimService.selectTeam(teamNo));
-		System.out.println(moimService.selectApplyList(teamNo));
-		System.out.println(moimService.seletResultHistory(teamNo));
-		*/
-		
-		mv.addObject("team", moimService.selectTeam(teamNo));
-		mv.addObject("teamMemberList", moimService.selectTeamMemberList(teamNo));
-		mv.addObject("applyList", moimService.selectApplyList(teamNo));
-		mv.addObject("resultHistory", moimService.seletResultHistory(teamNo));
-		mv.setViewName("moim/teamPage");
-		
-		return mv;
-	}
-	
+	/**
+	 * teamEnrollForm : 팀 등록 폼으로 이동
+	 */
 	//인터셉터 필요
 	@RequestMapping("teamEnrollForm.mo")
-	public ModelAndView teamEnrollFrom(ModelAndView mv) {
+	public ModelAndView teamEnrollForm(ModelAndView mv) {
 		
 		mv.setViewName("moim/teamEnrollForm");
 		
 		return mv;
 	}
 	
+	/**
+	 * ajaxSelectTeam : 사용자에게 팀 이름을 입력 받아 DB에 있는 TeamName과 중복값이 있는지 select해오는 메소드
+	 * @param checkName : 사용하고자 하는 팀 이름(중복체크)
+	 */
 	@ResponseBody
 	@RequestMapping(value="checkTeamName.mo", produces="text/html; charset=UTF-8")
 	public String ajaxSelectTeam(String checkName) {
@@ -105,12 +96,15 @@ public class MoimController {
 		}
 	}
 	
+	/**
+	 * insertTeam : 사용자에게 정보를 입력받아서 DB에 TEAM 테이블에 추가하는 메소드
+	 * @param team : teamName, memNo, teamMember(팀인원), teamIntro, teamArea, teamTime, keyword, powerDuration
+	 * @param upfile : 팀소개사진 첨부파일(originName, changeName)
+	 */
 	//인터셉터 필요
 	// 팀 등록 + 전적 등록 + 리더 팀멤버 등록 + 로그인 유저 다시 담아줌
 	@RequestMapping("insertTeam.mo")
 	public ModelAndView insertTeam(ModelAndView mv, Team team, MultipartFile upfile, HttpSession session) {
-		
-		//System.out.println(upfile.getOriginalFilename());
 		
 		if(!upfile.getOriginalFilename().equals("")) {
 			// 파일 등록을 했을 때
@@ -140,6 +134,43 @@ public class MoimController {
 		return mv;
 	}
 	
+	/**
+	 * teamPage : 사용자가 입력한 팀 번호를 식별값으로 팀, 팀멤버, 신청 내역 select
+	 * @param mv
+	 * @param teamNo : 팀, 팀멤버, 신청 내역의 식별값
+	 */
+	@RequestMapping("teamPage.mo")
+	public ModelAndView teamPage(ModelAndView mv, String teamNo) {
+		// 팀 페이지 갈 때 TEAM, TEAM_MEMBER, APPLY 테이블 다 들고 가야됨 => 어째 이런 일이,,,,,,,,,
+		// 한번의 select문으로 조인해서 가져올 수는 있는데, 3개의 vo에 담아야 하니 이를 어떻게 해야 할까
+		
+		mv.addObject("team", moimService.selectTeam(teamNo));
+		mv.addObject("teamMemberList", moimService.selectTeamMemberList(teamNo));
+		mv.addObject("applyList", moimService.selectApplyList(teamNo));
+		mv.addObject("resultHistory", moimService.seletResultHistory(teamNo));
+		mv.setViewName("moim/teamPage");
+		
+		return mv;
+	}
+	
+	/**
+	 * ajaxSelectApply : teamPage와 groupDetailView에
+	 * 다른 사용자가 들어갈 때 해당 모임에 신청했는지 DB에 있는 apply테이블에서 select해 확인하는 메소드
+	 * @param ap : loginMember의 memNo, 해당 모임의 moimNo로 apply 조회
+	 */
+	//인터셉터 필요
+	@ResponseBody
+	@RequestMapping(value="selectApply.mo", produces="application/json; charset=UTF-8")
+	public String ajaxSelectApply(Apply ap) {
+		
+		return new Gson().toJson(moimService.ajaxSelectApply(ap));
+	}
+	
+	/**
+	 * teamUpdateForm : 사용자가 요청한 teamNo를 식별값으로 팀 정보 수정 페이지로 이동
+	 * @param teamNo : 해당 팀의 정보를 가지고 오기 위한 식별값
+	 * @param teamMemberCount : 현재 팀원 수를 알 수 있도록 teamMemberList의 사이즈를 담아옴.
+	 */
 	//인터셉터 필요
 	@RequestMapping("teamUpdateForm.mo")
 	public ModelAndView teamUpdateForm(ModelAndView mv, String teamNo, int teamMemberCount) throws ParseException {
@@ -149,8 +180,6 @@ public class MoimController {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date today = format.parse((format.format(new Date())));	
 		Date powerDuration = format.parse(team.getPowerDuration());
-		
-		
 		
 		if(today.compareTo(powerDuration) > 0) {
 			//System.out.println("기간이 지남");
@@ -165,221 +194,16 @@ public class MoimController {
 		return mv;
 	}
 	
-	//인터셉터 필요
-	@RequestMapping("teamMemberUpdateForm.mo")
-	public ModelAndView teamMemberUpdateForm(ModelAndView mv, String teamNo) {
-		// teamNo 사용해서 teamMember 정보를 가지고서 updateForm으로 이동
-		
-		mv.addObject("teamMemberList", moimService.selectTeamMemberList(teamNo));
-		
-		mv.setViewName("moim/teamMemberUpdateForm");
-		
-		return mv;
-	}
-	
-	// 채팅 관련 기능 시작
-	
-	//인터셉터 필요
-	@RequestMapping("chattingRoom.mo")
-	public ModelAndView cahttingRoom(ModelAndView mv, Chatting chat, String moimMember, String moimTitle) {
-		// teamNo 이용해서 채팅방 보내주기~
-		
-		//System.out.println(moimService.selectChattingList(chat));
-		//System.out.println(chat);
-		
-		if(chat.getMoimNo().contains("G")) {
-			ArrayList<Member> groupMemberList = moimService.selectAcceptMember(chat.getMoimNo());
-			mv.addObject("chatMemberList", groupMemberList);
-			
-			moimMember = String.valueOf(groupMemberList.size());
-			
-			//System.out.println(groupMemberList);
-		} else if(chat.getMoimNo().contains("T")) {
-			mv.addObject("chatMemberList", moimService.selectTeamMemberList(chat.getMoimNo()));
-		}
-		
-		mv.addObject("chatList", moimService.selectChattingList(chat)).addObject("moimMember", moimMember).addObject("moimNo", chat.getMoimNo()).addObject("moimTitle", moimTitle).setViewName("moim/chatView");
-		
-		return mv;
-	}
-	
-	//인터셉터 필요
-	@ResponseBody
-	@RequestMapping(value="ajaxSelectChatList.mo", produces="application/json; charset=UTF-8")
-	public String ajaxSelectChattingList(String moimNo, String memNo) {
-		
-		Chatting chat = new Chatting();
-		
-		chat.setMemNo(memNo);
-		chat.setMoimNo(moimNo);
-		
-		return new Gson().toJson(moimService.selectChattingList(chat));
-	}
-	
-	//인터셉터 필요
-	@ResponseBody
-	@RequestMapping(value="insertChat.mo", produces="text/html; charset=UTF-8")
-	public String ajaxInsertChatting(String moimNo, String memNo, String chatContent) {
-		Chatting chat = new Chatting();
-		
-		chat.setMoimNo(moimNo);
-		chat.setMemNo(memNo);
-		chat.setChatContent(chatContent);
-		
-		//System.out.println(chat);
-		
-		String message = "";
-		
-		if(moimService.ajaxInsertChatting(chat) > 0) {
-			message = "NNNNY";
-		} else {
-			message = "NNNNN";
-		}
-		return message;
-	}
-	
-	//인터셉터 필요
-	@ResponseBody
-	@RequestMapping(value="deleteChat.mo", produces="text/html; charset=UTF-8")
-	public String ajaxDeleteChatting(String chatNo) {
-
-		//System.out.println(chatNo);
-		
-		if(moimService.ajaxDeleteChatting(chatNo) > 0) {
-			return "NNNNY";
-		} else {
-			return "NNNNN";
-		}
-	}
-	
-	//인터셉터 필요
-	@RequestMapping("badgeShop.mo")
-	public ModelAndView badgeShop(ModelAndView mv) {
-		
-		mv.setViewName("moim/badgeBuyPage");
-		
-		return mv;
-	}
-	
-	@RequestMapping("groupList.mo")
-	public ModelAndView selectGroupList(ModelAndView mv,
-										@RequestParam(value="cpage", defaultValue="1") int currentPage,
-										@RequestParam(value="groupArea", defaultValue="all") String groupArea,
-										@RequestParam(value="gender", defaultValue="A") String gender,
-										@RequestParam(value="level", defaultValue="E") String level,
-										@RequestParam(value="groupMember", defaultValue="A") String groupMember) {
-
-		Group group = new Group();
-		group.setGroupArea(groupArea);
-		group.setGender(gender);
-		group.setLevel(level);
-		group.setGroupMember(groupMember);
-		
-		PageInfo pi = Pagination.getPageInfo(moimService.selectGroupCountList(group), currentPage, 10, 9);
-		//System.out.println(pi);
-		mv.addObject("pi", pi).addObject("groupList", moimService.selectGroupList(pi, group)).addObject("group", group).setViewName("moim/groupListView");
-		
-		return mv;
-	}
-	
-	@RequestMapping("groupDetail.mo")
-	public ModelAndView selectGroup(ModelAndView mv, String groupNo) {
-		
-		Group group = moimService.selectGroup(groupNo);
-		
-		long startTimeNum = Long.parseLong(group.getStartTime().replace("/", "").replace(" ", "").replace(":", ""));
-		long todayNum = Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
-		
-		String deadLine = "";
-		
-		if(startTimeNum <= todayNum) {
-			deadLine = "expired";
-		} else {
-			deadLine = "ok";
-		}
-		
-		String engLevel = "";
-		String engGender = "";
-		
-		switch(group.getLevel()){
-			case "초급" : engLevel = "B";
-			break;
-			case "중급" : engLevel = "M";
-			break;
-			case "고급" : engLevel = "S";
-		}
-		
-		switch(group.getGender()) {
-			case "여자만" : engGender = "F";
-			break;
-			case "남자만" : engGender = "M";
-		}
-		
-		mv.addObject("engGender", engGender).addObject("engLevel", engLevel).addObject("group", group).addObject("deadLine", deadLine).addObject("applyList", moimService.selectGroupApplyList(groupNo)).setViewName("moim/groupDetailView");
-		
-		return mv;
-	}
-	
-	//인터셉터 필요
-	@RequestMapping("groupUpdateForm.mo")
-	public ModelAndView groupUpdateForm(ModelAndView mv, String groupNo) {
-		
-		Group group = moimService.selectGroup(groupNo);
-		
-		String groupMember = group.getGroupMember();
-		String partiNum = "";
-		
-		//System.out.println(groupMember);
-		
-		if(!group.getGroupMember().contains("모집마감")) {
-			//모집 마감이 아니라면 => (a/b)
-			// a값을 담아줌
-			group.setGroupMember(groupMember.substring(groupMember.indexOf('/') + 1, groupMember.indexOf(')')));
-			// b값을 담아줌
-			partiNum = groupMember.substring(1, groupMember.indexOf('/'));
-		} else {
-			// 모집마감이라면 => 모짐마감(a)
-			// 둘 다 a값을 담아줌. 모집인원의 현재값과 최소값을 가져가기 위함
-			group.setGroupMember(groupMember.substring(groupMember.indexOf('(') + 1, groupMember.indexOf(')')));
-			partiNum = group.getGroupMember();
-		}
-		//2023/01/01 12:00:00 형태를 -> 2023-01-01T12:00 형태로 변경하여 input Date의 min 값으로 활용
-		group.setEndTime(group.getEndTime().replace(" ", "T").replace("/", "-").substring(0, 16));
-		group.setStartTime(group.getStartTime().replace(" ", "T").replace("/", "-").substring(0, 16));
-		
-//		System.out.println(group.getEndTime());
-//		System.out.println(group.getStartTime());
-//		System.out.println(group.getGroupMember());
-//		System.out.println(partiNum);
-		
-		mv.addObject("group", group).addObject("partiNum", partiNum).setViewName("moim/groupUpdateForm");
-		
-		return mv;
-	}
-	
-	//인터셉터 필요
-	@RequestMapping("groupEnrollForm.mo")
-	public ModelAndView groupEnrollFrom(ModelAndView mv) {
-		
-		mv.setViewName("moim/groupEnrollForm");
-		
-		return mv;
-	}
-	
-	// teamPage나 groupDetailView에 들어갈 때 해당 모임에 신청했는지 확인하는 메소드
-	@ResponseBody
-	@RequestMapping(value="selectApply.mo", produces="application/json; charset=UTF-8")
-	public String ajaxSelectApply(HttpSession session) {
-		//System.out.println(moimService.ajaxSelectApply(((Member)(session.getAttribute("loginMember"))).getMemNo()));
-		return new Gson().toJson(moimService.ajaxSelectApply(((Member)(session.getAttribute("loginMember"))).getMemNo()));
-	}
-	
+	/**
+	 * updateTeam : 사용자가 입력한 값으로 DB에 Team 테이블 정보 업데이트 메소드
+	 * @param team : teamNo, teamMember(팀 인원), teamIntro, teamArea, teamTime, keyword, powerDuration, originName, changeName, badgeOriginName, badgeChangeName, badgeStatus
+	 * @param reUpfile : 1) reUpfile[0] : 팀 대표 사진(originName, changeName) 2) reUpfile[1] : 뱃지 사진(badgeOriginName, badgeChangeName)
+	 */
 	// 뱃지를 바꿨을 수도 있으니 로그인유저 다시
 	//인터셉터 필요
 	@RequestMapping("updateTeam.mo")
 	public ModelAndView updateTeam(ModelAndView mv, Team team, MultipartFile[] reUpfile, HttpSession session) {
 		
-		//System.out.println(team);
 		// ------------- 팀 사진 처리 -------------
 		if(!reUpfile[0].getOriginalFilename().equals("")) {
 			// 새로운 팀 사진이 새로 들어왔을 때
@@ -432,19 +256,28 @@ public class MoimController {
 		return mv;
 	}
 	
+	/**
+	 * teamMemberUpdateForm : 사용자가 요청한 teamNo로 teamMemberList를 DB에서 select해 팀 멤버 업데이트 폼으로 이동(팀 멤버 정보를 가지고 이동)
+	 * @param teamNo : 해당 팀의 식별값
+	 */
 	//인터셉터 필요
-	@RequestMapping("updateBadge.mo")
-	public ModelAndView updateTeamBadgeStatus(ModelAndView mv, Team team, HttpSession session) {
-		if(moimService.updateTeamBadgeStatus(team) > 0) {
-			session.setAttribute("alterMsg", "뱃지 구매 성공");
-			mv.setViewName("redirect:teamPage.mo?teamNo=" + team.getTeamNo());
-		} else {
-			mv.addObject("errorMsg", "뱃지 구매 실패").setViewName("common/errorPage");
-		}
+	@RequestMapping("teamMemberUpdateForm.mo")
+	public ModelAndView teamMemberUpdateForm(ModelAndView mv, String teamNo) {
+		// teamNo 사용해서 teamMember 정보를 가지고서 updateForm으로 이동
+		
+		mv.addObject("teamMemberList", moimService.selectTeamMemberList(teamNo));
+		
+		mv.setViewName("moim/teamMemberUpdateForm");
 		
 		return mv;
 	}
 	
+	/**
+	 * updateTeamMember : 1) teamNo를 식별값으로 팀의 모든 팀멤버의 등급을 M으로 바꾼다. 그 후 leader와 subLeader에 담긴 memNo를 식별값으로 leader등급과 subLeader 등급을 update한다.
+	 * @param teamNo : update하고자 하는 팀의 식별값
+	 * @param leader : 리더로 등급 변경하고자 하는 팀 멤버의 memNo를 담아온다.
+	 * @param subLeader : 부리더로 등급 변경하고자 하는 팀 멤버의 memNo를 담아온다.
+	 */
 	// 세션에 로그인멤버 다시 담기
 	//인터셉터 필요
 	@RequestMapping("teamMemberUpdate.mo")
@@ -468,9 +301,9 @@ public class MoimController {
 			teamMemberList.add(subLeaderInfo);
 		}
 		
-		
 		if(moimService.updateTeamMember(teamMemberList) > 0) {
 			// 모두 성공
+			// 현재 팀장의 grade가 변경됐을 수도 있기 때문에 loginMember에 새 정보를 담아준다.
 			session.setAttribute("loginMember", memberService.loginMember((Member)session.getAttribute("loginMember")));
 			session.setAttribute("alterMsg", "팀원 정보 수정 성공");
 			mv.setViewName("redirect:teamPage.mo?teamNo=" + teamNo);
@@ -482,6 +315,39 @@ public class MoimController {
 		return mv;
 	}
 	
+	/**
+	 * badgeShop : 팀 뱃지 구매 페이지로 이동
+	 */
+	//인터셉터 필요
+	@RequestMapping("badgeShop.mo")
+	public ModelAndView badgeShop(ModelAndView mv) {
+		
+		mv.setViewName("moim/badgeBuyPage");
+		
+		return mv;
+	}
+	
+	/**
+	 * updateTeamBadgeStatus : teamNo를 식별값으로 받아 해당 팀의 badgeStatus를 Y로 변경해주는 메소드
+	 * @team : 1) teamNo : 팀 식별값, 2) memNo : 포인트를 소비하기 위한 멤버 식별값
+	 */
+	//인터셉터 필요
+	@RequestMapping("updateBadge.mo")
+	public ModelAndView updateTeamBadgeStatus(ModelAndView mv, Team team, HttpSession session) {
+		if(moimService.updateTeamBadgeStatus(team) > 0) {
+			session.setAttribute("alterMsg", "뱃지 구매 성공");
+			mv.setViewName("redirect:teamPage.mo?teamNo=" + team.getTeamNo());
+		} else {
+			mv.addObject("errorMsg", "뱃지 구매 실패").setViewName("common/errorPage");
+		}
+		
+		return mv;
+	}
+	
+	/**
+	 * deleteTeamMember : DB에서 teamNo와 memNo를 조건으로 teamMember를 삭제하는 메소드
+	 * @param tm : 1) teamNo : 해당 팀의 식별값, 2) memNo : 탈퇴하고자 하는 멤버의 식별값
+	 */
 	//인터셉터 필요
 	@RequestMapping("deleteTeamMember.mo")
 	public ModelAndView deleteTeamMember(ModelAndView mv, TeamMember tm, HttpSession session) {
@@ -496,24 +362,10 @@ public class MoimController {
 		return mv;
 	}
 	
-	//인터셉터 필요
-	@RequestMapping("deleteApply.mo")
-	public ModelAndView deleteApply(HttpSession session, ModelAndView mv, Apply ap) {
-		// moimNo랑 memNo가 담겨 있음
-		if(moimService.deleteApply(ap) > 0) {
-			session.setAttribute("alterMsg", "신청 취소 완료");
-			if(ap.getMoimNo().contains("T")) {
-				mv.setViewName("redirect:teamPage.mo?teamNo=" + ap.getMoimNo());
-			} else {
-				mv.setViewName("redirect:groupDetail.mo?groupNo=" + ap.getMoimNo());
-			}
-		} else {
-			mv.addObject("errorMsg", "신청 취소 실패").setViewName("common/errorPage");
-		}
-		
-		return mv;
-	}
-	
+	/**
+	 * insertApply : 팀, 소모임 참여 심청 메소드
+	 * @param ap : memNo : 요청을 보내는 회원의 회원 정보 식별값, moimNo : 신청하고자 하는 모임번호 / 보내줄 페이지 식별값
+	 */
 	//인터셉터 필요
 	@RequestMapping("insertApply.mo")
 	public ModelAndView insertApply(ModelAndView mv, Apply ap) {
@@ -531,6 +383,11 @@ public class MoimController {
 		return mv;
 	}
 	
+	/**
+	 * insertTeamMember : 팀장이 팀 신청 수락 시 TeamMember 테이블에 해당 회원의 정보 insert 메소드
+	 * @param tm : 1) memNo : 신청한 회원의 memNo, 2) teamNo : 신청한 팀의 teamNo
+	 * @param applyNo : 해당 요청 정보를 삭제하기 위한 식별값
+	 */
 	//인터셉터 필요
 	@RequestMapping("insertTeamMember.mo")
 	public ModelAndView insertTeamMember(ModelAndView mv, TeamMember tm, int applyNo) {
@@ -549,12 +406,158 @@ public class MoimController {
 		return mv;
 	}
 	
+	/**
+	 * deleteApply : 팀, 소모임 신청 거절 및 팀 수락 후 사용하는 apply 정보 삭제 메소드(MoimServiceImpl 클래스에서 insertTeamMember 메소드 내에서 사용)
+	 * @param ap : memNo : 신청한 회원 정보 식별값, moimNo : 신청한 모임 정보 식별값 / 돌려보내줄 화면 지정 시 필요
+	 */
+	//인터셉터 필요
+	@RequestMapping("deleteApply.mo")
+	public ModelAndView deleteApply(HttpSession session, ModelAndView mv, Apply ap) {
+		// moimNo랑 memNo가 담겨 있음
+		if(moimService.deleteApply(ap) > 0) {
+			session.setAttribute("alterMsg", "신청 취소 완료");
+			if(ap.getMoimNo().contains("T")) {
+				mv.setViewName("redirect:teamPage.mo?teamNo=" + ap.getMoimNo());
+			} else {
+				mv.setViewName("redirect:groupDetail.mo?groupNo=" + ap.getMoimNo());
+			}
+		} else {
+			mv.addObject("errorMsg", "신청 취소 실패").setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	// ------------------- 채팅 관련 기능 시작 -------------------
+	
+	/**
+	 * cahttingRoom : 팀, 소모임 대화 내용을 담고 채팅방으로 보내주는 메소드
+	 * selectTeamMemberList : 채팅방에 들어올 수 있는 해당 팀의 teamMember 조회 메소드
+	 * selectAcceptMember : 소모임 신청 수락되어 채팅방에 입장할 수 있는 멤버 조회 메소드
+	 * @param chat : moimNo : 해당 모임 식별값, memNo : 채팅방에 입장하는 회원의 정보 식별값
+	 * @param moimMember : 모임에 현재 참여신청 완료되어 채팅방에 들어올 수 있는 사람의 수
+	 * @param moimTitle : 팀이름 또는 소그룹 모집 제목
+	 */
+	//인터셉터 필요
+	@RequestMapping("chattingRoom.mo")
+	public ModelAndView cahttingRoom(ModelAndView mv, Chatting chat, String moimMember, String moimTitle) {
+		
+		if(chat.getMoimNo().contains("G")) {
+			ArrayList<Member> groupMemberList = moimService.selectAcceptMember(chat.getMoimNo());
+			mv.addObject("chatMemberList", groupMemberList);
+			
+			moimMember = String.valueOf(groupMemberList.size());
+			
+		} else if(chat.getMoimNo().contains("T")) {
+			mv.addObject("chatMemberList", moimService.selectTeamMemberList(chat.getMoimNo()));
+		}
+		
+		mv.addObject("chatList", moimService.selectChattingList(chat)).addObject("moimMember", moimMember).addObject("moimNo", chat.getMoimNo()).addObject("moimTitle", moimTitle).setViewName("moim/chatView");
+		
+		return mv;
+	}
+	
+	/**
+	 * ajaxSelectChattingList : 1초에 한번씩 moimNo와 memNo를 식별값으로 채팅 리스트를 조회해오는 메소드
+	 * @param chat : 1) moimNo : 해당 모임 식별값, 2) memNo : 채팅방에 참여한 loginMember의 회원 식별값
+	 */
+	//인터셉터 필요
+	@ResponseBody
+	@RequestMapping(value="ajaxSelectChatList.mo", produces="application/json; charset=UTF-8")
+	public String ajaxSelectChattingList(Chatting chat) {
+		
+		return new Gson().toJson(moimService.selectChattingList(chat));
+	}
+	
+	/**
+	 * ajaxInsertChatting : 사용자의 입력값을 채팅 내용 추가하는 메소드
+	 * @param moimNo : 채팅 방의 모임 식별자
+	 * @param memNo : 채팅을 입력한 loginMember의 memNo
+	 * @param chatContent : 사용자가 입력한 채팅 내용
+	 * @return
+	 */
+	//인터셉터 필요
+	@ResponseBody
+	@RequestMapping(value="insertChat.mo", produces="text/html; charset=UTF-8")
+	public String ajaxInsertChatting(Chatting chat) {
+		
+		String message = "";
+		
+		if(moimService.ajaxInsertChatting(chat) > 0) {
+			message = "NNNNY";
+		} else {
+			message = "NNNNN";
+		}
+		return message;
+	}
+	
+	/**
+	 * ajaxDeleteChatting : 비동기식으로 chatting을 삭제하는 메소드
+	 * @param chatNo : 삭제하고자 하는 채팅의 번호를 식별하는 값
+	 */
+	//인터셉터 필요
+	@ResponseBody
+	@RequestMapping(value="deleteChat.mo", produces="text/html; charset=UTF-8")
+	public String ajaxDeleteChatting(String chatNo) {
+
+		if(moimService.ajaxDeleteChatting(chatNo) > 0) {
+			return "NNNNY";
+		} else {
+			return "NNNNN";
+		}
+	}
+	
+	/**
+	 * selectGroupList : 아래 조건에 맞추어 group 리스트를 select하는 메소드
+	 * @param currentPage : 요청하는 페이지
+	 * @param groupArea : 소그룹 지역
+	 * @param gender : 소그룹 성별 조건
+	 * @param level : 소그룹 레벨 조건
+	 * @param groupMember : 소그룹 모집인원
+	 */
+	@RequestMapping("groupList.mo")
+	public ModelAndView selectGroupList(ModelAndView mv,
+										@RequestParam(value="cpage", defaultValue="1") int currentPage,
+										@RequestParam(value="groupArea", defaultValue="all") String groupArea,
+										@RequestParam(value="gender", defaultValue="A") String gender,
+										@RequestParam(value="level", defaultValue="E") String level,
+										@RequestParam(value="groupMember", defaultValue="A") String groupMember) {
+
+		Group group = new Group();
+		group.setGroupArea(groupArea);
+		group.setGender(gender);
+		group.setLevel(level);
+		group.setGroupMember(groupMember);
+		
+		PageInfo pi = Pagination.getPageInfo(moimService.selectGroupCountList(group), currentPage, 10, 9);
+		//System.out.println(pi);
+		mv.addObject("pi", pi).addObject("groupList", moimService.selectGroupList(pi, group)).addObject("group", group).setViewName("moim/groupListView");
+		
+		return mv;
+	}
+	
+	/**
+	 * groupEnrollFrom : 소그룹 등록 폼으로 이동
+	 */
+	//인터셉터 필요
+	@RequestMapping("groupEnrollForm.mo")
+	public ModelAndView groupEnrollForm(ModelAndView mv) {
+		
+		mv.setViewName("moim/groupEnrollForm");
+		
+		return mv;
+	}
+	
+	/**
+	 * insertGroup : 사용자가 입력한 정보를 바탕으로 Group insert하는 메소드
+	 * @param group : memNo, groupTitle, groupContent, groupArea, place, gender, level, groupMember, startTime, endTime, powerDuration
+	 * @param upfile : 썸네일 파일(originName, changeName)
+	 */
 	//인터셉터 필요
 	@RequestMapping("insertGroup.mo")
 	public ModelAndView insertGroup(ModelAndView mv, Group group, MultipartFile upfile, HttpSession session) {
 		
-		//System.out.println(group);
-		
+		// DB에 Date타입으로 insert하기 위해 값을 가공
+		// 2020-01-01T12:12 -> 2020-01-01 12:12
 		group.setStartTime(group.getStartTime().replace("T", " "));
 		group.setEndTime(group.getEndTime().replace("T", " "));
 		
@@ -562,7 +565,6 @@ public class MoimController {
 			group.setOriginName(upfile.getOriginalFilename());
 			group.setChangeName("resources/upfiles/" + saveFile(upfile, session));
 		}
-		//System.out.println(group);
 		
 		if(moimService.insertGroup(group) > 0) {
 			if(group.getPowerDuration() != null) {
@@ -577,15 +579,85 @@ public class MoimController {
 		
 		return mv;
 	}
+		
+	/**
+	 * selectGroup : 사용자가 요청한 groupNo를 식별자로 소그룹 정보, 소그룹 개최자 멤버 정보, 신청 정보를 가지고 디테일 뷰로 이동
+	 * @param groupNo : 요청하는 group의 식별값
+	 */
+	@RequestMapping("groupDetail.mo")
+	public ModelAndView selectGroup(ModelAndView mv, String groupNo) {
+		
+		Group group = moimService.selectGroup(groupNo);
+		
+		long startTimeNum = Long.parseLong(group.getStartTime().replace("/", "").replace(" ", "").replace(":", ""));
+		long todayNum = Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+		
+		String deadLine = startTimeNum <= todayNum ? "expired" : "ok";
+		
+		String engGender = group.getGender().equals("여자만") ? "F" : "M";
+		
+		String engLevel = "";
+		
+		switch(group.getLevel()){
+			case "초급" : engLevel = "B";
+			break;
+			case "중급" : engLevel = "M";
+			break;
+			case "고급" : engLevel = "S";
+		}
+		
+		
+		mv.addObject("engGender", engGender).addObject("engLevel", engLevel).addObject("group", group).addObject("deadLine", deadLine).addObject("applyList", moimService.selectGroupApplyList(groupNo)).setViewName("moim/groupDetailView");
+		
+		return mv;
+	}
 	
+	/**
+	 * groupUpdateForm : selectGroup 메소드를 사용해서 소모임 정보를 group Vo에 담아 수정폼으로 이동
+	 * @param groupNo : 수정하고자 하는 group의 식별값
+	 */
+	//인터셉터 필요
+	@RequestMapping("groupUpdateForm.mo")
+	public ModelAndView groupUpdateForm(ModelAndView mv, String groupNo) {
+		
+		Group group = moimService.selectGroup(groupNo);
+		
+		String groupMember = group.getGroupMember();
+		String partiNum = "";
+		
+		if(!group.getGroupMember().contains("모집마감")) {
+			//모집 마감이 아니라면 => (a/b)
+			// a값을 담아줌
+			group.setGroupMember(groupMember.substring(groupMember.indexOf('/') + 1, groupMember.indexOf(')')));
+			// b값을 담아줌
+			partiNum = groupMember.substring(1, groupMember.indexOf('/'));
+		} else {
+			// 모집마감이라면 => 모짐마감(a)
+			// 둘 다 a값을 담아줌. 모집인원의 현재값과 최소값을 가져가기 위함
+			group.setGroupMember(groupMember.substring(groupMember.indexOf('(') + 1, groupMember.indexOf(')')));
+			partiNum = group.getGroupMember();
+		}
+		
+		//2023/01/01 12:00:00 형태를 -> 2023-01-01T12:00 형태로 변경하여 input Date의 min 값으로 활용
+		group.setEndTime(group.getEndTime().replace(" ", "T").replace("/", "-").substring(0, 16));
+		group.setStartTime(group.getStartTime().replace(" ", "T").replace("/", "-").substring(0, 16));
+		
+		mv.addObject("group", group).addObject("partiNum", partiNum).setViewName("moim/groupUpdateForm");
+		
+		return mv;
+	}
+	
+	/**
+	 * updateGroup : 사용자가 입력한 데이터를 바탕으로 소그룹 정보 업데이트
+	 * @param group : groupNo, memNo, originName(기존파일), changeName(기존파일), groupTitle, groupContent, groupArea, place, gender, level, startTime, endTime, powerDuration
+	 * @param reUpfile : 사용자가 수정한 썸네일(originName, changeName)
+	 */
 	//인터셉터 필요
 	@RequestMapping("updateGroup.mo")
 	public ModelAndView updateGroup(ModelAndView mv, Group group, MultipartFile reUpfile, HttpSession session) {
 		
 		group.setStartTime(group.getStartTime().replace("T", " "));
 		group.setEndTime(group.getEndTime().replace("T", " "));
-		
-		//System.out.println(group);
 		
 		if(!reUpfile.getOriginalFilename().equals("")) {
 			if(!group.getOriginName().equals("")) {
@@ -605,22 +677,16 @@ public class MoimController {
 		return mv;
 	}
 	
-	//인터셉터 필요
-	@ResponseBody
-	@RequestMapping(value="selectGroupApply.mo", produces="application/json; charset=UTF-8")
-	public String ajaxSelectGroupApply(Apply ap) {
-		
-		//System.out.println(ap);
-		
-		return new Gson().toJson(moimService.ajaxSelectGroupApply(ap));
-	}
-	
+	/**
+	 * updateApply : 소그룹 신청 수락 시 ACCETP_YN을 Y로 바꿔주고 ACCEPT_DATE를 현재로 업데이트 해주는 메소드
+	 * @param ap : 1) applyNo : 수락할 apply의 식별값, 2) moimNo : 페이지를 보내줄 moimNo
+	 */
 	//인터셉터 필요
 	@RequestMapping("updateApply.mo")
-	public ModelAndView updateGroupApply(ModelAndView mv, Apply ap) {
+	public ModelAndView updateApply(ModelAndView mv, Apply ap) {
 		
 		if(moimService.updateApply(ap) > 0) {
-			mv.setViewName("redirect:groupDetail.mo?groupNo=" + ap.getMoimNo());
+				mv.setViewName("redirect:groupDetail.mo?groupNo=" + ap.getMoimNo()); 
 		} else {
 			mv.addObject("errorMsg", "수락 실패").setViewName("common/errorMsg");
 		}
@@ -628,6 +694,10 @@ public class MoimController {
 		return mv;
 	}
 	
+	/**
+	 * deleteGroup : groupNo로 요청받은 소그룹 삭제 메소드
+	 * @param group : groupNo : 삭제하고자 하는 그룹의 식별값
+	 */
 	//인터셉터 필요
 	@RequestMapping("deleteGroup.mo")
 	public ModelAndView deleteGroup(ModelAndView mv, Group group) {
@@ -640,5 +710,4 @@ public class MoimController {
 		
 		return mv;
 	}
-	
 }
