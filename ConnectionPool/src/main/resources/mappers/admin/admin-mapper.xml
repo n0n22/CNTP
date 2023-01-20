@@ -296,7 +296,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                ,REPORT_BOARD
                ,REPORT_REASON
                ,REPORTER
-               ,RM.MEM_ID "REPOTER_ID"
+               ,RM.MEM_ID "REPORTER_ID"
                ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
                ,REPORT_RESULT
                ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE"
@@ -466,133 +466,77 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       COUNT(*)
 		  FROM
 		       (
-                    SELECT
-                           A.MEM_NO,
-                           A.MEM_ID,
-                           COUNT,
-                           PENALTY,
-                           COMPLETION_DATE
-                      FROM
-                           (
-                                   SELECT MEM_NO
-                                           ,MEM_ID
-                                           ,COUNT(*) "COUNT",
-                                           CASE WHEN COUNT(*) >= 10 THEN '탈퇴'
-                                                WHEN COUNT(*) >= 5  THEN '정지'
-                                           END "PENALTY"
-                                           ,TO_CHAR(MAX(COMPLETION_DATE), 'YYYY-MM-DD') "COMPLETION_DATE"
-                                    FROM REPORT "R"
-                                    JOIN 
-                                       (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
-                                          FROM BOARD
-                                          JOIN MEMBER USING(MEM_NO)
-                                         WHERE MEM_STATUS != 'K'
-                                        ) "B" ON (B.BOARD_NO = R.BOARD_NO)
-                                    WHERE REPORT_RESULT = 'O'
-                                    GROUP BY MEM_NO, MEM_ID
-                                    HAVING COUNT(*) >= 5
-                                    ) "A"
-                             JOIN
-                                  PENALTY "P" ON (A.MEM_NO = P.MEM_NO)
-                             WHERE
-                                   <![CDATA[END_DATE < SYSDATE]]>
-            UNION                   
-                    SELECT
-                           A.MEM_NO,
-                           A.MEM_ID,
-                           COUNT,
-                           PENALTY,
-                           COMPLETION_DATE
-                      FROM
-                           (
-                                   SELECT MEM_NO
-                                           ,MEM_ID
-                                           ,COUNT(*) "COUNT",
-                                           CASE WHEN COUNT(*) >= 10 THEN '탈퇴'
-                                                WHEN COUNT(*) >= 5  THEN '정지'
-                                           END "PENALTY"
-                                           ,TO_CHAR(MAX(COMPLETION_DATE), 'YYYY-MM-DD') "COMPLETION_DATE"
-                                    FROM REPORT "R"
-                                    JOIN 
-                                       (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
-                                          FROM BOARD
-                                          JOIN MEMBER USING(MEM_NO)
-                                         WHERE MEM_STATUS != 'K'
-                                        ) "B" ON (B.BOARD_NO = R.BOARD_NO)
-                                    WHERE REPORT_RESULT = 'O'
-                                    GROUP BY MEM_NO, MEM_ID
-                                    HAVING COUNT(*) >= 5
-                                    ) "A"
-                             JOIN
-                                  PENALTY "P" ON (A.MEM_NO = P.MEM_NO)
-                             WHERE
-                                   <![CDATA[END_DATE < SYSDATE]]>                                
+		 		SELECT 
+				       MEM_NO
+				       ,MEM_ID
+				       ,COUNT(*) "COUNT",
+				       CASE WHEN COUNT(*) >= 10 THEN '탈퇴'
+				            WHEN COUNT(*) >= 5  THEN '정지'
+				       END "PENALTY"
+				       ,TO_CHAR(MAX(COMPLETION_DATE), 'YYYY-MM-DD') "COMPLETION_DATE"
+				  FROM 
+				       (
+				       SELECT 
+				                DECODE(REPORT_BOARD, 'board', B.MEM_NO, 'board_reply', C.WRITER) "MEM_NO"
+				                ,DECODE(REPORT_BOARD, 'board', M1.MEM_ID, 'board_reply', M2.MEM_ID) "MEM_ID"
+				                ,COMPLETION_DATE
+				          FROM 
+				               REPORT "R"
+				          JOIN
+				               BOARD "B" ON (R.BOARD_NO = B.BOARD_NO)
+				          JOIN
+				               BOARD_REPLY "C" ON (R.BOARD_NO = C.COMMENT_NO)
+				          JOIN
+				               MEMBER "M1" ON (B.MEM_NO = M1.MEM_NO)
+				          JOIN
+				               MEMBER "M2" ON (C.WRITER = M2.MEM_NO)
+				          JOIN
+				               MEMBER "RM" ON (R.REPORTER = RM.MEM_NO)
+				         WHERE RM.MEM_STATUS != 'K'
+				           AND REPORT_RESULT = 'O'
+				       )
+				  JOIN PENALTY "P" USING(MEM_NO)
+				 WHERE <![CDATA[END_DATE < SYSDATE]]>    
+			     GROUP BY MEM_NO, MEM_ID
+			    HAVING COUNT(*) >= 5                     
 		       )
 	</select>
 	
 	<!-- 패널티 대상 목록 조회 -->
 	<select id="selectPenaltyList" resultMap="reportResultSet">
-        SELECT
-               A.MEM_NO,
-               A.MEM_ID,
-               COUNT,
-               PENALTY,
-               COMPLETION_DATE
-          FROM
-               (
-                       SELECT MEM_NO
-                               ,MEM_ID
-                               ,COUNT(*) "COUNT",
-                               CASE WHEN COUNT(*) >= 10 THEN '탈퇴'
-                                    WHEN COUNT(*) >= 5  THEN '정지'
-                               END "PENALTY"
-                               ,TO_CHAR(MAX(COMPLETION_DATE), 'YYYY-MM-DD') "COMPLETION_DATE"
-                        FROM REPORT "R"
-                        JOIN 
-                           (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
-                              FROM BOARD
-                              JOIN MEMBER USING(MEM_NO)
-                             WHERE MEM_STATUS != 'K'
-                            ) "B" ON (B.BOARD_NO = R.BOARD_NO)
-                        WHERE REPORT_RESULT = 'O'
-                        GROUP BY MEM_NO, MEM_ID
-                        HAVING COUNT(*) >= 5
-                        ) "A"
-                 JOIN
-                      PENALTY "P" ON (A.MEM_NO = P.MEM_NO)
-                 WHERE
-                       <![CDATA[END_DATE < SYSDATE]]>
-UNION                   
-        SELECT
-               A.MEM_NO,
-               A.MEM_ID,
-               COUNT,
-               PENALTY,
-               COMPLETION_DATE
-          FROM
-               (
-                       SELECT MEM_NO
-                               ,MEM_ID
-                               ,COUNT(*) "COUNT",
-                               CASE WHEN COUNT(*) >= 10 THEN '탈퇴'
-                                    WHEN COUNT(*) >= 5  THEN '정지'
-                               END "PENALTY"
-                               ,TO_CHAR(MAX(COMPLETION_DATE), 'YYYY-MM-DD') "COMPLETION_DATE"
-                        FROM REPORT "R"
-                        JOIN 
-                           (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
-                              FROM BOARD
-                              JOIN MEMBER USING(MEM_NO)
-                             WHERE MEM_STATUS != 'K'
-                            ) "B" ON (B.BOARD_NO = R.BOARD_NO)
-                        WHERE REPORT_RESULT = 'O'
-                        GROUP BY MEM_NO, MEM_ID
-                        HAVING COUNT(*) >= 5
-                        ) "A"
-                 JOIN
-                      PENALTY "P" ON (A.MEM_NO = P.MEM_NO)
-                 WHERE
-                       <![CDATA[END_DATE < SYSDATE]]>   
+		SELECT 
+		       MEM_NO
+		       ,MEM_ID
+		       ,COUNT(*) "COUNT",
+		       CASE WHEN COUNT(*) >= 10 THEN '탈퇴'
+		            WHEN COUNT(*) >= 5  THEN '정지'
+		       END "PENALTY"
+		       ,TO_CHAR(MAX(COMPLETION_DATE), 'YYYY-MM-DD') "COMPLETION_DATE"
+		  FROM 
+		       (
+		       SELECT 
+		                DECODE(REPORT_BOARD, 'board', B.MEM_NO, 'board_reply', C.WRITER) "MEM_NO"
+		                ,DECODE(REPORT_BOARD, 'board', M1.MEM_ID, 'board_reply', M2.MEM_ID) "MEM_ID"
+		                ,COMPLETION_DATE
+		          FROM 
+		               REPORT "R"
+		          JOIN
+		               BOARD "B" ON (R.BOARD_NO = B.BOARD_NO)
+		          JOIN
+		               BOARD_REPLY "C" ON (R.BOARD_NO = C.COMMENT_NO)
+		          JOIN
+		               MEMBER "M1" ON (B.MEM_NO = M1.MEM_NO)
+		          JOIN
+		               MEMBER "M2" ON (C.WRITER = M2.MEM_NO)
+		          JOIN
+		               MEMBER "RM" ON (R.REPORTER = RM.MEM_NO)
+		         WHERE RM.MEM_STATUS != 'K'
+		           AND REPORT_RESULT = 'O'
+		       )
+		  JOIN PENALTY "P" USING(MEM_NO)
+		 WHERE <![CDATA[END_DATE < SYSDATE]]>    
+	     GROUP BY MEM_NO, MEM_ID
+	    HAVING COUNT(*) >= 5
 	</select>
 	
 	
