@@ -1,6 +1,7 @@
 package com.kh.cntp.board.controller;
 
 import java.io.File;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,6 +22,8 @@ import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.common.template.Pagination;
 import com.kh.cntp.common.template.Template;
 import com.kh.cntp.reply.model.vo.Reply;
+
+import oracle.net.aso.b;
 
 @Controller
 public class BoardController {
@@ -136,20 +139,27 @@ public class BoardController {
 			}
 			
 		}
-		/*
+		
 		//검색 -> 작성자, 제목, 내용
 		//작성자 -> memberNo ? / nickName? 
-		@RequestMapping("mSerch.bo")
-		public <SEARCH> ModelAndView mSearch(@ModelAttribute SEARCH search,  ModelAndView mv, Board b) {
-			mv= mv.addObject(search);
+		@RequestMapping("SearchNick.bo")
+		public ModelAndView mSearch(String condition, String keyword,  ModelAndView mv,@RequestParam(value="cpage",defaultValue="1") int currentPage ) {
+			
+			HashMap<String, String> map= new HashMap();
+			map.put("condition", condition);
+			map.put("keyword", keyword);
+			
+			PageInfo pi = Pagination.getPageInfo(boardService.selectSearchCount(map),currentPage, 10,5); //int pageLimit 10, int boardLimit : 5
+			//System.out.println(boardService.selectSearchCount(map));
+			
+			
+			
 			return mv;
 			
-			mv.addObject("b",boardService.selectBoard(bno)).setViewName("board/boardUpdateForm");
-			return mv;
 			
 			
 		}
-		*/
+		
 		
 }
 

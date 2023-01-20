@@ -39,6 +39,8 @@
             width: 700px;
             padding: 10px;
         }
+        
+        
 
 
     </style>
@@ -80,12 +82,12 @@
 	                        </tr>
 	                        <tr>
 	                            <th>제목</th>
-	                            <td><input type="text" name="title" value="${ notice.title }"></td>
+	                            <td><input type="text" name="title" value="${ notice.title }" required></td>
 	                        </tr>
 	                        <tr>
 	                            <th>내용</th>
 	                            <td>
-	                                <textarea class="editor" name="content">${ notice.content }</textarea>
+	                                <textarea class="editor" name="content" required>${ notice.content }</textarea>
 	                            </td>
 	                        </tr>
 	                        <tr>

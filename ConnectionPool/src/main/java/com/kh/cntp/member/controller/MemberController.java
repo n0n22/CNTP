@@ -326,7 +326,6 @@ public class MemberController {
 	@RequestMapping(value="showProfile.me", produces="application/json; charset=UTF-8")
 	public String showProfile(int memNo) {
 		Member m = memberService.showProfile(memNo);
-		System.out.println(m);
 		return new Gson().toJson(m);
 	}
 	// 인기도 올리는 기능
@@ -337,20 +336,14 @@ public class MemberController {
 		// 인기도 식별 코드 만들기
 		// F + "인기도 누른 회원" + T + "인기도 당한 회원" + U(up)/D(down)
 		String ingido = "F" + memNo + "T" + targetNo;
-		// 중복 검사
-		int result = memberService.checkIngido(ingido);
-		int result2 = 0;
-		if(result == 0){
-			ingido += flag.equals("1")? "U" : "D";
-			// HashMap 객체에 담기
-			HashMap<String, String> map = new HashMap<String, String>();
-			map.put("ingido", ingido);
-			map.put("targetNo", targetNo);
-			map.put("flag", flag);
-			// 인기도 변경 및 기록
-			result2 = memberService.upOrDownIngido(map);
-	}
-		return String.valueOf(result2);
+		ingido += flag.equals("1") ? "U" : "D";
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("ingido", ingido);
+		map.put("targetNo", targetNo);
+		map.put("flag", flag);
+		// 인기도 중복 검사 & 인기도 변경 & 인기도 기록
+		return String.valueOf(memberService.upOrDownIngido(map));
 	}
 	
 	// 지역별 인기도왕

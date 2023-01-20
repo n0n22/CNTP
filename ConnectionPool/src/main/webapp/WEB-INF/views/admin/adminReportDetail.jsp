@@ -84,7 +84,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>대상 내용</th>
+                        <th height="200">대상 내용</th>
                         <td colspan="5">
                             <p align="left">
 								${ report.content }
@@ -102,16 +102,17 @@
             </table>
         </div>
 
-		<c:if test="${ empty report.reportResult }">
-	        <div class="result-btn-area">
-	            <button type="button" class="btn btn-warning" onclick="invalidFormSubmit();">신고무효</button>
-	            <button type="button" class="btn btn-danger" onclick="confirmFormSubmit();">신고확정</a>
-	        </div>
-		</c:if>
+        <div class="result-btn-area">
+			<c:if test="${ empty report.reportResult }">
+		            <button type="button" class="btn btn-warning" onclick="invalidFormSubmit();">신고무효</button>
+		            <button type="button" class="btn btn-danger" onclick="confirmFormSubmit();">신고확정</button>
+			</c:if>
+			<button type="button" class="btn btn-secondary" onclick="history.back();">목록으로</button>
+        </div>
 
 		<form method="post" action="" id="submitForm">
 			<input type="hidden" value="${ report.reportNo }" name="reportNo" >
-			<input type="hidden" value="${ report.boardNo }" name="boardNo" >			
+			<input type="hidden" value="${ report.boardNo }" name="boardNo" >		
 		</form>
 			
 		<script>

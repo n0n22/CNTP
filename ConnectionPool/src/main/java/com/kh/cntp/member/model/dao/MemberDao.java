@@ -160,10 +160,6 @@ public class MemberDao {
 	public Member showProfile(SqlSessionTemplate sqlSession, int memNo) {
 		return sqlSession.selectOne("memberMapper.showProfile", memNo);
 	}
-	// 인기도 중복 검사
-	public int checkIngido(SqlSessionTemplate sqlSession, String ingidio) {
-		return sqlSession.selectOne("memberMapper.checkIngido", ingidio);
-	}
 	// 인기도 변경
 	public int upOrDownIngido(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.update("memberMapper.upOrDownIngido", map);

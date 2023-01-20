@@ -1,6 +1,7 @@
 package com.kh.cntp.board.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -57,6 +58,11 @@ public class BoardDao {
 	
 	public int insertBoardReply(SqlSessionTemplate sqlSession, Reply r) {
 		return sqlSession.insert("replyMapper.insertBoardReply" ,r);
+	}
+
+	public int selectSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		
+		return sqlSession.selectOne("boardMapper.selectSearchCount", map);
 	}
 	
 	
