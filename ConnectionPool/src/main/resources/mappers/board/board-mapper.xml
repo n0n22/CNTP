@@ -178,11 +178,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select 
 				board_no,
 				 title,
-				 member_no,
+				 mem_no,
 				 category,
 				 nickName,
 				 count,
-				 create_Date
+				to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		from board b
 		join member using ( mem_no)
 		where b.status = 'Y'
