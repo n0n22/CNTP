@@ -258,6 +258,7 @@ SELECT
        ,DECODE(REPORT_BOARD, 'board', M1.MEM_ID, 'board_reply', M2.MEM_ID) "MEM_ID"
        ,DECODE(REPORT_BOARD, 'board', B.CONTENT, 'board_reply', C.COMMENT_CONTENT) "CONTENT"
        ,RM.MEM_ID "REPORTER_ID" 
+       ,RM.MEM_STATUS
   FROM
        REPORT "R"
   JOIN
@@ -453,23 +454,15 @@ SELECT
 				  FROM 
 				       (
 				       SELECT 
-				                DECODE(REPORT_BOARD, 'board', B.MEM_NO, 'board_reply', C.WRITER) "MEM_NO"
-				                ,DECODE(REPORT_BOARD, 'board', M1.MEM_ID, 'board_reply', M2.MEM_ID) "MEM_ID"
-				                ,COMPLETION_DATE
-				          FROM 
-				               REPORT "R"
-				          JOIN
-				               BOARD "B" ON (R.BOARD_NO = B.BOARD_NO)
-				          JOIN
-				               BOARD_REPLY "C" ON (R.BOARD_NO = C.COMMENT_NO)
-				          JOIN
-				               MEMBER "M1" ON (B.MEM_NO = M1.MEM_NO)
-				          JOIN
-				               MEMBER "M2" ON (C.WRITER = M2.MEM_NO)
-				          JOIN
-				               MEMBER "RM" ON (R.REPORTER = RM.MEM_NO)
-				         WHERE RM.MEM_STATUS != 'K'
-				           AND REPORT_RESULT = 'O'
+				              MEM_NO
+				              ,MEM_ID
+				              ,COMPLETION_DATE
+				         FROM 
+				               VW_REPORT_DT
+				         WHERE 
+				               RM.MEM_STATUS != 'K'
+				           AND 
+				               REPORT_RESULT = 'O'
 				       )
 				  JOIN PENALTY "P" USING(MEM_NO)
 				 WHERE <![CDATA[END_DATE < SYSDATE]]>    
@@ -491,28 +484,20 @@ SELECT
 		  FROM 
 		       (
 		       SELECT 
-		                DECODE(REPORT_BOARD, 'board', B.MEM_NO, 'board_reply', C.WRITER) "MEM_NO"
-		                ,DECODE(REPORT_BOARD, 'board', M1.MEM_ID, 'board_reply', M2.MEM_ID) "MEM_ID"
-		                ,COMPLETION_DATE
-		          FROM 
-		               REPORT "R"
-		          JOIN
-		               BOARD "B" ON (R.BOARD_NO = B.BOARD_NO)
-		          JOIN
-		               BOARD_REPLY "C" ON (R.BOARD_NO = C.COMMENT_NO)
-		          JOIN
-		               MEMBER "M1" ON (B.MEM_NO = M1.MEM_NO)
-		          JOIN
-		               MEMBER "M2" ON (C.WRITER = M2.MEM_NO)
-		          JOIN
-		               MEMBER "RM" ON (R.REPORTER = RM.MEM_NO)
-		         WHERE RM.MEM_STATUS != 'K'
-		           AND REPORT_RESULT = 'O'
+		              MEM_NO
+		              ,MEM_ID
+		              ,COMPLETION_DATE
+		         FROM 
+		               VW_REPORT_DT
+		         WHERE 
+		               RM.MEM_STATUS != 'K'
+		           AND 
+		               REPORT_RESULT = 'O'
 		       )
 		  JOIN PENALTY "P" USING(MEM_NO)
 		 WHERE <![CDATA[END_DATE < SYSDATE]]>    
 	     GROUP BY MEM_NO, MEM_ID
-	    HAVING COUNT(*) >= 5
+	    HAVING COUNT(*) >= 5                     
 	</select>
 	
 	
