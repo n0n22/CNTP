@@ -13,6 +13,7 @@ import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.dao.MemberDao;
 import com.kh.cntp.member.model.vo.Cert;
 import com.kh.cntp.member.model.vo.Member;
+import com.kh.cntp.member.model.vo.NaverVO;
 import com.kh.cntp.member.model.vo.Point;
 import com.kh.cntp.moim.model.vo.Group;
 
@@ -26,6 +27,25 @@ public class MemberServiceImpl implements MemberService {
 	// sqlSessionTemplate == sqlSession 대체
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	
+	// 네이버 로그인 이메일체크
+	@Override
+	public int naverEmailCheck(String email) {
+		return memberDao.naverEmailCheck(sqlSession, email);
+	}
+	
+	// 네이버 로그인 추가 
+	@Override
+	public int naverInsert(NaverVO naver) {
+		return memberDao.naverInsert(sqlSession, naver);
+	}
+	
+	// 네이버 로그인 확인
+	@Override
+	public NaverVO loginNaverMember(String email) {
+		return memberDao.loginNaverMember(sqlSession, email);
+	}
+
 	
 	// 로그인용 메소드
 	@Override
@@ -91,6 +111,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public boolean ajaxcertNumCheck(Cert cert) {
 		return memberDao.ajaxcertNumCheck(sqlSession, cert);
+	}
+	
+	// Cert 테이블 시간마다 지우기
+	@Override
+	public int certDeleteAll() {
+		return memberDao.certDeleteAll(sqlSession);
 	}
 	
 	// 비밀번호 변경
@@ -194,7 +220,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.allIngidoRank(sqlSession);
 	}
 
-	
+
 	
 
 

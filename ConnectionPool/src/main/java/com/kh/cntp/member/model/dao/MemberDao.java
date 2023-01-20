@@ -11,11 +11,27 @@ import com.kh.cntp.board.model.vo.Board;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.vo.Cert;
 import com.kh.cntp.member.model.vo.Member;
+import com.kh.cntp.member.model.vo.NaverVO;
 import com.kh.cntp.member.model.vo.Point;
 import com.kh.cntp.moim.model.vo.Group;
 
 @Repository
 public class MemberDao {
+	
+	// 네이버 로그인 이메일체크
+	public int naverEmailCheck(SqlSessionTemplate sqlSession, String email) {
+		return sqlSession.selectOne("memberMapper.naverEmailCheck", email);
+	}
+
+	// 네이버 로그인 추가
+	public int naverInsert(SqlSessionTemplate sqlSession, NaverVO naver) {
+		return sqlSession.insert("memberMapper.naverInsert", naver);
+	}
+	
+	// 네이버 로그인 확인
+	public NaverVO loginNaverMember(SqlSessionTemplate sqlSession, String email) {
+		return sqlSession.selectOne("memberMapper.loginNaverMember", email);
+	}
 	
 	// 로그인
 	public Member loginMember(SqlSessionTemplate sqlSession, Member member) {
@@ -74,6 +90,11 @@ public class MemberDao {
 			sqlSession.delete("memberMapper.remove", cert);
 		}
 		return result != null;
+	}
+	
+	// Cert 테이블 시간마다 지우기
+	public int certDeleteAll(SqlSessionTemplate sqlSession) {
+		return sqlSession.delete("memberMapper.certDeleteAll");
 	}
 	
 	// 비밀번호 변경

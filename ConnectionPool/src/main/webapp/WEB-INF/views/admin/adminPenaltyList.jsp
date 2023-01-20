@@ -214,7 +214,7 @@
 					
 				}
 				if(count > 0) { // 체크 한 상태라서 요청이 가야 함
-		    		alertify.confirm('체크 했어?', function() {
+		    		alertify.confirm('처리하시겠습니까?', function() {
 					
 		    			$('#penaltyForm').submit();
 		    		
@@ -225,7 +225,7 @@
 		   			});
 				} 
 				else { // 체크 안한 상태라서 요청이 가면 안됨
-		    		alertify.confirm('체크 안함', function() {
+		    		alertify.confirm('체크해주세요', function() {
 		   			});
 				}
 				

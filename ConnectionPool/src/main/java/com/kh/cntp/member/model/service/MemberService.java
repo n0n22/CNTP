@@ -7,12 +7,22 @@ import com.kh.cntp.board.model.vo.Board;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.vo.Cert;
 import com.kh.cntp.member.model.vo.Member;
+import com.kh.cntp.member.model.vo.NaverVO;
 import com.kh.cntp.member.model.vo.Point;
 import com.kh.cntp.moim.model.vo.Group;
 
 public interface MemberService {
 	
 	// memberService InterFace
+	
+	// 네이버 로그인 이메일체크
+	int naverEmailCheck(String email);
+	
+	// 네이버 로그인 추가 
+	int naverInsert(NaverVO naver);
+	
+	// 네이버 로그인 확인
+	NaverVO loginNaverMember(String email);
 	
 	// 로그인
 	Member loginMember(Member member);
@@ -85,6 +95,9 @@ public interface MemberService {
 	
 	// 소모임 조회 (마이페이지)
 	ArrayList<Group> myPageGroupList(int memNo);
+	
+	// Cert 테이블 시간마다 지우기
+	int certDeleteAll(); 
 	
 	// 지역별 인기도 왕
 	ArrayList<Member> areaIngidoRank();

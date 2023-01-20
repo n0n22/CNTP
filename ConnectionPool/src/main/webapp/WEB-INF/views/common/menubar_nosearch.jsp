@@ -258,10 +258,8 @@
 			                    </div>    
 		                     <!-- 로그인 되어있을때 끝 -->
 		                     </c:if>
-		                     
                     	</c:otherwise>
                     </c:choose>
-                     
                 </ul>
             </section>
         </div>

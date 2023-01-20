@@ -18,8 +18,8 @@
 	<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource" destroy-method="close">
 		<!-- 어떤 DB에 접속할건지 정보 작성 -->
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@192.168.31.9:1521:xe"/>
-<!-- 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/> -->
+		<!--<property name="url" value="jdbc:oracle:thin:@192.168.31.9:1521:xe"/>-->
+ 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/> 
 		<property name="username" value="CONNECTIONPOOL"/>
 		<property name="password" value="CONNECTIONPOOL"/>
 	</bean>	
