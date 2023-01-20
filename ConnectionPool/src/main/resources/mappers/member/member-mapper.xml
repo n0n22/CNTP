@@ -76,6 +76,63 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="POWER_DURATION" 	property="powerDuration"/>
 	</resultMap>
 	
+	<!-- 네이버 로그인 이메일 중복체크용-->
+	<select id="naverEmailCheck" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       NAVERMEMBER
+		 WHERE
+		       NAVER_EMAIL = #{email}
+	</select>
+	
+	<!-- 네이버 로그인 회원 가입용 -->
+	<insert id="naverInsert" parameterType="naver">
+		INSERT
+		  INTO
+		       NAVERMEMBER
+		       (
+		       NAVER_MEMNO,
+		       NAVER_MEMID,
+		       NAVER_MEMNAME,
+		       NAVER_PHONE,
+		       NAVER_EMAIL,
+		       NAVER_GENDER,
+		       NAVER_NICKNAME,
+		       NAVER_BIRTHDAY
+		       )
+		VALUES
+		       (
+		       #{memNo},
+		       #{memId},
+		       #{memName},
+		       #{phone},
+		       #{email},
+		       #{gender},
+		       #{nickName},
+		       #{birthDay}
+		       )
+	</insert>
+	
+	<!-- 네이버 로그인 -->
+	<select id="loginNaverMember" parameterType="string" resultType="naver">
+		SELECT 
+			   NAVER_MEMNO,
+			   NAVER_MEMID,		
+		       NAVER_MEMNAME,
+		       NAVER_PHONE,
+		       NAVER_EMAIL,
+		       NAVER_GENDER,
+		       NAVER_NICKNAME,
+		       NAVER_BIRTHDAY
+		  FROM
+		       NAVERMEMBER
+		 WHERE
+		       NAVER_EMAIL = #{email}
+	</select>
+	
+	
+	
 	<!-- 로그인용 쿼리문  -->
 	<select id="loginMember" parameterType="member" resultMap="memberResultSet">
 		SELECT 		   
