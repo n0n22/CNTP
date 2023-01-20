@@ -25,7 +25,17 @@ public class MoimServiceImpl implements MoimService {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	
+	@Override
+	public int selectTeamCountList(Team team) {
+		return moimDao.selectTeamCountList(sqlSession, team);
+	}
 
+	@Override
+	public ArrayList<Team> selectTeamList(PageInfo pi, Team team) {
+		return moimDao.selectTeamList(sqlSession, pi, team);
+	}
+	
 	@Override
 	public int ajaxSelectTeam(String checkName) {
 		return moimDao.ajaxSelectTeam(sqlSession, checkName);
@@ -59,8 +69,8 @@ public class MoimServiceImpl implements MoimService {
 	}
 	
 	@Override
-	public Apply ajaxSelectApply(int memNo) {
-		return moimDao.ajaxSelectApply(sqlSession, memNo);
+	public Apply ajaxSelectApply(Apply ap) {
+		return moimDao.ajaxSelectApply(sqlSession, ap);
 	}
 
 	@Override
@@ -88,9 +98,13 @@ public class MoimServiceImpl implements MoimService {
 	public int updateTeamMember(ArrayList<TeamMember> teamMemberList) {
 				// 해당 팀의 모든 팀원의 등급을 "M"으로 바꿈
 		int result = moimDao.updateTeamMemberGradeM(sqlSession, teamMemberList.get(0).getTeamNo());
+		
+		// 리더와 부리더 등급 변경 리더만 있다면 한번만, 부리더도 있다면 두번 요청 보냄
 		for(TeamMember tm : teamMemberList) {
 			result *= moimDao.updateTeamMember(sqlSession, tm);
 		}
+		
+		// 2~3번의 요청 결과를 곱하여 성공 여부를 return
 		return  result;
 	}
 
@@ -105,15 +119,7 @@ public class MoimServiceImpl implements MoimService {
 		return moimDao.updateTeamBadgeStatus(sqlSession, team);
 	}
 
-	@Override
-	public int selectTeamCountList(Team team) {
-		return moimDao.selectTeamCountList(sqlSession, team);
-	}
 
-	@Override
-	public ArrayList<Team> selectTeamList(PageInfo pi, Team team) {
-		return moimDao.selectTeamList(sqlSession, pi, team);
-	}
 
 	@Override
 	public ArrayList<Chatting> selectChattingList(Chatting chat) {
@@ -159,11 +165,6 @@ public class MoimServiceImpl implements MoimService {
 	@Override
 	public int deleteGroup(Group group) {
 		return moimDao.deleteGroup(sqlSession, group);
-	}
-
-	@Override
-	public Apply ajaxSelectGroupApply(Apply ap) {
-		return moimDao.ajaxSelectGroupApply(sqlSession, ap);
 	}
 
 	@Override

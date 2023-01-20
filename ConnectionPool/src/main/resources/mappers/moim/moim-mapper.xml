@@ -264,10 +264,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       T.STATUS = 'Y'
 	</select>
 	
-	<select id="ajaxSelectApply" parameterType="_int" resultMap="applyResultMap">
+	<select id="ajaxSelectApply" parameterType="apply" resultMap="applyResultMap">
 		SELECT
 			    APPLY_NO
 			   ,MOIM_NO
+			   ,MEM_NO
 			   ,ACCEPT_YN
 			   ,APPLY_DATE
 			   ,ACCEPT_DATE
@@ -276,7 +277,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE
 		       MEM_NO = #{ memNo }
            AND
-               MOIM_NO LIKE 'T%'
+               MOIM_NO = #{moimNo}
 	</select>
 
 	<update id="updateTeam" parameterType="team">
@@ -760,22 +761,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       GROUP_NO = #{ groupNo }
 	</update>
 	
-	<select id="ajaxSelectGroupApply" parameterType="apply" resultMap="applyResultMap">
-		SELECT
-		        APPLY_NO
-		       ,MOIM_NO
-		       ,MEM_NO
-		       ,ACCEPT_YN
-		       ,APPLY_DATE
-		       ,ACCEPT_DATE
-		  FROM
-		       APPLY
-		 WHERE
-		       MEM_NO = #{memNo}
-		   AND
-		       MOIM_NO = #{moimNo}
-		   
-	</select>
+	
 	
 	<select id="selectGroupApplyList" resultMap="applyResultMap">
 		SELECT
