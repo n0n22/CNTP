@@ -64,8 +64,13 @@ public class BoardDao {
 		
 		return sqlSession.selectOne("boardMapper.selectSearchCount", map);
 	}
+	/*
+	public ArrayList<Board> selectSearchList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
+		
+		return sqlSession.;
+	}
 	
-	
+	*/
 	
 	
 	
