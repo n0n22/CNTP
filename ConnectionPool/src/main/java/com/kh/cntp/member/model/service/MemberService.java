@@ -96,6 +96,9 @@ public interface MemberService {
 	// 소모임 조회 (마이페이지)
 	ArrayList<Group> myPageGroupList(int memNo);
 	
+	// Cert 테이블 시간마다 지우기
+	int certDeleteAll(); 
+	
 	// 지역별 인기도 왕
 	ArrayList<Member> areaIngidoRank();
 	

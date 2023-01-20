@@ -113,6 +113,12 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.ajaxcertNumCheck(sqlSession, cert);
 	}
 	
+	// Cert 테이블 시간마다 지우기
+	@Override
+	public int certDeleteAll() {
+		return memberDao.certDeleteAll(sqlSession);
+	}
+	
 	// 비밀번호 변경
 	@Override
 	public int pwdChange(Member member) {
@@ -214,7 +220,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.allIngidoRank(sqlSession);
 	}
 
-	
+
 	
 
 

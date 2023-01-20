@@ -92,6 +92,11 @@ public class MemberDao {
 		return result != null;
 	}
 	
+	// Cert 테이블 시간마다 지우기
+	public int certDeleteAll(SqlSessionTemplate sqlSession) {
+		return sqlSession.delete("memberMapper.certDeleteAll");
+	}
+	
 	// 비밀번호 변경
 	public int pwdChange(SqlSessionTemplate sqlSession, Member member) {
 		return sqlSession.update("memberMapper.pwdChange", member);

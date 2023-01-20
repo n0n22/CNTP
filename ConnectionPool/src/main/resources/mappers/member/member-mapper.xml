@@ -329,6 +329,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       SECRET_NO = #{secretNo}	      	
 	</delete>
 	
+	<!--  Cert 테이블 시간마다 지우기 -->
+	<delete id="certDeleteAll">
+		 DELETE
+			    CERT
+		  WHERE
+          	    VALID_TIME <![CDATA[>]]> TO_CHAR(SYSDATE);	   
+	</delete>
+	
+	
 	<!-- 비밀번호 변경 -->
 	<update id="pwdChange" parameterType="member">
 		UPDATE
