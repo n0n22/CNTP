@@ -142,26 +142,26 @@ public class AdminDao {
 	}
 	
 	
-	// 정지 처리
-//	public int stopMember(SqlSessionTemplate sqlSession, ArrayList<Integer> stopList) {
-//		return sqlSession.insert("adminMapper.stopMember", stopList);
+	// 정지 처리 - merge 구문 사용
+	public int stopPenalty(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.update("adminMapper.stopMember", memNo);
+	}
+	
+	
+//	// 정지 처리된 적 있는지 조회
+//	public int selectStopPenalty(SqlSessionTemplate sqlSession, int memNo) {
+//		return sqlSession.selectOne("adminMapper.selectStopPenalty", memNo);
 //	}
-	
-	
-	// 정지 처리된 적 있는지 조회
-	public int selectStopPenalty(SqlSessionTemplate sqlSession, int memNo) {
-		return sqlSession.selectOne("adminMapper.selectStopPenalty", memNo);
-	}
-	
-	// 정지 날짜 업데이트
-	public int updateStopPenalty(SqlSessionTemplate sqlSession, int memNo) {
-		return sqlSession.update("adminMapper.updateStopPenalty", memNo);
-	}
-	
-	// 정지 날짜 인서트
-	public int insertStopPenalty(SqlSessionTemplate sqlSession, int memNo) {
-		return sqlSession.insert("adminMapper.insertStopPenalty", memNo);
-	}
+//	
+//	// 정지 날짜 업데이트
+//	public int updateStopPenalty(SqlSessionTemplate sqlSession, int memNo) {
+//		return sqlSession.update("adminMapper.updateStopPenalty", memNo);
+//	}
+//	
+//	// 정지 날짜 인서트
+//	public int insertStopPenalty(SqlSessionTemplate sqlSession, int memNo) {
+//		return sqlSession.insert("adminMapper.insertStopPenalty", memNo);
+//	}
 	
 	// 팀 멤버 정보 조회 
 //	public ArrayList<TeamMember> selectTeamMem(SqlSessionTemplate sqlSession, int memNo) {
