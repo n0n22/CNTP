@@ -145,11 +145,11 @@
                 <table>
                   <tr>
                     <td width="100px">경기장 :&nbsp;</td>
-                    <td><input type="text" name="poolName" required="required" placeholder="경기장 이름을 입력해주세요"></td>
+                    <td><input type="text" name="poolName" required="required" maxlength="14" placeholder="경기장 이름을 입력해주세요"></td>
                   </tr>
                   <tr>
                         <td>장소 :&nbsp;</td>
-                        <td><input name="place" type="text" required="required" placeholder="경기장 장소를 입력해주세요"></td>
+                        <td><input name="place" type="text" required="required" maxlength="14" placeholder="경기장 장소를 입력해주세요"></td>
                   </tr>
                   <tr>
                     <td width="100px">길이 :&nbsp;</td>

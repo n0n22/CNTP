@@ -31,12 +31,16 @@ import oracle.net.aso.a;
 
 @Controller
 public class BattlePoolController {
-	// 의존성 주입 : 필드 주입 
-	// 주입하려고 하는 객체의 타입과 일치하는 객체를 자동으로 주입
 	@Autowired
 	private BattleService battleService;
 	
-	// 배틀풀 리스트 조회
+	/**
+	 * selectBattlePoolList : 사용자에게 날짜를 입력받아 DB에 있는 배틀풀 목록을 조회해오는 메소드
+	 * 
+	 * @param cpage : 화면에서 넘어온 조회를 원하는 날짜
+	 * @param mv : 데이터와 반환할 화면의 논리적 경로를 담을 모델앤뷰 객체
+	 * @return : 변환될 화면의 논리적인 경로
+	 */
 	@RequestMapping("battleList.bt")
 	public ModelAndView selectBattlePoolList(@RequestParam(value ="cpage", defaultValue="today") String cpage,
 											 ModelAndView mv) {
@@ -53,7 +57,17 @@ public class BattlePoolController {
 		
 		return mv;
 	}
-	// 배틀풀 리스트 검색 
+	/**
+	 * searchBattle : 사용자에게 검색 조건을 입력받아 DB에 있는 배틀풀 목록을 조회해오는 메소드
+	 * 
+	 * @param cpage : 화면에서 넘어온 조회를 원하는 날짜
+	 * @param area : 화면에서 넘어온 조회를 원하는 지역
+	 * @param gender : 화면에서 넘어온 조회를 원하는 성별
+	 * @param style : 화면에서 넘어온 조회를 원하는 종목
+	 * @param level : 화면에서 넘어온 조회를 원하는 레벨
+	 * @param mv : 데이터와 반환할 화면의 논리적 경로를 담을 모델앤뷰 객체
+	 * @return : 변환될 화면의 논리적인 경로
+	 */
 	@RequestMapping("search.bt")
 	public ModelAndView searchBattle(String cpage,
 								     @RequestParam(value = "area", defaultValue="") String area,
@@ -61,7 +75,7 @@ public class BattlePoolController {
 								     @RequestParam(value = "style", defaultValue="") String style,
 								     @RequestParam(value = "level", defaultValue="") String level,
 								     ModelAndView mv) {
-		// 동적 쿼리문을 위한 조건을 수행하기 위해 Map에 K, V 형태로 가공
+		// 동적 쿼리문을 위한 조건을 수행하기 위해 HashMap에 K, V 형태로 가공
 		HashMap<String, String> condition = new HashMap<String, String>();
 		condition.put("cpage", cpage);
 		condition.put("area", area);
@@ -69,7 +83,7 @@ public class BattlePoolController {
 		condition.put("style", style);
 		condition.put("level", level);
 		
-		// 요청한 날짜 + 요청한 조건의 경기를 조회 후 ArrayList<Batlle>에 담아 반환
+		// 요청한 날짜 + 요청한 조건의 경기를 조회 후 ArrayList<Battle>에 담아 반환
 		// HttpServletRequest의 attribute 영역에 담아주고 응답화면 지정
 		// 페이지 이동시에도 검색한 키워드 데이터를 계속 남기기 위해 condition 역시 attribute 영역에 저장
 		mv.addObject("battleList", battleService.searchBattle(condition))
@@ -79,12 +93,24 @@ public class BattlePoolController {
 		
 		return mv;
 	}
-	// 배틀풀 작성폼 보기
+	/**
+	 * enrollForm : 배틀풀 작성폼으로 넘어가는 메소드
+	 * @return
+	 */
 	@RequestMapping("enrollForm.bt")
 	public String enrollForm() {
 		return "battle/battlePoolEnrollForm";
 	}
-	// 배틀풀 작성
+	/**
+	 * insertBattle : 사용자가 입력한 배틀에 관한 정보들을 DB에 저장하는 메소드
+	 * 
+	 * @param battle : 화면에서 받아온 배틀에 관한 정보
+	 * @param poolInfo : 화면에서 받아온 경기장에 관한 정보
+	 * @param upfile : 파일이 저장되어 있는 경로 
+	 * @param session : 파일의 물리적 경로를 알아내기 위한 세션 객체
+	 * @param mv : 데이터와 반환할 화면의 논리적 경로를 담을 모델앤뷰 객체
+	 * @return : 반환될 화면의 논리적인 경로
+	 */
 	@RequestMapping("insert.bt")
 	public ModelAndView insertBattle(Battle battle,
 									 PoolInfo poolInfo,
@@ -107,7 +133,13 @@ public class BattlePoolController {
 		return mv;
 	}
 	
-	// 배틀풀 상세보기 : 배틀풀 경기 정보 / 경기장 정보 / 팀 전적 / 경기 결과 조회
+	/**
+	 * selectBattlePool : 사용자에게 배틀 번호를 입력받아 배틀풀에 관한 상세 정보(경기, 경기장, 팀전적, 경기결과)를 DB에서 조회해오는 메소드
+	 * 
+	 * @param battleNo : 화면에서 넘어온 배틀 번호
+	 * @param mv : 데이터와 반환할 화면의 논리적 경로를 담을 모델앤뷰 객체
+	 * @return : 반환될 화면의 논리적인 경로
+	 */
 	@RequestMapping("battleDetail.bt")
 	public ModelAndView selectBattlePool(int battleNo, ModelAndView mv) {
 
@@ -123,6 +155,15 @@ public class BattlePoolController {
 	}
 	
 	// 배틀풀 결과 : 홈팀 정보 / 홈팀 전적 / 어웨이팀 정보 / 어웨이팀 전적  / 배틀 결과
+	/**
+	 * selectBattleResult : 사용자에게 배틀 번호, 홈팀 팀번호, 어웨이팀 팀번호를 입력받아 배틀 결과를 DB에서 조회해오는 메소드
+	 * 
+	 * @param battleNo : 화면에서 넘어온 배틀 번호
+	 * @param homeTeam : 화면에서 넘어온 홈팀 번호
+	 * @param awayTeam : 화면에서 넘어온 어웨이팀 번호
+	 * @param mv : 데이터와 반환할 화면의 논리적 경로를 담을 모델앤뷰 객체
+	 * @return : 반환될 화면의 논리적인 경로
+	 */
 	@RequestMapping("battleResult.bt")
 	public ModelAndView selectBattleResult(int battleNo,
 										   String homeTeam,
@@ -140,7 +181,15 @@ public class BattlePoolController {
 		return mv;
 	}
 	
-	// 배틀결과 작성폼 : 홈팀 정보, 어웨이팀 정보
+	/**
+	 * resultEnrollForm : 사용자에게 배틀 번호, 홈팀 팀번호, 어웨이팀 팀번호를 입력받아 배틀 결과 작성폼을 보여주는 메소드 
+	 * 
+	 * @param battleNo : 화면에서 넘어온 배틀 번호
+	 * @param homeTeam : 화면에서 넘어온 홈팀 번호
+	 * @param awayTeam : 화면에서 넘어온 어웨이팀 번호
+	 * @param mv : 데이터와 반환할 화면의 논리적 경로를 담을 모델앤뷰 객체
+	 * @return : 반환될 화면의 논리적인 경로
+	 */
 	@RequestMapping("resultEnrollForm.bt")
 	public ModelAndView resultEnrollForm(int battleNo,
 									     String homeTeam,
@@ -155,16 +204,27 @@ public class BattlePoolController {
 		return mv;
 	}
 	
-	// 배틀 신청
+	/**
+	 * applyBattle : 사용자에게 팀번호, 회원번호, 채팅내용, 배틀번호를 입력받아 DB에 배틀 신청을 입력해주는 메소드
+	 * 
+	 * @param teamNo : 화면에서 넘어온 팀 번호
+	 * @param memNo : 화면에서 넘어온 회원 번호
+	 * @param chatContent : 화면에서 넘어온 채팅 내용
+	 * @param battleNo : 화면에서 넘어온 배틀 번호
+	 * @param session : alertMsg를 담을 세션 객체 
+	 * @param mv : 데이터와 반환할 화면의 논리적 경로를 담을 모델앤뷰 객체
+	 * @param redirectAttributes : redirect시 데이터를 전달하기 위한 객체
+	 * @return : 반환될 화면의 논리적인 경로
+	 */
 	@RequestMapping("battleApply.bt")
 	public ModelAndView applyBattle(String teamNo,
-							  String memNo,
-							  String chatContent,
-							  String battleNo,
-							  HttpSession session,
-							  ModelAndView mv,
-							  RedirectAttributes redirectAttributes) {
-		
+								    String memNo,
+								    String chatContent,
+								    String battleNo,
+								    HttpSession session,
+								    ModelAndView mv,
+								    RedirectAttributes redirectAttributes) {
+		// 줄이자
 		if(battleService.checkBattle(battleNo) > 0) {
 			
 			// map형태로 데이터 가공
@@ -189,13 +249,20 @@ public class BattlePoolController {
 		}
 		return mv;
 	} 
-	// 배틀 결과 작성
+	/**
+	 * insertBattleResult : 사용자에게 배틀 결과를 입력받아 DB에 배틀 결과를 입력해주는 메소드
+	 * 
+	 * @param br : 화면에서 넘어온 배틀 결과 정보
+	 * @param mv : 데이터와 반환할 화면의 논리적 경로를 담을 모델앤뷰 객체
+	 * @param redirectAttributes : redirect시 데이터를 전달하기 위한 객체
+	 * @return : 반환될 화면의 논리적인 경로
+	 */
 	@RequestMapping("insertBattleResult.bt")
 	public ModelAndView insertBattleResult(BattleResult br, 
 									 	   ModelAndView mv,
 									 	   RedirectAttributes redirectAttributes) {
-		int result = battleService.insertBattleResult(br);
-		if(result > 0) {
+		
+		if(battleService.insertBattleResult(br) > 0) {
 			redirectAttributes.addAttribute("battleNo", br.getBattleNo());
 			mv.setViewName("redirect: battleDetail.bt");
 		} else {
@@ -204,7 +271,17 @@ public class BattlePoolController {
 		}
 		return mv;
 	}
-	// 배틀 결과 승인
+	/**
+	 * battleResultOk : 사용자에게 배틀 번호를 입력받아 DB에 배틀 결과를 승인해주는 메소드
+	 * 
+	 * @param battleNo : 화면에서 넘어온 배틀 결과 정보
+	 * @param victoryTeamNo : 화면에서 넘어온 승리팀 번호
+	 * @param defeatTeamNo : 화면에서 넘어온 패배팀 번호
+	 * @param session : alertMsg를 담아줄 세션 객체
+	 * @param mv : 데이터와 반환할 화면의 논리적 경로를 담을 모델앤뷰 객체
+	 * @param redirectAttributes : redirect시 데이터를 전달하기 위한 객체
+	 * @return : 반환될 화면의 논리적인 경로
+	 */
 	@RequestMapping("battleResultOk.bt")
 	public ModelAndView battleResultOk(int battleNo,
 									   String victoryTeamNo,
@@ -224,8 +301,14 @@ public class BattlePoolController {
 		return mv;
 	}
 
-	
-	// 배틀 신청 취소
+	/**
+	 * cancelBattle : 사용자가에게 값을 입력받아 DB에 있는 배틀 신청을 제거하는 메소드
+	 * @param battleNo : 화면에서 넘어온 배틀번호
+	 * @param memNo : 화면에서 넘어온 멤버번호
+	 * @param session : alertMsg를 담아줄 세션 객체
+	 * @param redirectAttributes 
+	 * @return : 반환될 화면의 논리적인 경로
+	 */
 	@RequestMapping("cancelBattle.bt")
 	public String cancelBattle(String battleNo,
 							   String memNo,
@@ -247,6 +330,14 @@ public class BattlePoolController {
 		return "redirect: battleDetail.bt";
 	}
 	// 배틀풀 삭제
+	/**
+	 * deleteBattlePool: 사용자에게 값을 입력받아 작성한 배틀풀을 제거하는 메소드
+	 * 
+	 * @param battleNo : 화면에서 넘어온 배틀 번호
+	 * @param changeName : 화면에서 넘어온 서버에서 삭제할 파일 경로
+	 * @param session : alertMsg를 담아줄 세션 객체
+	 * @return : 반환될 화면의 논리적인 경로
+	 */
 	@RequestMapping("deleteBattlePool.bt")
 	public String deleteBattlePool(int battleNo,
 								   String changeName,
@@ -263,13 +354,21 @@ public class BattlePoolController {
 		}
 		return "redirect: battleList.bt";
 	}
-	// 배틀풀 수정폼
+	
+	/**
+	 * resultUpdateForm : 사용자에게 값을 입력받아 배틀결과 수정폼을 보여주는 메소드
+	 * 
+	 * @param battleNo : 화면에서 넘어온 배틀번호
+	 * @param homeTeam : 화면에서 넘어온 홈팀번호
+	 * @param awayTeam : 화면에서 넘어온 어웨이팀 번호
+	 * @param mv : 데이터와 반환할 화면의 논리적 경로를 담을 모델앤뷰 객체
+	 * @return : 반환될 화면의 논리적인 경로
+	 */
 	@RequestMapping("resultUpdateForm.bt")
 	public ModelAndView resultUpdateForm(int battleNo,
 									     String homeTeam,
 									     String awayTeam,
-									     ModelAndView mv,
-									     HttpSession session) {
+									     ModelAndView mv) {
 		
 		mv.addObject("battleNo", battleNo)
 		  .addObject("homeTeam", battleService.selectTeam(homeTeam))
@@ -279,6 +378,15 @@ public class BattlePoolController {
 		return mv;
 	}
 	// 배틀풒 수정
+	/**
+	 * updateBattleResultupdateBattleResult : 사용자에게 값을 입력받아 DB의 배틀결과를 수정해주는 메소드
+	 * 
+	 * @param br : 화면에서 넘어온 배틀결과
+	 * @param model : 데이터를 담기 위한 모델 객체
+	 * @param redirectAttributes : redirect시 데이터를 전달하기 위한 객체
+	 * @param session : alertMsg를 담기 위한 객체
+	 * @return : 반환될 화면의 논리적인 경로
+	 */
 	@RequestMapping("updateBattleResult.bt")
 	public String updateBattleResult(BattleResult br, 
 									 Model model,
@@ -292,24 +400,21 @@ public class BattlePoolController {
 		return "redirect: battleDetail.bt";
 	}
 	
-	
-	
-	
-	
-	
 	/*
 	 * topN
 	 * 
 	 * */
-	// 다승팀
+	/**
+	 * 
+	 * selectListBattleRank : 사용자에게 조건을 입력 받아 DB에서 조건별 팀 랭킹 목록을 조회할 ajax 메소드 
+	 * 
+	 * @param condition : 화면에서 넘어온 조건들
+	 * @return : 비동기식으로 화면에 반환될 값
+	 */
 	@ResponseBody
 	@RequestMapping(value="battleRank.top", produces="application/json; charset=UTF-8")
 	public String selectListBattleRank(String condition) {
 		return new Gson().toJson(battleService.selectListBattleRank(condition));
 	}
-	
-	
-	
-	
 	
 }

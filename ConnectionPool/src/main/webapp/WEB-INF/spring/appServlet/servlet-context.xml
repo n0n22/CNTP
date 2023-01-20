@@ -23,6 +23,8 @@
 	
 	<context:component-scan base-package="com.kh.cntp" />
 	
+	<beans:bean id="naverLoginBO" class="com.kh.cntp.member.login.NaverLoginBO" />
+	
 	
 	
 	<!-- Interceptor -->
@@ -91,7 +93,7 @@
 			<!-- 회원 관련 -->
 			<mapping path="/logout.me"></mapping>
 			
-			<!-- 회원 관련 (마이페이지)-->
+			<!-- 회원 관련 (마이페이지) -->
 			<mapping path="/myPageInfo.me"></mapping>
 			<mapping path="/myPageUpdate.me"></mapping>
 			<mapping path="/myPageDeleteForm.me"></mapping>

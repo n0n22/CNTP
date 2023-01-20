@@ -199,6 +199,7 @@
 		                vicRecords.push(vicRecord);
 		            }
 		            $('#vicRecord').val(JSON.stringify(vicRecords));
+		            console.log($('#vicRecord').val());
 		    }
 		    function inputDef(){
 		            var turn = $defParents.children().length;

@@ -45,7 +45,7 @@
 				<table class="groupEnrollTable" border="1">
 					<tr height="50">
 						<th width="200">제목</th>
-						<td width="600"><input type="text" style="height:50px" name="groupTitle" required></td>
+						<td width="600"><input type="text" style="height:50px" name="groupTitle" maxlength="40" required></td>
 					</tr>
 					<tr height="50">
 						<th>썸네일</th>

@@ -26,6 +26,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.cntp.member.model.vo.Ingido" alias="ingido" />
 		<typeAlias type="com.kh.cntp.member.model.vo.Point" alias="point" />
 		<typeAlias type="com.kh.cntp.member.model.vo.Member" alias="member" />
+		<typeAlias type="com.kh.cntp.member.model.vo.NaverVO" alias="naver" />
 		
 		<typeAlias type="com.kh.cntp.moim.model.vo.Apply" alias="apply" />
 		<typeAlias type="com.kh.cntp.moim.model.vo.Chatting" alias="chatting" />
