@@ -241,48 +241,55 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ===============================
 -->	
 
+<!-- 
+
+* 신고 관련 테이블 연결을 위해 VIEW를 만들었음
+
+SELECT
+       R.REPORT_NO
+       ,DECODE(R.REPORT_BOARD, 'board', '자유게시판', 'board_reply', '자유게시판 댓글') "REPORT_BOARD"
+       ,R.BOARD_NO      
+       ,R.REPORTER
+       ,R.REPORT_REASON
+       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
+       ,R.REPORT_RESULT
+       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE" 
+       ,DECODE(REPORT_BOARD, 'board', B.MEM_NO, 'board_reply', C.WRITER) "MEM_NO"
+       ,DECODE(REPORT_BOARD, 'board', M1.MEM_ID, 'board_reply', M2.MEM_ID) "MEM_ID"
+       ,DECODE(REPORT_BOARD, 'board', B.CONTENT, 'board_reply', C.COMMENT_CONTENT) "CONTENT"
+       ,RM.MEM_ID "REPORTER_ID" 
+  FROM
+       REPORT "R"
+  JOIN
+       BOARD "B" ON (R.BOARD_NO = B.BOARD_NO)
+  JOIN
+       BOARD_REPLY "C" ON (R.BOARD_NO = C.COMMENT_NO)
+  JOIN
+       MEMBER "M1" ON (B.MEM_NO = M1.MEM_NO)
+  JOIN
+       MEMBER "M2" ON (C.WRITER = M2.MEM_NO)
+  JOIN
+       MEMBER "RM" ON (R.REPORTER = RM.MEM_NO)
+
+ -->
+
+
+
+
 	<!-- 신고 목록 개수 조회 -->
 	<select id="selectReportListCount" parameterType="string" resultType="_int">
 		SELECT
 		       COUNT(*)
 		  FROM
-		        (
-				  SELECT
-			               REPORT_NO
-			               ,DECODE(REPORT_BOARD, 'board', B.MEM_NO, 'board_reply', C.WRITER) "MEM_NO"
-			               ,DECODE(REPORT_BOARD, 'board', M1.MEM_ID, 'board_reply', M2.MEM_ID) "MEM_ID"
-			               ,R.BOARD_NO
-			               ,REPORT_BOARD
-			               ,REPORT_REASON
-			               ,REPORTER
-			               ,RM.MEM_ID "REPOTER_ID"
-			               ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
-			               ,REPORT_RESULT
-			               ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE"
-			          FROM
-			               REPORT "R"
-			          JOIN
-			               BOARD "B" ON (R.BOARD_NO = B.BOARD_NO)
-			          JOIN
-			               BOARD_REPLY "C" ON (R.BOARD_NO = C.COMMENT_NO)
-			          JOIN
-			               MEMBER "M1" ON (B.MEM_NO = M1.MEM_NO)
-			          JOIN
-			               MEMBER "M2" ON (C.WRITER = M2.MEM_NO)
-			          JOIN
-			               MEMBER "RM" ON (R.REPORTER = RM.MEM_NO)
-			       where
-			               REPORT_RESULT
-				        <if test="result == 'yet'">
-							   is null			 
-						</if>
-						<if test="result == 'end'">
-							   is not null
-						</if>
-			         ORDER
-			            BY
-			               REPORT_NO ASC
-		          )
+		       VW_REPORT_DT
+		 WHERE
+		       REPORT_RESULT
+        <if test="result == 'yet'">
+			   is null
+		</if>
+		<if test="result == 'end'">
+			   is not null
+		</if>
 	</select>
 	
 	
@@ -290,29 +297,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectReportList" parameterType="string" resultMap="reportResultSet">
 		SELECT
                REPORT_NO
-               ,DECODE(REPORT_BOARD, 'board', B.MEM_NO, 'board_reply', C.WRITER) "MEM_NO"
-               ,DECODE(REPORT_BOARD, 'board', M1.MEM_ID, 'board_reply', M2.MEM_ID) "MEM_ID"
-               ,R.BOARD_NO
+               ,MEM_NO
+               ,MEM_ID
+               ,BOARD_NO
                ,REPORT_BOARD
                ,REPORT_REASON
                ,REPORTER
-               ,RM.MEM_ID "REPORTER_ID"
-               ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
+               ,REPORTER_ID
+               ,REPORT_DATE
                ,REPORT_RESULT
-               ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE"
+               ,COMPLETION_DATE
           FROM
-               REPORT "R"
-          JOIN
-               BOARD "B" ON (R.BOARD_NO = B.BOARD_NO)
-          JOIN
-               BOARD_REPLY "C" ON (R.BOARD_NO = C.COMMENT_NO)
-          JOIN
-               MEMBER "M1" ON (B.MEM_NO = M1.MEM_NO)
-          JOIN
-               MEMBER "M2" ON (C.WRITER = M2.MEM_NO)
-          JOIN
-               MEMBER "RM" ON (R.REPORTER = RM.MEM_NO)
-       where
+               VW_REPORT_DT
+         WHERE
                REPORT_RESULT
 	        <if test="result == 'yet'">
 				   is null			 
@@ -328,30 +325,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 신고 상세 조회 -->
 	<select id="selectReport" parameterType="report" resultMap="reportResultSet">
 		SELECT
-		       R.REPORT_NO
-		       ,R.REPORT_BOARD
-		       ,R.BOARD_NO      
-		       ,R.REPORTER
-		       ,R.REPORT_REASON
-		       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
-		       ,R.REPORT_RESULT
-		       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE" 
-		       ,DECODE(#{reportBoard}, 'board', B.MEM_NO, 'board_reply', C.WRITER) "MEM_NO"
-		       ,DECODE(#{reportBoard}, 'board', M1.MEM_ID, 'board_reply', M2.MEM_ID) "MEM_ID"
-		       ,DECODE(#{reportBoard}, 'board', B.CONTENT, 'board_reply', C.COMMENT_CONTENT) "CONTENT"
-		       ,RM.MEM_ID "REPORTER_ID" 
+		       *
 		  FROM
-		       REPORT "R"
-		  JOIN
-		       BOARD "B" ON (R.BOARD_NO = B.BOARD_NO)
-		  JOIN
-		       BOARD_REPLY "C" ON (R.BOARD_NO = C.COMMENT_NO)
-		  JOIN
-		       MEMBER "M1" ON (B.MEM_NO = M1.MEM_NO)
-		  JOIN
-		       MEMBER "M2" ON (C.WRITER = M2.MEM_NO)
-		  JOIN
-		       MEMBER "RM" ON (R.REPORTER = RM.MEM_NO)
+		       VW_REPORT_DT
 		 WHERE
 		       REPORT_NO = #{reportNo}
 	</select>

@@ -149,8 +149,10 @@ public class AdminController {
 	// 신고글 상세 조회 -> 신고글 상세 페이지로 이동
 	@RequestMapping("reportDetail.ad")
 	public ModelAndView selectReport(@ModelAttribute Report report, ModelAndView mv) {
-				
-		mv.addObject("report", adminService.selectReport(report));
+		// System.out.println(report);
+		Report r = adminService.selectReport(report);
+		// System.out.println(r);
+		mv.addObject("report", r);
 		mv.setViewName("admin/adminReportDetail");
 		
 		return mv;
@@ -182,7 +184,7 @@ public class AdminController {
 	// 신고 등록
 	@RequestMapping("reportInsert")
 	public ModelAndView insertReport(@ModelAttribute Report report, ModelAndView mv) {
-		System.out.println(report);
+		// System.out.println(report);
 		
 		if(adminService.insertReport(report) > 0) {
 			mv.addObject("alert", "신고가 정상적으로 처리되었습니다.").addObject("check", "check");
