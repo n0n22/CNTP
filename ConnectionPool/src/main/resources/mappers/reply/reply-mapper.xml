@@ -21,10 +21,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select
 				comment_no,
 				writer,
+				nickName,
 				comment_content,
 				to_char(comment_Date, 'YYYY-MM-DD') as "comment_Date"
 		  from 
 		        board_reply
+		  join
+		  		member on (mem_no = writer) 
 		  where
 		  		status = 'Y'
 		  	and

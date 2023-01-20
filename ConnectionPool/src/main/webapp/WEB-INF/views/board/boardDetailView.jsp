@@ -133,9 +133,14 @@
 							</tr>
 						</c:otherwise>
 					</c:choose>
-
 					<tr>
-						<td colspan="4">${board_reply }<span id="rcount"></span></td>
+						<td colspan="4"><span id="rcount">${ board_reply }</span>개</td>
+					</tr>
+					<tr>
+						<th>작성자</th>
+						<th>내용</th>
+						<th>작성일</th>
+						<th></th>
 					</tr>
 				</thead>
 

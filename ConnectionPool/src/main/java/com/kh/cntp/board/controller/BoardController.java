@@ -154,7 +154,7 @@ public class BoardController {
 			mv.addObject("pi", pi).addObject("list", boardService.selectSearchList(map, pi)).setViewName("board/boardListView");
 			
 			 
-			
+		
 			return mv;
 		
 		}
