@@ -26,6 +26,7 @@ public class MoimServiceImpl implements MoimService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
+	// 팀 기능
 	@Override
 	public int selectTeamCountList(Team team) {
 		return moimDao.selectTeamCountList(sqlSession, team);
@@ -74,29 +75,14 @@ public class MoimServiceImpl implements MoimService {
 	}
 
 	@Override
-	public int insertApply(Apply ap) {
-		return moimDao.insertApply(sqlSession, ap);
-	}
-
-	@Override
-	public int updateApply(Apply ap) {
-		return moimDao.updateApply(sqlSession, ap);
-	}
-
-	@Override
-	public int deleteApply(Apply ap) {
-		return moimDao.deleteApply(sqlSession, ap);
-	}
-
-	@Override
 	public int updateTeam(Team team) {
 		return moimDao.updateTeam(sqlSession, team);
 	}
-
+	
 	@Transactional
 	@Override
 	public int updateTeamMember(ArrayList<TeamMember> teamMemberList) {
-				// 해당 팀의 모든 팀원의 등급을 "M"으로 바꿈
+		// 해당 팀의 모든 팀원의 등급을 "M"으로 바꿈
 		int result = moimDao.updateTeamMemberGradeM(sqlSession, teamMemberList.get(0).getTeamNo());
 		
 		// 리더와 부리더 등급 변경 리더만 있다면 한번만, 부리더도 있다면 두번 요청 보냄
@@ -107,79 +93,94 @@ public class MoimServiceImpl implements MoimService {
 		// 2~3번의 요청 결과를 곱하여 성공 여부를 return
 		return  result;
 	}
-
+	
+	@Override
+	public int updateTeamBadgeStatus(Team team) {
+		return moimDao.updateTeamBadgeStatus(sqlSession, team);
+	}
+	
 	@Transactional
 	@Override
 	public int deleteTeamMember(TeamMember tm) {
 		return moimDao.deleteTeamMember(sqlSession, tm.getMemNo());
 	}
-
+	
 	@Override
-	public int updateTeamBadgeStatus(Team team) {
-		return moimDao.updateTeamBadgeStatus(sqlSession, team);
-	}
-
-
-
-	@Override
-	public ArrayList<Chatting> selectChattingList(Chatting chat) {
-		return moimDao.selectChattingList(sqlSession, chat);
-	}
-
-	@Override
-	public int ajaxInsertChatting(Chatting chat) {
-		// TODO Auto-generated method stub
-		return moimDao.ajaxInsertChatting(sqlSession, chat);
-	}
-
-	@Override
-	public int ajaxDeleteChatting(String chatNo) {
-		return moimDao.ajaxDeleteChatting(sqlSession, chatNo);
-	}
-
-	@Override
-	public ArrayList<Group> selectGroupList(PageInfo pi, Group group) {
-		return moimDao.selectGroupList(sqlSession, group, pi);
-	}
-
-	@Override
-	public int selectGroupCountList(Group group) {
-		return moimDao.selectGroupCountList(sqlSession, group);
-	}
-
-	@Override
-	public int insertGroup(Group group) {
-		return moimDao.insertGroup(sqlSession, group);
-	}
-
-	@Override
-	public Group selectGroup(String groupNo) {
-		return moimDao.selectGroup(sqlSession, groupNo);
-	}
-
-	@Override
-	public int updateGroup(Group group) {
-		return moimDao.updateGroup(sqlSession, group);
-	}
-
-	@Override
-	public int deleteGroup(Group group) {
-		return moimDao.deleteGroup(sqlSession, group);
-	}
-
-	@Override
-	public ArrayList<Apply> selectGroupApplyList(String moimNo) {
-		return moimDao.selectGroupApplyList(sqlSession, moimNo);
+	public int insertApply(Apply ap) {
+		return moimDao.insertApply(sqlSession, ap);
 	}
 
 	@Override
 	public int insertTeamMember(TeamMember tm, Apply ap) {
 		return moimDao.insertTeamMember(sqlSession, tm)*moimDao.deleteApply(sqlSession, ap);
 	}
+	
+	@Override
+	public int deleteApply(Apply ap) {
+		return moimDao.deleteApply(sqlSession, ap);
+	}
 
+	// 채팅 기능
 	@Override
 	public ArrayList<Member> selectAcceptMember(String groupNo) {
 		return moimDao.selectAcceptMember(sqlSession, groupNo);
+	}
+
+	@Override
+	public ArrayList<Chatting> selectChattingList(Chatting chat) {
+		return moimDao.selectChattingList(sqlSession, chat);
+	}
+	
+	@Override
+	public int ajaxInsertChatting(Chatting chat) {
+		// TODO Auto-generated method stub
+		return moimDao.ajaxInsertChatting(sqlSession, chat);
+	}
+	
+	@Override
+	public int ajaxDeleteChatting(String chatNo) {
+		return moimDao.ajaxDeleteChatting(sqlSession, chatNo);
+	}
+	
+	// 소그룹 기능
+	@Override
+	public int selectGroupCountList(Group group) {
+		return moimDao.selectGroupCountList(sqlSession, group);
+	}
+	
+	@Override
+	public ArrayList<Group> selectGroupList(PageInfo pi, Group group) {
+		return moimDao.selectGroupList(sqlSession, group, pi);
+	}
+
+	@Override
+	public int insertGroup(Group group) {
+		return moimDao.insertGroup(sqlSession, group);
+	}
+	
+	@Override
+	public Group selectGroup(String groupNo) {
+		return moimDao.selectGroup(sqlSession, groupNo);
+	}
+	
+	@Override
+	public ArrayList<Apply> selectGroupApplyList(String moimNo) {
+		return moimDao.selectGroupApplyList(sqlSession, moimNo);
+	}
+	
+	@Override
+	public int updateGroup(Group group) {
+		return moimDao.updateGroup(sqlSession, group);
+	}
+	
+	@Override
+	public int updateApply(Apply ap) {
+		return moimDao.updateApply(sqlSession, ap);
+	}
+
+	@Override
+	public int deleteGroup(Group group) {
+		return moimDao.deleteGroup(sqlSession, group);
 	}
 
 }
