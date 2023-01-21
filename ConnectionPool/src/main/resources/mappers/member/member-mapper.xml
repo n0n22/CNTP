@@ -4,7 +4,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="memberMapper">
-
+	
+	<!-- 멤버  -->
 	<resultMap id="memberResultSet" type="member" >
 		<result column="MEM_NO" property="memNo"/>
 		<result column="MEM_ID" property="memId"/>
@@ -30,43 +31,138 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="FAILCNT" property="failCnt"/>
 	</resultMap>
 	
+	<!-- 포인트 -->
+	<resultMap id="pointResultSet" type="point">
+		<result column="POINT_NO" property="pointNo"/>
+		<result column="MEM_NO" property="memNo"/>
+		<result column="POINT_CONTENT" property="pointContent"/>
+		<result column="POINT" property="point"/>
+		<result column="POINT_DATE" property="pointDate"/>
+		<result column="CATEGORY" property="category"/>
+	</resultMap>
+	
+	<!-- 게시글 -->
+	<resultMap id="boardResultSet" type="board">
+		<result column="BOARD_NO" property="boardNo"/>
+		<result column="MEM_NO" property="memberNo"/>
+		<result column="TITLE" property="title"/>
+		<result column="COUNT" property="count"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="CATEGORY" property="category"/>
+	</resultMap>
+	
+	<!-- 소모임 -->
+	<resultMap type="group" id="groupResultMap">
+		<result column="GROUP_NO" 			property="groupNo"/>
+		<result column="NICKNAME" 			property="nickname"/>
+		<result column="GRADE" 			property="grade"/>
+		<result column="INGIDO"				property="ingido"/>
+		<result column="MEM_GENDER" 		property="memGender"/>
+		<result column="MEM_NO" 			property="memNo"/>
+		<result column="GROUP_CONTENT" 		property="groupContent"/>
+		<result column="GROUP_TITLE" 		property="groupTitle"/>
+		<result column="KOR_AREA" 		    property="korArea"/>
+		<result column="GROUP_AREA" 		property="groupArea"/>
+		<result column="PLACE" 				property="place"/>
+		<result column="GROUP_MEMBER" 		property="groupMember"/>
+		<result column="GROUP_STATUS" 		property="groupStatus"/>
+		<result column="START_TIME" 		property="startTime"/>
+		<result column="END_TIME" 			property="endTime"/>
+		<result column="ORIGIN_NAME" 		property="originName"/>
+		<result column="CHANGE_NAME" 		property="changeName"/>
+		<result column="LEVEL" 				property="level"/>
+		<result column="GENDER" 			property="gender"/>
+		<result column="CREATE_DATE" 		property="createDate"/>
+		<result column="POWER_DURATION" 	property="powerDuration"/>
+	</resultMap>
+	
+	<!-- 네이버 로그인 이메일 중복체크용-->
+	<select id="naverEmailCheck" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       NAVERMEMBER
+		 WHERE
+		       NAVER_EMAIL = #{email}
+	</select>
+	
+	<!-- 네이버 로그인 회원 가입용 -->
+	<insert id="naverInsert" parameterType="naver">
+		INSERT
+		  INTO
+		       NAVERMEMBER
+		       (
+		       NAVER_MEMNO,
+		       NAVER_MEMID,
+		       NAVER_MEMNAME,
+		       NAVER_PHONE,
+		       NAVER_EMAIL,
+		       NAVER_GENDER,
+		       NAVER_NICKNAME,
+		       NAVER_BIRTHDAY
+		       )
+		VALUES
+		       (
+		       #{memNo},
+		       #{memId},
+		       #{memName},
+		       #{phone},
+		       #{email},
+		       #{gender},
+		       #{nickName},
+		       #{birthDay}
+		       )
+	</insert>
+	
+	<!-- 네이버 로그인 -->
+	<select id="loginNaverMember" parameterType="string" resultType="naver">
+		SELECT 
+			   NAVER_MEMNO,
+			   NAVER_MEMID,		
+		       NAVER_MEMNAME,
+		       NAVER_PHONE,
+		       NAVER_EMAIL,
+		       NAVER_GENDER,
+		       NAVER_NICKNAME,
+		       NAVER_BIRTHDAY
+		  FROM
+		       NAVERMEMBER
+		 WHERE
+		       NAVER_EMAIL = #{email}
+	</select>
+	
+	
+	
 	<!-- 로그인용 쿼리문  -->
 	<select id="loginMember" parameterType="member" resultMap="memberResultSet">
-		SELECT 
-		       MEM_NO,
-		       MEM_ID,
-		       MEM_PWD,
-		       GENDER,
-		       INGIDO,
-		       MEM_POINT,
-		       EMAIL,
-		       NICKNAME,
-		       MEM_NAME,
-		       MEM_AREA,
-		       PHONE,
-		       BIRTHDAY,
-		       DETAIL_AREA,
-		       MEM_STATUS,
-		       ENROLL_DATE,
-		       GRADE,
-		       END_DATE,
-		       T.TEAM_NO,
-               TEAM_NAME,
-		       TEAM_GRADE,
-               BADGE_CHANGE_NAME,
-               FAILCNT
-		  FROM 
-		       MEMBER
-     LEFT JOIN 
-		       PENALTY USING (MEM_NO)
-     LEFT JOIN
-		       TEAM_MEMBER T USING (MEM_NO)
-     LEFT JOIN
-               TEAM USING USING (MEM_NO) 
-		 WHERE 
-		       MEM_ID = #{memId}
-		   AND
-		       MEM_STATUS = 'Y'
+		SELECT 		   
+		               M.MEM_NO,
+				       MEM_ID,
+				       MEM_PWD,
+				       GENDER,
+				       INGIDO,
+				       MEM_POINT,
+				       EMAIL,
+				       NICKNAME,
+				       MEM_NAME,
+				       MEM_AREA,
+				       PHONE,
+				       BIRTHDAY,
+				       DETAIL_AREA,
+				       MEM_STATUS,
+				       ENROLL_DATE,
+				       GRADE,
+				       END_DATE,
+				       TEAM_NO,
+				       TEAM_GRADE,
+		               FAILCNT,
+		               TEAM_NAME,
+		               BADGE_CHANGE_NAME
+		FROM
+		               VW_MEMBER "M"
+		     LEFT JOIN
+		               TEAM USING(TEAM_NO)
+		        WHERE M.MEM_ID = #{memId}
 	</select>
 	
 	<!-- 회원가입 -->
@@ -115,6 +211,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       )
 	</insert>
 	
+	<!-- 아이디 중복체크 -->
+	<select id="ajaxIdCheck" parameterType="string" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM
+		  	   MEMBER
+		 WHERE 
+		 	   MEM_ID = #{checkId}	   	        
+	</select>
+	
+	<!-- 닉네임 중복체크 -->
+	<select id="ajaxNickNameCheck" parameterType="string" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM 
+		  	   MEMBER
+		 WHERE
+		 	   NICKNAME = #{checkNickName}	 	        
+	</select>
+	
 	<!-- 로그인 횟수 증가 -->
 	<update id="loginCount" parameterType="member">
 		UPDATE 
@@ -158,7 +274,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 비밀번호 찾기 시 메일요청을 위한  아이디,이메일 확인-->
-	<select id="findPwdMailRequest" parameterType="member" resultType="_int">
+	<select id="ajaxfindPwdMailRequest" parameterType="member" resultType="_int">
 		SELECT 
 		       COUNT(*)
 		  FROM
@@ -188,7 +304,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 인증번호 확인 -->
-	<select id="certNumCheck" parameterType="cert" resultType="cert">
+	<select id="ajaxcertNumCheck" parameterType="cert" resultType="cert">
 		SELECT
 		       CERT_IP,
 		       SECRET_NO,
@@ -199,6 +315,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       CERT_IP = #{certIp}
 		   AND 
 		       SECRET_NO = #{secretNo}
+		   AND
+		       VALID_TIME BETWEEN SYSDATE - 5/24/60 AND SYSDATE        
 	</select>
 	
 	<!-- Cert table 한 행 지우기 -->
@@ -210,6 +328,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   AND 
 		       SECRET_NO = #{secretNo}	      	
 	</delete>
+	
+	<!--  Cert 테이블 시간마다 지우기 -->
+	<delete id="certDeleteAll">
+		 DELETE
+			    CERT
+		  WHERE
+          	    VALID_TIME <![CDATA[>]]> TO_CHAR(SYSDATE);	   
+	</delete>
+	
 	
 	<!-- 비밀번호 변경 -->
 	<update id="pwdChange" parameterType="member">
@@ -254,38 +381,312 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   	   MEM_NO = #{memNo}			     	   		   
 	</update>
 	
+	<!-- 포인트 내역 개수 -->
+	<select id="selectPointCount" parameterType="point" resultType="_int">
+		SELECT
+			   COUNT(*)
+		  FROM 
+		       POINT
+		 WHERE 
+	           MEM_NO = #{memNo}
+   		<if test='category != "all"'>
+    	   AND
+		       CATEGORY = #{category}
+		</if>           
+	</select>
+	
+	<!-- 포인트 내역 조회 -->
+	<select id="selectPointList" parameterType="point" resultMap="pointResultSet">
+		SELECT 
+		       POINT_NO,
+		       MEM_NO,
+		       POINT_CONTENT,
+		       POINT,
+		       TO_CHAR(POINT_DATE, 'YYYY-MM-DD') as "POINT_DATE",
+		       CATEGORY
+		  FROM 
+		       POINT
+		 WHERE         
+		       MEM_NO = #{memNo}
+        <if test='category != "all"'>
+		   AND
+		       CATEGORY = #{category}
+		</if>
+		 ORDER
+		    BY
+		       POINT_NO DESC       
+	</select>
+	
+	<!-- 작성한 게시글 수 -->
+	<select id="selectMyBoardCount" parameterType="board" resultType="_int">
+		SELECT
+			   COUNT(*)
+		  FROM 
+		       BOARD
+		 WHERE 
+	           MEM_NO = #{memberNo}
+   		<if test='category != "all"'>
+    	   AND
+		       CATEGORY = #{category}
+		</if>           
+	</select>
+	
+	<!-- 작성한 게시글 조회 -->
+	<select id="selectMyBoardList" parameterType="board" resultMap="boardResultSet">
+		SELECT 
+		       BOARD_NO,
+		       MEM_NO,
+		       TITLE,
+		       COUNT,
+		       TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') as "CREATE_DATE",
+		       CATEGORY
+		  FROM 
+		       BOARD
+		 WHERE         
+		       MEM_NO = #{memberNo}
+        <if test='category != "all"'>
+		   AND
+		       CATEGORY = #{category}
+		</if>
+		 ORDER
+		    BY
+		       BOARD_NO DESC       
+	</select>
+	
+	<!-- 출석 내역 조회 -->
+	<select id="selectAtCheck" parameterType="_int" resultMap="pointResultSet">
+		SELECT 
+		       MEM_NO,
+		       TO_CHAR(POINT_DATE, 'YYYY-MM-DD') as "POINT_DATE",
+		       POINT_CONTENT
+		  FROM
+		       POINT
+		 WHERE 
+		       MEM_NO = #{memNo}
+		   AND 
+		       POINT_CONTENT = '출석체크'
+    </select>
+    
+    <!-- 출석 중복 조회 -->
+    <select id="countAtCheck" parameterType="_int" resultType="_int">
+    	SELECT 
+		       COUNT(*)
+		  FROM
+		       POINT
+		 WHERE 
+		       MEM_NO = #{memNo}
+		   AND
+		       POINT_CONTENT = '출석체크'
+		   AND
+		       POINT = '+1'
+		   AND
+		       CATEGORY = '적립'
+		   AND
+		       TO_CHAR(POINT_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+    </select>
+	
+	<!-- 출석체크 추가(포인트테이블) -->
+	<insert id="insertAtCheck" parameterType="point">
+		INSERT
+		  INTO
+		       POINT
+		       (
+		       POINT_NO,
+		       MEM_NO,
+		       POINT_CONTENT,
+		       POINT,
+		       POINT_DATE,
+		       CATEGORY
+		       )
+		VALUES 
+		       (
+		       SEQ_PNO.NEXTVAL,
+		       #{memNo},
+		       '출석체크',
+		       #{point},
+		       SYSDATE,
+		       '적립'
+		       )
+	</insert>
+	
+	<!-- 출석체크 추가(멤버테이블) -->
+	<update id="updatePointMember" parameterType="point">
+		UPDATE 
+		       MEMBER
+		   SET
+		       MEM_POINT = MEM_POINT + (#{point})
+		 WHERE
+		       MEM_NO = #{memNo}
+	
+	</update>
+	
+	<!-- 마이페이지 소모임 조회 -->
+	<select id="myPageGroupList" parameterType="_int" resultMap="groupResultMap">
+		SELECT 
+		        G.GROUP_NO
+		       ,M.NICKNAME
+		       ,G.MEM_NO
+		       ,G.GROUP_AREA
+		       ,A.KOR_AREA
+		       ,G.CHANGE_NAME
+		       ,G.GROUP_TITLE
+		       ,CASE WHEN G.GENDER = 'A' THEN '무관'
+		             WHEN G.GENDER = 'F' THEN '여자만'
+		             ELSE '남자만' END "GENDER"
+		       ,CASE WHEN "LEVEL" = 'E' THEN '무관'
+		             WHEN "LEVEL" = 'B' THEN '초급'
+		             WHEN "LEVEL" = 'M' THEN '중급'
+		             ELSE '고급' END "LEVEL"
+		       ,CASE WHEN TO_CHAR(G.POWER_DURATION, 'YYYYMMDD') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDD')]]> THEN '파워'
+		             ELSE '일반' END "POWER_DURATION"
+		       ,TO_CHAR(G.START_TIME, 'YYYY/MM/DD hh24:mi:ss') "START_TIME"
+		       ,TO_CHAR(G.END_TIME, 'YYYY/MM/DD hh24:mi:ss') "END_TIME"
+		       ,CASE WHEN GROUP_MEMBER - 1 <![CDATA[<= (SELECT
+		                                          COUNT(*)
+		                                     FROM
+		                                          APPLY "A"
+		                                    WHERE
+		                                          A.MOIM_NO = G.GROUP_NO
+		                                      AND
+		                                          ACCEPT_YN = 'Y'
+		                                    )]]> THEN '모집마감'
+		        ELSE '('||((SELECT
+		                          COUNT(*)
+		                     FROM
+		                          APPLY "A"
+		                    WHERE
+		                          A.MOIM_NO = G.GROUP_NO
+		                      AND
+		                          ACCEPT_YN = 'Y') + 1)||'/'||G.GROUP_MEMBER||')' END "GROUP_MEMBER"
+		  FROM
+		       "GROUP" G
+		  JOIN 
+		       MEMBER "M" ON(G.MEM_NO = M.MEM_NO)
+		  JOIN
+		       AREA "A" ON(G.GROUP_AREA = A.ENG_AREA)
+		 WHERE
+		       M.MEM_NO = #{memNo}
+		 ORDER
+		    BY G.POWER_DURATION, G.CREATE_DATE DESC
+	</select>
 	
 	<!-- 인기도 ******************************************************** -->
 	
 	<!-- 회원 프로필 조회 -->
 	<select id="showProfile" parameterType="_int" resultMap="memberResultSet">
         SELECT 
-		       MEM_NO,
+		       M.MEM_NO,
 		       GENDER,
 		       INGIDO,
 		       NICKNAME,
 		       KOR_AREA AS "MEM_AREA",
-		       TO_CHAR(BIRTHDAY, 'YYYY-MM-DD') "BIRTHDAY",
+		       BIRTHDAY,
 		       DETAIL_AREA,
 		       TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') "ENROLL_DATE",
 		       GRADE,
-		       T.TEAM_NO,
+		       TEAM_NO,
                TEAM_NAME,
 		       TEAM_GRADE,
                BADGE_CHANGE_NAME
 		  FROM 
-		       MEMBER
+		       VW_MEMBER M
      LEFT JOIN
-		       TEAM_MEMBER T USING (MEM_NO)
-     LEFT JOIN
-               TEAM USING USING (MEM_NO) 
+		       TEAM USING (TEAM_NO)
           JOIN
 		  	   AREA ON (MEM_AREA = ENG_AREA)
 		 WHERE 
-               MEM_NO = #{memNo}
-		   AND
-		       MEM_STATUS = 'Y'
+               M.MEM_NO = #{memNo}
 	</select>
 	
+	<!-- 인기도 변경 : 0이면 중복X, 1이면 중복O -->
+	<update id="upOrDownIngido" parameterType="map">
+		UPDATE
+	        	MEMBER
+		   SET
+		        INGIDO = INGIDO + (#{flag})
+		 WHERE
+		        MEM_NO = #{targetNo}
+		   AND
+		   		0 = (
+		   			
+		   			SELECT 
+		   					COUNT(*)
+		   			  FROM
+		   			  		INGIDO
+		   			 WHERE
+		   			 		INGIDO LIKE SUBSTR(#{ingido}, 0, LENGTH(#{ingido}) - 1) || '%'
+		   			   AND
+		   			   		TO_CHAR(CREATE_DATE,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+		   			)
+		   
+	</update>
+	<!-- 인기도 변경 기록 저장 -->
+	<insert id="insertIngidoRecord" parameterType="map">
+		INSERT
+		  INTO
+		        INGIDO
+		        (
+		        INGIDO
+		        )
+		VALUES
+		        (
+		        #{ingido}
+		        )
+	</insert>
+	
+	<!-- 지역별 인기도 왕 조회 -->
+	<select id="areaIngidoRank" resultMap="memberResultSet">
+	SELECT 
+			B.NICKNAME, 
+			KOR_AREA "MEM_AREA", 
+			B.INGIDO, 
+			B.MEM_NO, 
+			NVL(TEAM_NAME, '무소속') "TEAM_NAME"
+	  FROM
+	        (SELECT MEM_AREA, MEM_NO
+	           FROM (
+	                SELECT 
+	                        MEM_NO, MEM_AREA, ROW_NUMBER() OVER(PARTITION BY MEM_AREA ORDER BY MEM_NAME DESC) AS "rn"
+	                  FROM
+	                        MEMBER M
+	                 WHERE
+	                        (MEM_AREA, INGIDO) IN (SELECT MEM_AREA, MAX(INGIDO)
+	                                                 FROM MEMBER
+	                                                GROUP BY MEM_AREA)
+	                )
+	        WHERE "rn" = 1) A
+	  JOIN
+	        MEMBER B ON(A.MEM_NO = B.MEM_NO)
+	  JOIN
+	        AREA ON(A.MEM_AREA = ENG_AREA)
+	  LEFT
+	  JOIN
+	        TEAM_MEMBER TM ON(B.MEM_NO = TM.MEM_NO)
+	  LEFT
+	  JOIN
+	        TEAM T  ON(TM.TEAM_NO = T.TEAM_NO)
+	  ORDER BY B.INGIDO DESC
+		
+	
+	</select>
+	
+	<select id="allIngidoRank" resultMap="memberResultSet">
+	SELECT *
+	  FROM (
+	        SELECT 
+	                NICKNAME, 
+	                KOR_AREA "MEM_AREA", 
+	                INGIDO, 
+	                MEM_NO
+	          FROM 
+	                MEMBER
+	          JOIN
+	                AREA ON(MEM_AREA = ENG_AREA)
+	         ORDER 
+	            BY INGIDO DESC
+	        )
+	 WHERE 
+	        ROWNUM BETWEEN 1 AND 9
+	</select>
 	
 </mapper>

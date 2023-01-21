@@ -15,7 +15,7 @@ public class ReplyController {
 	@Autowired
 	private ReplyService replyService;
 	
-	/*
+	
 	//Board댓글
 	@ResponseBody
 	@RequestMapping(value = "rlist.bo", produces="application/json; charset=UTF-8")
@@ -29,18 +29,14 @@ public class ReplyController {
 		return replyService.BoardinsertReply(r) > 0 ? "success" : "fail";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "topList.bo", produces="application/json; charset=UTF-8")
-	public String ajaxTopBoardList() {
-		return new Gson().toJson(replyService.selectTopBoard());
-	}
+	
 
 	
 	//수영일기 댓글
 	@ResponseBody
 	@RequestMapping(value = "rlist.di", produces="application/json; charset=UTF-8")
 	public String ajaxDiarySelectDiaryReplyList(int dno) {
-		return new Gson().toJson(replyService.DiaryselectReplyList(bno));
+		return new Gson().toJson(replyService.DiaryselectReplyList(dno));
 	}
 	
 	@ResponseBody
@@ -49,12 +45,8 @@ public class ReplyController {
 		return replyService.DiaryinsertReply(r) > 0 ? "success" : "fail";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "topList.di", produces="application/json; charset=UTF-8")
-	public String ajaxTopDiaryList() {
-		return new Gson().toJson(replyService.selectTopBoard());
-	}
-
-	*/
+	
+	
+	
 	
 }

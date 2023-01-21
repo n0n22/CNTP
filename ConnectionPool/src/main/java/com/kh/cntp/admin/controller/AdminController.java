@@ -6,6 +6,8 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,7 @@ import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.common.template.Pagination;
 import com.kh.cntp.common.template.Template;
 import com.kh.cntp.member.model.vo.Member;
+import com.kh.cntp.moim.model.vo.TeamMember;
 import com.kh.cntp.notice.model.service.NoticeService;
 import com.kh.cntp.notice.model.vo.Notice;
 
@@ -145,9 +148,11 @@ public class AdminController {
 	
 	// 신고글 상세 조회 -> 신고글 상세 페이지로 이동
 	@RequestMapping("reportDetail.ad")
-	public ModelAndView selectReport(int rno, ModelAndView mv) {
-		
-		mv.addObject("report", adminService.selectReport(rno));
+	public ModelAndView selectReport(@ModelAttribute Report report, ModelAndView mv) {
+		// System.out.println(report);
+		Report r = adminService.selectReport(report);
+		// System.out.println(r);
+		mv.addObject("report", r);
 		mv.setViewName("admin/adminReportDetail");
 		
 		return mv;
@@ -165,14 +170,19 @@ public class AdminController {
 	public String reportEnrollForm(@ModelAttribute Report report, Model model) {
 		// System.out.println(report);
 		
-		model.addAttribute("report", report);
+		if (adminService.selectReportCount(report) > 0) {
+			model.addAttribute("alert", "이미 신고한 게시글입니다.");
+		} else {
+			model.addAttribute("report", report);			
+		}
+		
 		return "admin/reportEnrollForm";
 	}
 	
 	
 	
 	// 신고 등록
-	@RequestMapping("reportInsert.ad")
+	@RequestMapping("reportInsert")
 	public ModelAndView insertReport(@ModelAttribute Report report, ModelAndView mv) {
 		// System.out.println(report);
 		
@@ -233,37 +243,87 @@ public class AdminController {
 	}
 	
 	
+//	// 패널티 처리
+//	@RequestMapping("penaltyInsert.ad")
+//	public ModelAndView insertPenalty(int[] memNo, String[] penalty, ModelAndView mv, HttpSession session) {
+//		int result = 1;
+//		
+//		for(int i = 0; i < memNo.length; i++) {
+//			
+//			if(penalty[i].equals("정지")) { // 정지 : select -> update or insert
+//				
+//				if(adminService.selectStopPenalty(memNo[i]) > 0) { // 정지 받은 적이 있으면 update
+//					result *= adminService.updateStopPenalty(memNo[i]);
+//										
+//				} else { // 정지받은 적이 없으면 insert
+//					result *= adminService.insertStopPenalty(memNo[i]);
+//				}
+//				
+//			} else { // 탈퇴 
+//				TeamMember tm = adminService.selectTeamMem(memNo[i]);
+//				
+//				if(tm != null) { // 조회 결과가 있을 때
+//					// 팀장으로 업데이트 + 팀멤버테이블 삭제 + 멤버테이블 상태변경
+//					result *= adminService.updateTeamLeader(memNo[i], tm.getMemNo());
+//				} else { // 조회 결과가 없을 때
+//					// 팀 상태 변경 + 팀멤버테이블 삭제 + 멤버테이블 상태변경 
+//					result *= adminService.updateTeamStatus(memNo[i]);
+//				}
+//			}
+//		}
+//		
+//		
+//		if(result > 0) { // 모든 결과가 성공이면
+//			session.setAttribute("alertMsg", "처리가 완료되었습니다.");
+//			mv.setViewName("redirect:penaltyList.ad");
+//		} else {
+//			mv.addObject("errorMsg", "처리 실패");
+//			mv.setViewName("common/errorPage");
+//		}
+//		
+//		mv.setViewName("redirect:penaltyList.ad");
+//		return mv;
+//	}
+	
+	
 	// 패널티 처리
 	@RequestMapping("penaltyInsert.ad")
-	public ModelAndView insertPenalty(int[] memNo, String[] penalty, ModelAndView mv) {
-		ArrayList<Integer> stopList = new ArrayList();
-		ArrayList<Integer> kickList = new ArrayList();
+	public ModelAndView insertPenalty(int[] memNo, String[] penalty, ModelAndView mv, HttpSession session) {
+		
+//		for(int i = 0; i < memNo.length; i++) {
+//			
+//			if(penalty[i].equals("정지")) { // 정지 : select -> update or insert
+//				if(adminService.selectStopPenalty(memNo[i]) > 0) { // 정지 받은 적이 있으면 update
+//					penalty[i] = "정지O";
+//				} else { // 정지받은 적이 없으면 insert
+//					penalty[i] = "정지X";
+//				}
+//				
+//			} else { // 탈퇴 
+//				TeamMember tm = adminService.selectTeamMem(memNo[i]);
+//				int team = adminService.selectTeam(memNo[i]);
+//				if(team > 0 && tm != null) { // 소속팀이 있고, 바꿀 멤버가 있을 때
+//					penalty[i] = "바꿀멤버O";
+//				} else if(team > 0 && tm == null) { // 소속 팀이 있고, 바꿀 멤버가 없을 때
+//					penalty[i] = "바꿀멤버X";
+//				} else {
+//					penalty[i] = "팀X";
+//				}
+//			}
+//		}
 		
 		
-		for (int i = 0; i < memNo.length; i++) {
-			Report re = new Report();
-			if(penalty[i].equals("정지")) {
-				stopList.add(memNo[i]);
-			} else {
-				kickList.add(memNo[i]);
-			}			
+		if(adminService.givePenalties(memNo, penalty) > 0) {
+			session.setAttribute("alertMsg", "처리를 완료했습니다.");
+			mv.setViewName("redirect:penaltyList.ad");
+		} else {
+			mv.addObject("errorMsg", "패널티 부과 처리 실패").setViewName("common/errorPage");
 		}
 		
-		
-		if(!stopList.isEmpty()) {
-			adminService.stopMember(stopList);
-		}
-		if(!kickList.isEmpty()) {
-			
-		}
-		
-		
-		mv.setViewName("redirect:penaltyList.ad");
 		return mv;
 	}
 	
-	
-	
+
 	
 	
 //-------------------------------------------
@@ -435,11 +495,17 @@ public class AdminController {
 	}
 	
 	
-	
-	
-	
-	
-	
+	// 자동완성
+	@ResponseBody
+	@RequestMapping(value="autoComplete.ad", produces="application/json; charset=UTF-8")
+	public String autoComplete() {
+		JSONObject obj = new JSONObject();
+		obj.put("names", adminService.selectListName());
+		obj.put("ids", adminService.selectListId());
+		obj.put("nicknames", adminService.selectListNickname());
+		// System.out.println(obj);
+		return obj.toJSONString();
+	}
 	
 	
 	

@@ -16,6 +16,15 @@
 		align-content: center;
 		align-items:center;
 	}
+	
+	.pagingParent{
+		margin: auto;
+		text-align: center;
+	}
+	
+	.pagingArea{
+		display: inline-block;
+	}
 </style>
 </head>
 <body>
@@ -92,7 +101,7 @@
 										<p style="display:none" class="thisTeamNo">${ team.teamNo }</p>
 									</td>
 									<td>${ team.powerDuration }</td>
-									<td>${ team.teamArea }</td>
+									<td>${ team.korArea }</td>
 									<td>${ team.nickname }</td>
 									<td>${ team.teamName }</td>
 									<td>${ team.teamMember }</td>
@@ -104,37 +113,49 @@
 				</tbody>
 			</table>
 			
-			<div id="pagingArea" align="center">
-				<ul class="pagination" align="center">
-					<c:choose>
-						<c:when test="${ pi.currentPage ne 1 }">
-							<li class="page-item"><a class="page-link" href="teamList.mo?cpage=${ pi.currentPage - 1 }&teamArea=${ team.teamArea }&teamMember=${ team.teamMember }&keyword=${ team.keyword }">Previous</a></li>
-						</c:when>
-						<c:otherwise>
-							<li class="page-item disabled"><a class="page-link" disabled>Previous</a></li>
-						</c:otherwise>
-					</c:choose>
-					
-					<c:forEach begin="${pi.startPage }" end="${pi.endPage }" var="p">
-						<li class="page-item"><a class="page-link" href="teamList.mo?cpage=${ p }&teamArea=${ team.teamArea }&teamMember=${ team.teamMember }&keyword=${ team.keyword }">${ p }</a></li>
-					</c:forEach>
-					
-					<c:choose>
-						<c:when test="${ pi.currentPage ne pi.maxPage }">
-							<li class="page-item"><a class="page-link" href="teamList.mo?cpage=${ pi.currentPage + 1 }&teamArea=${ team.teamArea }&teamMember=${ team.teamMember }&keyword=${ team.keyword }">Next</a></li>
-						</c:when>
-						<c:otherwise>
-							<li class="page-item disabled"><a class="page-link" disabled>Next</a></li>
-						</c:otherwise>
-					</c:choose>
-				</ul>
-			</div>
-			
-			<c:if test="${ not empty loginMember }">
-				<div align="right">
-					<a href="teamEnrollFrom.mo">팀 만들기</a>
+			<div class="pagingParent">
+				<div class="pagingArea" align="center">
+					<ul class="pagination" align="center">
+						<c:choose>
+							<c:when test="${ pi.currentPage ne 1 }">
+								<li class="page-item"><a class="page-link" href="teamList.mo?cpage=${ pi.currentPage - 1 }&teamArea=${ team.teamArea }&teamMember=${ team.teamMember }&keyword=${ team.keyword }">Previous</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item disabled"><a class="page-link" disabled>Previous</a></li>
+							</c:otherwise>
+						</c:choose>
+						
+						<c:forEach begin="${pi.startPage }" end="${pi.endPage }" var="p">
+							<li class="page-item"><a class="page-link" href="teamList.mo?cpage=${ p }&teamArea=${ team.teamArea }&teamMember=${ team.teamMember }&keyword=${ team.keyword }">${ p }</a></li>
+						</c:forEach>
+						
+						<c:choose>
+							<c:when test="${ pi.currentPage ne pi.maxPage }">
+								<li class="page-item"><a class="page-link" href="teamList.mo?cpage=${ pi.currentPage + 1 }&teamArea=${ team.teamArea }&teamMember=${ team.teamMember }&keyword=${ team.keyword }">Next</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item disabled"><a class="page-link" disabled>Next</a></li>
+							</c:otherwise>
+						</c:choose>
+					</ul>
 				</div>
-			</c:if>
+			</div>
+			<c:choose>
+				<c:when test="${ empty loginMember }">
+				
+				</c:when>
+				<c:when test="${ not empty loginMember and empty loginMember.teamNo }">
+					<div align="right">
+						<a href="teamEnrollForm.mo" class="btn btn-primary">팀 만들기</a>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div align="right">
+						<button disabled class="btn btn-primary">팀 만들기</button>
+						<p>현재 팀에 소속되어 있어 새 팀 생성이 불가합니다.</p>
+					</div>
+				</c:otherwise>
+			</c:choose>
 			
 		</div>
 			

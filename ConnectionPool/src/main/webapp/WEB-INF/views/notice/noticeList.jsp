@@ -9,10 +9,14 @@
 <title>공지사항</title>
 
 	<style>
-
+		.outer {
+			width: 1100px;
+			margin: auto;
+		}
 
         .notice-title h2 {
             text-align: center;
+            margin-top: 30px;
         }
 
         .notice-search {
@@ -58,6 +62,35 @@
             padding: 20px;
         }
 
+		
+		input[type=radio] {
+			display : none;
+		}
+		
+		label {
+			padding : 5px 10px;
+		}
+		
+		input[type=radio]:hover + label:hover {
+			cursor: pointer;
+		}
+		
+		input[type=radio]:checked + label {
+			color :blue;
+		}
+		.notice-foot{
+			margin: auto;
+			text-align: center;
+		}
+		.page-area{
+			display: inline-block;
+		}
+		
+		#noticeTable tbody tr:hover {
+        	cursor : pointer;
+        }
+	
+
     </style>
 
 
@@ -77,25 +110,25 @@
 
         </div>
         <div class="notice-navi">
-            <div class="notice-navi-cate">
-                <a href="list.no">전체</a> |
-                <a href="list.no?cate=공지">공지</a> |
-                <a href="list.no?cate=이벤트">이벤트</a> |
-                <a href="list.no?cate=대회정보">대회정보</a>
-            </div>
-            <div class="notice-navi-middle">
-
-            </div>
-            <div class="notice-search">
-                <form action="#">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">검색</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            <form action="list.no" method="get" id="noticeForm">
+	            <div class="notice-navi-cate">
+	            	<input type="radio" name="cate" value="all" id="cate1" onchange="$('#noticeForm').submit();"><label for="cate1">전체</label> |
+	            	<input type="radio" name="cate" value="공지" id="cate2" onchange="$('#noticeForm').submit();"><label for="cate2">공지</label> |
+	            	<input type="radio" name="cate" value="이벤트" id="cate3" onchange="$('#noticeForm').submit();"><label for="cate3">이벤트</label> |
+	            	<input type="radio" name="cate" value="대회정보" id="cate4" onchange="$('#noticeForm').submit();"><label for="cate4">대회정보</label> |
+	            </div>
+	            <div class="notice-navi-middle">
+	
+	            </div>
+	            <div class="notice-search">
+	                    <div class="input-group mb-3">
+	                        <input type="text" class="form-control" placeholder="제목 키워드 입력" value="${ keyword }" name="keyword">
+	                        <div class="input-group-append">
+	                            <button class="btn btn-primary" type="submit">검색</button>
+	                        </div>
+	                    </div>
+	            </div>
+            </form>
         </div>
         <div class="notice-table">
             <div class="container">
@@ -128,21 +161,16 @@
 
         </div>
 		
-		<c:if test="${ loginMember.grade eq 'A' }">
-	        <div class="notice-hidden">
-	            <a href="noticeEnrollForm.ad" class="btn btn-sm btn-primary">글작성</a>
-	        </div>
-		</c:if>
 
         <div class="notice-foot">
         	<div class="page-area">
-	        	<ul class="pagination" align="center">
+	        	<ul class="pagination">
 	               	<c:choose>
 	                	<c:when test="${ pi.currentPage eq 1 }">
 	                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
 	                    </c:when>
 	                    <c:otherwise>
-	                    	<li class="page-item"><a class="page-link" href="list.no?cate=${ cate }&cpage=${ pi.currentPage - 1 }">&lt;</a></li>
+	                    	<li class="page-item"><a class="page-link" href="list.no?cate=${ cate }&keyword=${ keyword }&cpage=${ pi.currentPage - 1 }">&lt;</a></li>
 	                    </c:otherwise>
 	                </c:choose>
 	                
@@ -150,10 +178,10 @@
 	                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
 		                <c:choose>
 		                	<c:when test="${ pi.currentPage eq p }">
-		                   		<li class="page-item disabled"><a class="page-link" href="list.no?cate=${ cate }&cpage=${ p }">${ p }</a></li>
+		                   		<li class="page-item disabled"><a class="page-link" href="list.no?cate=${ cate }&keyword=${ keyword }&cpage=${ p }">${ p }</a></li>
 		                	</c:when>
 		                	<c:otherwise>
-		                		<li class="page-item"><a class="page-link" href="list.no?cate=${ cate }&cpage=${ p }">${ p }</a></li>
+		                		<li class="page-item"><a class="page-link" href="list.no?cate=${ cate }&keyword=${ keyword }&cpage=${ p }">${ p }</a></li>
 		                	</c:otherwise>
 		                </c:choose>
 	                </c:forEach>
@@ -164,13 +192,18 @@
 		                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
 	                    </c:when>
 	                    <c:otherwise>
-		                    <li class="page-item"><a class="page-link" href="list.no?cate=${ cate }&cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+		                    <li class="page-item"><a class="page-link" href="list.no?cate=${ cate }&keyword=${ keyword }&cpage=${ pi.currentPage + 1 }">&gt;</a></li>
 	                    </c:otherwise>
 	                </c:choose>
 				</ul>
         	</div>
         </div>
 
+		<c:if test="${ loginMember.grade eq 'A' }">
+	        <div class="notice-hidden">
+	            <a href="noticeEnrollForm.ad" class="btn btn-sm btn-primary">글작성</a>
+	        </div>
+		</c:if>
 
     </div>
 
@@ -186,6 +219,14 @@
 			// 행을 클릭하면 상세보기
 			$('#noticeTable tbody .clickTr').click(function() {
 				location.href = "detail.no?nno=" + $(this).children().eq(0).text();		
+			});
+			
+			
+			
+			$('input[type=radio]').each(function() {
+				if('${cate}' == $(this).val()) {
+					$(this).attr('checked', true);
+				}
 			});
 			
 			

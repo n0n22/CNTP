@@ -1,6 +1,7 @@
 package com.kh.cntp.board.controller;
 
 import java.io.File;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,14 +11,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.cntp.board.model.service.BoardService;
 import com.kh.cntp.board.model.vo.Board;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.common.template.Pagination;
 import com.kh.cntp.common.template.Template;
+import com.kh.cntp.reply.model.vo.Reply;
+
+import oracle.net.aso.b;
 
 @Controller
 public class BoardController {
@@ -29,7 +35,7 @@ public class BoardController {
 	@RequestMapping ("list.bo")
 	public ModelAndView selectList(@RequestParam(value="cpage",defaultValue="1") int currentPage, ModelAndView mv) {
 		
-		PageInfo pi = Pagination.getPageInfo(boardService. selectListCount(),currentPage, 5,3); //int pageLimit 5, int boardLimit : 3
+		PageInfo pi = Pagination.getPageInfo(boardService. selectListCount(),currentPage, 10,5); //int pageLimit 10, int boardLimit : 5
 		mv.addObject("pi", pi).addObject("list", boardService.selectList(pi)).setViewName("board/boardListView");
 		
 		return mv;
@@ -91,7 +97,7 @@ public class BoardController {
 				
 					new File(session.getServletContext().getRealPath(filePath)).delete();
 			}
-			session.setAttribute("alert", "삭제 성공~~");	
+			session.setAttribute("alertMsg", "삭제 성공~~");	
 				return "redirect:list.bo";
 		}else { //삭제 실패
 			model.addAttribute("errorMsg", "게시글 삭제 실패");
@@ -126,7 +132,7 @@ public class BoardController {
 			
 			if(boardService.updateBoard(b) > 0) {
 				session.setAttribute("alertMsg", "게시글이 수정되었습니다~~");
-				return "redirect:detail.bo?bno" + b.getBoardNo();
+				return "redirect:detail.bo?bno=" + b.getBoardNo();
 			}else {
 				model.addAttribute("errorMsg", "게시글 수정 실패~~!!");
 				return "common/errorPage";
@@ -134,6 +140,25 @@ public class BoardController {
 			
 		}
 		
+		//검색 -> 작성자, 제목, 내용
+		//작성자 -> memberNo ? / nickName? 
+		@RequestMapping("SearchNick.bo")
+		public ModelAndView mSearch(String condition, String keyword,  ModelAndView mv,@RequestParam(value="cpage",defaultValue="1") int currentPage ) {
+			
+			HashMap<String, String> map= new HashMap();
+			map.put("condition", condition);
+			map.put("keyword", keyword);
+			
+			PageInfo pi = Pagination.getPageInfo(boardService.selectSearchCount(map),currentPage, 10,5); //int pageLimit 10, int boardLimit : 5
+			//System.out.println(boardService.selectSearchCount(map));
+			mv.addObject("pi", pi).addObject("list", boardService.selectSearchList(map, pi)).setViewName("board/boardListView");
+			
+			 
+		
+			return mv;
+		
+		}
+			
 		
 		
 }

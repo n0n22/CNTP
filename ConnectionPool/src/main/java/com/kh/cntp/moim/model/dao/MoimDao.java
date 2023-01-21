@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.model.vo.PageInfo;
+import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.moim.model.vo.Apply;
 import com.kh.cntp.moim.model.vo.Chatting;
 import com.kh.cntp.moim.model.vo.Group;
@@ -50,8 +51,8 @@ public class MoimDao {
 		return sqlSession.selectOne("moimMapper.selectResultHistory", teamNo);
 	}
 	
-	public Apply ajaxSelectApply(SqlSessionTemplate sqlSession, int memNo) {
-		return sqlSession.selectOne("moimMapper.ajaxSelectApply", memNo);
+	public Apply ajaxSelectApply(SqlSessionTemplate sqlSession, Apply ap) {
+		return sqlSession.selectOne("moimMapper.ajaxSelectApply", ap);
 	}
 	
 	public int updateTeam(SqlSessionTemplate sqlSession, Team team) {
@@ -74,20 +75,20 @@ public class MoimDao {
 		return sqlSession.delete("moimMapper.deleteTeamMember", memNo);
 	}
 	
-	public int deleteApply(SqlSessionTemplate sqlSession, int memNo) {
-		return sqlSession.delete("moimMapper.deleteApply", memNo);
+	public int deleteApply(SqlSessionTemplate sqlSession, Apply ap) {
+		return sqlSession.delete("moimMapper.deleteApply", ap);
 	}
 	
 	public int insertApply(SqlSessionTemplate sqlSession, Apply ap) {
 		return sqlSession.insert("moimMapper.insertApply", ap);
 	}
 	
-	public int updateApply(SqlSessionTemplate sqlSession, int applyNo) {
-		return sqlSession.update("moimMapper.updateApply", applyNo);
+	public int updateApply(SqlSessionTemplate sqlSession, Apply ap) {
+		return sqlSession.update("moimMapper.updateApply", ap);
 	}
 	
-	public int insertTeamMember(SqlSessionTemplate sqlSession, Apply ap) {
-		return sqlSession.insert("moimMapper.insertTeamMember", ap);
+	public int insertTeamMember(SqlSessionTemplate sqlSession, TeamMember tm) {
+		return sqlSession.insert("moimMapper.insertTeamMember", tm);
 	}
 	
 	public int selectTeamCountList(SqlSessionTemplate sqlSession, Team team) {
@@ -132,5 +133,24 @@ public class MoimDao {
 	public Group selectGroup(SqlSessionTemplate sqlSession, String groupNo) {
 		return sqlSession.selectOne("moimMapper.selectGroup", groupNo);
 	}
+	
+	public int insertGroup(SqlSessionTemplate sqlSession, Group group) {
+		return sqlSession.insert("moimMapper.insertOneGroup", group);
+	}
+	
+	public int updateGroup(SqlSessionTemplate sqlSession, Group group) {
+		return sqlSession.update("moimMapper.updateGroup", group);
+	}
 
+	public ArrayList<Apply> selectGroupApplyList(SqlSessionTemplate sqlSession, String moimNo){
+		return (ArrayList)sqlSession.selectList("moimMapper.selectGroupApplyList", moimNo);
+	}
+	
+	public int deleteGroup(SqlSessionTemplate sqlSession, Group group) {
+		return sqlSession.update("moimMapper.deleteGroup", group);
+	}
+	
+	public ArrayList<Member> selectAcceptMember(SqlSessionTemplate sqlSession, String groupNo){
+		return (ArrayList)sqlSession.selectList("moimMapper.selectAcceptMember", groupNo);
+	}
 }

@@ -16,7 +16,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="origin_name"	property="originName" />
 		<result column="change_name"	property="changeName" />
 		<result column="count"			property="count" />
-		
+		<result column="status"			property="status" />
+		<result column="nickName"			property="nickName" />
 	</resultMap>
 
 
@@ -44,12 +45,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				,title
 				,mem_no
 				,count
+				,nickName
+				,category
 				,to_char(create_date, 'YYYY-MM-DD') as "CREATE_DATE"
 				,origin_name
+				,status
 		from
 				board
+		join 	
+				member using(mem_no)	
 		where
-				status = 'Y'
+				status != 'N'
 		order
 			by						
 				board_no desc
@@ -63,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				(
 				board_no
 				,title
-				,mem_no
+				,nickName
 				,content
 				,category
 				,origin_name
@@ -73,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				(
 				seq_bno.nextval
 				,#{title}
-				,#{memberNo}
+				,#{nickName}
 				,#{content}
 				,#{category}
 				,#{originName}
@@ -103,18 +109,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					board_no
 					,title
 					,mem_no
+					,nickName
 					,content
+					,category
 					,origin_name
 					,change_name
 					,to_char(create_date, 'YYYY-MM-DD') as "create_date"
 			from
 					board
+			join 	
+					member using(mem_no)	
 			where
 					status = 'Y'
 			 and
-			 		board_no = #{boardNo}						
-	
-	
+			 		board_no = #{boardNo}
 	</select>
 	
 	
@@ -135,15 +143,67 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set
 				title = #{title}		
 				,content = #{content}
-				,memNo = #{memberNo}
-				,originName = #{originName}
-				,changeName = #{changeName}
-		and 
-				status = 'Y'
+				,nickName = #{nickName}
+				,origin_Name = #{originName}
+				,change_Name = #{changeName}
+		where 
+				board_no = #{boardNo}
 	
 	</update>
 	
+	<select id="selectSearchCount" resultType="_int" parameterType="hashmap">
+		select
+				count(*)
+		from
+				board b
+		join
+				member using (mem_no)
+		where 	
+				b.status = 'Y'					
+		<if test="condition == 'nickName'">
+		AND NICKNAME
+		</if>
+		<if test="condition == 'content'">
+		AND CONTENT
+		</if>
+		<if test="condition == 'title'">
+		AND TITLE
+		</if>
+		 LIKE '%' || #{ keyword } || '%'
 	
+	</select>		
+	
+	
+	<select id="selectSearchList" parameterType="hashmap" resultMap="boardResultSet">
+		select 
+				board_no,
+				 title,
+				 mem_no,
+				 category,
+				 nickName,
+				 count,
+				to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		from board b
+		join member using ( mem_no)
+		where b.status = 'Y'
+		<choose>
+			<when test="condition == 'nickName'">
+				AND NICKNAME
+			</when>
+			<when test="condition == 'title'">
+				AND TITLE
+			</when>
+			<otherwise>
+				AND CONTENT
+			</otherwise>
+		</choose>
+				LIKE '%' || #{ keyword } || '%'
+		ORDER BY BOARD_NO DESC
+	</select>
+	
+	
+	
+
 	
 	
 	

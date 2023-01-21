@@ -6,18 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.kh.cntp.board.model.vo.Board;
+import com.kh.cntp.common.model.vo.PageInfo;
+import com.kh.cntp.common.template.Pagination;
 import com.kh.cntp.member.model.service.MemberService;
 import com.kh.cntp.member.model.vo.Member;
+import com.kh.cntp.member.model.vo.Point;
+import com.kh.cntp.moim.model.service.MoimService;
 
 @Controller
 public class myPageController {
-	// myPage 관련 컨트롤러 이 또한 화면지정을 위한 mapping값만 설정함 추후 수정예정
 	
 	@Autowired
 	private MemberService memberService;
-
+	@Autowired
+	private MoimService moimService;
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder; 
 	
@@ -70,7 +77,12 @@ public class myPageController {
 	// 마이페이지 회원탈퇴 결과페이지
 	@RequestMapping("myPageDelete.me")
 	public ModelAndView myPageDelete(String agree, ModelAndView mv, HttpSession session) {
-
+		 
+//		if (((Member)session.getAttribute("loginMember")).getTeamGrade().equals("L")) {
+//			mv.addObject("alertMsg", "팀장 권한 위임 후 탈퇴 가능합니다");
+//			mv.setViewName("");
+//		} 
+		
 		if (agree.equals("동의합니다")) {
 			if(memberService.myPageDelete(((Member)session.getAttribute("loginMember"))) > 0) {
 				session.removeAttribute("loginMember");
@@ -89,31 +101,112 @@ public class myPageController {
 	
 	// 마이페이지 포인트 내역 조회
 	@RequestMapping("myPagePoint.me")
-	public String myPagePoint() {
-		return "member/myPage/myPagePoint";
+	public ModelAndView myPagePoint(HttpSession session,
+									ModelAndView mv,
+									Point point,
+									@RequestParam(value="cpage", defaultValue="1")int cPage,
+									@RequestParam(value="category", defaultValue="all")String category) {
+		
+		// Point에 현재 로그인한 회원번호,카테고리 set 
+		point.setMemNo(((Member)session.getAttribute("loginMember")).getMemNo());
+		point.setCategory(category); 
+		
+		PageInfo pi = Pagination.getPageInfo(memberService.selectPointCount(point), cPage, 5, 5);
+		
+		mv.addObject("pi", pi);
+		mv.addObject("plist", memberService.selectPointList(pi, point));
+		mv.addObject("category", category);
+		mv.setViewName("member/myPage/myPagePoint");
+		
+		return mv;
 	}
 	
 	// 마이페이지 작성글 조회
 	@RequestMapping("myPageBoard.me")
-	public String myPageBoard() {
-		return "member/myPage/myPageBoard";
+	public ModelAndView myPageBoard(HttpSession session,
+									ModelAndView mv,
+									Board board,
+									@RequestParam(value="cpage", defaultValue="1")int cpage,
+									@RequestParam(value="category", defaultValue="all")String category) {
+		
+		// Board에 현재 로그인한 회원번호(식별값), 카테고리 set
+		board.setMemberNo(((Member)session.getAttribute("loginMember")).getMemNo());
+		board.setCategory(category);
+		
+		PageInfo pi = Pagination.getPageInfo(memberService.selectMyBoardCount(board), cpage, 5, 5);
+		
+		mv.addObject("pi", pi);
+		mv.addObject("blist", memberService.selectMyBoardList(pi, board));
+		mv.addObject("category", category);
+		mv.setViewName("member/myPage/myPageBoard");
+		
+		return mv;
 	}
 	
 	// 마이페이지 소모임 조회
 	@RequestMapping("myPageMoim.me")
-	public String myPageMoim() {
-		return "member/myPage/myPageMoim";
-	}
-	
-	// 마이페이지 수영일기 조회
-	@RequestMapping("myPageDiary.me")
-	public String myPageDiary() {
-		return "member/myPage/myPageDiary";
+	public ModelAndView myPageMoim(HttpSession session,
+								   ModelAndView mv
+								   ) {
+		
+		int memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
+		
+		mv.addObject("groupList",memberService.myPageGroupList(memNo));
+		
+		mv.setViewName("member/myPage/myPageMoim");
+		
+		return mv;
 	}
 	
 	// 마이페이지 팀 조회
 	@RequestMapping("myPageTeam.me")
-	public String myPageTeam() {
-		return "member/myPage/myPageTeam";
+	public ModelAndView myPageTeam(HttpSession session, ModelAndView mv) {
+		
+		String teamNo = ((Member)session.getAttribute("loginMember")).getTeamNo();
+		
+		mv.addObject("team", moimService.selectTeam(teamNo));
+		mv.addObject("teamMemberList", moimService.selectTeamMemberList(teamNo));
+		mv.addObject("applyList", moimService.selectApplyList(teamNo));
+		mv.addObject("resultHistory", moimService.seletResultHistory(teamNo));
+		mv.setViewName("member/myPage/myPageTeam");
+		
+		return mv;
+	}
+	
+	// 출석체크 페이지
+	@RequestMapping(value="myPageAtCheckForm.me", produces="application/json; charset=UTF-8")
+	public ModelAndView myPageAtCheckForm(HttpSession session, ModelAndView mv) {
+		
+		int memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
+		
+		mv.addObject("checkList",new Gson().toJson(memberService.selectAtCheck(memNo)));
+		mv.setViewName("member/myPage/myPageAttendanceCheck");
+		
+		return mv;
+	}
+	
+	// 출석체크
+	@RequestMapping("myPageAtCheck.me")
+	public String myPageAtCheck(int memNo, String pt, Point point, HttpSession session, Member member) {
+		point.setMemNo(memNo);
+		point.setPoint(pt);
+		member = (Member)session.getAttribute("loginMember");
+		
+		
+		if(memberService.countAtCheck(memNo) == 0) {
+			if(memberService.insertAtCheck(point) > 0){
+				session.setAttribute("alertMsg","출석체크 완료");
+				session.setAttribute("loginMember", memberService.loginMember(member));
+			} else {
+				session.setAttribute("alertMsg","관리자에게 문의하세요");
+			}
+			
+		} else {
+			session.setAttribute("alertMsg", "이미 출석하셨습니다");
+		}
+		
+		
+		
+		return "redirect:myPageAtCheckForm.me";
 	}
 }

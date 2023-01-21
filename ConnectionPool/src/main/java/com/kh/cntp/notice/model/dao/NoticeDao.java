@@ -1,6 +1,7 @@
 package com.kh.cntp.notice.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -13,16 +14,16 @@ import com.kh.cntp.notice.model.vo.Notice;
 public class NoticeDao {
 
 	// 공지사항 목록 개수 조회
-	public int selectListCount(SqlSessionTemplate sqlSession, String cate) {
-		return sqlSession.selectOne("noticeMapper.selectListCount", cate);
+	public int selectListCount(SqlSessionTemplate sqlSession, HashMap map) {
+		return sqlSession.selectOne("noticeMapper.selectListCount", map);
 	}
 	
 	// 공지사항 목록 개수 조회
-	public ArrayList<Notice> selectList(SqlSessionTemplate sqlSession, String cate, PageInfo pi) {
+	public ArrayList<Notice> selectList(SqlSessionTemplate sqlSession, HashMap map, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("noticeMapper.selectList", cate, rowBounds);
+		return (ArrayList)sqlSession.selectList("noticeMapper.selectList", map, rowBounds);
 	}
 	
 	

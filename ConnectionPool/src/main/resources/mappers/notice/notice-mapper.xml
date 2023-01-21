@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<!-- 공지사항 목록 개수 조회 -->
-	<select id="selectListCount" parameterType="string" resultType="_int">
+	<select id="selectListCount" parameterType="hashmap" resultType="_int">
 		SELECT
 		       COUNT(*)
 		  FROM 
@@ -29,6 +29,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="cate != 'all'">
 		   AND
 		       CATEGORY = #{cate}
+		</if>
+		<if test="keyword != ''">
+		   AND
+		       TITLE LIKE '%' || #{keyword} || '%'
 		</if>
 	</select>
 	
@@ -51,6 +55,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="cate != 'all'">
 		   AND
 		       CATEGORY = #{cate}
+		</if>
+		<if test="keyword != ''">
+		   AND
+		       TITLE LIKE '%' || #{keyword} || '%'
 		</if>
 		 ORDER
 		    BY

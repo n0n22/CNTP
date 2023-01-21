@@ -87,7 +87,7 @@
         /* border: 1px solid palevioletred; */
     }
     #name-area {
-        font-size: 25px;
+        font-size: 22px;
     }
     #userName {
         color: rgb(63, 72, 107);
@@ -210,9 +210,9 @@
              <div>
                 <ul id="top-ul">
                     <li><a id="click" href="myPageInfo.me">회원정보</a></li>
+                    <li><a href="myPageAtCheckForm.me">출석체크</a></li>
                     <li><a href="myPageBoard.me">작성글 보기</a></li>
-                    <li><a href="myPageDiary.me">수영일기</a></li>
-                    <li><a id="click" href="myPageTeam.me">나의팀 보기</a></li>
+                    <li><a href="myPageTeam.me">나의팀 보기</a></li>
                     <li><a href="myPageMoim.me">소모임 보기</a></li>
                     <li><a href="myPagePoint.me">포인트 조회</a></li>
                 </ul>
@@ -246,7 +246,7 @@
                                 <option value="">할게없음</option>
                                 <option value="">기타</option>
                             </select><br>
-                            <input name="" class="del-textarea" maxlength="100" value="회원 탈퇴 유의사항을 숙지하였으며 회원 탈퇴를 진행하겠습니까?">
+                            <input name="" class="del-textarea" maxlength="100" readonly value="회원 탈퇴 유의사항을 숙지하였으며 회원 탈퇴를 진행하겠습니까?">
                             <input name="agree" class="del-textarea" maxlength="5" value="" placeholder="동의합니다 입력">
                             
                          

@@ -1,6 +1,7 @@
 package com.kh.cntp.notice.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +23,15 @@ public class NoticeServiceImpl implements NoticeService {
 	
 	// 공지사항 목록 개수 조회
 	@Override
-	public int selectListCount(String cate) {
-		return noticeDao.selectListCount(sqlSession, cate);
+	public int selectListCount(HashMap map) {
+		return noticeDao.selectListCount(sqlSession, map);
 	}
 
 
 	// 공지사항 목록 조회
 	@Override
-	public ArrayList<Notice> selectList(String cate, PageInfo pi) {
-		return noticeDao.selectList(sqlSession, cate, pi);
+	public ArrayList<Notice> selectList(HashMap map, PageInfo pi) {
+		return noticeDao.selectList(sqlSession, map, pi);
 	}
 
 	// 공지사항 조회수 증기

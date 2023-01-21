@@ -11,6 +11,7 @@ import com.kh.cntp.admin.model.vo.Banner;
 import com.kh.cntp.admin.model.vo.Report;
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.member.model.vo.Member;
+import com.kh.cntp.moim.model.vo.TeamMember;
 import com.kh.cntp.notice.model.vo.Notice;
 
 @Repository
@@ -84,10 +85,15 @@ public class AdminDao {
 	
 	
 	// 신고 상세 조회
-	public Report selectReport(SqlSessionTemplate sqlSession, int rno) {
-		return sqlSession.selectOne("adminMapper.selectReport", rno);
+	public Report selectReport(SqlSessionTemplate sqlSession, Report report) {
+		return sqlSession.selectOne("adminMapper.selectReport", report);
 	}
 	
+	
+	// 신고 횟수 조회
+	public int selectReportCount(SqlSessionTemplate sqlSession, Report report) {
+		return sqlSession.selectOne("adminMapper.selectReportCount", report);
+	}
 	
 	
 	
@@ -98,8 +104,8 @@ public class AdminDao {
 	
 	
 	// 신고 등록 - BOARD update : 게시글 상태 업데이트
-	public int updateBoardStatus(SqlSessionTemplate sqlSession, int boardNo) {
-		return sqlSession.update("adminMapper.updateBoardStatus", boardNo);
+	public int updateBoardStatus(SqlSessionTemplate sqlSession, Report report) {
+		return sqlSession.update("adminMapper.updateBoardStatus", report);
 	}
 	
 	
@@ -109,8 +115,8 @@ public class AdminDao {
 	}
 	
 	// 신고 무효 - BOARD update : 게시글 상태 되돌리기
-	public int reUpdateBoardStatus(SqlSessionTemplate sqlSession, int boardNo) {
-		return sqlSession.update("adminMapper.reUpdateBoardStatus", boardNo);
+	public int reUpdateBoardStatus(SqlSessionTemplate sqlSession, Report report) {
+		return sqlSession.update("adminMapper.reUpdateBoardStatus", report);
 	}
 	
 	
@@ -136,10 +142,70 @@ public class AdminDao {
 	}
 	
 	
-	// 정지 처리
-	public int stopMember(SqlSessionTemplate sqlSession, ArrayList<Integer> stopList) {
-		return sqlSession.insert("adminMapper.stopMember", stopList);
+	// 정지 처리 - merge 구문 사용
+	public int stopPenalty(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.update("adminMapper.stopMember", memNo);
 	}
+	
+	
+//	// 정지 처리된 적 있는지 조회
+//	public int selectStopPenalty(SqlSessionTemplate sqlSession, int memNo) {
+//		return sqlSession.selectOne("adminMapper.selectStopPenalty", memNo);
+//	}
+//	
+//	// 정지 날짜 업데이트
+//	public int updateStopPenalty(SqlSessionTemplate sqlSession, int memNo) {
+//		return sqlSession.update("adminMapper.updateStopPenalty", memNo);
+//	}
+//	
+//	// 정지 날짜 인서트
+//	public int insertStopPenalty(SqlSessionTemplate sqlSession, int memNo) {
+//		return sqlSession.insert("adminMapper.insertStopPenalty", memNo);
+//	}
+	
+	// 팀 멤버 정보 조회 
+//	public ArrayList<TeamMember> selectTeamMem(SqlSessionTemplate sqlSession, int memNo) {
+//		return (ArrayList)sqlSession.selectList("adminMapper.selectTeamMem", memNo);
+//	}
+	public TeamMember selectTeamMem(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("adminMapper.selectTeamMem", memNo);
+	}
+	
+	// 소속팀이 있는지 조회
+	public TeamMember selectTeam(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("adminMapper.selectTeam", memNo);
+	}
+	
+	
+	// 바꿀 팀원이 있을때 팀장으로 업데이트
+	public int updateTeamLeader(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.update("adminMapper.updateTeamLeader", memNo);
+	}
+	
+	
+	// 팀 상태 변경
+	public int updateTeamStatus(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.update("adminMapper.updateTeamStatus", memNo);
+	}	
+		
+	
+	// 팀멤버 테이블에서 삭제
+	public int deleteTeamMember(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.delete("adminMapper.deleteTeamMember", memNo);
+	}
+	
+	
+	// 강퇴 멤버 상태 변경
+	public int updateMemberStatus(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.update("adminMapper.updateMemberStatus", memNo);
+	}
+	
+	
+//	// 부리더를 리더로
+//	public int updateSubLeader(SqlSessionTemplate sqlSession, int sl) {
+//		return sqlSession.update("adminMapper.updateSubLeader", sl);
+//	}
+	
 	
 	
 	
@@ -197,6 +263,18 @@ public class AdminDao {
 	// 공지사항 삭제
 	public int deleteNotice(SqlSessionTemplate sqlSession, int nno) {
 		return sqlSession.update("adminMapper.deleteNotice", nno);
+	}
+	// 자동완성
+	public ArrayList<String> selectListName(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectListName");
+	}
+
+	public ArrayList<String> selectListId(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectListId");
+	}
+
+	public ArrayList<String> selectListNickname(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectListNickname");
 	}
 	
 	

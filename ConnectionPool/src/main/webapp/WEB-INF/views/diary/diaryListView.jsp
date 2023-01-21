@@ -257,40 +257,57 @@ textarea{
         <!-- start page main wrapper -->
         <div id="main-wrapper">
             <div class="row">
-                <div class="col-lg-5 col-xl-3">
+           	  
+           	   <!-- 검색창  -->
+                <div class="col-lg-5 col-xl-3"> 
                     <div class="card card-white grid-margin">
-                        <form name="search-form">
+                        <form name="search-form" type="submit">
                             <input type="search" class="search"  placeholder="#검색어를 입력하세요" ><button>검색</button>
                         </form>         
-                        </div>
-                    </div>
+                     </div>
+                </div>
+                
+                
                 <div class="col-lg-7 col-xl-6">
+                	<!-- insert창  -->
                     <div class="card card-white grid-margin">
+                        <form id="contentInsert" action="insert.di" enctype="multipart/form-data" method="post">
                         <div class="card-body">
                             <div class="post">
-                                <textarea class="form-control" id="contentInsert" placeholder="내용을 입력해주세요" rows="4"></textarea>
+                                <textarea class="form-control" id="contentInsert" placeholder="내용을 입력해주세요" rows="4"name="content"></textarea>
+                              	
+                               <input type="hidden" name="memberNo" value="${loginMember.memNo }">
+                               
                                 <div class="post-options">
-                                    <a href="#"><i class="fa fa-camera"></i></a>
-                                    <a href="#"><i class="fas fa-video"></i></a>
-                                   
+                                <input type="file" id="upfile" name="upfile"><a href="#"><i class="fa fa-camera"></i></a>
+                                <input type="file" accept="video/*">   <a href="#"><i class="fas fa-video"></i></a>
+                                   	
+                                   	
+                                   	<c:if test="${not empty sessionScope.loginMember }">
                                     <button class="btn btn-outline-primary float-right">등록하기</button>
+                                	</c:if>
                                 </div>
-                            </div>
-                        </div>
+                            </div> <!--"post" 끝  -->
+                        </div>	
+                        </form>
                     </div>
+                </div>
+                    
+                   
+                     <c:forEach items="${list }" var="d">
                     <div class="profile-timeline">
                                 <div class="card card-white grid-margin">
                                     <div class="card-body">
                                         <div class="timeline-item-header">
-                                            <img src="" alt="" />
-                                            <p>작성자<span> 닉네임</span></p>
-                                            <small>3 시간전</small>
+                                            <img src="${changeName }" alt="" />
+                                            <p>${d.memberNo }<span> 닉네임</span></p>
+                                            <small>${d.createDate }</small>
                                         </div>
                                         <div class="timeline-item-post">
-                                            <p>오늘 새벽 수영완료.</p>
+                                            <p>${d.content }</p>
                                             <div class="timeline-options">
-                                                <a href="#"><i class="fa fa-comment"></i> 댓글 (4)</a>
-                                                <a href="#"><i class="fa fa-thumbs-up"></i> 좋아요 (15)</a>
+                                                <a href="#"><i class="fa fa-comment"></i>${r.commentContent }</a>
+                                                <a href="#"><i class="fa fa-thumbs-up"></i> ${d.heart }</a>
                                                 <span class="material-symbols-outlined">lock_open
                                                   
                                                 </span>
@@ -300,39 +317,42 @@ textarea{
                                                     <option value="T">팀공개</option>
                                                     <option value="P">개인공개</option>
                                                 </select>
-                                               
-
-
+                                            </div>
+                                            
+                                            <div class="timeline-comment">
+                                                <div class="timeline-comment-header">
+                                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
+                                                    <p>${d.memberNo } <small>${d.createDate }</small></p>
+                                                </div>
+                                                <p class="timeline-comment-text">${r.comment }</p>
                                             </div>
                                             <div class="timeline-comment">
                                                 <div class="timeline-comment-header">
                                                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-                                                    <p>홍길동 <small>1 시간 전</small></p>
+                                                    <p>${d.memberNo } <small>${d.createDate }</small></p>
                                                 </div>
-                                                <p class="timeline-comment-text">어머 정말 부지런하시네요~! .</p>
+                                                <p class="timeline-comment-text">${r.commentContent}  </p>
                                             </div>
-                                            <div class="timeline-comment">
-                                                <div class="timeline-comment-header">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-                                                    <p>김길동 <small>3 시간 전</small></p>
-                                                </div>
-                                                <p class="timeline-comment-text">저도 새벽수영 완료입니다~!! 오수완!! </p>
-                                            </div>
-                                            <textarea class="form-control" placeholder="댓글을 입력해주새요"></textarea>
+                                            <textarea class="form-control" placeholder="댓글을 입력해주세요" name="content"></textarea>
                                             <div class="post-options">
                                                 <button class="btn btn-outline-primary float-right">등록하기</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                            </div> <!-- "post-options" 끝 -->
+                                        </div> <!-- "timeline-item-post" 끝 -->
+                                    
+                                    </div> <!-- "card-body" 끝-->
                                 </div>
+                         </div>
+                          </c:forEach>
                             
+                         
+                         
                          
                                 <div class="card card-white grid-margin">
                                     <div class="card-body">
                                         <div class="timeline-item-header">
                                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-                                            <p>작성자   <span>닉네임</span></p>
-                                            <small>7 시간 전</small>
+                                            <p>${d.memberNo }  <span>닉네임</span></p>
+                                            <small>${d.createDate }</small>
                                         </div>
                                         <div class="timeline-item-post">
                                             <p>오늘 저녁 수영도 완료!! 오수완~~^^</p>
@@ -345,7 +365,7 @@ textarea{
                                             <div class="timeline-comment">
                                                 <div class="timeline-comment-header">
                                                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-                                                    <p>박길동 <small>1 시간 전</small></p>
+                                                    <p>${d.memberNo } <small>${d.createDate }</small></p>
                                                 </div>
                                                 <p class="timeline-comment-text">저도 곧 수영장 갑니다! </p>
                                             </div>
@@ -357,14 +377,16 @@ textarea{
                                     </div>
                                 </div>
                     </div>
+                   
+                    
+                    
                 </div>
             </div>
             <!-- Row -->
         </div>
         <!-- end page main wrapper -->
        <jsp:include page="../common/footer.jsp" />
-    </div>
-    </div>
+    
 
 
 </body>

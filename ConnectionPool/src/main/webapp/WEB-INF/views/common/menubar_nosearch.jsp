@@ -21,6 +21,11 @@
     <!-- ajax -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     
+    <!-- jQuery 자동완성 라이브러리-->
+	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+	<!-- jQuery 자동완성 스타일시트 -->
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css">
+    
     
     <!-- JavaScript -->
 	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
@@ -183,6 +188,10 @@
         font-family:'Pretendard-Regular';
         font-style: normal;
     }
+    [ingido]:hover{
+    	cursor: pointer;
+    	color : red;
+    }
 
 
  
@@ -233,13 +242,13 @@
                     	<c:otherwise>
                     	 <!-- 로그인 되어있을때 시작 -->
                     	 	<c:if test="${ loginMember.memId eq 'admin' }">
-                    	 		<li class="username" data-toggle="modal" data-target="#myModal">${ loginMember.nickName }님</li>
+                    	 		<li class="username" ingido="${loginMember.memNo}" title="프로필 보기" onclick="showProfile(event)">${ loginMember.nickName }님</li>
 		                    	<li><div><a href="memberList.ad">관리자페이지</a></div></li>
 		                    	<li class="logout"><a href="logout.me">로그아웃</a></li>
 		                    </c:if>
 		                    
 							<c:if test="${ loginMember.memId ne 'admin' }">		                    		                   	 
-			                    <li class="username" ingido="${loginMember.memNo}" onclick="showProfile(event)">${ loginMember.nickName }님</li>
+			                    <li class="username" ingido="${loginMember.memNo}" title="프로필 보기" onclick="showProfile(event)">${ loginMember.nickName }님</li>
 			                    <li><div><a href="myPageInfo.me">마이페이지</a></div></li>
 			                    <li class="logout"><a href="logout.me">로그아웃</a></li>
 			                    <div class="basket-icon">
@@ -249,10 +258,8 @@
 			                    </div>    
 		                     <!-- 로그인 되어있을때 끝 -->
 		                     </c:if>
-		                     
                     	</c:otherwise>
                     </c:choose>
-                     
                 </ul>
             </section>
         </div>
@@ -269,17 +276,22 @@
     		$.ajax({
     			url : 'showProfile.me',
     			data : {memNo:$memNo},
+    			type : "post",
     			success : function(m){
-    				console.log(m);
-    				var gender = m.gender == 'M' ? '남자' : '여자';
-    				var grade = '';
+    				// 로그인한 유저만 회원 프로필을 띄울 수 있음
+    				if(${empty loginMember}){
+    					return;
+    				}
+    					
+    				let gender = m.gender == 'M' ? '남자' : '여자';
+    				let grade = '';
     				switch(m.grade){
     				case 'B' : grade = 'resources/images/beginner.jpg'; break;
     				case 'M' : grade = 'resources/images/middle.jpg'; break;
     				case 'S' : grade = 'resources/images/special.jpg'; break;
     				default : grade = 'resources/images/cntp_flamingo.png'; break;
     				}
-    				var teamName = m.teaName == '' ? '무소속' : m.teamName;
+    				let teamName = m.teamName == null ? '무소속' : m.teamName;
     				
     				var modal = 
     			        `<div class="modal" id="myModal">
@@ -289,7 +301,7 @@
 		    		                    <!-- Modal Header -->
 		    		                    <div class="modal-header">
 		    		                        <h4 class="modal-title" align="center">커넥션플 회원 프로필</h4>
-		    		                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		    		                        <button type="button" class="close" onclick="modalClose(event)";>&times;</button>
 		    		                    </div>
 		    		                
 		    		                    <!-- Modal body -->
@@ -302,7 +314,8 @@
 		    		                                    <p class="card-text">성별 : \${gender}</p>
 		    		                                    <p class="card-text">지역 : \${m.memArea}</p>
 		    		                                    <p class="card-text">팀 : \${teamName}</p>
-		    		                                    &nbsp;<button onclick="ingido(\${m.memNo},1)">👍</button">&nbsp;<button onclick="ingido(\${m.memNo},-1)">👎</button>
+		    		                                    <p class="card-text">인기도 : <span id="ingido">\${m.ingido}</span></p>
+		    		                                    &nbsp;<button onclick="ingido(\${m.memNo},\${m.ingido},1)">👍</button>&nbsp;<button onclick="ingido(\${m.memNo},\${m.ingido},-1)">👎</button>
 		    		                                </div>
 		    		                            </div>
 		    		                        </div>
@@ -324,13 +337,55 @@
     			}
     		})
     	}
-    	
+    	// 회원 프로필 닫기
         function modalClose(event){
             $(event.target).attr('data-dismiss','modal');
             $('#modal').html('');
         }
-    
-    
+    	// 인기도 up & down
+    	// memNo에서는 올리는 회원 번호, 
+    	function ingido(targetNo, ingido, flag){
+    		
+    		if(<c:out value="${loginMember.memNo}" default="none"/> == targetNo){
+    			alert('자신의 인기도는 올릴거나 내릴 수 없습니다.');
+    			return;
+    		}
+    		$.ajax({
+    			url : "ingido.me",
+    			type : "post",
+    			data : {
+    					memNo : <c:out value="${loginMember.memNo}" default="none"/>,
+    					flag : flag,
+    					targetNo : targetNo
+    				   },
+    			success : function(result){
+    				if(result > 0){ // 인기도 변경 성공
+    					switch(flag){
+    						case 1 : alert('인기도 1을 올리셨습니다.'); $('#ingido').text(ingido + flag); break;
+    						case -1 : alert('인기도 1을 내리셨습니다.'); $('#ingido').text(ingido + flag); break;
+    					}
+    				} else{
+    					alert('이미 해당 회원의 인기도를 올리거나 내렸습니다.');
+    				}
+    			},
+    			error : function(){
+    				console.log('ajax 통신 실패');
+    			}
+    		})
+    	}
+    	$(function(){
+    		var cntp =     
+    		`    	         _____  _   _  _____ ______
+    	        /  __ \\| \\ | ||_   _|| ___ \\
+    	        | /  \\/|  \\| |  | |  | |_/ /
+    	        | |    | . \` |  | |  |  __/
+    	        | \\__/\\| |\\  |  | |  | |
+    	         \\____/\\_| \\_/  \\_/  \\_|
+    	    `;
+    		console.log(cntp);
+    	})
+    	
+    	
     </script>
     
     

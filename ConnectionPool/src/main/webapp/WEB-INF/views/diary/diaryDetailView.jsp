@@ -246,51 +246,174 @@ textarea{
 
 </head>
 <body>
-	
-	 <jsp:include page="../common/menubar_nosearch.jsp" />
-	 
-                                <div class="card card-white grid-margin">
-                                    <div class="card-body">
-                                        <div class="timeline-item-header">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-                                            <p>작성자   <span>닉네임</span></p>
-                                            <small>7 시간 전</small>
-                                        </div>
-                                        <div class="timeline-item-post">
-                                            <p>오늘 저녁 수영도 완료!! 오수완~~^^</p>
-                                            <img src="img/post-img01.jpg" alt="" />
-                                            <div class="timeline-options">
-                                                <a href="#"><i class="fa fa-thumbs-up"></i> 좋아요 (22)</a>
-                                                <a href="#"><i class="fa fa-comment"></i> 댓글 (7)</a>
-                                                <a href="#"><i class="fa fa-share"></i> 공유 (9)</a>
-                                            </div>
-                                            <div class="timeline-comment">
-                                                <div class="timeline-comment-header">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-                                                    <p>박길동 <small>1 시간 전</small></p>
-                                                </div>
-                                                <p class="timeline-comment-text">저도 곧 수영장 갑니다! </p>
-                                            </div>
-                                            <textarea class="form-control" placeholder="댓글을 입력해주세요" ></textarea>
-                                            <div class="post-options">
-                                                <button class="btn btn-outline-primary float-right">등록하기</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-	
-	
+
+	<jsp:include page="../common/menubar_nosearch.jsp" />
+
+	<div class="card card-white grid-margin">
+		<div class="card-body">
+			<c:if test="${ loginMember.memberNo eq d.memberNo }">
+				<div align="center">
+					<!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
+					<a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a> 
+					<a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
+				</div>
+			</c:if>
+			
+			 <form action="" method="post" id="postForm">
+            	<input type="hidden" name="bno" value="${d.MemberNo}" />
+            	<input type="hidden" name="filePath" value="${ b.changeName }" />
+            </form>
+			
+			<script>
+            	function postFormSubmit(num){
+					if(num == 1){ // 수정하기 클릭 시
+						$('#postForm').attr('action', 'updateForm.bo').submit();
+					} else{	// 삭제하기 클릭 시
+						$('#postForm').attr('action', 'delete.bo').submit();
+					}
+            	}
+            </script>
+            
+			<br><br>
+			
+			
+			<div class="timeline-item-header">
+				<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
+				<p>
+					${MemberNo } <span>닉네임</span>
+				</p>
+				<small>${createDate }</small>
+			</div>
+			<div class="timeline-item-post">
+				<p>오늘 저녁 수영도 완료!! 오수완~~^^</p>
+				<img src="img/post-img01.jpg" alt="" />
+				<div class="timeline-options">
+					<a href="#"><i class="fa fa-thumbs-up"></i> 좋아요 (22)</a> <a
+						href="#"><i class="fa fa-comment"></i> 댓글 (7)</a> <a href="#"><i
+						class="fa fa-share"></i> 공유 (9)</a>
+				</div>
+				<div class="timeline-comment">
+					<div class="timeline-comment-header">
+						<img src="https://bootdey.com/img/Content/avatar/avatar7.png"
+							alt="" />
+						<p>
+							박길동 <small>1 시간 전</small>
+						</p>
+					</div>
+					<p class="timeline-comment-text">저도 곧 수영장 갑니다!</p>
+				</div>
+				
+			<c:choose>
+				<c:when test="${empty loginMember }">	
+				
+				<textarea class="form-control" >로그인 후 이용 가능합니다.</textarea>
+				<div class="post-options">
+					<button class="btn btn-outline-primary float-right">등록하기</button>
+				</div>
+				</c:when>
+				<c:otherwise>
+					<textarea class="form-control" placeholder="댓글을 입력해주세요"></textarea>
+				<div class="post-options">
+					<button class="btn btn-outline-primary float-right">등록하기</button>
+				</div>
+				</c:otherwise>
+			</c:choose>
+			
+			</div>
+		
+		
+		</div>
+	</div>
+
+
 	<jsp:include page="../common/footer.jsp" />
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	 <script>
+    	
+    	$(function(){
+    		DiaryselectReplyList();
+    	});
+    
+    	function addDiaryReply(){ //댓글 작성용 ajax
+    		
+    		if($('#content').val().trim() != ''){
+    			$.ajax({
+    				url: 'rinsert.di',
+    				data :{
+    					diaryNo : ${d.diaryNo},
+    					commentContent : $('#content').val(),
+    					writer : ${loginMember.memNo}
+    				},
+    				success : function(status){
+    					console.log(status);
+    				
+    					if(status == 'success'){
+    						selectDiaryReplyList();
+    						$('#content').val('');
+    					}
+    				
+    					
+    				},
+    				error: function(){
+    					console.log('실패!!ㅜㅜ');
+    				}
+    				
+    			})
+    		}
+    		else {
+    			alertify.alert('정상적인 댓글을 작성해주세요!!');
+    		}
+    				
+    		}
+    		
+    	
+    
+    	
+    	function selectDiaryReplyList(){
+    		$.ajax({
+    			url: 'rlist.di', //게시글에 달린 댓글만 조회. (현재 게시글의 글번호를 넘겨줌.)
+    			data: {dno : ${d.diaryNo}},
+    			success : function(list){
+    				console.log(list);
+    				
+    				let value='';
+    				for(let i in list){
+    					console.log(list[i].commentContent);
+    					value += '<tr>'
+							   + '<th>' + list[i].writer  + '</th>'
+							   + '<th>' + list[i].commentContent + '</th>'
+							   + '<th>' + list[i].commentDate   + '</th>'
+							   + '<td><button class="btn btn-sm btn-danger" onclick="openReportForm(' + "'board-reply'" + ', this, ' + list[i].commentNo + ');">신고</button></td>'
+							   + '</tr>';
+						
+    				}
+    				
+    				$('#replyArea tbody').html(value);
+					$('#rcount').text(list.length);
+    			},
+    			error : function(){
+    				console.log('댓글 목록 조회 실패!!ㅜㅜ');
+    			}
+    		
+    		})
+    		
+    		
+    	}
+    
+    
+    
+    
+    </script>
+    
+    
+
+
+
+
+
+
+
+
+
 </body>
 </html>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>            
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,7 +87,7 @@
         /* border: 1px solid palevioletred; */
     }
     #name-area {
-        font-size: 25px;
+        font-size: 22px;
     }
     #userName {
         color: rgb(63, 72, 107);
@@ -245,20 +246,28 @@
     <div class="outer">
         <div class="top-bar">
             <div class="inline-block">
-                <div id="name-area" style="cursor: default;"><span id="userName">커풀</span> 님
-                    <br>🤔<span>무소속</span>
+                <div id="name-area" style="cursor: default;"><span id="userName">${sessionScope.loginMember.nickName}</span> 님
+                    <br>
+                    <c:if test="${ sessionScope.loginMember.badgeChangeName == null }">
+                    	노뱃지
+                   	</c:if>
+                   	<img src="${ sessionScope.loginMember.badgeChangeName }" width="30px">
+                   	<c:if test="${ sessionScope.loginMember.teamName == null }">
+                   		무소속	
+                   	</c:if>
+                   		<span>${ sessionScope.loginMember.teamName }</span>
                 </div>
                 <div>
-                    <div id="point-text">포인트&nbsp;<span id="point">180</span></div>
-                    <div id="ingido-text">인기도&nbsp;<span id="ingido">13</span></div>
+                    <div id="point-text">포인트&nbsp;<span id="point">${sessionScope.loginMember.memPoint}</span></div>
+                    <div id="ingido-text">인기도&nbsp;<span id="ingido">${sessionScope.loginMember.ingido}</span></div>
                 </div>
+                
             </div>
             <div>
                 <ul id="top-ul">
                     <li><a  href="myPageInfo.me">회원정보</a></li>
-                    <li><a href="">출석체크</a></li>
+                    <li><a href="myPageAtCheckForm.me">출석체크</a></li>
                     <li><a href="myPageBoard.me">작성글 보기</a></li>
-                    <li><a href="myPageDiary.me">수영일기</a></li>
                     <li><a href="myPageTeam.me">나의팀 보기</a></li>
                     <li><a id="click" href="myPageMoim.me">소모임 보기</a></li>
                     <li><a href="myPagePoint.me">포인트 조회</a></li>
@@ -270,125 +279,49 @@
                 <div id="title-line"><hr></div>
             <div class="info-area" style="margin: auto;">
                 <!-- 없을때-->
-                <div align="center">
-                    <br><br><br> 
-                    <p class="noTitle">소속된 소모임이 없어요</p>
-                    <a href="">소모임 페이지로 이동하기</a>
-                    <br><br><br>
-                </div>
-                
-                <!-- 있을때-->
-                
-
-                <div class="grouptList-area">
-
-                    <!--이게 하나의 게시물-->
-                    <div class="group" align="center">
-        
-                        <div class="thum">
-                            <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                        </div>
-        
-                        <div class="group-info">
-                            <table>
-                                <tr>
-                                    <td width="150">#지역 제주도</td>
-                                    <td width="150">#모집인원 1/10</td>
-                                </tr>
-                                <tr>
-                                    <td>#여자만</td>
-                                    <td>#중수레벨</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"> #2023-01-10 15:00</td>
-                                    <input type="hidden" class="groupNo" name="groupNo" value="그룹넘버">
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-        
-    
-                    <!--이게 하나의 게시물-->
-                    <div class="group" align="center">
-        
-                        <div class="thum">
-                            <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                        </div>
-        
-                        <div class="group-info">
-                            <table>
-                                <tr>
-                                    <td width="150">#지역 제주도</td>
-                                    <td width="150">#모집인원 1/10</td>
-                                </tr>
-                                <tr>
-                                    <td>#여자만</td>
-                                    <td>#중수레벨</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"> #2023-01-10 15:00</td>
-                                    <input type="hidden" class="groupNo" name="groupNo" value="그룹넘버">
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-        
-    
-                    <!--이게 하나의 게시물-->
-                    <div class="group" align="center">
-        
-                        <div class="thum">
-                            <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                        </div>
-        
-                        <div class="group-info">
-                            <table>
-                                <tr>
-                                    <td width="150">#지역 제주도</td>
-                                    <td width="150">#모집인원 1/10</td>
-                                </tr>
-                                <tr>
-                                    <td>#여자만</td>
-                                    <td>#중수레벨</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"> #2023-01-10 15:00</td>
-                                    <input type="hidden" class="groupNo" name="groupNo" value="그룹넘버">
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    
-                     <!--이게 하나의 게시물-->
-                     <div class="group" align="center">
-        
-                        <div class="thum">
-                            <img class="thum" width="290px" src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg">
-                        </div>
-        
-                        <div class="group-info">
-                            <table>
-                                <tr>
-                                    <td width="150">#지역 제주도</td>
-                                    <td width="150">#모집인원 1/10</td>
-                                </tr>
-                                <tr>
-                                    <td>#여자만</td>
-                                    <td>#중수레벨</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"> #2023-01-10 15:00</td>
-                                    <input type="hidden" class="groupNo" name="groupNo" value="그룹넘버">
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-
- 
-                </div>
-                
-            </div>
-    
+            	<!-- 있을때-->
+                <c:choose>
+                	<c:when test="${ empty groupList }">
+		                <div align="center">
+		                    <br><br><br> 
+		                    <p class="noTitle">소속된 소모임이 없어요</p>
+		                    <a href="">소모임 페이지로 이동하기</a>
+		                    <br><br><br><br><br><br>
+		                </div>
+                </c:when>
+                <c:otherwise>
+                	<c:forEach items="${ groupList }" var="g">
+							
+				                <!--이게 하나의 게시물-->
+				                <div class="group" align="center">
+				    
+			                    <div class="thum">
+			                        <img class="thum" height="300px" width="290px" src="${ g.changeName }">
+			                    </div>
+				    
+			                    <div class="group-info">
+			                        <table>
+			                        	<tr>
+			                        		<td>#${ g.powerDuration }</td>
+			                        	</tr>
+			                            <tr>
+			                                <td width="150">#지역 ${ g.korArea }</td>
+			                                <td width="150">#모집인원 ${ g.groupMember }</td>
+			                            </tr>
+			                            <tr>
+			                                <td>#성별 ${ g.gender }</td>
+			                                <td>#레벨 ${ g.level }</td>
+			                            </tr>
+			                            <tr>
+			                                <td colspan="2"> #${ g.startTime }<br> ~ ${ g.endTime }</td>
+			                                <input type="hidden" class="groupNo" name="groupNo" value="${ g.groupNo }">
+			                            </tr>
+			                        </table>
+			                    </div>
+			                </div>
+			       </c:forEach>         
+                </c:otherwise>
+                </c:choose>
             </div>    
         </div>
 
@@ -396,5 +329,19 @@
 
    
 	<jsp:include page="../../common/footer.jsp"/>
+
+	<script>
+		$(function(){
+			
+			// 피드 게시물 클릭하면 해당 피드 게시물의 모임번호와 일치하는 detail페이지로 넘어가야 한다.
+			$('.group').click(function(){
+				
+				location.href = 'groupDetail.mo?groupNo=' + $(this).find('.groupNo').val();
+			})
+			
+		})
+	</script>
+	
+	
 </body>
 </html>

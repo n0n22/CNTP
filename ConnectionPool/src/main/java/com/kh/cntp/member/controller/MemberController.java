@@ -1,10 +1,17 @@
 package com.kh.cntp.member.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.mail.MessagingException;
@@ -14,24 +21,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.google.gson.Gson;
+import com.kh.cntp.member.login.NaverLoginBO;
 import com.kh.cntp.member.model.service.MemberService;
 import com.kh.cntp.member.model.vo.Cert;
 import com.kh.cntp.member.model.vo.Member;
+import com.kh.cntp.member.model.vo.NaverVO;
 
 @Controller
 public class MemberController {
 	// ---화면지정용 나중에 전부 수정 및 로직 구성할 예정
+
+	private NaverLoginBO naverLoginBO;
+	private String apiResult = null;
+	
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+		this.naverLoginBO = naverLoginBO;
+	}
 	
 	@Autowired
 	private MemberService memberService;
@@ -99,8 +122,16 @@ public class MemberController {
 	}
 	
 	// 로그인 페이지
-	@RequestMapping("loginForm.me")
-	public String loginForm() {
+	@RequestMapping(value= "/loginForm.me", method = {RequestMethod.GET, RequestMethod.POST})
+	public String loginForm(Model model, HttpSession session) {
+		
+		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+		/* 인증요청문 확인 */
+		System.out.println("네이버:" + naverAuthUrl);
+		/* 객체 바인딩 */
+		model.addAttribute("urlNaver", naverAuthUrl);
+		
 		return "member/login";
 	}
 	
@@ -134,6 +165,11 @@ public class MemberController {
 					SimpleDateFormat endViewFormat = new SimpleDateFormat("yyyy년MM월dd일"); // 년 월 일 로 표기 안할 시 2023-01-16 KST 00:00:00 로 뜸 
 					session.setAttribute("loginMsg", "정지된 회원입니다. 기한: " + endViewFormat.format(endDate) + "까지");
 					mv.setViewName("member/login");
+				} else {
+					
+					session.setAttribute("loginMember", loginMember);
+					memberService.loginCountReset(member);
+					mv.setViewName("redirect:/");
 				}
 				
 			} else { // 성공시 FAILCNT = 0 으로 업데이트
@@ -167,6 +203,109 @@ public class MemberController {
 		return mv;
 	}
 	
+	// 네이버 로그인 성공시 callback호출 메소드
+	@RequestMapping(value="/callbackNaver.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public String callbackNaver(Model model,
+								@RequestParam String code,
+								@RequestParam String state,
+								HttpSession session) throws Exception {
+		
+		System.out.println("로그인 성공 callbackNaver");
+		OAuth2AccessToken oauthToken;
+        oauthToken = naverLoginBO.getAccessToken(session, code, state);
+        //로그인 사용자 정보를 읽어온다.
+	    apiResult = naverLoginBO.getUserProfile(oauthToken);
+	    
+		JSONParser jsonParser = new JSONParser();
+		JSONObject jsonObj;
+		
+		jsonObj = (JSONObject) jsonParser.parse(apiResult);
+		JSONObject response_obj = (JSONObject) jsonObj.get("response");		
+		String token = oauthToken.getAccessToken();
+		
+		System.out.println(response_obj);
+		// 프로필 조회
+		String memNo = (String)response_obj.get("no");
+		String memId = (String)response_obj.get("id");
+		String email = (String)response_obj.get("email");
+		String name = (String)response_obj.get("name");
+		String mobile = (String)response_obj.get("mobile");
+		String birthday = (String)response_obj.get("birthday");
+		String gender = (String)response_obj.get("gender");
+		String nickname = (String)response_obj.get("nickname");
+		
+		// 세션에 사용자 정보 등록
+		session.setAttribute("signIn", apiResult);
+		
+		NaverVO loginMember = new NaverVO(memNo ,memId, name, mobile, email, gender, nickname, birthday);
+		
+		if(memberService.naverEmailCheck(email) > 0) {
+			System.out.println("1");
+			session.setAttribute("loginMember", memberService.loginNaverMember(email));
+		} else {
+			System.out.println("2");
+			memberService.naverInsert(loginMember);
+			session.setAttribute("loginMember",loginMember);
+		}
+		
+		session.setAttribute("access_token", token);
+		
+        /* 네이버 로그인 성공 페이지 View 호출 */
+		
+		return "redirect:/";
+	}
+	
+	@RequestMapping("remove.do") //token = access_token임
+	public String remove(HttpSession session, HttpServletRequest request, Model model ) {
+		
+		String apiUrl = "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id="+NaverLoginBO.CLIENT_ID+
+		"&client_secret="+NaverLoginBO.CLIENT_SECRET+"&access_token="+((String)session.getAttribute("access_token")).replaceAll("'", "")+"&service_provider=NAVER";
+			
+			try {
+				String res = requestToServer(apiUrl);
+				model.addAttribute("res", res); //결과값 찍어주는용
+			    session.invalidate();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		    return "redirect:/";
+	}
+	
+	private String requestToServer(String apiURL) throws IOException {
+	    return requestToServer(apiURL, null);
+	  }
+	
+	private String requestToServer(String apiURL, String headerStr) throws IOException {
+	    URL url = new URL(apiURL);
+	    HttpURLConnection con = (HttpURLConnection)url.openConnection();
+	    con.setRequestMethod("GET");
+	    System.out.println("header Str: " + headerStr);
+	    if(headerStr != null && !headerStr.equals("") ) {
+	      con.setRequestProperty("Authorization", headerStr);
+	    }
+	    int responseCode = con.getResponseCode();
+	    BufferedReader br;
+	    System.out.println("responseCode="+responseCode);
+	    if(responseCode == 200) { // 정상 호출
+	      br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+	    } else {  // 에러 발생
+	      br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+	    }
+	    String inputLine;
+	    StringBuffer res = new StringBuffer();
+	    while ((inputLine = br.readLine()) != null) {
+	      res.append(inputLine);
+	    }
+	    br.close();
+	    if(responseCode==200) {
+	    	String new_res=res.toString().replaceAll("&#39;", "");
+			 return new_res; 
+	    } else {
+	      return null;
+	    }
+	  }
+	
 	// 로그아웃
 	@RequestMapping("logout.me")
 	public String logoutMember(HttpSession session) {
@@ -199,10 +338,26 @@ public class MemberController {
 		return mv;
 	}
 	
+	// 아이디 중복체크
+	@ResponseBody
+	@RequestMapping("idCheck.me")
+	public String ajaxIdCheck(String checkId) {
+		
+		return memberService.ajaxIdCheck(checkId) > 0 ? "unavailable" : "Available";
+	}
+	
+	// 닉네임 중복체크
+	@ResponseBody
+	@RequestMapping("nickNameCheck.me")
+	public String ajaxNickNameCheck(String checkNickName) {
+		
+		return memberService.ajaxNickNameCheck(checkNickName) > 0 ? "unavailable" : "Available";
+	}
+	
 	// 회원가입 시 메일 인증
 	@ResponseBody
 	@RequestMapping("insertMailRequest.me")
-	public String insertMailRequest(String checkId, String checkEmail, HttpServletRequest request) throws MessagingException {
+	public String ajaxinsertMailRequest(String checkId, String checkEmail, HttpServletRequest request) throws MessagingException {
 		
 		String email = checkId + '@' + checkEmail;
 		String result = "";
@@ -240,14 +395,14 @@ public class MemberController {
 	// 비밀번호 재설정 인증(아이디와 이메일 체크 후 메일 전송)
 	@ResponseBody
 	@RequestMapping("findPwdMailRequest.me")
-	public String findPwdMailRequest(String checkId, String checkEmail, Member member, HttpServletRequest request) throws MessagingException {
+	public String ajaxfindPwdMailRequest(String checkId, String checkEmail, Member member, HttpServletRequest request) throws MessagingException {
 		
 		member.setMemId(checkId);
 		member.setEmail(checkEmail);
 		
 		String result = "";
 		
-		if(memberService.findPwdMailRequest(member) > 0) { // 아이디와 이메일이 같다면
+		if(memberService.ajaxfindPwdMailRequest(member) > 0) { // 아이디와 이메일이 같다면
 			result = "successEmail";
 			sendMail(member.getEmail(),request); // 메일보내기
 		} else {
@@ -259,7 +414,7 @@ public class MemberController {
 	// 메일 인증번호 확인
 	@ResponseBody
 	@RequestMapping("certNum.me")
-	public boolean certNumCheck(String certNum, HttpServletRequest request) {
+	public boolean ajaxcertNumCheck(String certNum, HttpServletRequest request) {
 		
 		// cert builder
 		Cert cert = Cert.builder()
@@ -267,7 +422,7 @@ public class MemberController {
 		.secretNo(certNum).build();
 		
 		// DB에 맞는 정보가 있으면 true 없으면 false 반환 
-		return memberService.certNumCheck(cert);
+		return memberService.ajaxcertNumCheck(cert);
 	}
 	
 	
@@ -305,7 +460,38 @@ public class MemberController {
 		Member m = memberService.showProfile(memNo);
 		return new Gson().toJson(m);
 	}
+	// 인기도 올리는 기능
+	// 1. 중복 체크 2. 인기도 인기도 올리거나 내리기 3. 인기도 기록 테이블에 INSERT 
+	@ResponseBody
+	@RequestMapping(value="ingido.me")
+	public String ingido(String memNo, String flag, String targetNo) {
+		// 인기도 식별 코드 만들기
+		// F + "인기도 누른 회원" + T + "인기도 당한 회원" + U(up)/D(down)
+		String ingido = "F" + memNo + "T" + targetNo;
+		ingido += flag.equals("1") ? "U" : "D";
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("ingido", ingido);
+		map.put("targetNo", targetNo);
+		map.put("flag", flag);
+		// 인기도 중복 검사 & 인기도 변경 & 인기도 기록
+		return String.valueOf(memberService.upOrDownIngido(map));
+	}
 	
-
+	// 지역별 인기도왕
+	@ResponseBody
+	@RequestMapping(value="areaIngidoRank.top", produces="applicaiton/json; charset=UTF-8")
+	public String areaIngidoRank() {
+		ArrayList<Member> list = memberService.areaIngidoRank();
+		return new Gson().toJson(list);
+	}
+	
+	// 전체 인기도 랭킹
+	@ResponseBody
+	@RequestMapping(value="allIngidoRank.top", produces="applicaiton/json; charset=UTF-8")
+	public String allIngidoRank() {
+		ArrayList<Member> list = memberService.allIngidoRank();
+		return new Gson().toJson(list);
+	}
 	
 }

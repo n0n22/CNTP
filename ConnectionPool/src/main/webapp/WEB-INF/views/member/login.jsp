@@ -74,7 +74,7 @@
         border-right: 0.5px;
     }
 
-    .login-area button {
+    #login-btn {
         background-color: RGB(28,154,206);
         color: white;
         width: 250px;
@@ -84,10 +84,31 @@
         font-size: 17px;
         font-family: 'Pretendard-Regular';
     }
-    .login-area button:hover {
+    #login-btn:hover {
         background-color: rgb(29, 172, 233);
         cursor: pointer;
     }
+    
+    #naver-btn{
+    	background-color: RGB(3, 199, 90);
+        color: white;
+        width: 250px;
+        height: 40px;
+        border-radius: 7px;
+        border: none;
+        font-size: 17px;
+        font-family: 'Pretendard-Regular';
+    }
+    
+    #naver-btn:hover{
+   		background-color: RGB(3, 199, 90);
+        cursor: pointer;
+    }
+    
+    #naverImg{
+    	margin-left: -10pxpx;
+    }
+    
     #link-area {
         font-size: 15px;
         margin-top: 20px;
@@ -137,11 +158,12 @@
 		                <div><input class="userInput" type="text" name="memId" required placeholder="아이디"></div>
             		</c:otherwise>
             	</c:choose>
-                <div><input class="userInput" type="password" name="memPwd" placeholder="비밀번호"></div>
+                <div><input class="userInput" type="password" name="memPwd" required placeholder="비밀번호"></div>
                 
                 <div class="checkId"><input type="checkbox" name="checkId">아이디 저장</div>
                 
                 <div><button id="login-btn" type="submit">로그인</button></div>
+                <div><button type="button" id="naver-btn" class="btn" onclick="location.href='${urlNaver}'"><img id="naverImg" src="resources/images/btnG_아이콘사각.png" width="30px" height="30px">네이버 로그인</button></div>
             </form>
             
             <!-- 네이버 로그인도 추가 할 예정-->

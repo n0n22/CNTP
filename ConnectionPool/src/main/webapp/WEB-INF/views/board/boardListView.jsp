@@ -52,7 +52,9 @@
             <h2>게시판</h2>
             <br>
             <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
+            <c:if test="${not empty loginMember }">
             <a class="btn btn-secondary" style="float:right;" href="enrollForm.bo" method="post">글쓰기</a>
+            </c:if>
             <br>
             <br>
             <table id="boardList" class="table table-hover" align="center">
@@ -70,17 +72,26 @@
         <tbody>
         
         	<c:forEach items="${ list }" var="b">
-            <tr>
-                <td class="bno">${b.boardNo }</td>
-                <td>${b.category }</td>
-                <td>${b.title }</td>
-                <td>${b.memberNo }</td>
-                <td>${b.createDate }</td>
-                <td>${b.count }</td>
-             
-                
+        		<c:choose>
+        			<c:when test="${b.status eq 'R'}">
+        				<tr>
+        					<td>${b.boardNo }</td>
+        					<td colspan="5">신고된 게시글입니다.</td>
+        				</tr>
+        			</c:when>
+        			<c:otherwise>        				
+			            <tr class="clickTr">
+			                <td class="bno">${b.boardNo }</td>
+			                <td>${b.category }</td>
+			                <td>${b.title }</td>
+			              	<td>${b.nickName} </td>
+			                <td>${b.createDate }</td>
+			                <td>${b.count }</td>
+			            </tr>        		
+        			</c:otherwise>
+        		</c:choose>
+                           
             </c:forEach>    
-            </tr>
             
             
         </tbody>
@@ -91,7 +102,7 @@
             <script>
             
             	$(function(){
-					$('#boardList>tbody>tr').click(function(){
+					$('#boardList>tbody>.clickTr').click(function(){
 						location.href = 'detail.bo?bno=' + $(this).children('.bno').text();
 					})
             	})
@@ -133,10 +144,10 @@
 
             <br clear="both"><br>
 
-            <form id="searchForm" action="" method="get" align="center">
+            <form id="searchForm" action="SearchNick.bo" method="get" align="center">
                 <div class="select">
                     <select class="custom-select" name="condition">
-                        <option value="memNo">작성자</option>
+                        <option value="nickName">작성자</option>
                         <option value="title">제목</option>
                         <option value="content">내용</option>
                     </select>

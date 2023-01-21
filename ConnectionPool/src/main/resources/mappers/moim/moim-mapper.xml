@@ -14,7 +14,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="TEAM_INTRO" 		property="teamIntro"/>
 		<result column="ORIGIN_NAME" 		property="originName"/>
 		<result column="CHANGE_NAME" 		property="changeName"/>
-		<result column="KOR_AREA" 			property="teamArea"/>
+		<result column="KOR_AREA" 			property="korArea"/>
+		<result column="TEAM_AREA" 			property="teamArea"/>
 		<result column="TEAM_TIME" 			property="teamTime"/>
 		<result column="KEYWORD" 			property="keyword"/>
 		<result column="CREATE_DATE" 		property="createDate"/>
@@ -31,17 +32,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="NICKNAME" 	property="nickname"/>
 		<result column="MEM_NO" 	property="memNo"/>
 		<result column="TEAM_ENROLL_DATE" 	property="teamEnrollDate"/>
+		<result column="GRADE" 	property="grade"/>
 	</resultMap>
 	
 	<resultMap type="group" id="groupResultMap">
 		<result column="GROUP_NO" 			property="groupNo"/>
 		<result column="NICKNAME" 			property="nickname"/>
+		<result column="GRADE" 			property="grade"/>
 		<result column="INGIDO"				property="ingido"/>
 		<result column="MEM_GENDER" 		property="memGender"/>
 		<result column="MEM_NO" 			property="memNo"/>
 		<result column="GROUP_CONTENT" 		property="groupContent"/>
 		<result column="GROUP_TITLE" 		property="groupTitle"/>
-		<result column="KOR_AREA" 		    property="groupArea"/>
+		<result column="KOR_AREA" 		    property="korArea"/>
+		<result column="GROUP_AREA" 		property="groupArea"/>
 		<result column="PLACE" 				property="place"/>
 		<result column="GROUP_MEMBER" 		property="groupMember"/>
 		<result column="GROUP_STATUS" 		property="groupStatus"/>
@@ -52,7 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="LEVEL" 				property="level"/>
 		<result column="GENDER" 			property="gender"/>
 		<result column="CREATE_DATE" 		property="createDate"/>
-		<result column="POWER_DURRATION" 	property="powerDuration"/>
+		<result column="POWER_DURATION" 	property="powerDuration"/>
 	</resultMap>
 	
 	<resultMap type="apply" id="applyResultMap">
@@ -72,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="NICKNAME" 		property="nickname"/>
 		<result column="CHAT_CONTENT" 	property="chatContent"/>
 		<result column="CREATE_DATE" 	property="createDate"/>
+		<result column="GENDER" 	property="gender"/>
 	</resultMap>
 	
 	<resultMap type="resultHistory" id="resultHistoryResultMap">
@@ -80,6 +85,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="LOSING_STREAK" 	property="losingStreak"/>
 		<result column="VICTORY" 		property="victory"/>
 		<result column="DEFEAT" 		property="defeat"/>
+	</resultMap>
+	
+	<resultMap type="member" id="memberResultMap">
+		<result column="MEM_NO"			property="memNo"/>
+		<result column="NICKNAME"		property="nickName"/>
+		<result column="ENROLL_DATE"	property="enrollDate"/>
+		<result column="GRADE"			property="grade"/>
 	</resultMap>
 	
 	<select id="ajaxSelectTeam" resultType="_int" parameterType="string">
@@ -159,6 +171,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  ,ORIGIN_NAME
 			  ,CHANGE_NAME
 			  ,KOR_AREA
+			  ,TEAM_AREA
 			  ,CASE WHEN TEAM_TIME = 'all' THEN '무관'
                     WHEN TEAM_TIME = 'weekday' THEN '평일'
                     ELSE '주말' END "TEAM_TIME"
@@ -190,6 +203,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        ,M.NICKNAME
 		        ,TM.MEM_NO
 		        ,TO_CHAR(TEAM_ENROLL_DATE, 'YYYY-MM-DD') AS "TEAM_ENROLL_DATE"
+		        ,M.GRADE
 		  FROM 
 		       TEAM_MEMBER "TM"
 		  JOIN
@@ -214,6 +228,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ,A.MOIM_NO
 		       ,M.NICKNAME
 		       ,A.MEM_NO
+		       ,M.GENDER
 		       ,A.ACCEPT_YN
 		       ,TO_CHAR(APPLY_DATE, 'YYYY-MM-DD') AS "APPLY_DATE"
 		       ,TO_CHAR(ACCEPT_DATE, 'YYYY-MM-DD') AS "ACCEPT_DATE"
@@ -249,10 +264,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       T.STATUS = 'Y'
 	</select>
 	
-	<select id="ajaxSelectApply" parameterType="_int" resultMap="applyResultMap">
+	<select id="ajaxSelectApply" parameterType="apply" resultMap="applyResultMap">
 		SELECT
 			    APPLY_NO
 			   ,MOIM_NO
+			   ,MEM_NO
 			   ,ACCEPT_YN
 			   ,APPLY_DATE
 			   ,ACCEPT_DATE
@@ -261,7 +277,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE
 		       MEM_NO = #{ memNo }
            AND
-               MOIM_NO LIKE 'T%'
+               MOIM_NO = #{moimNo}
 	</select>
 
 	<update id="updateTeam" parameterType="team">
@@ -271,7 +287,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		      ,TEAM_INTRO = #{ teamIntro }
 		      ,ORIGIN_NAME = #{ originName }
 		      ,CHANGE_NAME = #{ changeName }
+		      <if test='teamArea != null'>
 		      ,TEAM_AREA = #{ teamArea }
+		      </if>
 		      ,TEAM_TIME = #{ teamTime }
 		      ,KEYWORD = #{ keyword }
 		      ,BADGE_ORIGIN_NAME = #{ badgeOriginName }
@@ -314,11 +332,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       MEM_NO = #{ memNo }
 	</delete>
 	
-	<delete id="deleteApply" parameterType="_int">
+	<delete id="deleteApply" parameterType="apply">
 		DELETE
 			   APPLY
 		 WHERE
 		       MEM_NO = #{ memNo }
+		   AND
+		       MOIM_NO = #{ moimNo }
 	</delete>
 	
 	<insert id="insertApply">
@@ -336,7 +356,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       )
 	</insert>
 	
-	<update id="updateApply" parameterType="_int">
+	<update id="updateApply" parameterType="apply">
 		UPDATE 
 		       APPLY
 		   SET
@@ -344,15 +364,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		      ,ACCEPT_DATE = SYSDATE
 		 WHERE
 		       APPLY_NO = #{ applyNo }
+		  AND
+		       MOIM_NO = #{moimNo}
 	</update>
 	
-	<insert id="insertTeamMember">
+	<insert id="insertTeamMember" parameterType="teamMember">
 		INSERT
 		  INTO
 		        TEAM_MEMBER
 		VALUES
 		       (
-		        #{ moimNo }
+		        #{teamNo }
 		       ,'M'
 		       ,#{ memNo }
 		       ,SYSDATE
@@ -477,7 +499,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       ,C.MOIM_NO
 		       ,C.MEM_NO
 		       ,C.CHAT_CONTENT
-		       ,TO_CHAR(C.CREATE_DATE, 'YY/MM/DD HH24:MI') "CREATE_DATE"
+		       ,TO_CHAR(C.CREATE_DATE, 'MM/DD HH24:MI') "CREATE_DATE"
 		       ,M.NICKNAME
 		  FROM
 		       CHATTING "C"
@@ -523,11 +545,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT 
 		        G.GROUP_NO
 		       ,M.NICKNAME
+		       ,CASE WHEN M.GRADE = 'B' THEN '초급'
+		             WHEN M.GRADE = 'M' THEN '중급'
+		             WHEN M.GRADE = 'S' THEN '고급' END "GRADE"
 		       ,M.INGIDO
 		       ,CASE WHEN M.GENDER = 'F' THEN '여성'
 		             ELSE '남자' END "MEM_GENDER"
 		       ,G.MEM_NO
 		       ,G.GROUP_CONTENT
+		       ,G.GROUP_AREA
 		       ,AR.KOR_AREA
 		       ,G.PLACE
 		       ,G.ORIGIN_NAME
@@ -541,7 +567,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		             WHEN "LEVEL" = 'B' THEN '초급'
 		             WHEN "LEVEL" = 'M' THEN '중급'
 		             ELSE '고급' END "LEVEL"
-		       ,CASE WHEN TO_CHAR(G.POWER_DURATION, 'YYYYMMDD') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDD')]]> THEN '파워'
+		       ,CASE WHEN TO_CHAR(G.POWER_DURATION, 'YYYYMMDD') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDD')]]> THEN TO_CHAR(G.POWER_DURATION, 'YYYY-MM-DD')
 		             ELSE '일반' END "POWER_DURATION"
 		       ,TO_CHAR(G.CREATE_DATE, 'YYYY/MM/DD') "CREATE_DATE"
 		       ,TO_CHAR(G.START_TIME, 'YYYY/MM/DD hh24:mi:ss') "START_TIME"
@@ -554,7 +580,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		                                          MOIM_NO = #{ groupNo }
 		                                      AND
 		                                          ACCEPT_YN = 'Y'
-		                                    )]]> THEN '모집마감'
+		                                    )]]> THEN '모집마감'||'('||G.GROUP_MEMBER||')'
 		        ELSE '('||((SELECT
 		                          COUNT(*)
 		                     FROM
@@ -588,7 +614,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  AND 
 		      GENDER = #{ gender }
 		</if>
-		<if test='level != "A"'>
+		<if test='level != "E"'>
 		  AND
 		      "LEVEL" = #{ level }
 		</if>
@@ -603,8 +629,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		                                      AND
 		                                          ACCEPT_YN = 'Y'
 		                                    )
+		  AND
+		      TO_CHAR(START_TIME, 'YYYYMMDDHH24MISS') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')]]>
 		</if>
-		       
 	</select>
 	
 	<select id="selectGroupList" parameterType="group" resultMap="groupResultMap">
@@ -612,6 +639,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		        G.GROUP_NO
 		       ,M.NICKNAME
 		       ,G.MEM_NO
+		       ,G.GROUP_AREA
 		       ,A.KOR_AREA
 		       ,G.CHANGE_NAME
 		       ,G.GROUP_TITLE
@@ -624,9 +652,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		             ELSE '고급' END "LEVEL"
 		       ,CASE WHEN TO_CHAR(G.POWER_DURATION, 'YYYYMMDD') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDD')]]> THEN '파워'
 		             ELSE '일반' END "POWER_DURATION"
-		       ,TO_CHAR(G.CREATE_DATE, 'YYYY/MM/DD') "CREATE_DATE"
-		       ,TO_CHAR(G.START_TIME, 'YYYY/MM/DD hh24:mi:ss') "START_TIME"
-		       ,TO_CHAR(G.END_TIME, 'YYYY/MM/DD hh24:mi:ss') "END_TIME"
+		       ,TO_CHAR(G.START_TIME, 'YYYY/MM/DD hh24:mi') "START_TIME"
+		       ,TO_CHAR(G.END_TIME, 'YYYY/MM/DD hh24:mi') "END_TIME"
 		       ,CASE WHEN GROUP_MEMBER - 1 <![CDATA[<= (SELECT
 		                                          COUNT(*)
 		                                     FROM
@@ -675,10 +702,127 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		                                      AND
 		                                          ACCEPT_YN = 'Y'
 		                                    )
+		  AND
+		      TO_CHAR(START_TIME, 'YYYYMMDDHH24MISS') <![CDATA[>= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')]]>
 		</if>
 		 ORDER
-		    BY G.POWER_DURATION DESC, CREATE_DATE DESC
+		    BY G.POWER_DURATION, G.CREATE_DATE DESC
 		       
 	</select>
+	
+	<insert id="insertOneGroup" parameterType="group">
+		INSERT
+		  INTO
+		       "GROUP"
+		VALUES (
+		        'G'||SEQ_GNO.NEXTVAL
+		       ,#{ memNo }
+		       ,#{ groupContent }
+		       ,#{ groupArea }
+		       ,#{ place }
+		       ,#{ groupMember}
+		       ,#{ originName }
+		       ,#{ changeName }
+		       ,#{ level }
+		       ,#{ gender }
+		       ,SYSDATE
+		       <if test="powerDuration != null">
+		       ,SYSDATE + 7
+		       </if>
+		       <if test="powerDuration == null">
+		       ,NULL
+		       </if>
+		       ,#{ groupTitle }
+		       ,TO_DATE(#{ startTime }, 'YYYY-MM-DD HH24:MI')
+		       ,TO_DATE(#{ endTime }, 'YYYY-MM-DD HH24:MI')
+		       ,'Y'
+		       )
+	</insert>
+	
+	<update id="updateGroup" parameterType="group">
+		UPDATE
+		       "GROUP"
+		   SET
+		        GROUP_CONTENT = #{groupContent}
+		       ,GROUP_AREA = #{ groupArea }
+		       ,PLACE = #{ place }
+		       ,GROUP_MEMBER = #{ groupMember }
+		       ,ORIGIN_NAME = #{ originName }
+		       ,CHANGE_NAME = #{ changeName}
+		       ,"LEVEL" = #{ level }
+		       ,GENDER = #{ gender }
+		       ,GROUP_TITLE = #{ groupTitle }
+		       ,START_TIME = TO_DATE(#{ startTime }, 'YYYY-MM-DD HH24:MI')
+		       ,END_TIME = TO_DATE(#{ endTime }, 'YYYY-MM-DD HH24:MI')
+			  <if test="powerDuration != null">
+	      		,POWER_DURATION = SYSDATE + 7
+		      </if>
+		 WHERE
+		       GROUP_NO = #{ groupNo }
+	</update>
+	
+	
+	
+	<select id="selectGroupApplyList" resultMap="applyResultMap">
+		SELECT
+		        APPLY_NO
+		       ,A.MOIM_NO
+		       ,M.MEM_NO
+		       ,ACCEPT_YN
+		       ,APPLY_DATE
+		       ,ACCEPT_DATE
+		       ,M.NICKNAME
+		 FROM
+		      APPLY "A"
+		 JOIN
+		      MEMBER "M" ON(M.MEM_NO = A.MEM_NO)
+		 JOIN
+		      "GROUP" "G" ON(G.GROUP_NO = A.MOIM_NO)
+		WHERE
+		      MOIM_NO = #{moimNo}
+		 AND
+		      G.GROUP_STATUS = 'Y'
+		 AND
+		       ACCEPT_YN = 'N'
+	</select>
+	
+	<update id="deleteGroup">
+		UPDATE
+		       "GROUP"
+		   SET
+		       GROUP_STATUS = 'N'
+		 WHERE
+		       GROUP_NO = #{groupNo}
+	
+	</update>
+	
+	<select id="selectAcceptMember" parameterType="string" resultMap="memberResultMap">
+		(SELECT
+		        MB.MEM_NO
+		       ,MB.NICKNAME
+		       ,TO_CHAR(A.ACCEPT_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+		       ,MB.GRADE
+		  FROM
+		       MEMBER "MB"
+		  JOIN
+		       APPLY "A" ON(MB.MEM_NO = A.MEM_NO)
+		 WHERE
+		       A.ACCEPT_YN = 'Y'
+		   AND 
+		       A.MOIM_NO = #{groupNo})
+		UNION
+		(SELECT
+		        M.MEM_NO
+		       ,M.NICKNAME
+		       ,TO_CHAR(G.CREATE_DATE, 'YYYY-MM-DD') "ENROLL_DATE"
+		       ,M.GRADE
+		  FROM
+		       MEMBER "M"
+		  JOIN
+		       "GROUP" "G" ON(G.MEM_NO = M.MEM_NO)
+		 WHERE
+		       G.GROUP_NO = #{groupNo})
+	</select>
+	
 	
 </mapper>

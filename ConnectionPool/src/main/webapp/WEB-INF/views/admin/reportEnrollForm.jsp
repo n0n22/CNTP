@@ -31,13 +31,13 @@
 		</div>
 		<div class="target-area">
 			<p>
-				작성자 : ${ report.memNickName }
+				<b>작성자</b> : ${ report.memNickName }
 				<br>
-				글내용 : ${ report.content }
+				<b>글내용</b> : ${ report.content }
 			</p>
 		</div>
 		
-		<form action="reportInsert.ad" method="post">
+		<form action="reportInsert" method="post">
 
 			<input type="hidden" value="${ report.reportBoard }" name="reportBoard" id="reportBoard">
 			<input type="hidden" value="${ report.boardNo }" name="boardNo" id="boardNo">

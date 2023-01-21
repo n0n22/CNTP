@@ -62,11 +62,9 @@ element.style {
 
 
 	<div>
-		<form id="updateForm" method="post" action="update.di"
-			enctype="multipart/form-data">
+		<form id="updateForm" method="post" action="update.di" enctype="multipart/form-data">
 			<link
-				href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-				rel="stylesheet" />
+				href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 			<div class="card card-white grid-margin">
 				<div class="card-body">
 					<div class="post">

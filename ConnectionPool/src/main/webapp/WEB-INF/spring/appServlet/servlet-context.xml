@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -22,6 +24,96 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.kh.cntp" />
+	
+	<beans:bean id="naverLoginBO" class="com.kh.cntp.member.login.NaverLoginBO" />
+	
+	<!-- 스케줄러 -->
+	<task:scheduler id="CertScheduler" pool-size="10" />
+	<task:annotation-driven scheduler="CertScheduler" />
+	
+	<!-- Interceptor -->
+	<interceptors>
+		<interceptor>
+		<!--
+			 회원 관련 페이지
+			<mapping path="/memberList.ad" />
+			<mapping path="/allMemberList.ad" />
+			신고 관련 페이지
+			<mapping path="/reportList.ad" />
+			<mapping path="/reportDetail.ad" />
+			<mapping path="/reportInvalid.ad" />
+			<mapping path="/reportConfirm.ad" />
+			<mapping path="/penaltyList.ad" />
+			<mapping path="/penaltyInsert.ad" />
+			배너 관련 페이지
+			<mapping path="/bannerList.ad" />
+			<mapping path="/bannerEnrollForm.ad" />
+			<mapping path="/bannerInsert.ad" />
+			<mapping path="/bannerUpdate.ad" />
+			공지 관련 페이지
+			<mapping path="/noticeEnrollForm.ad" />
+			<mapping path="/noticeUpdateForm.ad" />
+			<mapping path="/noticeInsert.ad" />
+			<mapping path="/noticeUpdate.ad" />
+			<mapping path="/noticeDelete.ad" />
+		 -->
+		 	<!-- *로 모든 매핑값을 받을 수 있음 -->
+		 	<mapping path="/*.ad" />
+		 	<mapping path="/*.ad/*" />
+			<beans:bean class="com.kh.cntp.common.interceptor.AdminInterceptor" id="adminInterceptor"></beans:bean>
+		</interceptor>
+		<interceptor>
+			<!-- 팀 관련 -->
+			<mapping path="/teamEnrollForm.mo"/>
+			<mapping path="/insertTeam.mo"/>
+			<mapping path="/teamUpdateForm.mo"/>
+			<mapping path="/updateTeam.mo"/>
+			<mapping path="/teamMemberUpdateForm.mo"/>
+			<mapping path="/teamMemberUpdate.mo"/>
+			<mapping path="/insertTeamMember.mo"/>
+			<mapping path="/deleteTeamMember.mo"/>
+			<mapping path="/badgeShop.mo"/>
+			<mapping path="/updateBadge.mo"/>
+			<!-- 채팅 관련 -->
+			<mapping path="/chattingRoom.mo"/>
+			<mapping path="/ajaxSelectChatList.mo"/>
+			<mapping path="/insertChat.mo"/>
+			<mapping path="/deleteChat.mo"/>
+			<!-- 소그룹 관련 -->
+			<mapping path="/groupEnrollForm.mo"/>
+			<mapping path="/insertGroup.mo"/>
+			<mapping path="/groupUpdateForm.mo"/>
+			<mapping path="/updateGroup.mo"/>
+			<mapping path="/deleteGroup.mo"/>
+			<mapping path="/insertApply.mo"/>
+			<mapping path="/selectGroupApply.mo"/>
+			<mapping path="/updateApply.mo"/>
+			<mapping path="/deleteApply.mo"/>
+			
+			<!-- 신고 관련 -->
+			<mapping path="/reportForm"></mapping>
+			<mapping path="/reportInsert"></mapping>
+			
+			<!-- 회원 관련 -->
+			<mapping path="/logout.me"></mapping>
+			
+			<!-- 회원 관련 (마이페이지) -->
+			<mapping path="/myPageInfo.me"></mapping>
+			<mapping path="/myPageUpdate.me"></mapping>
+			<mapping path="/myPageDeleteForm.me"></mapping>
+			<mapping path="/myPageDelete.me"></mapping>
+			<mapping path="/myPagePoint.me"></mapping>
+			<mapping path="/myPageBoard.me"></mapping>
+			<mapping path="/myPageMoim.me"></mapping>
+			<mapping path="/myPageTeam.me"></mapping>
+			<mapping path="/myPageAtCheckForm.me"></mapping>
+			<mapping path="/myPageAtCheck.me"></mapping>
+			
+						
+			<beans:bean class="com.kh.cntp.common.interceptor.LoginInterceptor" id="loginInterceptor"></beans:bean>
+		</interceptor>
+	</interceptors>
+	
 	
 	
 	

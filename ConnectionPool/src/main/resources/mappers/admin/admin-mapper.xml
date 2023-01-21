@@ -46,15 +46,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<!-- 배너 ResultMap -->
-	<resultMap id="BannerResultSet" type="banner">
+	<resultMap id="bannerResultSet" type="banner">
 		<result property="bannerNo" column="BANNER_NO" />
 		<result property="memNo" column="MEM_NO" />
 		<result property="createDate" column="CREATE_DATE" />
-		<result property="OriginName" column="ORIGIN_NAME" />
+		<result property="originName" column="ORIGIN_NAME" />
 		<result property="changeName" column="CHANGE_NAME" />
 		<result property="status" column="STATUS" />
 		<result property="writer" column="NICKNAME" />
 	</resultMap>
+	
+	<!-- 팀 멤버 ResultMap -->
+	<resultMap type="teamMember" id="teamMemberResultSet">
+		<result column="TEAM_NO" 	property="teamNo"/>
+		<result column="TEAM_GRADE" property="teamGrade"/>
+		<result column="NICKNAME" 	property="nickname"/>
+		<result column="MEM_NO" 	property="memNo"/>
+		<result column="TEAM_ENROLL_DATE" 	property="teamEnrollDate"/>
+	</resultMap>
+
+
 
 
 <!-- 
@@ -230,16 +241,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ===============================
 -->	
 
+<!-- 
+
+* 신고 관련 테이블 연결을 위해 VIEW를 만들었음
+
+SELECT
+       R.REPORT_NO
+       ,DECODE(R.REPORT_BOARD, 'board', '자유게시판', 'board_reply', '자유게시판 댓글') "REPORT_BOARD"
+       ,R.BOARD_NO      
+       ,R.REPORTER
+       ,R.REPORT_REASON
+       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
+       ,R.REPORT_RESULT
+       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE" 
+       ,DECODE(REPORT_BOARD, 'board', B.MEM_NO, 'board_reply', C.WRITER) "MEM_NO"
+       ,DECODE(REPORT_BOARD, 'board', M1.MEM_ID, 'board_reply', M2.MEM_ID) "MEM_ID"
+       ,DECODE(REPORT_BOARD, 'board', B.CONTENT, 'board_reply', C.COMMENT_CONTENT) "CONTENT"
+       ,RM.MEM_ID "REPORTER_ID" 
+       ,RM.MEM_STATUS
+  FROM
+       REPORT "R"
+  JOIN
+       BOARD "B" ON (R.BOARD_NO = B.BOARD_NO)
+  JOIN
+       BOARD_REPLY "C" ON (R.BOARD_NO = C.COMMENT_NO)
+  JOIN
+       MEMBER "M1" ON (B.MEM_NO = M1.MEM_NO)
+  JOIN
+       MEMBER "M2" ON (C.WRITER = M2.MEM_NO)
+  JOIN
+       MEMBER "RM" ON (R.REPORTER = RM.MEM_NO)
+
+ -->
+
+
+
+
 	<!-- 신고 목록 개수 조회 -->
 	<select id="selectReportListCount" parameterType="string" resultType="_int">
 		SELECT
 		       COUNT(*)
 		  FROM
-		       REPORT
+		       VW_REPORT_DT
 		 WHERE
-		       REPORT_RESULT 
-		<if test="result == 'yet'">
-			   is null			 
+		       REPORT_RESULT
+        <if test="result == 'yet'">
+			   is null
 		</if>
 		<if test="result == 'end'">
 			   is not null
@@ -250,63 +297,55 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 신고 목록 조회 -->
 	<select id="selectReportList" parameterType="string" resultMap="reportResultSet">
 		SELECT
-		       R.REPORT_NO
-		       ,B.MEM_NO
-		       ,B.MEM_ID
-		       ,R.BOARD_NO
-		       ,R.REPORT_BOARD
-		       ,R.REPORT_REASON
-		       ,R.REPORTER
-		       ,M.MEM_ID "REPORTER_ID"
-		       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
-		       ,R.REPORT_RESULT
-		       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE"
-		  FROM
-		       REPORT "R"
-		  JOIN
-		       (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
-		          FROM BOARD
-		          JOIN MEMBER USING(MEM_NO)) "B" ON (B.BOARD_NO = R.BOARD_NO)
-		  JOIN
-		       MEMBER "M" ON(M.MEM_NO = R.REPORTER)
-		 WHERE
-		       REPORT_RESULT
-		<if test="result == 'yet'">
-			   is null			 
-		</if>
-		<if test="result == 'end'">
-			   is not null
-		</if>
-		 ORDER
+               REPORT_NO
+               ,MEM_NO
+               ,MEM_ID
+               ,BOARD_NO
+               ,REPORT_BOARD
+               ,REPORT_REASON
+               ,REPORTER
+               ,REPORTER_ID
+               ,REPORT_DATE
+               ,REPORT_RESULT
+               ,COMPLETION_DATE
+          FROM
+               VW_REPORT_DT
+         WHERE
+               REPORT_RESULT
+	        <if test="result == 'yet'">
+				   is null			 
+			</if>
+			<if test="result == 'end'">
+				   is not null
+			</if>
+         ORDER
             BY
                REPORT_NO ASC
 	</select>
 	
 	<!-- 신고 상세 조회 -->
-	<select id="selectReport" parameterType="_int" resultMap="reportResultSet">
-		SELECT 
-		       R.REPORT_NO
-		       ,R.REPORT_BOARD
-		       ,R.BOARD_NO      
-		       ,R.REPORTER
-		       ,R.REPORT_REASON
-		       ,TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') "REPORT_DATE"
-		       ,R.REPORT_RESULT
-		       ,TO_CHAR(R.COMPLETION_DATE, 'YYYY-MM-DD') "COMPLETION_DATE" 
-		       ,B.MEM_NO
-		       ,B.MEM_ID
-		       ,B.CONTENT
-		       ,M.MEM_ID "REPORTER_ID" 
+	<select id="selectReport" parameterType="report" resultMap="reportResultSet">
+		SELECT
+		       *
 		  FROM
-		       REPORT "R"
-		  JOIN
-		       (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
-		          FROM BOARD
-		          JOIN MEMBER USING(MEM_NO)) "B" ON (B.BOARD_NO = R.BOARD_NO)
-		  JOIN
-		       MEMBER "M" ON(M.MEM_NO = R.REPORTER)
+		       VW_REPORT_DT
 		 WHERE
-		       REPORT_NO = #{rno}
+		       REPORT_NO = #{reportNo}
+	</select>
+	
+	
+	<!-- 신고 횟수 조회 -->
+	<select id="selectReportCount" parameterType="report" resultType="_int">
+		SELECT 
+		       COUNT(*)
+		  FROM 
+		       REPORT
+		 WHERE
+		       BOARD_NO = #{boardNo}
+		   AND
+		       REPORT_BOARD = #{reportBoard}
+		   AND
+		       REPORTER = #{reporter}
 	</select>
 
 
@@ -340,11 +379,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 신고당한 게시글 상태 업데이트 -->
 	<update id="updateBoardStatus" parameterType="_int">
 		UPDATE
+		<if test="reportBoard == 'board'">
 		       BOARD
 		   SET
 		       STATUS = 'R'
 		 WHERE
-		       BOARD_NO = #{boardNo}
+		       BOARD_NO = #{boardNo}     
+		</if>
+		<if test="reportBoard == 'board_reply'">		
+		       BOARD_REPLY
+		   SET
+		       STATUS = 'R'
+		 WHERE
+		       COMMENT_NO = #{boardNo}
+		</if>
 	</update>
 	
 	
@@ -360,13 +408,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- 신고 무효 - 신고당한 게시글 상태 되돌리기 -->
-	<update id="reUpdateBoardStatus">
+	<update id="reUpdateBoardStatus" parameterType="report">
 		UPDATE
+		<if test="reportBoard == 'board'">
 		       BOARD
 		   SET
 		       STATUS = 'Y'
 		 WHERE
-		       BOARD_NO = #{boardNo}
+		       BOARD_NO = #{boardNo}     
+		</if>
+		<if test="reportBoard == 'board_reply'">		
+		       BOARD_REPLY
+		   SET
+		       STATUS = 'Y'
+		 WHERE
+		       COMMENT_NO = #{boardNo}
+		</if>
 	</update>
 	
 	<!-- 신고글 확정 처리  -->
@@ -382,77 +439,70 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 패널티 대상 목록 개수 조회 -->
 	<select id="selectPenaltyListCount" resultType="_int">
-		SELECT
+ 		SELECT
 		       COUNT(*)
 		  FROM
 		       (
-		SELECT
-		       A.MEM_NO,
-		       A.MEM_ID,
-		       COUNT,
-		       PENALTY,
-		       COMPLETION_DATE
-		  FROM
-		       (
-		               SELECT MEM_NO
-		                       ,MEM_ID
-		                       ,COUNT(*) "COUNT",
-		                       CASE WHEN COUNT(*) >= 10 THEN '탈퇴'
-		                            WHEN COUNT(*) >= 5  THEN '정지'
-		                       END "PENALTY"
-		                       ,TO_CHAR(MAX(COMPLETION_DATE), 'YYYY-MM-DD') "COMPLETION_DATE"
-		                FROM REPORT "R"
-		                JOIN 
-		                   (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
-		                      FROM BOARD
-		                      JOIN MEMBER USING(MEM_NO)  
-		                    ) "B" ON (B.BOARD_NO = R.BOARD_NO)
-		                WHERE REPORT_RESULT = 'O'
-		                GROUP BY MEM_NO, MEM_ID
-		                HAVING COUNT(*) >= 5
-		                ) "A"
-		         JOIN
-		              PENALTY "P" ON (A.MEM_NO = P.MEM_NO)
-		         WHERE
-		               <![CDATA[END_DATE < SYSDATE]]>
+		 		SELECT 
+				       MEM_NO
+				       ,MEM_ID
+				       ,COUNT(*) "COUNT",
+				       CASE WHEN COUNT(*) >= 10 THEN '탈퇴'
+				            WHEN COUNT(*) >= 5  THEN '정지'
+				       END "PENALTY"
+				       ,MAX(COMPLETION_DATE) "COMPLETION_DATE"
+				  FROM 
+				       (
+				       SELECT 
+				              MEM_NO
+				              ,MEM_ID
+				              ,COMPLETION_DATE
+				         FROM 
+				               VW_REPORT_DT
+				         WHERE 
+				               MEM_STATUS != 'K'
+				           AND 
+				               REPORT_RESULT = 'O'
+				       )
+				  JOIN PENALTY "P" USING(MEM_NO)
+				 WHERE <![CDATA[END_DATE < SYSDATE]]>    
+			     GROUP BY MEM_NO, MEM_ID
+			    HAVING COUNT(*) >= 5                     
 		       )
 	</select>
 	
 	<!-- 패널티 대상 목록 조회 -->
 	<select id="selectPenaltyList" resultMap="reportResultSet">
-		SELECT
-		       A.MEM_NO,
-		       A.MEM_ID,
-		       COUNT,
-		       PENALTY,
-		       COMPLETION_DATE
-		  FROM
+		SELECT 
+		       MEM_NO
+		       ,MEM_ID
+		       ,COUNT(*) "COUNT",
+		       CASE WHEN COUNT(*) >= 10 THEN '탈퇴'
+		            WHEN COUNT(*) >= 5  THEN '정지'
+		       END "PENALTY"
+		       ,MAX(COMPLETION_DATE) "COMPLETION_DATE"
+		  FROM 
 		       (
-		       SELECT MEM_NO
-		               ,MEM_ID
-		               ,COUNT(*) "COUNT",
-		               CASE WHEN COUNT(*) >= 10 THEN '탈퇴'
-		                    WHEN COUNT(*) >= 5  THEN '정지'
-		               END "PENALTY"
-		               ,TO_CHAR(MAX(COMPLETION_DATE), 'YYYY-MM-DD') "COMPLETION_DATE"
-		        FROM REPORT "R"
-		        JOIN 
-		           (SELECT MEM_ID, MEM_NO, NICKNAME, BOARD_NO, TITLE, CONTENT
-		              FROM BOARD
-		              JOIN MEMBER USING(MEM_NO)  
-		            ) "B" ON (B.BOARD_NO = R.BOARD_NO)
-		        WHERE REPORT_RESULT = 'O'
-		        GROUP BY MEM_NO, MEM_ID
-		        HAVING COUNT(*) >= 5
-		        ) "A"
-		 JOIN
-		      PENALTY "P" ON (A.MEM_NO = P.MEM_NO)
-		 WHERE
-		       <![CDATA[END_DATE < SYSDATE]]>
+		       SELECT 
+		              MEM_NO
+		              ,MEM_ID
+		              ,COMPLETION_DATE
+		         FROM 
+		               VW_REPORT_DT
+		         WHERE 
+		               MEM_STATUS != 'K'
+		           AND 
+		               REPORT_RESULT = 'O'
+		       )
+		  JOIN PENALTY "P" USING(MEM_NO)
+		 WHERE <![CDATA[END_DATE < SYSDATE]]>    
+	     GROUP BY MEM_NO, MEM_ID
+	    HAVING COUNT(*) >= 5                     
 	</select>
 	
 	
 	<!-- 정지 처리 -->
+<!-- 
 	<insert id="stopMember" parameterType="java.util.ArrayList">
 		INSERT ALL 
 		<foreach collection="list" item="item" index="index">   
@@ -470,8 +520,190 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</foreach>
 		SELECT * FROM DUAL
 	</insert>
+ -->	
+	<!-- 정지처리 -->
+	<update id="stopMember" parameterType="_int">
+		merge into penalty
+		using dual
+		on 
+		(
+				(SELECT
+				       COUNT(*)
+				  FROM 
+				       PENALTY
+				 WHERE
+				       MEM_NO = #{memNo}) = 1
+		)
+		when matched then
+				UPDATE
+				   SET
+				       END_DATE = SYSDATE + 7
+				 WHERE 
+				       MEM_NO = #{memNo}
+		when not matched then
+				INSERT (mem_no, end_date)
+			    VALUES
+			    	   (
+			           #{memNo}
+			           ,SYSDATE + 7
+			           )
+	</update>
+ <!-- 
+ 	* MERGE 구문으로 한꺼번에 처리
+ 	
+	정치 저리된 적 있는 지 조회 
+	<select id="selectStopPenalty" parameterType="_int" resultType="_int">
+		SELECT
+		       COUNT(*)
+		  FROM 
+		       PENALTY
+		 WHERE
+		       MEM_NO = #{memNo}
+	</select>
+	
+	정지 날짜 업데이트
+	<update id="updateStopPenalty" parameterType="_int">
+		UPDATE
+		       PENALTY
+		   SET
+		       END_DATE = SYSDATE + 7
+		 WHERE 
+		       MEM_NO = #{memNo}
+	</update>
+	
+	정지 날짜 인서트 
+	<insert id="insertStopPenalty" parameterType="_int">
+		INSERT
+		  INTO
+		       PENALTY
+	    VALUES
+	    	   (
+	           #{memNo}
+	           ,SYSDATE + 7
+	           )
+	</insert>
+ -->
+	 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+	<!-- 팀 멤버정보 조회하기 -->
+<!-- 
+	<select id="selectTeamMem" parameterType="_int" resultMap="teamMemberResultSet">
+		SELECT
+		        TEAM_NO
+		        ,TEAM_GRADE
+		        ,MEM_NO
+		        ,TEAM_ENROLL_DATE
+		  FROM
+		       TEAM_MEMBER
+		 WHERE
+		       TEAM_NO = (
+		                  SELECT TEAM_NO
+		                    FROM TEAM_MEMBER
+		                   WHERE MEM_NO = #{memNo}
+		                 )
+	</select>
+ -->	
+	<!-- 리더가 아니고, 등급과 가입일자 순으로 정렬해서 조회 -->
+ 	<select id="selectTeamMem" parameterType="_int" resultMap="teamMemberResultSet">
+	 	SELECT 
+	 		   MEM_NO
+		  FROM
+		       (SELECT
+		               *
+		          FROM
+		               TEAM_MEMBER
+		         WHERE  
+		               TEAM_NO = (
+				                  SELECT TEAM_NO
+				                    FROM TEAM_MEMBER
+				                   WHERE MEM_NO = #{memNo}
+				                 )
+		           AND 
+		               TEAM_GRADE != 'L'
+		         ORDER 
+		            BY TEAM_GRADE DESC, TEAM_ENROLL_DATE)
+		 WHERE ROWNUM = 1
+ 	</select>
+ 	
+ 	<!-- 바꿀 팀원이 있을 때 팀 리더로 업데이트 -->
+ 	<update id="updateTeamLeader" parameterType="_int">
+ 		UPDATE
+ 		       TEAM_MEMBER
+ 		   SET
+ 		       TEAM_GRADE = 'L'
+ 		 WHERE
+ 		       MEM_NO = #{memNo}   
+ 	</update>
 	
 	
+	<!-- 팀 상태 변경 -->
+	<update id="updateTeamStatus">
+		UPDATE
+		       TEAM
+		   SET
+		       STATUS = 'N'
+		 WHERE
+		       TEAM_NO = (
+					       select
+							       team_no
+							from
+							     team_member
+							where 
+								  mem_no = #{memNo}
+		       				)		       
+	</update>	
+	
+	<!-- 팀 멤버 삭제  -->
+	<delete id="deleteTeamMember" parameterType="_int">
+		DELETE
+		  FROM
+		       TEAM_MEMBER
+		 WHERE
+		       MEM_NO = #{memNo}
+	</delete>
+
+	<!-- 강퇴 멤버 상태 변경 -->
+	<update id="updateMemberStatus">
+		UPDATE
+		       MEMBER
+		   SET
+		       MEM_STATUS = 'K'
+		 WHERE
+		       MEM_NO = #{memNo}
+	</update>
+	
+	<!-- 소속된 팀이 있는지 조회 -->
+	<select id="selectTeam" parameterType="_int" resultMap="teamMemberResultSet">
+		SELECT
+		       *
+		  FROM
+		       TEAM_MEMBER
+		 WHERE
+		       MEM_NO = #{memNo}
+	</select>
+
+	
+	<!-- 부리더를 리더로 -->
+<!-- 	
+	<update id="updateSubLeader" parameterType="_int">
+		UPDATE
+		       TEAM_MEMBER
+		   SET
+		       TEAM_GRADE = 'L'
+		 WHERE
+			   MEM_NO = #{memNo}	
+	</update>
+-->
+	
+
 
 	
 <!-- 
@@ -492,7 +724,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 배너 목록 조회 -->
-	<select id="selectBannerList" parameterType="string" resultMap="BannerResultSet">
+	<select id="selectBannerList" parameterType="string" resultMap="bannerResultSet">
 		SELECT 
 			   BANNER_NO
                ,MEM_NO
@@ -544,7 +776,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- 메인페이지 배너 조회 -->
-	<select id="selectMainBannerList" resultMap="BannerResultSet">
+	<select id="selectMainBannerList" resultMap="bannerResultSet">
 		SELECT 
 			   BANNER_NO
                ,MEM_NO
@@ -625,7 +857,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	   	       STATUS = 'Y'	
 	</update>
 	
-	
-	
+	<!-- 자동완성 -->
+	<select id="selectListName" resultType="string">
+		SELECT 
+		        MEM_NAME
+		  FROM 
+		        MEMBER
+		 WHERE 
+		  		GRADE != 'A'
+		   AND
+		   		MEM_STATUS = 'Y'
+		  
+	</select>
+	<select id="selectListId" resultType="string">
+		SELECT 
+		        MEM_ID
+		  FROM 
+		        MEMBER
+		 WHERE 
+		  		GRADE != 'A'
+  		   AND
+		   		MEM_STATUS = 'Y'
+		  
+	</select>
+	<select id="selectListNickname" resultType="string">
+		SELECT 
+		        NICKNAME
+		  FROM 
+		        MEMBER
+ 		 WHERE 
+		  		GRADE != 'A'
+		   AND
+		   		MEM_STATUS = 'Y'
+	</select>
 	
 </mapper>

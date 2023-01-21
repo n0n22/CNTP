@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.cntp.battle.model.vo.ResultHistory;
 import com.kh.cntp.common.model.vo.PageInfo;
+import com.kh.cntp.member.model.vo.Member;
 import com.kh.cntp.moim.model.vo.Apply;
 import com.kh.cntp.moim.model.vo.Chatting;
 import com.kh.cntp.moim.model.vo.Group;
@@ -30,8 +31,11 @@ public interface MoimService {
 	ArrayList<TeamMember> selectTeamMemberList(String teamNo);
 	
 	// apply 관련 정보 select
-	// 후에 group 상세 페이지에서도 중복 사용
+	// 후에 group 상세 페이지에서도 중복 사용하지 못 했음....
 	ArrayList<Apply> selectApplyList(String moimNo);
+	
+	ArrayList<Apply> selectGroupApplyList(String moimNo);
+	
 	
 	// 팀 승패 기록 select
 	ResultHistory seletResultHistory(String teamNo);
@@ -41,14 +45,16 @@ public interface MoimService {
 	// 신청하는 loginUser 번호, 팀 번호로다가
 	int insertApply(Apply ap);
 	
-	Apply ajaxSelectApply(int memNo);
+	Apply ajaxSelectApply(Apply ap);
 	
 	// --------------- 팀 상세페이지(팀장 입장) ---------------
 	// 신청 수락
-	int UpdateApply(Apply ap);
+	int insertTeamMember(TeamMember tm, Apply ap);
+	
+	int updateApply(Apply ap);
 	
 	// 신청 거절
-	int DeleteApply(int memNo);
+	int deleteApply(Apply ap);
 	
 	// 팀 페이지 수정
 	int updateTeam(Team team);
@@ -57,7 +63,7 @@ public interface MoimService {
 	int updateTeamMember(ArrayList<TeamMember> teamMemberList);
 	
 	// 팀장이 아닐 경우에만 탈퇴할 수 있도록 걸어둬야 한다. 팀장이면 권한 수정하라고 alert 예정
-	int deleteTeamMember(int memNo);
+	int deleteTeamMember(TeamMember tm);
 	
 	// 팀 뱃지 status를 N에서 Y로 수정
 	// 성공 시 포인트 -100도 해줘야 한다.
@@ -77,6 +83,8 @@ public interface MoimService {
 	int ajaxInsertChatting(Chatting chat);
 	
 	int ajaxDeleteChatting(String chatNo);
+	
+	ArrayList<Member> selectAcceptMember(String groupNo);
 	
 	// --------------- 소그룹 시작 ---------------
 	
@@ -100,34 +108,6 @@ public interface MoimService {
 	
 	// 소그룸 글 삭제
 	int deleteGroup(Group group);
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

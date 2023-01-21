@@ -92,6 +92,7 @@
 							<option value="Gyeongbuk">경상북도</option>
 							<option value="Gyeongnam">경상남도</option>
 		                </select>
+		                <br>* 팀원 가입 시 지역 변경이 어려우니 신중히 선택해주세요.
 		            </td>
 		        </tr>
 		        <tr height="50">
@@ -131,7 +132,7 @@
 				                <label for="powerDuration"> 파워 등록 시 10P가 소요됩니다. </label> 
 		            		</c:when>
 		            		<c:otherwise>
-		            			<input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" value="true" disabled> 
+		            			<input type="checkbox" id="powerDuration" class="powerDuration" name="powerDuration" disabled> 
 				                <label for="powerDuration"> 파워 등록 시 10P가 소요됩니다. </label> 
 		            		</c:otherwise>
 		            	</c:choose>

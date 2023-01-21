@@ -18,38 +18,37 @@ public class ReplyServiceImpl implements ReplyService{
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	/*
+	
 	//board게시판
 	
 	@Override
-	public ArrayList<Reply> selectReplyList(int boardNo) {
+	public ArrayList<Reply> BoardselectReplyList(int boardNo) {
+		
 		return replyDao.BoardselectReplyList(sqlSession, boardNo);
 	}
 
 	@Override
-	public int insertReply(Reply r) {
-		return replyDao.BoardinsertReply(sqlSession, r);
+	public int BoardinsertReply(Reply r) {
+		
+		return  replyDao.BoardinsertReply(sqlSession, r);
 	}
 
-	@Override
-	public ArrayList<Board> selectTopBoard() {
-		return replyDao.selectTopBoardList(sqlSession);
-	}
+
+	
 	
 	//수영일기 댓글게시판
+	
 	@Override
-	public ArrayList<Reply> selectReplyList(int diaryNo) {
+	public ArrayList<Reply> DiaryselectReplyList(int diaryNo) {
+		
 		return replyDao.DiaryselectReplyList(sqlSession, diaryNo);
 	}
-
+	
 	@Override
-	public int insertReply(Reply r) {
+	public int DiaryinsertReply(Reply r) {
+		
 		return replyDao.DiaryinsertReply(sqlSession, r);
 	}
 
-	@Override
-	public ArrayList<Diary> selectTopDiary() {
-		return replyDao.selectTopDiaryList(sqlSession);
-	}
-	*/
+	
 }

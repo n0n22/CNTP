@@ -5,5 +5,112 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="replyMapper">
 	
+	<resultMap id="replyResultSet" type="reply">
+		<result column="comment_no" property="commentNo" />
+		<result column="diary_no" property="diaryNo" />
+		<result column="board_no" property="boardNo" />
+		<result column="writer" property="writer" />
+		<result column="comment_content" property="commentContent" />
+		<result column="comment_Date" property="commentDate" />
+		<result column="status" property="status" />
+		
+	</resultMap>
+
+	<!--board 댓글 -->
+	<select id ="selectBoardReplyList" resultMap="replyResultSet">
+		select
+				comment_no,
+				writer,
+				nickName,
+				comment_content,
+				to_char(comment_Date, 'YYYY-MM-DD') as "comment_Date"
+		  from 
+		        board_reply
+		  join
+		  		member on (mem_no = writer) 
+		  where
+		  		status = 'Y'
+		  	and
+				board_no = #{boardNo}
+			order
+			 by
+			  	comment_no desc			  			      	
+	</select>
+	
+	
+	<insert id ="insertBoardReply" parameterType="reply">
+		insert 
+	 	  into
+				board_reply 
+				(
+				comment_no,
+				comment_content,
+				writer,
+				board_no
+				)
+		values
+				(
+				seq_brno.nextval,
+				#{commentContent},
+				#{writer},
+				#{boardNo}
+				)		
+			
+	</insert>
+	
+	
+	
+	<!-- 수영일기 댓글 -->
+	<select id ="selectDiaryReplyList" resultMap="replyResultSet">
+		select
+				comment_no commentNo,
+				writer Writer ,
+				comment_content commentContent,
+				to_char(comment_Date, 'YYYY-MM-DD') as "comment_Date"
+		  from
+		        diary_reply
+		  where
+		  		status = 'Y'
+		  	and
+				diary_no = #{diaryNo}
+			order
+			 by
+			  	diary_no desc			  			      	
+	
+	
+	</select>
+	
+	
+	<insert id ="insertDiaryReply" parameterType="reply">
+		insert 
+	 	  into
+				diary_reply 
+				(
+				comment_no,
+				comment_content,
+				writer,
+				diary_no
+				)
+		values
+				(
+				seq_brno.nextval,
+				#{commentContent},
+				#{writer},
+				#{diaryNo}
+				)		
+			
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>

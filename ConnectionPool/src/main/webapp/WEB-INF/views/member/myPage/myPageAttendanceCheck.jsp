@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>ConnectionPool 마이페이지</title>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.0.2/index.global.min.js'></script>
 <style>
     @font-face {
         font-family: 'Pretendard-Regular';
@@ -86,7 +89,7 @@
         /* border: 1px solid palevioletred; */
     }
     #name-area {
-        font-size: 25px;
+        font-size: 22px;
     }
     #userName {
         color: rgb(63, 72, 107);
@@ -151,7 +154,7 @@
 
     }
    
-    .info-area button {
+    .atCheck{
         font-family: 'Pretendard-Regular';
         font-size: 15px;
         background-color: RGB(28,154,206);
@@ -199,133 +202,127 @@
         font-size: 16px;
         color: rgb(113, 113, 113);
    }
+
    
 </style>
 </head>
 <body>
 
 	<jsp:include page="../../common/menubar_nosearch.jsp"/>
-
+		
     <div class="outer">
         <div class="top-bar">
-            <div class="inline-block">
-                <div id="name-area" style="cursor: default;"><span id="userName">커풀</span> 님
-                    <br>🤔<span>무소속</span>
+             <div class="inline-block">
+                <div id="name-area" style="cursor: default;"><span id="userName">${sessionScope.loginMember.nickName}</span> 님
+                    <br>
+                    <c:if test="${ sessionScope.loginMember.badgeChangeName == null }">
+                    	노뱃지
+                   	</c:if>
+                   	<img src="${ sessionScope.loginMember.badgeChangeName }" width="30px">
+                   	<c:if test="${ sessionScope.loginMember.teamName == null }">
+                   		무소속	
+                   	</c:if>
+                   		<span>${ sessionScope.loginMember.teamName }</span>
                 </div>
                 <div>
-                    <div id="point-text">포인트&nbsp;<span id="point">180</span></div>
-                    <div id="ingido-text">인기도&nbsp;<span id="ingido">13</span></div>
+                    <div id="point-text">포인트&nbsp;<span id="point">${sessionScope.loginMember.memPoint}</span></div>
+                    <div id="ingido-text">인기도&nbsp;<span id="ingido">${sessionScope.loginMember.ingido}</span></div>
                 </div>
             </div>
             <div>
                 <ul id="top-ul">
-                    <li><a  href="myPageInfo.me">회원정보</a></li>
-                    <li><a href="">출석체크</a></li>
+                    <li><a href="myPageInfo.me">회원정보</a></li>
+                    <li><a id="click" href="myPageAtCheckForm.me">출석체크</a></li>
                     <li><a href="myPageBoard.me">작성글 보기</a></li>
-                    <li><a id="click" href="myPageDiary.me">수영일기</a></li>
                     <li><a href="myPageTeam.me">나의팀 보기</a></li>
                     <li><a href="myPageMoim.me">소모임 보기</a></li>
                     <li><a href="myPagePoint.me">포인트 조회</a></li>
                 </ul>
             </div>
         </div>
+           		<form action="myPageAtCheck.me">
         <div class="main-area">
-            <div id="title">나의 수영일기 조회</div>
+            <div id="title">
+           		출석체크
+           		<input type="hidden" name="memNo" value="${ loginMember.memNo }">
+           		<input type="hidden" name="pt" value="+1">
+           		<span><button class="atCheck">출첵!</button></span>
+            </div>
+           		</form>
+            	
                 <div id="title-line"><hr></div>
             <div class="info-area" style="margin: auto;">
-
-                <div id="myBoardForm">
-                    <!-- 없을때-->
-                    <div align="center">
-                        <br><br><br> 
-                        <p class="noTitle">작성한 수영일기가 없어요</p>
-                        <a href="">수영일기로 이동</a>
-                        <br><br><br>
-                    </div>
-                    <!-- 있을때-->
-                    <div class="boardselect" align="right">
-                        <label>종류별로 보기</label>
-                        <select name="boardDetailForm">
-                            <option value="Seoul">모두 공개</option>
-                            <option value="Gyeonggi">팀 공개</option>
-                            <option value="Gyeonggi">멤버 공개</option>
-                        </select>
-
-                    </div>
-                    
-                    <br>
-                    
-                    <table class="table table-hover teamListTable" border="1">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th width="60">글번호</th>
-                                <th width="200">제목</th>
-                                <th width="50">작성자</th>
-                                <th width="50">작성일</th>
-                                <th width="20">좋아요</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>자도자도 졸려요</td>
-                                <td>아무개</td>
-                                <td>2022-12-12</td>
-                                <td>35</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>맨날맨날 졸려요</td>
-                                <td>아무개</td>
-                                <td>2022-12-12</td>
-                                <td>35</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>맨날맨날 졸려요</td>
-                                <td>아무개</td>
-                                <td>2022-12-12</td>
-                                <td>35</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>맨날맨날 졸려요</td>
-                                <td>아무개</td>
-                                <td>2022-12-12</td>
-                                <td>35</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>맨날맨날 졸려요</td>
-                                <td>아무개</td>
-                                <td>2022-12-12</td>
-                                <td>35</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                    <div class="teamList-paging-area">
-                    
-                    </div>
-                    
-                    <div align="right">
-                        <a href="">수영일기 바로가기</a>
-                    </div>
-                </div>
-                <br><br><br>
-                <div class="container" id="pagination">
-                    <ul class="pagination">
-                      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                </div>
+            	<div id='calendar'></div>
+            
             </div>     
         </div>
-
+        
     </div>
+    
+	<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+    	
+    	// Controller에서 Json으로 넘김
+    	var list = ${checkList};
+    	
+    	console.log(list);
+    	
+    	
+    	// 빈배열 , 빈 객체 생성
+    	let checkList = [];
+    	var checkEl = {};
+    	
+        var calendarEl = document.getElementById('calendar'); // div요소 선택
+	
+        for (var i in list) { // Json으로 넘어온 객체배열 만큼
+        // 빈 객체에 Json객체배열의 객체 넣어줌	
+    	checkEl = {
+    				title : list[i].pointContent,
+    				start: list[i].pointDate
+    				}
+    	// 빈 배열에 객체 넣어줌
+    	checkList.push(checkEl);
+        
+        };
+    	
+    	console.log(checkList);
+        
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          selectable: true, // 달력 클릭하게 해주는 속성
+          headerToolbar: {
+            left: 'prev,next today', // 왼쪽 상단 툴바
+            center: 'title', // X월 XXXX년 위치
+            right: 'dayGridMonth,timeGridWeek,timeGridDay' // 오른쪽 상단 툴바
+          },
+          dateClick: function(info) {// 날짜만 클릭 했을 때 핸들러
+            alert('clicked ' + info.dateStr); 
+          	
+          	
+          },
+          events:  // 화면에 띄워줄 이벤트 객체 배열
+        		checkList // 위에서만든 객체배열 
+        });
+        
+        
+        calendar.render(); // 달력 화면에 뿌려주는 렌더링함수
+        
+     	});
+		
+			
+		$(function(){
+			$('.teamListTable>tbody>tr').click(function(){
+				location.href = 'detail.bo?bno=' + $(this).children('#boardNo').text();   
+			})
+			
+		
+		})	
+		
+		
+	</script>
+	
+	
+
 
    
 	<jsp:include page="../../common/footer.jsp"/>

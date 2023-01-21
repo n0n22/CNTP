@@ -28,6 +28,9 @@
 		width: 150px;
 	}
 	
+	#reportTable tbody tr:hover {
+		cursor : pointer
+	}
 	
 	
 
@@ -96,39 +99,41 @@
             </div>
             
             
-			<div class="page-area">
-				<ul class="pagination" align="center">
-	               	<c:choose>
-	                	<c:when test="${ pi.currentPage eq 1 }">
-	                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
-	                    </c:when>
-	                    <c:otherwise>
-	                    	<li class="page-item"><a class="page-link" href="reportList.ad?result=${ result }&cpage=${ pi.currentPage - 1 }">&lt;</a></li>
-	                    </c:otherwise>
-	                </c:choose>
-	                
-	               
-	                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-		                <c:choose>
-		                	<c:when test="${ pi.currentPage eq p }">
-		                   		<li class="page-item disabled"><a class="page-link" href="reportList.ad?result=${ result }&cpage=${ p }">${ p }</a></li>
-		                	</c:when>
-		                	<c:otherwise>
-		                		<li class="page-item"><a class="page-link" href="reportList.ad?result=${ result }&cpage=${ p }">${ p }</a></li>
-		                	</c:otherwise>
+			<div class="admin-footer">
+				<div class="page-area">
+					<ul class="pagination" align="center">
+		               	<c:choose>
+		                	<c:when test="${ pi.currentPage eq 1 }">
+		                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<li class="page-item"><a class="page-link" href="reportList.ad?result=${ result }&cpage=${ pi.currentPage - 1 }">&lt;</a></li>
+		                    </c:otherwise>
 		                </c:choose>
-	                </c:forEach>
-	               
-	                
-					<c:choose>
-	                	<c:when test="${ pi.currentPage eq pi.maxPage }">
-		                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
-	                    </c:when>
-	                    <c:otherwise>
-		                    <li class="page-item"><a class="page-link" href="reportList.ad?result=${ result }&cpage=${ pi.currentPage + 1 }">&gt;</a></li>
-	                    </c:otherwise>
-	                </c:choose>
-				</ul>
+		                
+		               
+		                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+			                <c:choose>
+			                	<c:when test="${ pi.currentPage eq p }">
+			                   		<li class="page-item disabled"><a class="page-link" href="reportList.ad?result=${ result }&cpage=${ p }">${ p }</a></li>
+			                	</c:when>
+			                	<c:otherwise>
+			                		<li class="page-item"><a class="page-link" href="reportList.ad?result=${ result }&cpage=${ p }">${ p }</a></li>
+			                	</c:otherwise>
+			                </c:choose>
+		                </c:forEach>
+		               
+		                
+						<c:choose>
+		                	<c:when test="${ pi.currentPage eq pi.maxPage }">
+			                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
+		                    </c:when>
+		                    <c:otherwise>
+			                    <li class="page-item"><a class="page-link" href="reportList.ad?result=${ result }&cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+		                    </c:otherwise>
+		                </c:choose>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -143,7 +148,7 @@
 			// tr 클릭 시 신고 상세보기
 			$('#reportTable tbody .clickTr').click(function() {
 				
-				location.href = 'reportDetail.ad?rno=' + $(this).children().eq(0).text();
+				location.href = 'reportDetail.ad?reportBoard=' + $(this).children().eq(2).text() + '&reportNo=' + $(this).children().eq(0).text();
 				//console.log($(this).children().eq(0).text());
 				
 			});			

@@ -13,6 +13,8 @@ public class Diary {
 	private String scope;
 	private String status;
 	private int heart;
+
+	
 	
 	
 }

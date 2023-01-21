@@ -15,12 +15,19 @@ import com.kh.cntp.moim.model.vo.Team;
 
 @Repository
 public class BattleDao {
+	// 배틀풀 리스트 조회
 	public ArrayList<Battle> selectBattlePoolList(SqlSession sqlSession, String cpage){
 		return (ArrayList)sqlSession.selectList("battleMapper.selectBattlePoolList", cpage);
 	}
+	// 배틀풀 리스트 검색 
+	public ArrayList<Battle> searchBattle(SqlSessionTemplate sqlSession, HashMap<String, String> condition){
+		return (ArrayList)sqlSession.selectList("battleMapper.searchBattle", condition);
+	}
+	// 배틀풀 작성 : BATTLE 테이블에 INSERT
 	public int insertBattle(SqlSessionTemplate sqlSession, Battle battle) {
 		return sqlSession.insert("battleMapper.insertBattle", battle);
 	}
+	// 배틀풀 작성 : POOL_INFO 테이블에 INSERT
 	public int insertPoolInfo(SqlSessionTemplate sqlSession, PoolInfo poolInfo){
 		return sqlSession.insert("battleMapper.insertPoolInfo", poolInfo);
 	}
@@ -57,9 +64,7 @@ public class BattleDao {
 	public int updateDefeatTeam(SqlSessionTemplate sqlSession, String defeatTeamNo) {
 		return sqlSession.update("battleMapper.updateDefeatTeam", defeatTeamNo);
 	}
-	public ArrayList<Battle> searchBattle(SqlSessionTemplate sqlSession, HashMap<String, String> condition){
-		return (ArrayList)sqlSession.selectList("battleMapper.searchBattle", condition);
-	}
+
 	public int cancelBattle(SqlSessionTemplate sqlSession, String battleNo) {
 		return sqlSession.update("battleMapper.cancelBattle", battleNo);
 	}
@@ -68,5 +73,14 @@ public class BattleDao {
 	}
 	public int deleteBattlePool(SqlSessionTemplate sqlSession, int battleNo) {
 		return sqlSession.delete("battleMapper.deleteBattlePool", battleNo);
+	}
+	public int updateBattleResult(SqlSessionTemplate sqlSession, BattleResult br) {
+		return sqlSession.update("battleMapper.updateBattleResult", br);
+	}
+	public int checkBattle(SqlSessionTemplate sqlSession, String battleNo) {
+		return sqlSession.selectOne("battleMapper.checkBattle", battleNo);
+	}
+	public ArrayList<ResultHistory> selectListBattleRank(SqlSessionTemplate sqlSession, String condition){
+		return (ArrayList)sqlSession.selectList("battleMapper.selectListBattleRank", condition);
 	}
 }

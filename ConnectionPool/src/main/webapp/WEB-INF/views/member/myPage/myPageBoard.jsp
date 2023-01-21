@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,7 +88,7 @@
         /* border: 1px solid palevioletred; */
     }
     #name-area {
-        font-size: 25px;
+        font-size: 22px;
     }
     #userName {
         color: rgb(63, 72, 107);
@@ -209,21 +211,28 @@
 
     <div class="outer">
         <div class="top-bar">
-            <div class="inline-block">
-                <div id="name-area" style="cursor: default;"><span id="userName">커풀</span> 님
-                    <br>🤔<span>무소속</span>
+             <div class="inline-block">
+                <div id="name-area" style="cursor: default;"><span id="userName">${sessionScope.loginMember.nickName}</span> 님
+                    <br>
+                    <c:if test="${ sessionScope.loginMember.badgeChangeName == null }">
+                    	노뱃지
+                   	</c:if>
+                   	<img src="${ sessionScope.loginMember.badgeChangeName }" width="30px">
+                   	<c:if test="${ sessionScope.loginMember.teamName == null }">
+                   		무소속	
+                   	</c:if>
+                   		<span>${ sessionScope.loginMember.teamName }</span>
                 </div>
                 <div>
-                    <div id="point-text">포인트&nbsp;<span id="point">180</span></div>
-                    <div id="ingido-text">인기도&nbsp;<span id="ingido">13</span></div>
+                    <div id="point-text">포인트&nbsp;<span id="point">${sessionScope.loginMember.memPoint}</span></div>
+                    <div id="ingido-text">인기도&nbsp;<span id="ingido">${sessionScope.loginMember.ingido}</span></div>
                 </div>
             </div>
             <div>
                 <ul id="top-ul">
                     <li><a  href="myPageInfo.me">회원정보</a></li>
-                    <li><a href="">출석체크</a></li>
+                    <li><a href="myPageAtCheckForm.me">출석체크</a></li>
                     <li><a id="click" href="myPageBoard.me">작성글 보기</a></li>
-                    <li><a href="myPageDiary.me">수영일기</a></li>
                     <li><a href="myPageTeam.me">나의팀 보기</a></li>
                     <li><a href="myPageMoim.me">소모임 보기</a></li>
                     <li><a href="myPagePoint.me">포인트 조회</a></li>
@@ -237,99 +246,117 @@
 
                 <div id="myBoardForm">
                     <!-- 없을때-->
-                    <div align="center">
-                        <br><br><br> 
-                        <p class="noTitle">작성한 게시글이 없어요</p>
-                        <a href="">자유게시판으로 이동</a>
-                        <br><br><br>
-                    </div>
                     <!-- 있을때-->
-                    <div class="boardselect" align="right">
-                        <label>종류별로 보기</label>
-                        <select name="boardDetailForm">
-                            <option value="Seoul">질문</option>
-                            <option value="Gyeonggi">정보</option>
-                            <option value="Gyeonggi">후기</option>
-                            <option value="Gyeonggi">모임</option>
-                            <option value="Gyeonggi">배틀</option>
-                        </select>
-
-                    </div>
-                    
-                    <br>
-                    
-                    <table class="table table-hover teamListTable" border="1">
+                <c:choose>
+                	<c:when test="${ empty blist }">
+	                    <div align="center">
+	                        <br><br><br> 
+	                        <p class="noTitle">작성한 게시글이 없어요</p>
+	                        <a href="">자유게시판으로 이동</a>
+	                        <br><br><br><br><br><br>
+	                    </div>
+                	</c:when>
+                	<c:otherwise>
+                	
+                	 <ul class="nav">
+						  <li class="nav-item">
+						    <a class="nav-link" href="myPageBoard.me">전체보기</a>
+						  </li>
+						  <li class="nav-item">
+						    <a class="nav-link" href="myPageBoard.me?category=질문">질문</a>
+						  </li>
+						  <li class="nav-item">
+						    <a class="nav-link" href="myPageBoard.me?category=정보">정보</a>
+						  </li>
+						  <li class="nav-item">
+						    <a class="nav-link" href="myPageBoard.me?category=후기">후기</a>
+						  </li>
+						</ul>       
+						
+					<table class="table table-hover teamListTable" border="1">
                         <thead class="thead-dark">
                             <tr>
                                 <th width="60">글번호</th>
+                                <th width="50">카테고리</th>
                                 <th width="200">제목</th>
-                                <th width="50">작성자</th>
                                 <th width="50">작성일</th>
                                 <th width="20">조회수</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>자도자도 졸려요</td>
-                                <td>아무개</td>
-                                <td>2022-12-12</td>
-                                <td>35</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>맨날맨날 졸려요</td>
-                                <td>아무개</td>
-                                <td>2022-12-12</td>
-                                <td>35</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>맨날맨날 졸려요</td>
-                                <td>아무개</td>
-                                <td>2022-12-12</td>
-                                <td>35</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>맨날맨날 졸려요</td>
-                                <td>아무개</td>
-                                <td>2022-12-12</td>
-                                <td>35</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>맨날맨날 졸려요</td>
-                                <td>아무개</td>
-                                <td>2022-12-12</td>
-                                <td>35</td>
-                            </tr>
+                        	<c:forEach var="b" items="${blist}">
+                    		<tr>
+                    			<td id="boardNo">${ b.boardNo }</td>
+                    			<td>${ b.category }</td>
+                    			<td>${ b.title }</td>
+                    			<td>${ b.createDate }</td>
+                    			<td>${ b.count }</td>
+                    		</tr>
+                    		</c:forEach>
                         </tbody>
                     </table>
+						
+                	
+                	</c:otherwise>
+                
+                </c:choose>
                     
                     <div class="teamList-paging-area">
                     
                     </div>
                     
                     <div align="right">
-                        <a href="">게시판 바로가기</a>
+                        <a href="list.bo">게시판 바로가기</a>
                     </div>
                 </div>
                 <br><br><br>
-                <div class="container" id="pagination">
-                    <ul class="pagination">
-                      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                </div>
+                <c:if test="${ not empty blist }">
+                
+	                <div class="container" id="pagination">
+	                
+	                    <ul class="pagination">
+							<c:choose>
+								<c:when test="${ pi.currentPage eq 1 }">
+									<li class="page-item disabled"><a class="page-link"	href="#">Previous</a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item"><a class="page-link" href="myPageBoard.me?cpage=${ pi.currentPage - 1 }&category=${category}">Previous</a></li>
+								</c:otherwise>
+							</c:choose>
+
+							<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+								<li class="page-item"><a class="page-link" href="myPageBoard.me?cpage=${p}&category=${category}">${ p }</a></li>
+							</c:forEach>
+
+							<c:choose>
+								<c:when test="${ pi.currentPage eq pi.maxPage  }">
+									<li class="page-item disabled"><a class="page-link"	href="#">Next</a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item"><a class="page-link" href="myPageBoard.me?cpage=${ pi.currentPage + 1 }&category=${category}">Next</a></li>
+								</c:otherwise>
+							</c:choose>
+						</ul>
+	                </div>
+	                
+                </c:if>
+                
             </div>     
         </div>
+        
 
     </div>
-
+	<script>
+		
+			
+		$(function(){
+			$('.teamListTable>tbody>tr').click(function(){
+				location.href = 'detail.bo?bno=' + $(this).children('#boardNo').text();   
+			})
+		})	
+		
+		
+	</script>
    
 	<jsp:include page="../../common/footer.jsp"/>
 </body>

@@ -1,6 +1,7 @@
 package com.kh.cntp.board.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,30 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.updateBoard(sqlSession, b);
 	}
 
+	@Override
+	public ArrayList<Reply> selectBoardReplyList(int boardNo) {
+		
+		return boardDao.selectBoardReplyList(sqlSession, boardNo);
+	}
+
+	@Override
+	public int insertBoardReply(Reply r) {
+		
+		return boardDao.insertBoardReply(sqlSession, r);
+	}
+
+	
+	@Override
+	public int selectSearchCount(HashMap<String, String> map) {
+		
+		return boardDao.selectSearchCount(sqlSession, map);
+	}
+	
+	
+	@Override
+	public ArrayList<Board> selectSearchList(HashMap<String, String> map, PageInfo pi) {
+		 return boardDao.selectSearchList(sqlSession, map, pi);
+	}
 	
 	
 	

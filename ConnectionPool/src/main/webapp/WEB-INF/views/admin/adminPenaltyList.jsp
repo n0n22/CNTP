@@ -11,12 +11,7 @@
 <style>
 
 
-	.report-outer {
-		margin-left : 150px;
-		height : 90%;
 
-		padding: 20px;
-	}
 
 	.report-btn-area {
 		padding: 15px;
@@ -50,7 +45,7 @@
     <jsp:include page="../common/menubar_nosearch.jsp" />
     <jsp:include page="adminMenubar.jsp" />
 
-    <div class="report-outer">
+    <div class="admin-outer">
     
         
         <div class="report-btn-area">
@@ -89,42 +84,45 @@
 	                    </tbody>
 		            </table>
 
-                <button class="btn btn-danger" onclick="openConfirm()" id="confirmBtn">처리</btton>
+                <button class="btn btn-danger" onclick="openConfirm();" id="confirmBtn">처리</btton>
             </div>
-			<div class="page-area">
-				<ul class="pagination" align="center">
-	               	<c:choose>
-	                	<c:when test="${ pi.currentPage eq 1 }">
-	                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
-	                    </c:when>
-	                    <c:otherwise>
-	                    	<li class="page-item"><a class="page-link" href="penaltyList.ad?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
-	                    </c:otherwise>
-	                </c:choose>
-	                
-	               
-	                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-		                <c:choose>
-		                	<c:when test="${ pi.currentPage eq p }">
-		                   		<li class="page-item disabled"><a class="page-link" href="penaltyList.ad?cpage=${ p }">${ p }</a></li>
-		                	</c:when>
-		                	<c:otherwise>
-		                		<li class="page-item"><a class="page-link" href="penaltyList.ad?cpage=${ p }">${ p }</a></li>
-		                	</c:otherwise>
+            
+            <div class="admin-footer">
+				<div class="page-area">
+					<ul class="pagination" align="center">
+		               	<c:choose>
+		                	<c:when test="${ pi.currentPage eq 1 }">
+		                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<li class="page-item"><a class="page-link" href="penaltyList.ad?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
+		                    </c:otherwise>
 		                </c:choose>
-	                </c:forEach>
-	               
-	                
-					<c:choose>
-	                	<c:when test="${ pi.currentPage eq pi.maxPage }">
-		                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
-	                    </c:when>
-	                    <c:otherwise>
-		                    <li class="page-item"><a class="page-link" href="penaltyList.ad?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
-	                    </c:otherwise>
-	                </c:choose>
-				</ul>
-			</div>
+		                
+		               
+		                <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+			                <c:choose>
+			                	<c:when test="${ pi.currentPage eq p }">
+			                   		<li class="page-item disabled"><a class="page-link" href="penaltyList.ad?cpage=${ p }">${ p }</a></li>
+			                	</c:when>
+			                	<c:otherwise>
+			                		<li class="page-item"><a class="page-link" href="penaltyList.ad?cpage=${ p }">${ p }</a></li>
+			                	</c:otherwise>
+			                </c:choose>
+		                </c:forEach>
+		               
+		                
+						<c:choose>
+		                	<c:when test="${ pi.currentPage eq pi.maxPage }">
+			                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
+		                    </c:when>
+		                    <c:otherwise>
+			                    <li class="page-item"><a class="page-link" href="penaltyList.ad?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+		                    </c:otherwise>
+		                </c:choose>
+					</ul>
+				</div>
+            </div>
 
         </div>
 
@@ -203,8 +201,8 @@
 					
 					// console.log($(this).parent().nextAll().eq(3).text());
 					
-					var str = '<input type="text" value="' + $(this).parent().next().text() + '" name="memNo">';
-					str += '<input type="text" value="' + $(this).parent().nextAll().eq(3).text() + '" name="penalty">';
+					var str = '<input type="hidden" value="' + $(this).parent().next().text() + '" name="memNo">';
+					str += '<input type="hidden" value="' + $(this).parent().nextAll().eq(3).text() + '" name="penalty">';
 					
 					
 					
@@ -216,15 +214,18 @@
 					
 				}
 				if(count > 0) { // 체크 한 상태라서 요청이 가야 함
-		    		alertify.confirm('체크 했어?', function() {
+		    		alertify.confirm('처리하시겠습니까?', function() {
 					
-		    			// $('#penaltyForm').submit();
+		    			$('#penaltyForm').submit();
 		    		
+		   			}, function() {
+		   				
+		    			$('#penaltyForm').html('');
+		   				
 		   			});
 				} 
 				else { // 체크 안한 상태라서 요청이 가면 안됨
-		    		alertify.confirm('체크 안함', function() {
-		    			$('#penaltyForm').append('');
+		    		alertify.confirm('체크해주세요', function() {
 		   			});
 				}
 				

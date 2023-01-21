@@ -29,34 +29,46 @@ public class BattleServiceImpl implements BattleService{
 	public ArrayList<Battle> selectBattlePoolList(String cpage) {
 		return battleDao.selectBattlePoolList(sqlSession, cpage);
 	}
-	// BATTLE 테이블에 INSERT & POOLINFO에 INSERT
+	// 배틀풀 리스트 검색
+	@Override
+	public ArrayList<Battle> searchBattle(HashMap<String, String> condition) {
+		return battleDao.searchBattle(sqlSession, condition);
+	}
+	// 배틀풀 작성
+	// BATTLE 테이블에 INSERT & POOL_INFO 테이블에 INSERT
 	@Override
 	@Transactional
 	public int insertBattle(Battle battle, PoolInfo poolInfo) {
 		return battleDao.insertBattle(sqlSession, battle) * battleDao.insertPoolInfo(sqlSession, poolInfo);
 	}
-	
+	// 배틀풀 상세보기 조회
 	@Override
 	public Battle selectBattle(int battleNo) {
 		return battleDao.selectBattle(sqlSession, battleNo);
 	}
+	// 경기장 정보 조회
 	@Override
 	public PoolInfo selectPoolInfo(int battleNo) {
 		return battleDao.selectPoolInfo(sqlSession, battleNo);
 	}
+	// 배틀신청
+	// BATTLE 테이블 UPDATE() * CHATTING 테이블에 INSERT(도발메시지)
 	@Override
 	@Transactional
 	public int applyBattle(HashMap<String, String> apply) {
 		return battleDao.applyBattle(sqlSession, apply) * battleDao.msg(sqlSession, apply);
 	}
+	// 팀정보 조회
 	@Override
 	public Team selectTeam(String team) {
 		return battleDao.selectTeam(sqlSession, team);
 	}
+	// 배틀 결과 조회
 	@Override
 	public BattleResult selectBattleResult(int battleNo) {
 		return battleDao.selectBattleResult(sqlSession, battleNo);
 	}
+	// 팀 전적 조회
 	@Override
 	public ResultHistory selectResultHistory(String teamNo) {
 		return battleDao.selectResultHistory(sqlSession, teamNo);
@@ -70,10 +82,7 @@ public class BattleServiceImpl implements BattleService{
 	public int battleResultOk(int battleNo, String victoryTeamNo, String defeatTeamNo) {
 		return battleDao.battleResultOk(sqlSession, battleNo) * battleDao.updateVictoryTeam(sqlSession, victoryTeamNo) * battleDao.updateDefeatTeam(sqlSession, defeatTeamNo);
 	}
-	@Override
-	public ArrayList<Battle> searchBattle(HashMap<String, String> condition) {
-		return battleDao.searchBattle(sqlSession, condition);
-	}
+
 	@Override
 	@Transactional
 	public int cancelBattle(HashMap<String, String> cancel) {
@@ -85,8 +94,17 @@ public class BattleServiceImpl implements BattleService{
 	public int deleteBattlePool(int battleNo) {
 		return battleDao.deletePoolInfo(sqlSession, battleNo) * battleDao.deleteBattlePool(sqlSession, battleNo);
 	}
-
+	@Override
+	public int updateBattleResult(BattleResult br) {
+		return battleDao.updateBattleResult(sqlSession, br);
+	}
+	@Override
+	public int checkBattle(String battleNo) {
+		return battleDao.checkBattle(sqlSession, battleNo);
+	}
 	
-	
-
+	@Override
+	public ArrayList<ResultHistory> selectListBattleRank(String condition) {
+		return battleDao.selectListBattleRank(sqlSession, condition);
+	}
 }

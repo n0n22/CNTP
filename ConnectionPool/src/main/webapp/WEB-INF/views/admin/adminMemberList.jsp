@@ -7,8 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<script type="text/javascript" src="//cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 
+<script type="text/javascript" src="//cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
     <style>
 
 
@@ -44,6 +44,17 @@
 		}
 		
 		
+		.order-area {
+			width: 80%;
+		}
+		
+		
+		.order-area>div {
+			display:inline-block;		
+		}
+		
+
+
 
 
     </style>
@@ -84,6 +95,7 @@
     
                 </div>
             </div>
+            
            	<div class="order-area">
 	            <div class="select-order">
 	                <select name="order" id="orderSelect" class="form-control" align="right" onchange="keywordSearch();">
@@ -95,18 +107,26 @@
 	                    <option value="enrollDate" class="desc">가입일↓</option>
 	                </select>
 	            </div>
+	            
+		        <input type="hidden" value="" id="orderCondition" name="orderCondition">
+		        
+		        <div class="count-area">
+		        	<div class="count-select">
+		                <select name="bl" id="countSelect" class="form-control" align="right" onchange="keywordSearch();">
+		                    <option value="10" selected>10</option>
+		                    <option value="15">15</option>
+		                    <option value="30">30</option>
+		                </select>
+		            </div>
+		        </div>
+		        &nbsp;&nbsp;&nbsp;&nbsp;
+ 	            <button type="button" class="btn btn-outline-success" onclick="excelDownloadByHtml();">현재 목록 exel로</button>
+        		&nbsp;&nbsp;
+        		<button type="button" class="btn btn-success" onclick="allMemberList();">전체 목록 exel로</button>
+        
+		        
 	        </div>
-	        <input type="hidden" value="" id="orderCondition" name="orderCondition">
-	        <div class="count-area">
-	        	<div class="count-select">
-	                <select name="bl" id="countSelect" class="form-control" align="right" onchange="keywordSearch();">
-	                    <option value="10" selected>10</option>
-	                    <option value="15">15</option>
-	                    <option value="30">30</option>
-	                </select>
-	            </div>
-	        </div>
-            
+	        
             <!-- 
 			<input type="hidden" name="order" id="searchOrder" value="">
 			<input type="hidden" name="orderCondition" id="searchOrderCondition" value="">
@@ -142,9 +162,47 @@
         </form>
         -->
         
-        <script>
-        
+   <script>
+	        
+      		// 자동완성 사용될 데이터가 모여있는 배열
+       		var names = [];
+       		var ids = [];
+       		var nicknames = [];
         	$(function() {
+        		
+        		
+           		
+           		$.ajax({
+           			url : "autoComplete.ad",
+           			type : "post",
+           			success : function(data){
+           				// console.log(data);
+           				$.each(data.names, function(i){
+           					names.push(data.names[i]);
+           				});
+           				$.each(data.ids, function(i){
+           					ids.push(data.ids[i]);
+           				});
+           				$.each(data.nicknames, function(i){
+           					nicknames.push(data.nicknames[i]);
+           				});
+           			},
+           			error : function(){
+           				console.log("ajax 통신실패")
+           			}
+           		})
+        		// 회원 이름 검색 시 자동완성
+        		selectListNames();
+           		
+        		$("#conditionSelect").change(function(){
+        			switch($("#conditionSelect").val()){
+        			case 'name' : selectListNames(); break;
+        			case 'id' : selectListIds(); break;
+        			case 'nickname' : selectListNickNames(); break;
+        			}
+        		})
+        		
+        		
         		
         		
         		// 정렬기준 선택
@@ -177,8 +235,7 @@
         			
         			
         		});
-        	       		
-        		
+ 
         		
         	});
         	
@@ -189,7 +246,6 @@
         		
         		var value1 = $('#orderSelect option:selected'); // 선택된 정렬기준이
         		var test1 = value1.is('.desc'); // 내림차순을 포함하는가
-
         		if(test1) { // 내림차순
         			$('#orderCondition').val('desc');
         		}
@@ -213,7 +269,6 @@
         		
         		// 정렬 기준 넣기
         		var test2 = $('#orderSelect option:selected').is('.desc'); // 선택된 정렬기준이 내림차순을 포함하는가
-
         		if(test2) { // 내림차순
         			$('#orderCondition').val('desc');
         		}
@@ -230,8 +285,36 @@
         		$('#searchForm').submit();	
         		        		
         	};
-        
-			
+        	
+        	function selectListNames(){
+        		$("#keywordInput").autocomplete({
+        		    minLength: 2,
+         			source : function(request, response){
+        				var results = $.ui.autocomplete.filter(names, request.term);
+        				response(results.slice(0,10));
+        			}
+        		})
+        	}
+        	function selectListIds(){
+        		$("#keywordInput").autocomplete({
+        		    minLength: 2,
+         			source : function(request, response){
+        				var results = $.ui.autocomplete.filter(ids, request.term);
+        				response(results.slice(0,10));
+        			}
+        		})
+        	}
+        	function selectListNickNames(){
+        		$("#keywordInput").autocomplete({
+        		    minLength: 2,
+         			source : function(request, response){
+        				var results = $.ui.autocomplete.filter(nicknames, request.term);
+        				response(results.slice(0,10));
+        			}
+        		})
+        	}
+        	
+	
         
         
         </script>
@@ -248,7 +331,6 @@
                             <th width="15%">닉네임</th>
                             <th width="15%">인기도</th>
                             <th width="20%">가입일</th>
-                            <th width="10%">탈퇴</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -260,7 +342,6 @@
 	                            <td>${ m.nickName }</td>
 	                            <td>${ m.ingido }</td>
 	                            <td>${ m.enrollDate }</td>
-	                            <td><a href="" class="btn btn-sm btn-secondary">탈퇴</a></td>
 	                        </tr>
                     	</c:forEach>
                     </tbody>
@@ -268,54 +349,55 @@
             </div>
              
         </div>
-           
-            
-		<div class="page-area">
-        	<ul class="pagination" align="center">
-               	<c:choose>
-                	<c:when test="${pi.currentPage eq 1}">
-                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
-                    </c:when>
-                    <c:otherwise>
-                    	<li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${pi.currentPage - 1}&keyword=${keyword}&condition=${condition}">&lt;</a></li>
-                    </c:otherwise>
-                </c:choose>
-                
-               
-                <c:forEach begin="${pi.startPage}" end="${pi.endPage}" var="p">
-	                <c:choose>
-	                	<c:when test="${pi.currentPage eq p}">
-	                   		<li class="page-item disabled"><a class="page-link">${ p }</a></li>
-	                	</c:when>
-	                	<c:otherwise>
-	                		<li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${p}&keyword=${keyword}&condition=${condition}">${p}</a></li>
-	                	</c:otherwise>
+        
+        
+		<div class="admin-footer">
+			<div class="page-area" align="center">
+	        	<ul class="pagination" align="center">
+	               	<c:choose>
+	                	<c:when test="${pi.currentPage eq 1}">
+	                    	<li class="page-item disabled"><a class="page-link">&lt;</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${pi.currentPage - 1}&keyword=${keyword}&condition=${condition}">&lt;</a></li>
+	                    </c:otherwise>
 	                </c:choose>
-                </c:forEach>
-               
-                
-				<c:choose>
-                	<c:when test="${pi.currentPage eq pi.maxPage}">
-	                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
-                    </c:when>
-                    <c:otherwise>
-	                    <li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${pi.currentPage + 1}&keyword=${keyword}&condition=${condition}">&gt;</a></li>
-                    </c:otherwise>
-                </c:choose>
-			</ul>			
+	                
+	               
+	                <c:forEach begin="${pi.startPage}" end="${pi.endPage}" var="p">
+		                <c:choose>
+		                	<c:when test="${pi.currentPage eq p}">
+		                   		<li class="page-item disabled"><a class="page-link">${ p }</a></li>
+		                	</c:when>
+		                	<c:otherwise>
+		                		<li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${p}&keyword=${keyword}&condition=${condition}">${p}</a></li>
+		                	</c:otherwise>
+		                </c:choose>
+	                </c:forEach>
+	               
+	                
+					<c:choose>
+	                	<c:when test="${pi.currentPage eq pi.maxPage}">
+		                    <li class="page-item disabled"><a class="page-link">&gt;</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+		                    <li class="page-item"><a class="page-link" href="memberList.ad?order=${order}&orderCondition=${orderCondition}&bl=${pi.boardLimit}&cpage=${pi.currentPage + 1}&keyword=${keyword}&condition=${condition}">&gt;</a></li>
+	                    </c:otherwise>
+	                </c:choose>
+				</ul>			
+			</div>
 		</div>
+            
 
         
         <div>
         
-        	<button type="button" class="btn btn-outline-success" onclick="excelDownloadByHtml();">현재 목록 exel로</button>
-        	<button type="button" class="btn btn-success" onclick="allMemberList();">전체 목록 exel로</button>
-        
+
         </div>    
 
 		<script>
 		
-
+			// 파일명 설정
 			function setFileName() {
 				
 				let dt = new Date();
@@ -344,9 +426,7 @@
 				
 				// 시트(worksheet) 생성 : table_to_sheet(테이블, 시트명);
 				let ws = XLSX.utils.table_to_sheet(document.getElementById('memberTable'), '회원목록');
-				
-				// 컬럼 숨기기
-				// console.log(ws.G1.hidden);
+
 				
 				// 시트 설정을 전달하면서 엑셀 파일 생성
 				let wb = XLSX.utils.table_to_book(document.getElementById('memberTable'), ws);
@@ -388,12 +468,7 @@
 						console.log('ajax 멤버 전체 목록 조회 실패');						
 					}
 					
-					
-					
-				});							
-				
-				
-				
+				});	
 				
 			}
 			
@@ -404,71 +479,12 @@
 
 
 
-
-	    <button class="btn btn-sm btn-danger" onclick="openReportForm();">신고</button>
-
     </div>
-    
-      
-
-
-	<form id="reportvalue">
-		<input type="hidden" value="" name="memNickName" id="memNickName">
-		<input type="hidden" value="" name="content" id="content">
-		<input type="hidden" value="" name="reportBoard" id="reportBoard">
-		<input type="hidden" value="" name="boardNo" id="boardNo">
-	</form>
-
-    
     
 
     	
 	<jsp:include page="../common/footer.jsp" />
 
-
-
-	<script>
-		
-		function openReportForm() {
-			
-			// ------------- 수정해야함 ---------------------------------
-			if (${loginMember.memNo} == 4) {
-				alertify.alert('알림', '본인의 글은 신고할 수 없습니다.', function(){ alertify.success('확인 완료'); });
-			} else {
-				
-				// var customWindow = window.open('', '_blank', 'width=300,height=500');							
-				window.open('', '신고', 'width=450,height=300,location=yes,menubar=yes,scrollbar=no');
-				
-				$('#memNickName').val('닉네임7');
-				$('#content').val('바보야');
-				$('#reportBoard').val('board');
-				$('#boardNo').val(13);
-				
-				
-				
-				// console.log(reportvalue);
-				
-				reportvalue.action = 'reportForm';
-				// reportvalue.target = '_blank';
-				reportvalue.target = '신고';
-				reportvalue.method = 'post';
-				reportvalue.submit();
-				
-				
-			   // customWindow.close();
-
-			}
-			
-			
-		};
-		
-	
-		
-	
-	
-	
-	
-	</script>
 
 
 
