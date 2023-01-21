@@ -9,7 +9,7 @@ import com.kh.cntp.reply.model.vo.Reply;
 
 public interface DiaryService {
 	
-	/*
+	
 	// 게시글 리스트 조회 서비스 + 페이징 처리(select)
 	// 게시글 총 개수 조회
 	//int selectListCount(); // 리스트만 가져오면 되기때문에 count를 할 필요없다.
@@ -38,9 +38,7 @@ public interface DiaryService {
 		
 	// 댓글 작성 서비스 (Ajax)(insert)
 	int insertReply(Reply r);
-		
-	// TOP-N분석(select)
-	ArrayList<Diary> selectTopDiary();
 	*/
+	
 	
 }
