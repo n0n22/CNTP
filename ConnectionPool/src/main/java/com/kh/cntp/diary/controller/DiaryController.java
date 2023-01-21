@@ -23,74 +23,70 @@ public class DiaryController {
 	@Autowired
 	private DiaryService diaryService;
 	
-<<<<<<< HEAD
 	//수영일기 리스트 조회
 	@RequestMapping("list.di")
 	public ModelAndView selectList(ModelAndView mv) {
 		mv.addObject("list",diaryService.selectList()).setViewName("diary/diaryListView");
 
-=======
-	// 수영일기 리스트 조회 -> 페이징처리 할 필요없어서 리스트만 조회.
-	@RequestMapping("list.di")
-	public ModelAndView selectList(ModelAndView mv) {
-		mv.addObject("list", diaryService.selectList()).setViewName("diary/diaryListView");
-		//System.out.println(diaryService.selectList());
->>>>>>> 3a2e47dcab83363e8ec61c11a54056b0e58f17bf
 		return mv;
 	}
-
-	// 수영일기 작성폼으로
+	
+	//수영일기 작성폼으로
 	@RequestMapping("enrollForm.di")
 	public String enrollForm() {
 		return "diary/diaryEnrollForm";
 	}
-
-	// 수영일기 작성폼
-	@RequestMapping("insert.di")
+	
+	//수영일기 작성폼
+	@RequestMapping ("insert.di")
 	public String insertDiary(Diary d, MultipartFile upfile, HttpSession session, Model model) {
-
-		if (!upfile.getOriginalFilename().equals("")) {
-
-			d.setOriginName(upfile.getOriginalFilename()); // 원본명
-			d.setChangeName("/resources/upfiles/" + Template.saveFile(upfile, session));
+		
+		if(!upfile.getOriginalFilename().equals("")) {
+			
+			d.setOriginName(upfile.getOriginalFilename()); //원본명
+			d.setChangeName("resources/uploadFiles/" + Template.saveFile(upfile, session));
 		}
-
-		if (diaryService.insertDiary(d) > 0) { // 성공 => 게시글 리스트 페이지
-
+		 
+		if(diaryService.insertDiary(d) >0) { //성공 => 게시글 리스트 페이지
+		
 			session.setAttribute("alertMsg", "게시글 등록 완료~~!");
 			return "redirect:list.di";
 		} else {
-			model.addAttribute("errorMsg", "게시글 작성 실패...");
+			model.addAttribute("errorMsg","게시글 작성 실패...");
 			return "common/errorPage";
 		}
-
+		                               
 	}
 	
-	// 수영일기 상세보기
-	@RequestMapping("detail.di")
+	//수영일기 상세보기
+	@RequestMapping ("detail.bi")
 	public ModelAndView selectDiary(ModelAndView mv, int dno) {
-
-		mv.addObject("dno", diaryService.selectDiary(dno)).setViewName("diary/diaryDetailView");
-		mv.addObject("errorMsg", "상세조회실패~!").setViewName("common/errorPage");
+		
+		if(diaryService.)		
+		
+		
+		
 		return mv;
 	}
 	
-	// 수영일기 삭제
+	
+	//수영일기 삭제
 	@RequestMapping("delete.di")
 	public String deleteDiary(int bno, HttpSession session, Model model, String filePath) {
-
-		if (diaryService.deleteDiary(bno) > 0) { // 삭제 성공
-
-			if (!filePath.equals("")) { // 첨부파일이 있을경우 기존의 첨부파일을 삭제.
+		
+		if(diaryService.deleteDiary(bno) >0) { //삭제 성공
+		
+			if(!filePath.equals("")) { //첨부파일이 있을경우 기존의 첨부파일을 삭제.
 				new File(session.getServletContext().getRealPath(filePath)).delete();
 			}
 			session.setAttribute("alertMsg", "삭제 성공~!!");
 			return "redirect:list.di";
-		} else {// 삭제 실패
+		} else {//삭제 실패
 			model.addAttribute("errorMsg", "게시글 삭제 실패 ㅜㅜ");
 			return "common/errorPage";
 		}
-
+			
+			
 	}
 	
 	//수영일기 업데이트폼으로 이동
@@ -100,46 +96,34 @@ public class DiaryController {
 		return mv;
 	}
 	
-	// 수영일기 수정
+	//수영일기 수정
 	@RequestMapping("update.di")
-<<<<<<< HEAD
 	public String updateDiary(@ModelAttribute Board b ,Model model, MultipartFile reUpfile, HttpSession session ) {
 		
 		if(reUpfile.getOriginName() != null ) {
 			new File(session.getSetvletContext().getRealPath(d.getchangeName())).delete();
-=======
-	public String updateDiary(@ModelAttribute Diary d, Model model, MultipartFile reUpfile, HttpSession session) {
-
-		if (d.getOriginName() != null) {
-			new File(session.getServletContext().getRealPath(d.getChangeName())).delete();
->>>>>>> 3a2e47dcab83363e8ec61c11a54056b0e58f17bf
 		}
-
-		// 새로운 첨부파일을 서버에 업로드 시키기
+		
+		//새로운 첨부파일을 서버에 업로드 시키기
 		String changeName = Template.saveFile(reUpfile, session);
-
-		// d라는 Diary객체에 새로운 정보 (원본명, 저장경로)담기
+		
+		//d라는 Diary객체에  새로운 정보 (원본명, 저장경로)담기
 		d.setOriginName(reUpfile.getOriginalFilename());
-		d.setChangeName("/resources/upfiles/" + changeName);
-
-		if (diaryService.updateDiary(d) > 0) {
-			session.setAttribute("alertMsg", "게시글이 업데이트 되었습니다~~");
-			return "redirect:detail.di?dno=" + d.getDiaryNo();
-
-		} else {
-			model.addAttribute("errorMsg", "수정 실패야ㅜㅜ");
-			return "common/errorPage";
-		}
-
+		d.setChangeName("resources/uploadFiles/" + changeName);
+	}	
+		
+	if(diaryService.updateDiary(d) > 0) {
+		session.setAttribute("alertMsg", "게시글이 업데이트 되었습니다~~")
+		return "redirect:detail.di?dno" + d.getDiaryNo();
+		
+	}else {
+		model.addAttribute("errorMsg", "수정 실패야ㅜㅜ");
+		return "common/errorPage";
 	}
-<<<<<<< HEAD
 	
 	
 	
 	
 	
 	
-=======
-
->>>>>>> 3a2e47dcab83363e8ec61c11a54056b0e58f17bf
 }
