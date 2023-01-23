@@ -8,6 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap id="diaryResultSet" type="diary" >
 		<result column="diary_no" property="diaryNo" />
 		<result column="mem_no" property="memberNo" />
+		<result column="nickName" property="nickName" />
 		<result column="content" property="content" />
 		<result column="origin_name" property="originName" />
 		<result column="change_name" property="changeName" />
@@ -18,14 +19,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<select id="selectList" resultMap="diaryResultSet">
+		
 		select
 				diary_no
 				,mem_no
 				,content
+				,nickName
 				,to_char(create_date, 'YYYY-MM-DD') as "CREATE_DATE"
 				,origin_name
+				,change_name
 		from		
 				diary
+		join
+				member using(mem_no)		
 		where
 				status = 'Y'
 		order
@@ -57,31 +63,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  		)	
 	
 	</insert>
-	<!--  
-	<update id="increaseCount">
-		update
-				diary
-		set	
-				count = count + 1
-		where
-				diary_no = #{diaryNo}
-		and
-				status ='Y'							
 	
-	
-	</update>
-	-->
 	
 	<select id="selectDiary" resultMap="diaryResultSet">
 		select
 				diary_no
 				,mem_no
+				,nickName
 				,content
 				,origin_name
 				,change_name
 				,to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		from
 				diary
+		join
+				member using (mem_no)		
 		where			
 				status = 'Y'
 		and
@@ -106,10 +102,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update
 				diary
 		set			
-				title = #{Title}
+		
 				content = #{content}
-				originName = #{originName}
-				changeName = #{changeName}
+				,origin_name = #{originName}
+				,change_name = #{changeName}
 		where
 				diary_no = #{diaryNo}		
 

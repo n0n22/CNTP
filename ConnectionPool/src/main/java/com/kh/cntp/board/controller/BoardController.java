@@ -127,7 +127,7 @@ public class BoardController {
 				
 				//b라는 보드 객체에 새로운 정보(원본명, 저장경로) 담기
 				 b.setOriginName(reUpfile.getOriginalFilename());
-				 b.setChangeName("resources/uploadFiles/" + changeName);
+				 b.setChangeName("/resources/upfiles/" + changeName);
 			}
 			
 			if(boardService.updateBoard(b) > 0) {

@@ -251,7 +251,7 @@ textarea{
 
 	<div class="card card-white grid-margin">
 		<div class="card-body">
-			<c:if test="${ loginMember.memberNo eq d.memberNo }">
+			<c:if test="${ loginMember.memNo eq d.memberNo }">
 				<div align="center">
 					<!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
 					<a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a> 
@@ -260,16 +260,16 @@ textarea{
 			</c:if>
 			
 			 <form action="" method="post" id="postForm">
-            	<input type="hidden" name="bno" value="${d.MemberNo}" />
-            	<input type="hidden" name="filePath" value="${ b.changeName }" />
+            	<input type="hidden" name="dno" value="${d.diaryNo}" />
+            	<input type="hidden" name="filePath" value="${ d.changeName }" />
             </form>
 			
 			<script>
             	function postFormSubmit(num){
 					if(num == 1){ // 수정하기 클릭 시
-						$('#postForm').attr('action', 'updateForm.bo').submit();
+						$('#postForm').attr('action', 'updateForm.di').submit();
 					} else{	// 삭제하기 클릭 시
-						$('#postForm').attr('action', 'delete.bo').submit();
+						$('#postForm').attr('action', 'delete.di').submit();
 					}
             	}
             </script>
@@ -277,16 +277,17 @@ textarea{
 			<br><br>
 			
 			
+			<form ="detail.di">
 			<div class="timeline-item-header">
 				<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
 				<p>
-					${MemberNo } <span>닉네임</span>
+					${MemberNo } <span>${d.nickName} </span>
 				</p>
 				<small>${createDate }</small>
 			</div>
 			<div class="timeline-item-post">
-				<p>오늘 저녁 수영도 완료!! 오수완~~^^</p>
-				<img src="img/post-img01.jpg" alt="" />
+				<p>${d.content }</p>
+				<img src="${d.changeName }" alt="" />
 				<div class="timeline-options">
 					<a href="#"><i class="fa fa-thumbs-up"></i> 좋아요 (22)</a> <a
 						href="#"><i class="fa fa-comment"></i> 댓글 (7)</a> <a href="#"><i
@@ -297,11 +298,12 @@ textarea{
 						<img src="https://bootdey.com/img/Content/avatar/avatar7.png"
 							alt="" />
 						<p>
-							박길동 <small>1 시간 전</small>
+							${d.nickName} <small>${createDate }</small>
 						</p>
 					</div>
 					<p class="timeline-comment-text">저도 곧 수영장 갑니다!</p>
 				</div>
+			</form>	
 				
 			<c:choose>
 				<c:when test="${empty loginMember }">	

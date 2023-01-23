@@ -297,10 +297,14 @@ textarea{
                      <c:forEach items="${list }" var="d">
                     <div class="profile-timeline">
                                 <div class="card card-white grid-margin">
-                                    <div class="card-body">
+                                    <div class="card-body diaryarea" >
                                         <div class="timeline-item-header">
-                                            <img src="${changeName }" alt="" />
-                                            <p>${d.memberNo }<span> 닉네임</span></p>
+                                     		<c:if test="${not empty d.originName }">
+                                            <img src="${d.changeName }" alt=""  height="150px" width="100px">
+                                         	</c:if>
+                                            <p>${d.nickName }<span> </span>
+                                             <input type="hidden" name="diaryNo" value="${d.diaryNo}" class="card-body-dno">
+                                            </p>
                                             <small>${d.createDate }</small>
                                         </div>
                                         <div class="timeline-item-post">
@@ -329,7 +333,7 @@ textarea{
                                             <div class="timeline-comment">
                                                 <div class="timeline-comment-header">
                                                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-                                                    <p>${d.memberNo } <small>${d.createDate }</small></p>
+                                                    <p>${d.nickName } <small>${d.createDate }</small></p>
                                                 </div>
                                                 <p class="timeline-comment-text">${r.commentContent}  </p>
                                             </div>
@@ -342,7 +346,27 @@ textarea{
                                     </div> <!-- "card-body" 끝-->
                                 </div>
                          </div>
-                          </c:forEach>
+                         </c:forEach>
+                         
+                         <script>
+                         	$(function(){
+                         		$('.diaryarea').click(function(){
+                         			location.href= 'detail.di?dno=' + $(this).find('.card-body-dno').val();
+                         			
+                         			
+                         		})
+                         		
+                         		
+                         		
+                         		
+                         	})
+                         
+                         
+                         
+                         
+                         
+                         </script>
+                         
                             
                          
                          
@@ -351,7 +375,7 @@ textarea{
                                     <div class="card-body">
                                         <div class="timeline-item-header">
                                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-                                            <p>${d.memberNo }  <span>닉네임</span></p>
+                                            <p>${d.nickName}  <span>${d.nickName}</span></p>
                                             <small>${d.createDate }</small>
                                         </div>
                                         <div class="timeline-item-post">
@@ -365,7 +389,7 @@ textarea{
                                             <div class="timeline-comment">
                                                 <div class="timeline-comment-header">
                                                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-                                                    <p>${d.memberNo } <small>${d.createDate }</small></p>
+                                                    <p>${d.nickName} <small>${d.createDate }</small></p>
                                                 </div>
                                                 <p class="timeline-comment-text">저도 곧 수영장 갑니다! </p>
                                             </div>
@@ -376,6 +400,7 @@ textarea{
                                         </div>
                                     </div>
                                 </div>
+                             
                     </div>
                    
                     

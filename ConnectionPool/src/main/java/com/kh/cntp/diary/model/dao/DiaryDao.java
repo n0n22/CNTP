@@ -2,17 +2,22 @@ package com.kh.cntp.diary.model.dao;
 
 import org.springframework.stereotype.Repository;
 
+import com.kh.cntp.diary.model.vo.Diary;
+
+import java.util.ArrayList;
+
+import org.mybatis.spring.SqlSessionTemplate;
 @Repository
 public class DiaryDao {
 
-	
+
 public ArrayList<Diary> selectList(SqlSessionTemplate sqlSession) {
 	return (ArrayList)sqlSession.selectList("diaryMapper.selectList");
 }
 	
 	
-public int insertDiary(SqlSessionTemplate sqlSession, int diaryNo) {
-	return sqlSession.insert("diaryMapper.increaseCount", diaryNo);
+public int insertDiary(SqlSessionTemplate sqlSession, Diary d) {
+	return sqlSession.insert("diaryMapper.insertDiary", d);
 
 }
 	
@@ -30,25 +35,6 @@ public int updateDiary (SqlSessionTemplate sqlSession, Diary d) {
 	return sqlSession.update("diaryMapper.updateDiary", d);
 	
 }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

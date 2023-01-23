@@ -6,6 +6,7 @@ import lombok.Data;
 public class Diary {
 	private int diaryNo;
 	private int memberNo;
+	private String nickName;
 	private String content;
 	private String createDate; //작성일
 	private String originName;

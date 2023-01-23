@@ -26,6 +26,8 @@ public class DiaryController {
 	//수영일기 리스트 조회
 	@RequestMapping("list.di")
 	public ModelAndView selectList(ModelAndView mv) {
+		
+		System.out.println(diaryService.selectList());
 		mv.addObject("list",diaryService.selectList()).setViewName("diary/diaryListView");
 
 		return mv;
@@ -44,7 +46,7 @@ public class DiaryController {
 		if(!upfile.getOriginalFilename().equals("")) {
 			
 			d.setOriginName(upfile.getOriginalFilename()); //원본명
-			d.setChangeName("resources/uploadFiles/" + Template.saveFile(upfile, session));
+			d.setChangeName("resources/upfiles/" + Template.saveFile(upfile, session));
 		}
 		 
 		if(diaryService.insertDiary(d) >0) { //성공 => 게시글 리스트 페이지
@@ -59,11 +61,10 @@ public class DiaryController {
 	}
 	
 	//수영일기 상세보기
-	@RequestMapping ("detail.bi")
+	@RequestMapping ("detail.di")
 	public ModelAndView selectDiary(ModelAndView mv, int dno) {
 		
-		if(diaryService.)		
-		
+		mv.addObject("d", diaryService.selectDiary(dno)).setViewName("diary/diaryDetailView");
 		
 		
 		return mv;
@@ -72,9 +73,9 @@ public class DiaryController {
 	
 	//수영일기 삭제
 	@RequestMapping("delete.di")
-	public String deleteDiary(int bno, HttpSession session, Model model, String filePath) {
+	public String deleteDiary(int dno, HttpSession session, Model model, String filePath) {
 		
-		if(diaryService.deleteDiary(bno) >0) { //삭제 성공
+		if(diaryService.deleteDiary(dno) >0) { //삭제 성공
 		
 			if(!filePath.equals("")) { //첨부파일이 있을경우 기존의 첨부파일을 삭제.
 				new File(session.getServletContext().getRealPath(filePath)).delete();
@@ -98,10 +99,13 @@ public class DiaryController {
 	
 	//수영일기 수정
 	@RequestMapping("update.di")
-	public String updateDiary(@ModelAttribute Board b ,Model model, MultipartFile reUpfile, HttpSession session ) {
+	public String updateDiary(@ModelAttribute Diary d ,Model model, MultipartFile reUpfile, HttpSession session ) {
 		
-		if(reUpfile.getOriginName() != null ) {
-			new File(session.getSetvletContext().getRealPath(d.getchangeName())).delete();
+		if(!reUpfile.getOriginalFilename().equals("")) {
+		
+			//기존의 첨부파일이 있으면 기존의 첨부파일을 삭제
+		if(d.getOriginName() != null ) {
+			new File(session.getServletContext().getRealPath(d.getChangeName())).delete();
 		}
 		
 		//새로운 첨부파일을 서버에 업로드 시키기
@@ -109,12 +113,12 @@ public class DiaryController {
 		
 		//d라는 Diary객체에  새로운 정보 (원본명, 저장경로)담기
 		d.setOriginName(reUpfile.getOriginalFilename());
-		d.setChangeName("resources/uploadFiles/" + changeName);
+		d.setChangeName("resources/upfiles/" + changeName);
 	}	
 		
 	if(diaryService.updateDiary(d) > 0) {
-		session.setAttribute("alertMsg", "게시글이 업데이트 되었습니다~~")
-		return "redirect:detail.di?dno" + d.getDiaryNo();
+		session.setAttribute("alertMsg", "게시글이 수정 되었습니다~~");
+		return "redirect:detail.di?dno=" + d.getDiaryNo();
 		
 	}else {
 		model.addAttribute("errorMsg", "수정 실패야ㅜㅜ");
@@ -122,7 +126,7 @@ public class DiaryController {
 	}
 	
 	
-	
+	}
 	
 	
 	

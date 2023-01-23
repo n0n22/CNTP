@@ -2,7 +2,7 @@ package com.kh.cntp.diary.model.service;
 
 import java.util.ArrayList;
 
-import com.kh.cntp.board.model.vo.Board;
+
 import com.kh.cntp.common.model.vo.PageInfo;
 import com.kh.cntp.diary.model.vo.Diary;
 import com.kh.cntp.reply.model.vo.Reply;
@@ -23,7 +23,7 @@ public interface DiaryService {
 	// 게시글 조회수 증가(update)->조회수증가 할 필요없음. 
 	//int increaseCount(int boardNo);
 	// 게시글 상세 조회(select)
-	Board selectDiary(int diaryNo);
+	Diary selectDiary(int diaryNo);
 	
 	// 게시글 삭제 서비스(update)
 	int deleteDiary(int diaryNo);

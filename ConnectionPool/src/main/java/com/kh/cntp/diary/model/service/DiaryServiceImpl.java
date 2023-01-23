@@ -6,7 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.cntp.board.model.vo.Board;
+
 import com.kh.cntp.diary.model.dao.DiaryDao;
 import com.kh.cntp.diary.model.vo.Diary;
 
@@ -15,8 +15,10 @@ public class DiaryServiceImpl implements DiaryService {
 	
 	@Autowired
 	private DiaryDao diaryDao;
-
 	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+
 	@Override
 	public ArrayList<Diary> selectList() {
 		return diaryDao.selectList(sqlSession);
@@ -46,7 +48,6 @@ public class DiaryServiceImpl implements DiaryService {
 		return diaryDao.updateDiary(sqlSession, d);
 	}
 
-	
 	
 	
 	
