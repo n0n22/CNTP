@@ -6,7 +6,7 @@
 <p align="center">
 수영의 활성화를 위한 <b>커뮤니티 기능</b>을 고려 <br><br>
 라이트 유저를 고려한 <b>소모임</b>과, 수영 매니아들을 위한 <b>팀별 배틀</b> 기능 <br><br>
-"커넥션풀에 얕게, 때로는 깊게 빠져보세요!
+"커넥션풀에 얕게, 때로는 깊게 빠져보세요!"
 
 </p>
 
@@ -36,7 +36,19 @@
 
 ## 팀원
 ![팀원소개](https://user-images.githubusercontent.com/121650379/214078262-15df22bf-316b-40fc-9c02-e6fdb079453d.png)
+
 ###
+
+<div align="center">
+
+[신경호](https://github.com/kyungho-SHIN)
+[박세정](https://github.com/zoni613)
+[임선혁](https://github.com/ImSeon01)
+[이연정](https://github.com/YeonJeong1)
+[주성경](https://github.com/n0n22)
+
+</div>
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[신경호](https://github.com/kyungho-SHIN) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[박세정](https://github.com/zoni613)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[임선혁](https://github.com/ImSeon01)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[이연정](https://github.com/YeonJeong1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[주성경](https://github.com/n0n22)
 
 ## 주요기능
