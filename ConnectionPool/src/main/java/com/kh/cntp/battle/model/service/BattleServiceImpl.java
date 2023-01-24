@@ -102,7 +102,10 @@ public class BattleServiceImpl implements BattleService{
 	public int checkBattle(String battleNo) {
 		return battleDao.checkBattle(sqlSession, battleNo);
 	}
-	
+	@Override
+	public int battleObjection(HashMap<String, String> objecton) {
+		return battleDao.msg(sqlSession, objecton);
+	}
 	@Override
 	public ArrayList<ResultHistory> selectListBattleRank(String condition) {
 		return battleDao.selectListBattleRank(sqlSession, condition);

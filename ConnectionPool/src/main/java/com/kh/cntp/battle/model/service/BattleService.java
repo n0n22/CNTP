@@ -26,32 +26,38 @@ public interface BattleService {
 	// 배틀풀 경기장 정보 상세보기
 	PoolInfo selectPoolInfo(int battleNo);
 	
-// 배틀 신청
+	// 배틀 신청
 	int applyBattle(HashMap<String, String> apply);
 	
 	// 팀 정보 조회
 	Team selectTeam(String team);
+	
 	// 배틀 결과 조회
 	BattleResult selectBattleResult(int battleNo);
+	
 	// 팀 전적 조회
 	ResultHistory selectResultHistory(String team);
 	
-// 배틀 결과 작성
+	// 배틀 결과 작성
 	int insertBattleResult(BattleResult br);
 	
-// 배틀 결과 승인
+	// 배틀 결과 승인
 	int battleResultOk(int battleNo, String victoryTeamNo, String defeatTeamNo);
 	
-// 배틀 신청 취소
+	// 배틀 신청 취소
 	int cancelBattle(HashMap<String, String> cancel);
-// 배틀 삭제
+	
+	// 배틀 삭제
 	int deleteBattlePool(int battleNo);
 
-// 배틀 결과 수정
+	// 배틀 결과 수정
 	int updateBattleResult(BattleResult br);
-// 배틀 신청 중복 확인
+	
+	// 배틀 신청 중복 확인
 	int checkBattle(String battleNo);
 	
+	// 이의제기
+	int battleObjection(HashMap<String, String> objecton);
 	
 // topN
 	ArrayList<ResultHistory> selectListBattleRank(String condition);

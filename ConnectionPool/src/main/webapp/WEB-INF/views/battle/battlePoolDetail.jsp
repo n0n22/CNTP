@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>배틀풀 상세보기</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 <!-- 스타일 시트 -->
 <link rel="stylesheet" href="resources/css/battle/battlePoolDetail.css">
 </head>

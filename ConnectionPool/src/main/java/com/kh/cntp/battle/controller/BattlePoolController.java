@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.kh.cntp.battle.model.service.BattleService;
+import com.kh.cntp.battle.model.service.BattleServiceImpl;
 import com.kh.cntp.battle.model.vo.Battle;
 import com.kh.cntp.battle.model.vo.BattleResult;
 import com.kh.cntp.battle.model.vo.PoolInfo;
@@ -398,6 +399,22 @@ public class BattlePoolController {
 		
 		redirectAttributes.addAttribute("battleNo", br.getBattleNo());
 		return "redirect: battleDetail.bt";
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping("battleObjection.bt")
+	public String battleObjection(String teamNo,
+								  String memNo,
+								  String chatContent,
+								  String battleNo) {
+		HashMap<String, String> objection = new HashMap<String, String>();
+		objection.put("teamNo", teamNo);
+		objection.put("memNo", memNo);
+		objection.put("chatContent", chatContent);
+		objection.put("battleNo", battleNo);
+		
+		return String.valueOf(battleService.battleObjection(objection));
 	}
 	
 	/*

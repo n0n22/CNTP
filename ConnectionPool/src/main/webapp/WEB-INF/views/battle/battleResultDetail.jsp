@@ -6,10 +6,66 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src=""></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 <!-- 스타일 시트 -->
 <link rel="stylesheet" href="resources/css/battle/battleResultDetail.css">
+
+<style>
+	        /* 배틀 모달 스타일 */
+	    .message-background {
+	        position: fixed;
+	        top: 0;
+	        left: 0;
+	        width: 100%;
+	        height: 100vh;
+	        background-color: rgba(0, 0, 0, 0.3);
+	        z-index: 1000;
+	
+	        /* 숨기기 */
+	        z-index: -1;
+	        opacity: 0;
+	    }
+	
+	    .message-show {
+	        opacity: 1;
+	        z-index: 1000;
+	        transition: all 0.5s;
+	    }
+	
+	    .message-window {
+	        position: relative;
+	        width: 100%;
+	        height: 100%;
+	    }
+	
+	    .message-popup {
+	        position: absolute;
+	        top: 50%;
+	        left: 50%;
+	        transform: translate(-50%, -50%);
+	        background-color: white;
+	        box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
+	        font-family: 'Pretendard-Regular';
+	        border-radius: 3%;
+	
+	        /* 임시 지정 */
+	        width: 480px;
+	        height: 280px;
+	
+	        /* 초기에 약간 아래에 배치 */
+	        transform: translate(-50%, -50%);
+	        padding: 7px;
+	        
+	        /* padding-block-start: 30px; */
+	    }
+	
+	    .message-show .message-popup {
+	        transform: translate(-50%, -50%);
+	        transition: all 0.5s;
+	    }
+	    /* 모달 스타일 끝 */
+
+</style>
 
 </head>
 <body>
@@ -198,12 +254,30 @@
                 <!--로그인 유저 직급이 'L' && 로그인 유저 팀이 awayTeam && 결과가 작성이 되어 있을 경우(N) -->
                 <c:if test="${ (loginMember.teamGrade eq 'L') and (loginMember.teamNo eq awayTeam.teamNo) and (battleResult.ok eq 'N') }">
 	                <button class="btn btn-info" onclick="ok();">승인</button>
-	                <button class="btn btn-warning">이의제기</button>
+	                <button class="btn btn-warning show">이의제기</button>
                 </c:if>
                 <button class="btn btn-danger" onclick="back();">뒤로가기</button>
+                
+                <!-- 이의제기 모달 -->
+			    <div class="message-background">
+					<div class="message-window">
+						<div class="message-popup">
+							<div class="message-area" align="center">
+								<h3>이의제기</h3>
+								<br>
+									<textarea id="msgContent" rows="5" name="chatContent" maxlength="150"
+										style="width: 400px; resize: none;" placeholder="이의제기" required="required"></textarea>
+									<br> <br>
+									<button onclick="battleObjection();" class="btn btn-warning">이의제기</button>
+									<button type="button" id="close" class="btn btn-danger">취소</button>
+							</div>
+						</div>
+					</div>
+			    </div>
             </div>
         </div>
     </div>
+    
     
     <form action="battleResultOk.bt" method="post">
     	<input type="hidden" name="battleNo" value="${ battleNo }">
@@ -222,6 +296,38 @@
     		}
     		return;
     	}
+    	
+    	function battleObjection(){
+    		messageClose();
+    		$.ajax({
+    			url : "battleObjection.bt",
+    			type : "post",
+    			data : {
+    				teamNo : '${ loginMember.teamNo }',
+    				memNo : ${ loginMember.memNo },
+    				battleNo : ${ battleNo },
+    				chatContent : $('#msgContent').val()
+    			},
+    			success : function(data){
+    				if(data > 0) alert('이의제기 성공');
+    				else alert('이의제기 실패');
+    			}
+    		})
+    	}
+    	
+    	
+		// 메시지 모달 실행 및 종료 함수
+        document.querySelector(".show").addEventListener("click", messageShow);
+        document.querySelector("#close").addEventListener("click", messageClose);
+		
+        function messageShow() {
+        document.getElementById("msgContent").value = '';
+        document.querySelector(".message-background").className = "message-background message-show";
+        }
+    
+        function messageClose() {
+            document.querySelector(".message-background").className = "message-background";
+        }
     
     </script>
 	
