@@ -62,6 +62,11 @@
   5. 삭제하기 기능 
 
 ### 인기도
+![인기도](https://user-images.githubusercontent.com/121650379/214218091-2441028b-8a5c-4c52-8012-5c921ea6404d.gif)
+  1. 회원 닉네임 클릭시 회원 프로필 보여줌
+  2. 회원 인기도를 올리거나 내릴 수 있음
+  3. 자기 자신의 인기도나 한번 올리거나 내렸던 회원의 인기도는 올리거나 내릴 수 없음
+
 ### 수영일기
 #### 데스크톱 화면
 ![수영일기 데스크톱](https://user-images.githubusercontent.com/121650379/214216096-74201785-2387-4c7d-a91b-34ac4a5d3943.gif)
@@ -69,8 +74,9 @@
 #### 모바일 화면
 ![수영일기 모바일](https://user-images.githubusercontent.com/121650379/214215987-bbc51bc8-919e-4a4e-89a8-222b57fc40f9.gif)
 
-
 ### 신고
+![신고 기능](https://user-images.githubusercontent.com/121650379/214216729-aaffcdfe-256e-4e61-894e-3c0c9e90cb91.gif)
+
 
 ## 참고문서
 ### 노션
