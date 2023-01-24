@@ -60,7 +60,7 @@
   3. 닉네임 입력 - 유효성검사, 중복검사
  
 #### 이메일 입력 및 인증 & 회원가입
-![이메인 인증](https://user-images.githubusercontent.com/121650379/214221106-d38dd231-0c67-4001-8c89-ca9a9ed18f5f.gif)
+![이메일 인증](https://user-images.githubusercontent.com/121650379/214223030-7b07c943-9a9e-4dae-8d21-170fd78fab7a.gif)
   1. 유효성 및 인증번호 확인
   2. 모든 항목 작성 시 회원가입 버튼 활성화
 
