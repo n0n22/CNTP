@@ -63,6 +63,13 @@
 
 ### 인기도
 ### 수영일기
+#### 데스크톱 화면
+![수영일기 데스크톱](https://user-images.githubusercontent.com/121650379/214216096-74201785-2387-4c7d-a91b-34ac4a5d3943.gif)
+
+#### 모바일 화면
+![수영일기 모바일](https://user-images.githubusercontent.com/121650379/214215987-bbc51bc8-919e-4a4e-89a8-222b57fc40f9.gif)
+
+
 ### 신고
 
 ## 참고문서
