@@ -32,6 +32,10 @@ public class ReplyServiceImpl implements ReplyService{
 		
 		return  replyDao.BoardinsertReply(sqlSession, r);
 	}
+	
+	
+	
+	
 
 
 	

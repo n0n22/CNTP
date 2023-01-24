@@ -277,9 +277,9 @@ textarea{
 			<br><br>
 			
 			
-			<form ="detail.di">
+			<!--  <form ="detail.di">-->
 			<div class="timeline-item-header">
-				<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
+				<img src="${d.changeName }" alt="" />
 				<p>
 					${MemberNo } <span>${d.nickName} </span>
 				</p>
@@ -303,7 +303,7 @@ textarea{
 					</div>
 					<p class="timeline-comment-text">저도 곧 수영장 갑니다!</p>
 				</div>
-			</form>	
+			<!-- </form> -->	
 				
 			<c:choose>
 				<c:when test="${empty loginMember }">	
@@ -314,9 +314,9 @@ textarea{
 				</div>
 				</c:when>
 				<c:otherwise>
-					<textarea class="form-control" placeholder="댓글을 입력해주세요"></textarea>
+					<textarea class="form-control" id="content" placeholder="댓글을 입력해주세요">${r.commentContent}</textarea>
 				<div class="post-options">
-					<button class="btn btn-outline-primary float-right">등록하기</button>
+					<button class="btn btn-outline-primary float-right" onclick="addDiaryReply();" >등록하기</button>
 				</div>
 				</c:otherwise>
 			</c:choose>
@@ -329,86 +329,85 @@ textarea{
 
 
 	<jsp:include page="../common/footer.jsp" />
-
+	
+	
 	 <script>
     	
-    	$(function(){
-    		DiaryselectReplyList();
-    	});
-    
-    	function addDiaryReply(){ //댓글 작성용 ajax
-    		
-    		if($('#content').val().trim() != ''){
-    			$.ajax({
-    				url: 'rinsert.di',
-    				data :{
-    					diaryNo : ${d.diaryNo},
-    					commentContent : $('#content').val(),
-    					writer : ${loginMember.memNo}
-    				},
-    				success : function(status){
-    					console.log(status);
-    				
-    					if(status == 'success'){
-    						selectDiaryReplyList();
-    						$('#content').val('');
-    					}
-    				
-    					
-    				},
-    				error: function(){
-    					console.log('실패!!ㅜㅜ');
-    				}
-    				
-    			})
-    		}
-    		else {
-    			alertify.alert('정상적인 댓글을 작성해주세요!!');
-    		}
-    				
-    		}
-    		
     	
     
-    	
-    	function selectDiaryReplyList(){
-    		$.ajax({
-    			url: 'rlist.di', //게시글에 달린 댓글만 조회. (현재 게시글의 글번호를 넘겨줌.)
-    			data: {dno : ${d.diaryNo}},
-    			success : function(list){
-    				console.log(list);
-    				
-    				let value='';
-    				for(let i in list){
-    					console.log(list[i].commentContent);
-    					value += '<tr>'
-							   + '<th>' + list[i].writer  + '</th>'
-							   + '<th>' + list[i].commentContent + '</th>'
-							   + '<th>' + list[i].commentDate   + '</th>'
-							   + '<td><button class="btn btn-sm btn-danger" onclick="openReportForm(' + "'board-reply'" + ', this, ' + list[i].commentNo + ');">신고</button></td>'
-							   + '</tr>';
-						
-    				}
-    				
-    				$('#replyArea tbody').html(value);
-					$('#rcount').text(list.length);
-    			},
-    			error : function(){
-    				console.log('댓글 목록 조회 실패!!ㅜㅜ');
-    			}
-    		
-    		})
-    		
-    		
-    	}
-    
-    
-    
+   //댓글 조회용 ajax
+  	$(function(){
+  		selectDiaryReplyList();
+  	});
+  	
+  	
+  	function addDiaryReply(){ // 댓글 작성용ajax
+  		//ef를 클래스 값으로 갖는 p 요소의 부모 요소가 cd를 클래스 값으로 갖는 div일 때, 내용을 빨간색으로 만듭니다.
+  		// $( 'p.ef' ).parent( 'div.cd' ).css( 'color', 'red' );
+  		//if($(this).parent().parent().find('#content').val().trim() != '') {	
+  		console.log($('#content').val());
+  		if($(this).parent().parent().find('#content').val()!= '') {
+  			$.ajax({
+  				url: 'rinsert.di',
+  				data : {
+  					diaryNo : ${d.diaryNo},
+  					commentContent : $('#content').val(),
+  					writer : '${d.memberNo}'
+  				},
+  				success : function(status){
+  					if(status == 'success') {
+  						selectDiaryReplyList();
+  						$('#content').val('');
+  					}
+      			},
+      			error : function() {
+      				console.log('실패!!');
+      			}
+      		});
+      	}		
+      	else{
+      		alertify.alert('정상적인 댓글을 작성해주세요!!');
+      	}
+  		
+  	}
+  		
+  	
+  	function selectDiaryReplyList(){
+  		$.ajax({
+  			url: 'rlist.di', 
+  			data : {dno : ${d.diaryNo}},
+  			success : function(list) {
+  				console.log(list);
+  				
+  				let value='';
+  				for(let i in list) {
+  					console.log(list[i]);
+  					value += '<tr>'
+  						  + '<th>' + list[i].writer + '</th>'
+  						  + '<th>' + list[i].commentContent + '</th>'
+  						  + '<th>' + list[i].commmentDate + '</th>'
+  						  + '</tr>' ;		
+  					
+  				}
+  		$('#replyArea tbody').html(value);
+  		$('#rcount').text(list.length);
+  				
+  	},
+  	error : function(){
+  		console.log('댓글 목록 조회 실패!! ㅜㅜ');
+  	}
+  				
+  		
+  		})
+  		
+  		
+  	}
+  
     
     </script>
+   
     
-    
-
+	
 
 
 

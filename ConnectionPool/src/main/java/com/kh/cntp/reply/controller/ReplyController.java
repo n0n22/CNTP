@@ -42,6 +42,7 @@ public class ReplyController {
 	@ResponseBody
 	@RequestMapping("rinsert.di")
 	public String ajaxDiaryInsertReply(Reply r) {
+		System.out.println(r);
 		return replyService.DiaryinsertReply(r) > 0 ? "success" : "fail";
 	}
 	

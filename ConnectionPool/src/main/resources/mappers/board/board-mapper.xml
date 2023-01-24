@@ -69,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				(
 				board_no
 				,title
-				,nickName
+				,mem_no
 				,content
 				,category
 				,origin_name
@@ -79,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				(
 				seq_bno.nextval
 				,#{title}
-				,#{nickName}
+				,#{memberNo}
 				,#{content}
 				,#{category}
 				,#{originName}
@@ -143,7 +143,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set
 				title = #{title}		
 				,content = #{content}
-				,nickName = #{nickName}
+				,mem_no= #{memberNo}
 				,origin_Name = #{originName}
 				,change_Name = #{changeName}
 		where 

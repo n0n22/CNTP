@@ -69,6 +69,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				to_char(comment_Date, 'YYYY-MM-DD') as "comment_Date"
 		  from
 		        diary_reply
+		  join
+		  		member on (mem_no = writer)        
 		  where
 		  		status = 'Y'
 		  	and
@@ -93,7 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				)
 		values
 				(
-				seq_brno.nextval,
+				seq_drno.nextval,
 				#{commentContent},
 				#{writer},
 				#{diaryNo}

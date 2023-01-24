@@ -297,7 +297,7 @@ textarea{
                      <c:forEach items="${list }" var="d">
                     <div class="profile-timeline">
                                 <div class="card card-white grid-margin">
-                                    <div class="card-body diaryarea" >
+                                    <div class="card-body " >
                                         <div class="timeline-item-header">
                                      		<c:if test="${not empty d.originName }">
                                             <img src="${d.changeName }" alt=""  height="150px" width="100px">
@@ -326,23 +326,27 @@ textarea{
                                             <div class="timeline-comment">
                                                 <div class="timeline-comment-header">
                                                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-                                                    <p>${d.memberNo } <small>${d.createDate }</small></p>
+                                                    <p>${d.nickName } <small>${d.createDate }</small></p>
                                                 </div>
-                                                <p class="timeline-comment-text">${r.comment }</p>
+                                                <p class="timeline-comment-text" id="content">${r.commentContent }</p>
                                             </div>
                                             <div class="timeline-comment">
                                                 <div class="timeline-comment-header">
                                                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
                                                     <p>${d.nickName } <small>${d.createDate }</small></p>
                                                 </div>
-                                                <p class="timeline-comment-text">${r.commentContent}  </p>
+                                                <p class="timeline-comment-text" id="content">${r.commentContent}  </p>
                                             </div>
-                                            <textarea class="form-control" placeholder="댓글을 입력해주세요" name="content"></textarea>
+                                            <textarea class="form-control" placeholder="댓글을 입력해주세요" name="content" id="content"></textarea>
                                             <div class="post-options">
-                                                <button class="btn btn-outline-primary float-right">등록하기</button>
+                                                <button class="btn btn-outline-primary float-right" onclick="addDiaryReply();">등록하기</button>
                                             </div> <!-- "post-options" 끝 -->
                                         </div> <!-- "timeline-item-post" 끝 -->
-                                    
+                                    	
+                                    	<form action="" method="post" id="postForm">
+                                    		<input type="hidden" name="dno" value="${d.diaryNo }" />
+                                    	
+                                    	</form>
                                     </div> <!-- "card-body" 끝-->
                                 </div>
                          </div>
@@ -350,21 +354,86 @@ textarea{
                          
                          <script>
                          	$(function(){
-                         		$('.diaryarea').click(function(){
+                         		$('.timeline-item-header').click(function(){
                          			location.href= 'detail.di?dno=' + $(this).find('.card-body-dno').val();
-                         			
-                         			
+                       
+                         		})
+                         		
+                         	})
+                         	
+                         </script>	
+                         
+                         <script>
+                     		//댓글 조회용 ajax
+                         	/*$(function(){
+                         		selectDiaryReplyList();
+                         	});
+                         	*/
+                         	
+                         	function addDiaryReply(){ // 댓글 작성용ajax
+                         		//ef를 클래스 값으로 갖는 p 요소의 부모 요소가 cd를 클래스 값으로 갖는 div일 때, 내용을 빨간색으로 만듭니다.
+                         		// $( 'p.ef' ).parent( 'div.cd' ).css( 'color', 'red' );
+                         		//if($(this).parent().parent().find('#content').val().trim() != '') {	
+                         		
+                         		
+                         		if($('post-options.div').parent('textarea.#content').val().trim() != '') {
+                         			$.ajax({
+                         				url: 'rinsert.di',
+                         				data : {
+                         					diaryNo : '${d.diaryNo}',
+                         					commentContent : $('#content').val(),
+                         					writer : '${d.memberNo}'
+                         				},
+                         				success : function(status){
+                         					if(status == 'success') {
+                         						selectDiaryReplyList();
+                         						$('#content').val('');
+                         					}
+	                         			},
+	                         			error : function() {
+	                         				console.log('실패!!');
+	                         			}
+	                         		});
+	                         	}		
+	                         	else{
+	                         		alertify.alert('정상적인 댓글을 작성해주세요!!');
+	                         	}
+                         	}
+                         	/*
+                         	function selectDiaryReplyList(){
+                         		$.ajax({
+                         			url: 'rlist.di', 
+                         			data : {dno : ${d.diaryNo}},
+                         			success : function(list) {
+                         				console.log(list);
+                         				
+                         				let value='';
+                         				for(let i in list) {
+                         					console.log(list[i]);
+                         					value += '<tr>'
+                         						  + '<th>' + list[i].writer + '</th>'
+                         						  + '<th>' + list[i].commentContent + '</th>'
+                         						  + '<th>' + list[i].commmentDate + '</th>'
+                         						  + '</tr>' ;		
+                         					
+                         				}
+                         		$('#replyArea tbody').html(value);
+                         		$('#rcount').text(list.length);
+                         				
+                         	},
+                         	error : function(){
+                         		console.log('댓글 목록 조회 실패!! ㅜㅜ');
+                         	}
+                         				
+                         		
                          		})
                          		
                          		
-                         		
-                         		
-                         	})
-                         
-                         
-                         
-                         
-                         
+                         	}
+                         	*/
+                         	
+                         	
+                         	
                          </script>
                          
                             
