@@ -1,6 +1,6 @@
 ![image](https://user-images.githubusercontent.com/121650379/214137121-012c098c-d778-4e8c-a3a9-e70f965d7b31.png)
 
-## 프로젝트 소개
+## :page_with_curl: 프로젝트 소개
 <h3 align="center">"수영인을 위한 사이트"</h3>
 <br>
 <p align="center">
@@ -17,7 +17,7 @@
 | `팀장`           | [이연정](https://github.com/YeonJeong1)                                              |
 | `팀원`           | [박세정](https://github.com/zoni613), [신경호](https://github.com/kyungho-SHIN),  [임선혁](https://github.com/ImSeon01), [주성경](https://github.com/n0n22)                       |
 
-## 개발환경
+## :wrench: 개발환경
 ### OS
 <img src="https://img.shields.io/badge/window10-1572B6?style=for-the-badge&logo=windows&logoColor=white">
 
@@ -39,10 +39,10 @@
 ### 협업 프로그램
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"><img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"><img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white">
 
-## 팀원
+## 🤼‍♂️ 팀원
 ![팀원소개](https://user-images.githubusercontent.com/121650379/214078262-15df22bf-316b-40fc-9c02-e6fdb079453d.png)
 
-## 주요기능
+## :mag: 주요기능
 ### 회원가입
 #### 아이디&비밀번호&닉네임 유효성 검사
 ![유효성 검사](https://user-images.githubusercontent.com/121650379/214221005-5c1090b5-9cc1-4ddc-b28f-b0553d36fc52.gif)
@@ -80,7 +80,7 @@
 ![신고 기능](https://user-images.githubusercontent.com/121650379/214216729-aaffcdfe-256e-4e61-894e-3c0c9e90cb91.gif)
 
 
-## 참고문서
+## :pencil2: 참고문서
 ### 노션
 https://www.notion.so/Connection-Pool-9d2d902c429b42a68f73a55b40712cde
 
