@@ -90,3 +90,6 @@ https://www.erdcloud.com/d/KSnKboQj4E2826dJz
 ### 카카오 오븐
 https://ovenapp.io/project/OkHUbRSfpCaktCd3lRQNAT4AcMh3X8l5#fjbqp
 
+## 📝 License
+
+Copyright © 2023  Connection Pool  <br>
