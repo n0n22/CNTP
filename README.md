@@ -14,8 +14,8 @@
 | `프로젝트 이름`   | Connection Pool                                        |
 | ------------     | --------------------------------------------------     |
 | `프로젝트 기간`   | 2022.12.30 ~ 2023.01.25                                |
-| `팀장`           | 이연정                                                  |
-| `팀원`           | 박세정, 신경호,  임선혁, 주성경                           |
+| `팀장`           | [이연정](https://github.com/YeonJeong1)                                              |
+| `팀원`           | [박세정](https://github.com/zoni613), [신경호](https://github.com/kyungho-SHIN),  [임선혁](https://github.com/ImSeon01), [주성경](https://github.com/n0n22)                       |
 
 ## 개발환경
 ### OS
@@ -89,3 +89,4 @@ https://www.erdcloud.com/d/KSnKboQj4E2826dJz
 
 ### 카카오 오븐
 https://ovenapp.io/project/OkHUbRSfpCaktCd3lRQNAT4AcMh3X8l5#fjbqp
+
