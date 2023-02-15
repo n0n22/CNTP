@@ -464,7 +464,7 @@ SELECT
 				           AND 
 				               REPORT_RESULT = 'O'
 				       )
-				  JOIN PENALTY "P" USING(MEM_NO)
+				  JOIN PENALTY USING(MEM_NO)
 				 WHERE <![CDATA[END_DATE < SYSDATE]]>    
 			     GROUP BY MEM_NO, MEM_ID
 			    HAVING COUNT(*) >= 5                     

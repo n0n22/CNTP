@@ -196,7 +196,8 @@ public class AdminServiceImpl implements AdminService {
 			
 			switch (penalty[i]) {
 			case "정지" : 
-				result *= adminDao.stopPenalty(sqlSession, memNo[i]);				
+				result *= adminDao.stopPenalty(sqlSession, memNo[i]); 
+				break;
 //				if(adminDao.selectStopPenalty(sqlSession, memNo[i]) > 0) { // 정지 받은 적이 있으면 update
 //					result *= adminDao.updateStopPenalty(sqlSession, memNo[i]);
 //					break;
@@ -204,7 +205,6 @@ public class AdminServiceImpl implements AdminService {
 //					result *= adminDao.insertStopPenalty(sqlSession, memNo[i]);
 //					break;
 //				}
-				
 			case "탈퇴" :	
 				TeamMember teamInfo = adminDao.selectTeam(sqlSession, memNo[i]);
 				
@@ -224,14 +224,13 @@ public class AdminServiceImpl implements AdminService {
 					
 					// 그냥 멤버였을 때
 					result *= adminDao.deleteTeamMember(sqlSession, memNo[i]); // 팀멤버테이블에서 삭제
-
 				} 
 				
 				// 무조건 실행
 				// 소속 팀이 없을 때	
 				result *= adminDao.updateMemberStatus(sqlSession, memNo[i]); // 멤버 상태 변경
+				break;
 			}
-
 		}
 
 		return result;
