@@ -334,7 +334,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 DELETE
 			    CERT
 		  WHERE
-          	    VALID_TIME <![CDATA[>]]> TO_CHAR(SYSDATE);	   
+          	    VALID_TIME <![CDATA[<]]> TO_CHAR(SYSDATE)	   
 	</delete>
 	
 	
